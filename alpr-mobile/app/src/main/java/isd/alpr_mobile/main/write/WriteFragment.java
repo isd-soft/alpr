@@ -1,4 +1,4 @@
-package isd.alpr_mobile;
+package isd.alpr_mobile.main.write;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import isd.alpr_mobile.R;
 
 
 public class WriteFragment extends Fragment {
