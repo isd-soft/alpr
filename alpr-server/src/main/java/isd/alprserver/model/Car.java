@@ -1,4 +1,4 @@
-package isd.alprserver.Model;
+package isd.alprserver.model;
 
 import lombok.*;
 
