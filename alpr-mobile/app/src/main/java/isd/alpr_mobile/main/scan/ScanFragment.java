@@ -65,7 +65,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
         super.onDetach();
         mListener = null;
     }
-
+    
     private void startSourceCamera() {
         TextRecognizer textRecognizer = new TextRecognizer
                 .Builder(getApplicationContext()).build();

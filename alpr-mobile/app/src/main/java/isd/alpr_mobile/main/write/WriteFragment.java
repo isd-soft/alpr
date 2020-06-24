@@ -26,12 +26,6 @@ public class WriteFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_write, container, false);
     }
 
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onWriteFragmentInteraction();
-        }
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
