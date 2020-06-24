@@ -1,33 +1,35 @@
 package isd.alpr_mobile.main.scan;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import isd.alpr_mobile.R;
 
-public class ScanFragment extends Fragment {
-
-    private final int REQUEST_PERMISSION_ID = 1000;
+public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
     private OnScanFragmentInteractionListener mListener;
     private SurfaceView cameraView;
     private CameraSource cameraSource;
+    // todo: add an queue of items to process to have the ability to discard all of them when an valid plate number found
+
 
     public ScanFragment() {
         // Required empty public constructor
@@ -36,11 +38,8 @@ public class ScanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_scan, container, false);
-
         cameraView = view.findViewById(R.id.surfaceView);
-
         return view;
     }
 
@@ -48,12 +47,6 @@ public class ScanFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         startSourceCamera();
-    }
-
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onScanFragmentInteraction();
-        }
     }
 
     @Override
@@ -73,13 +66,6 @@ public class ScanFragment extends Fragment {
         mListener = null;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        //startSourceCamera();
-    }
-
     private void startSourceCamera() {
         TextRecognizer textRecognizer = new TextRecognizer
                 .Builder(getApplicationContext()).build();
@@ -93,36 +79,37 @@ public class ScanFragment extends Fragment {
                     .setRequestedFps(30.0f)
                     .build();
 
-            cameraView.getHolder().addCallback(new Callback(cameraSource, cameraView));
-
-            textRecognizer.setProcessor(new Detector.Processor<TextBlock>() {
-                @Override
-                public void release() {
-
-                }
-
-                @Override
-                public void receiveDetections(Detector.Detections<TextBlock> detections) {
-                    final SparseArray<TextBlock> items = detections.getDetectedItems();
-                    if (items.size() >= 0) {
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                StringBuilder stringBuilder = new StringBuilder();
-                                for (int i = 0; i < items.size(); i++) {
-                                    TextBlock item = items.valueAt(i);
-                                    stringBuilder.append(item.getValue());
-                                    stringBuilder.append("\n");
-                                }
-                                System.out.println(stringBuilder.toString());
-                            }
-                        };
-
-                        runnable.run();
-                    }
-                }
-            });
+            cameraView.getHolder().addCallback(this);
+            textRecognizer.setProcessor(new OCRProcessor());
         }
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        try {
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(),
+                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        Objects.requireNonNull(getActivity()),
+                        new String[]{Manifest.permission.CAMERA},
+                        RequestCode.CAMERA_REQUEST_PERMISSION_ID.ordinal());
+                // todo: continue if permission granted, else replace fragment to WriteFragment
+                return;
+            }
+            cameraSource.start(cameraView.getHolder());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        cameraSource.stop();
     }
 
     private Context getApplicationContext() {

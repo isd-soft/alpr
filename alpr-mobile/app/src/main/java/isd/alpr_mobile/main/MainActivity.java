@@ -66,12 +66,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onScanFragmentInteraction() {
+    public void onWriteFragmentInteraction() {
 
     }
 
     @Override
-    public void onWriteFragmentInteraction() {
+    public void onValidPlate(String licensePlate) {
 
     }
 }
