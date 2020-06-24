@@ -1,4 +1,4 @@
-package isd.alprserver.Model;
+package isd.alprserver.model;
 
 import lombok.*;
 
@@ -6,9 +6,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "companies")
@@ -19,6 +18,8 @@ public class Company {
     private int id;
 
     private String name;
+
+    private int nrParkingSpots;
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<User> users;

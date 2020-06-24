@@ -1,4 +1,4 @@
-package isd.alprserver.Model;
+package isd.alprserver.model;
 
 import lombok.*;
 
@@ -6,8 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
