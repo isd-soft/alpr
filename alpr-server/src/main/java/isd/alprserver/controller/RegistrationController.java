@@ -1,35 +1,31 @@
 package isd.alprserver.controller;
 
 import isd.alprserver.dto.UserDTO;
-import isd.alprserver.model.User;
 import isd.alprserver.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-//@RequestMapping("/registration")
+@RequiredArgsConstructor
 public class RegistrationController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/register")
-    public @ResponseBody String addUser(@RequestBody @Valid UserDTO user) {
-        System.out.println(user);
-        if(!user.getPassword().equals(user.getPasswordConfirm())) {
-            return "wrong pass";
-        }
+    public ResponseEntity<String> addUser(@RequestBody @Valid UserDTO user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(!userService.saveUser(user.convertToModel())) {
-            return "already exist";
+        if(!userService.save(user.toUser())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already used");
         }
 
-        return "done";
+        return ResponseEntity.ok("Account registered");
     }
 
     @GetMapping(value = "/hello")

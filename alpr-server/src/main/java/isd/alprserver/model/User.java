@@ -26,7 +26,8 @@ public class User implements UserDetails {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]/.[a-zA-Z])")
+    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+)")
+    @Column(unique = true)
     private String email;
 
     @NotNull
@@ -37,11 +38,12 @@ public class User implements UserDetails {
     @Pattern(regexp = "[a-zA-Z]+")
     private String lastName;
 
+    @NotNull
     @Min(18)
     private int age;
 
     @NotNull
-    @Pattern(regexp = "/+373[0-9]{6}")
+    @Pattern(regexp = "\\+373[0-9]{8}")
     private String telephoneNumber;
 
     @NotNull
@@ -57,7 +59,13 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Car> cars;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "users_roles",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
     @Override
@@ -87,6 +95,6 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
     }
 }

@@ -40,7 +40,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         }
         else {
-            logger.warn("JWT does not begin with Bearer Sting");
+            logger.warn("JWT does not begin with Bearer String");
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {

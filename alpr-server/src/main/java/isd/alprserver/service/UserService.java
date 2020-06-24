@@ -4,6 +4,7 @@ import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
 import isd.alprserver.repository.RoleRepository;
 import isd.alprserver.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,44 +19,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    //@Autowired
-    //private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-
-        if(user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return user;
-    }
-
-    public User findUserById(int userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user.orElse(new User());
+        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByEmail(user.getEmail());
-
-        if (userFromDB != null)
+    public boolean save(User user) {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
             return false;
-
+        }
         user.setRoles(Collections.singleton(Role.builder().id(1L).name("USER_ROLE").build()));
-        //user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
