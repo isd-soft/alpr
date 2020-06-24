@@ -20,6 +20,7 @@ import isd.alpr_mobile.main.write.WriteFragment;
 public class MainActivity extends AppCompatActivity
         implements OnScanFragmentInteractionListener,
         OnWriteFragmentInteractionListener {
+
     private FrameLayout frameLayout;
     private BottomNavigationView nav;
 
@@ -59,7 +60,6 @@ public class MainActivity extends AppCompatActivity
 
     private void replaceFrame(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(frameLayout.getId(), fragment)
 //                .addToBackStack(null)
                 .commit();
