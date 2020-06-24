@@ -26,7 +26,7 @@ public class User implements UserDetails {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+)")
+    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     @Column(unique = true)
     private String email;
 
@@ -49,9 +49,6 @@ public class User implements UserDetails {
     @NotNull
     @Size(min = 2)
     private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;

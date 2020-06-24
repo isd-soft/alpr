@@ -5,7 +5,7 @@ export class User {
               public firstName: string = "",
               public lastName: string = "",
               public age: number = 0,
-              public telephone: string = "",
+              public telephoneNumber: string = "",
               public password: string = "",
               public company: string = "") {
   }

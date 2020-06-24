@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../shared/user.model";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-registration',
@@ -10,17 +11,19 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class RegistrationComponent implements OnInit {
   user: User = new User();
   passwordConfirm: string = "";
-  registrationForm: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    age: new FormControl(''),
-    telephone: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    company: new FormControl('')
+
+  registrationForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    age: ['', [Validators.required, Validators.min(18)]],
+    telephone: ['', [Validators.required, Validators.pattern("^\\+(373[0-9]{8})$")]],
+    password: ['', [Validators.required, Validators.minLength(2)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(2)]],
+    company: ['', Validators.required]
   });
-  constructor() { }
+  constructor(private fb: FormBuilder,
+              private httpClient: HttpClient) { }
 
   ngOnInit(): void {
 
@@ -31,7 +34,9 @@ export class RegistrationComponent implements OnInit {
       alert("Passwords don't match");
     }
     else {
-      console.log(this.user);
+      this.user.company = null;
+      this.httpClient.post("http://localhost:8080/register", this.user)
+        .subscribe(response => console.log(response));
     }
   }
 

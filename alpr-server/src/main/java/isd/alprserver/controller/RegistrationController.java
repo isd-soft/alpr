@@ -13,6 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class RegistrationController {
     private final UserService userService;
 
@@ -20,6 +21,7 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> addUser(@RequestBody @Valid UserDTO user) {
+        System.out.println(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         if(!userService.save(user.toUser())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already used");

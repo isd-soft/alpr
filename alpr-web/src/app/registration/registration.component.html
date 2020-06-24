@@ -7,42 +7,42 @@
     <form class="my-form" [formGroup]="registrationForm" (ngSubmit)="onRegister()">
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" type="text" name="email" required  formControlName="email">
+        <input matInput placeholder="Email" type="text" name="email" required  formControlName="email" [(ngModel)]="user.email">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="First Name" name="firstName" type="text" required formControlName="firstName">
+        <input matInput placeholder="First Name" name="firstName" type="text" required formControlName="firstName" [(ngModel)]="user.firstName">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last Name" name="lastName" type="text" required formControlName="lastName">
+        <input matInput placeholder="Last Name" name="lastName" type="text" required formControlName="lastName" [(ngModel)]="user.lastName">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Age</mat-label>
-        <input matInput placeholder="Age" name="age" type="number" required formControlName="age">
+        <input matInput placeholder="Age" name="age" type="number" required formControlName="age" [(ngModel)]="user.age">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Telephone Number</mat-label>
-        <input matInput placeholder="+373XXXXXXXX" name="telephone" type="text" required formControlName="telephone">
+        <input matInput placeholder="+373XXXXXXXX" name="telephone" type="text" required formControlName="telephone" [(ngModel)]="user.telephoneNumber">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" name="password" type="password" required formControlName="password">
+        <input matInput placeholder="Password" name="password" type="password" required formControlName="password" [(ngModel)]="user.password">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Confirm Password</mat-label>
-        <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required formControlName="confirmPassword">
+        <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required formControlName="confirmPassword" [(ngModel)]="passwordConfirm">
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Company</mat-label>
-        <mat-select required formControlName="company">
+        <mat-select required formControlName="company" [(ngModel)]="user.company">
           <mat-option value="ISD">ISD</mat-option>
           <mat-option value="Endava">Endava</mat-option>
         </mat-select>
