@@ -1,4 +1,4 @@
-package isd.alpr_mobile;
+package isd.alpr_mobile.main.write;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import isd.alpr_mobile.R;
 
 
 public class WriteFragment extends Fragment {
@@ -21,14 +23,7 @@ public class WriteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_write, container, false);
-    }
-
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onWriteFragmentInteraction();
-        }
     }
 
     @Override
@@ -38,7 +33,7 @@ public class WriteFragment extends Fragment {
             mListener = (OnWriteFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnWriteFragmentInteractionListener");
         }
     }
 
