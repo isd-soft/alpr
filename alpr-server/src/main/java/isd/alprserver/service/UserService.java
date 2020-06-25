@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(int userId) {
+    public boolean deleteUser(long userId) {
         if(userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
             return true;

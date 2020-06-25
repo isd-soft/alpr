@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +22,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotNull
     @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+)")
