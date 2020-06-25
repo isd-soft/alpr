@@ -4,6 +4,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../shared/user.service";
+import {CompanyModel} from "../shared/company.model";
+import {CompanyService} from "../shared/company.service";
 
 @Component({
   selector: 'app-registration',
@@ -13,6 +15,8 @@ import {UserService} from "../shared/user.service";
 export class RegistrationComponent implements OnInit {
   user: User = new User();
   passwordConfirm: string = "";
+
+  companies = [];
 
   registrationForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -26,10 +30,11 @@ export class RegistrationComponent implements OnInit {
   });
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private companyService: CompanyService) { }
 
   ngOnInit(): void {
-
+    this.companyService.getAll().subscribe(companies => this.companies = companies);
   }
 
   onRegister() {

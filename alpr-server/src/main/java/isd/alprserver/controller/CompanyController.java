@@ -14,6 +14,7 @@ import isd.alprserver.service.CompanyService;
 
 @RestController
 @RequestMapping("/companies")
+@CrossOrigin
 public class CompanyController {
 
     @Autowired

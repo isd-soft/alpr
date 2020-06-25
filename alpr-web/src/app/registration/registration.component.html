@@ -43,8 +43,7 @@
       <mat-form-field class="full-width">
         <mat-label>Company</mat-label>
         <mat-select required formControlName="company">
-          <mat-option value="ISD">ISD</mat-option>
-          <mat-option value="Endava">Endava</mat-option>
+          <mat-option *ngFor="let company of companies" [value]="company.name">{{company.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </form>

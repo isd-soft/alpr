@@ -13,6 +13,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UserService} from "./shared/user.service";
+import {CompanyService} from "./shared/company.service";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import {UserService} from "./shared/user.service";
     HttpClientModule,
     MatSnackBarModule
   ],
-  providers: [UserService],
+  providers: [UserService, CompanyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
