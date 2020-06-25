@@ -8,6 +8,7 @@ public class AlprServerApplication
 {
     public static void main(String[] args)
     {
+        
         SpringApplication.run(AlprServerApplication.class, args);
     }
 }
