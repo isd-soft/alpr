@@ -1,9 +1,10 @@
 package isd.alprserver.repository;
-
-import isd.alprserver.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import isd.alprserver.model.Company;
+
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface CompanyRepository extends JpaRepository<Company, Long> {
+   //Company updateCompanyById(long id);
 }

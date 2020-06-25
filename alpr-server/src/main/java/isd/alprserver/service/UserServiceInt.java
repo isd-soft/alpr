@@ -10,7 +10,7 @@ public interface UserServiceInt {
     User saveUser(User user);
     User updateUser(User user);
     void deleteUser(User user);
-    void deleteUserById(long id);
-    User getUserById(long Id);
+    void deleteUserById(int id);
+    User getUserById(int Id);
     List<User> getAllUsers();
 }

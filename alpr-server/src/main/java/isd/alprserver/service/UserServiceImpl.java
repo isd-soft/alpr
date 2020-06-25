@@ -30,13 +30,13 @@ public class UserServiceImpl implements UserServiceInt {
     }
 
     @Override
-    public void deleteUserById(long id) {
+    public void deleteUserById(int id) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.deleteById(id);
     }
 
     @Override
-    public User getUserById(long id) {
+    public User getUserById(int id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 

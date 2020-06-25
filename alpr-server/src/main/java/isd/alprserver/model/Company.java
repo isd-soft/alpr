@@ -15,7 +15,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     private String name;
 
@@ -23,4 +23,8 @@ public class Company {
 
     @OneToMany(fetch = FetchType.LAZY)
     private Set<User> users;
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

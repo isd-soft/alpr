@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class UserService implements UserDetailsService {
     private final RoleRepository roleRepository;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
@@ -44,7 +46,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-    public boolean deleteUser(long userId) {
+    public boolean deleteUser(int userId) {
         if(userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
             return true;
