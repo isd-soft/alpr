@@ -1,4 +1,4 @@
-package isd.alprserver.Model;
+package isd.alprserver.model;
 
 import lombok.*;
 
@@ -16,7 +16,7 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(unique = true)
     private String licensePlate;
