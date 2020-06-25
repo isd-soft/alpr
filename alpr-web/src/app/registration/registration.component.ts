@@ -3,6 +3,7 @@ import {User} from "../shared/user.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../shared/user.service";
 
 @Component({
   selector: 'app-registration',
@@ -24,7 +25,7 @@ export class RegistrationComponent implements OnInit {
     company: ['', Validators.required]
   });
   constructor(private fb: FormBuilder,
-              private httpClient: HttpClient,
+              private userService: UserService,
               private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
@@ -46,14 +47,14 @@ export class RegistrationComponent implements OnInit {
     }
     else {
       this.user.company = null;
-      this.httpClient.post("http://localhost:8080/register", this.user)
+      this.userService.registerUser(this.user)
         .toPromise()
         .then(_ => alert("GOOD"))
         .catch(error => this.handleError(error));
     }
   }
 
-  handleError(httpError: HttpErrorResponse) {
+  handleError(httpError: HttpErrorResponse): void {
     if(httpError.status === 200) {
       alert("GOOD in error");
     }
@@ -61,4 +62,5 @@ export class RegistrationComponent implements OnInit {
       this.snackBar.open(httpError.error, "OK", {duration: 4000})
     }
   }
+
 }
