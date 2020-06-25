@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="@string/writeFragment"
     tools:context=".main.write.WriteFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -183,7 +184,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
-            android:contentDescription="@string/car_logo_until_valid_plate_nubmer_is_given"
+            android:contentDescription="@string/car_logo_until_valid_plate_number_is_given"
             android:src="@drawable/ic_car_logo"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
