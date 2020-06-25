@@ -20,7 +20,7 @@ public class UserDTO {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+)")
+    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     private String email;
 
     @NotNull
@@ -42,8 +42,6 @@ public class UserDTO {
     @NotNull
     @Size(min = 2)
     private String password;
-
-    private String passwordConfirm;
     private Company company;
 
     public User toUser() {
@@ -51,7 +49,6 @@ public class UserDTO {
                 .id(id)
                 .email(email)
                 .password(password)
-                .passwordConfirm(passwordConfirm)
                 .age(age)
                 .company(company)
                 .telephoneNumber(telephoneNumber)

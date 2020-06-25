@@ -13,7 +13,6 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +25,7 @@ public class User implements UserDetails {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]+)")
+    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     @Column(unique = true)
     private String email;
 
@@ -50,9 +49,6 @@ public class User implements UserDetails {
     @Size(min = 2)
     private String password;
 
-    @Transient
-    private String passwordConfirm;
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Company company;
 
@@ -62,7 +58,7 @@ public class User implements UserDetails {
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
-    })
+    }, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
                 joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "roles_id"))
