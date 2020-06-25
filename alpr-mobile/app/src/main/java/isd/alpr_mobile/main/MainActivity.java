@@ -7,7 +7,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,8 +19,11 @@ import isd.alpr_mobile.main.write.WriteFragment;
 public class MainActivity extends AppCompatActivity
         implements OnScanFragmentInteractionListener,
         OnWriteFragmentInteractionListener {
+
     private FrameLayout frameLayout;
     private BottomNavigationView nav;
+    private ScanFragment scanFragment;
+    private WriteFragment writeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,33 +38,34 @@ public class MainActivity extends AppCompatActivity
                 return replaceFrameByItem(item);
             }
         });
+
+        scanFragment = new ScanFragment();
+        writeFragment = new WriteFragment();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        replaceFrame(new ScanFragment());
+        replaceFrame(scanFragment);
     }
 
     private boolean replaceFrameByItem(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.scan_plate_action:
-                replaceFrame(new ScanFragment());
+                replaceFrame(scanFragment);
                 break;
             case R.id.write_plate_action:
-                replaceFrame(new WriteFragment());
+                replaceFrame(writeFragment);
                 break;
         }
-        // todo: get stored fragment instead of creating new
+        // todo: get stored fragment in getSupportFragmentManager() instead of creating new
         return true;
     }
 
     private void replaceFrame(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(frameLayout.getId(), fragment)
-//                .addToBackStack(null)
-                .commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(frameLayout.getId(), fragment, fragment.getTag())
+                .commitNow();
     }
 
     @Override
@@ -72,6 +75,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onValidPlate(String licensePlate) {
-
+        // todo: handle API server response (change to WriteFragment, fill edit text with valid number, show given data)
     }
 }

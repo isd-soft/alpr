@@ -23,13 +23,12 @@ import java.io.IOException;
 import java.util.Objects;
 
 import isd.alpr_mobile.R;
+import isd.alpr_mobile.main.scan.license_plate_validation.OnPlateFoundListener;
 
-public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
+public class ScanFragment extends Fragment implements SurfaceHolder.Callback, OnPlateFoundListener {
     private OnScanFragmentInteractionListener mListener;
     private SurfaceView cameraView;
     private CameraSource cameraSource;
-    // todo: add an queue of items to process to have the ability to discard all of them when an valid plate number found
-
 
     public ScanFragment() {
         // Required empty public constructor
@@ -65,7 +64,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
         super.onDetach();
         mListener = null;
     }
-    
+
     private void startSourceCamera() {
         TextRecognizer textRecognizer = new TextRecognizer
                 .Builder(getApplicationContext()).build();
@@ -80,7 +79,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
                     .build();
 
             cameraView.getHolder().addCallback(this);
-            textRecognizer.setProcessor(new OCRProcessor());
+            textRecognizer.setProcessor(new OCRProcessor(this));
         }
     }
 
@@ -114,6 +113,11 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
 
     private Context getApplicationContext() {
         return Objects.requireNonNull(getActivity()).getApplicationContext();
+    }
+
+    @Override
+    public void onPlateFound(String licensePlateNumber) {
+        // todo: handle found license plate number (API request)
     }
 }
 

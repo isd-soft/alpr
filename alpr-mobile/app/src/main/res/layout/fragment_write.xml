@@ -1,14 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="@string/writeFragment"
     tools:context=".main.write.WriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/license_plate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/plate_example"
+            android:inputType="text"
+            app:layout_constraintEnd_toStartOf="@+id/checkBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/checkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/check"
+            app:layout_constraintBottom_toBottomOf="@+id/license_plate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/license_plate" />
+
+        <TextView
+            android:id="@+id/statusTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/status"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/license_plate"
+            app:layout_constraintTop_toBottomOf="@+id/license_plate" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:gravity="center_vertical"
+            android:singleLine="false"
+            android:text="@string/unknown"
+            android:textAllCaps="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
+            app:layout_constraintEnd_toEndOf="@+id/license_plate"
+            app:layout_constraintStart_toEndOf="@+id/statusTitle"
+            app:layout_constraintTop_toTopOf="@+id/statusTitle" />
+
+        <TextView
+            android:id="@+id/ownerTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/owner"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/statusTitle"
+            app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
+
+        <TextView
+            android:id="@+id/owner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/ownerTitle"
+            app:layout_constraintEnd_toEndOf="@+id/status"
+            app:layout_constraintStart_toStartOf="@+id/status"
+            app:layout_constraintTop_toTopOf="@+id/ownerTitle" />
+
+        <TextView
+            android:id="@+id/companyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/company"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/ownerTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ownerTitle" />
+
+        <TextView
+            android:id="@+id/company"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/companyTitle"
+            app:layout_constraintEnd_toEndOf="@+id/owner"
+            app:layout_constraintStart_toStartOf="@+id/owner"
+            app:layout_constraintTop_toTopOf="@+id/companyTitle" />
+
+        <TextView
+            android:id="@+id/brandTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/brand"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/companyTitle"
+            app:layout_constraintTop_toBottomOf="@+id/companyTitle" />
+
+        <TextView
+            android:id="@+id/brand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/brandTitle"
+            app:layout_constraintEnd_toEndOf="@+id/company"
+            app:layout_constraintStart_toStartOf="@+id/company"
+            app:layout_constraintTop_toTopOf="@+id/brandTitle" />
+
+        <TextView
+            android:id="@+id/carModelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/model"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/brandTitle"
+            app:layout_constraintTop_toBottomOf="@+id/brandTitle" />
+
+        <TextView
+            android:id="@+id/carModel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/unknown"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/carModelTitle"
+            app:layout_constraintEnd_toEndOf="@+id/brand"
+            app:layout_constraintStart_toStartOf="@+id/brand"
+            app:layout_constraintTop_toTopOf="@+id/brandTitle"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/carColorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/color"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/carModelTitle"
+            app:layout_constraintTop_toBottomOf="@+id/carModelTitle" />
+
+        <TextView
+            android:id="@+id/carColor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/carColorTitle"
+            app:layout_constraintEnd_toEndOf="@+id/carModel"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/brand"
+            app:layout_constraintTop_toTopOf="@+id/carColorTitle"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:contentDescription="@string/car_logo_until_valid_plate_number_is_given"
+            android:src="@drawable/ic_car_logo"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/license_plate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

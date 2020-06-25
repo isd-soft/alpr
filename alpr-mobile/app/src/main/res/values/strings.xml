@@ -1,8 +1,24 @@
 <resources>
     <string name="app_name">Alpr Mobile</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan">Scan</string>
     <string name="write">Write</string>
+    <string name="plate_example">MD AAB 4326</string>
+    <string name="check">check</string>
+    <string name="status">Status:</string>
+    <string name="unknown">unknown</string>
+    <string name="example_owner">Example owner</string>
+    <string name="company_name">Company Name</string>
+    <string name="owner">Owner:</string>
+    <string name="company">Company:</string>
+    <string name="brand">Brand:</string>
+    <string name="car_s_brand">Car\'s Brand</string>
+    <string name="model">Model:</string>
+    <string name="color">Color:</string>
+    <string name="car_s_model">Car\'s Model</string>
+    <string name="car_s_color">Car\'s Color</string>
+    <string name="car_logo_until_valid_plate_number_is_given">
+        car logo until valid plate number is given</string>
+    <string name="writeFragment">writeFragment</string>
+    <string name="scanFragment">scanFragment</string>
 </resources>
