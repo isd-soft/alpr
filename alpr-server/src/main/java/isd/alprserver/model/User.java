@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
+    @Pattern(regexp = "([a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     @Column(unique = true)
     private String email;
 

@@ -20,7 +20,7 @@ public class UserDTO {
     private int id;
 
     @NotNull
-    @Pattern(regexp = "([a-zA-Z0-9]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
+    @Pattern(regexp = "([a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     private String email;
 
     @NotNull
