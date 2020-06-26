@@ -16,4 +16,6 @@ public interface CompanyService {
     Company getCompanyById(long id);
 
     Company updateCompany(Company company);
+
+    Company getByName(String name);
 }

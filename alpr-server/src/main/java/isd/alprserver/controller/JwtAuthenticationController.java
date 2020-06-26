@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequiredArgsConstructor
 public class JwtAuthenticationController {
 
@@ -33,6 +33,7 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest request) throws Exception {
+        System.out.println(request);
         authenticate(request.getEmail(), request.getPassword());
         final UserDetails userDetails = userServiceImp
                 .loadUserByUsername(request.getEmail());

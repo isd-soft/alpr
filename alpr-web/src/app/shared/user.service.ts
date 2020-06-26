@@ -1,7 +1,7 @@
 
 import {User} from "./user.model";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from "@angular/core";
 
 
@@ -15,5 +15,15 @@ export class UserService {
 
   registerUser(user: User): Observable<any> {
     return this.httpClient.post(this.url + "/register", user);
+  }
+
+  login(email: string, password: string): Observable<any> {
+    return this.httpClient.post(this.url + "/authenticate",
+      {email:email, password:password});
+  }
+
+  hello(): Observable<string> {
+    console.log(localStorage.getItem("token"));
+    return this.httpClient.get<string>(this.url + "/hello", {headers: new HttpHeaders().set('Authorization', localStorage.getItem("token"))});
   }
 }

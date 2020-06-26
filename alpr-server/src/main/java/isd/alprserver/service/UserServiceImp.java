@@ -1,8 +1,10 @@
 package isd.alprserver.service;
 
+import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.UserNotFoundException;
+import isd.alprserver.repository.CompanyRepository;
 import isd.alprserver.repository.RoleRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final CompanyRepository companyRepository;
 
     @Override
     @Transactional
@@ -29,10 +32,12 @@ public class UserServiceImp implements UserDetailsService, UserService {
     }
 
     @Override
-    public boolean save(User user) {
+    @Transactional
+    public boolean save(User user, String company) {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             return false;
         }
+        companyRepository.getByName(company).get().getUsers().add(user);
         Role userRole = Role.builder().name("USER_ROLE").build();
         user.setRoles(Collections.singleton(roleRepository.save(userRole)));
         userRepository.save(user);

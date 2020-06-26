@@ -14,11 +14,15 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UserService} from "./shared/user.service";
 import {CompanyService} from "./shared/company.service";
+import { LoginComponent } from './login/login.component';
+import {AppRoutingModule} from './app-routing.module';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import {CompanyService} from "./shared/company.service";
     MatInputModule,
     MatSelectModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AppRoutingModule,
+    MatCheckboxModule
   ],
   providers: [UserService, CompanyService],
   bootstrap: [AppComponent]

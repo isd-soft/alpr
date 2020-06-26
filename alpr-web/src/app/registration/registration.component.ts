@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../shared/user.model";
+import {User} from '../shared/user.model';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../shared/user.service";
 import {CompanyModel} from "../shared/company.model";
 import {CompanyService} from "../shared/company.service";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -31,7 +32,8 @@ export class RegistrationComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private snackBar: MatSnackBar,
-              private companyService: CompanyService) { }
+              private companyService: CompanyService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.companyService.getAll().subscribe(companies => this.companies = companies);
@@ -51,21 +53,18 @@ export class RegistrationComponent implements OnInit {
       this.snackBar.open("Passwords don't match", "OK", {duration: 4000})
     }
     else {
-      this.user.company = null;
       this.userService.registerUser(this.user)
         .toPromise()
-        .then(_ => alert("GOOD"))
+        .then(_ => {
+          this.snackBar.open("Successfully", "OK", {duration: 3000});
+          this.router.navigate(['login']);
+        })
         .catch(error => this.handleError(error));
     }
   }
 
   handleError(httpError: HttpErrorResponse): void {
-    if(httpError.status === 200) {
-      alert("GOOD in error");
-    }
-    else {
-      this.snackBar.open(httpError.error, "OK", {duration: 4000})
-    }
+    this.snackBar.open(httpError.error.value, "OK", {duration: 4000})
   }
 
 }

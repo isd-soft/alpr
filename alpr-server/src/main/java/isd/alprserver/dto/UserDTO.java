@@ -40,14 +40,13 @@ public class UserDTO {
     @NotNull
     @Size(min = 2)
     private String password;
-    private Company company;
+    private String company;
 
     public User toUser() {
         return User.builder()
                 .email(email)
                 .password(password)
                 .age(age)
-                .company(company)
                 .telephoneNumber(telephoneNumber)
                 .firstName(firstName)
                 .lastName(lastName)

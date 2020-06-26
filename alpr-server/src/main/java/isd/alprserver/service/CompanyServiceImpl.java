@@ -46,5 +46,8 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.save(company);
     }
 
-
+    @Override
+    public Company getByName(String name) {
+        return this.companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("This company doesn't exist"));
+    }
 }
