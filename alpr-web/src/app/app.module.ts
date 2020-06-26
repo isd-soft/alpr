@@ -14,6 +14,11 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {UserService} from "./shared/user.service";
 import {CompanyService} from "./shared/company.service";
+import { OnUsersActionsComponent } from './on-users-actions/on-users-actions.component';
+import { ViewUsersComponent } from './on-users-actions/view-users/view-users.component';
+import { EditUserComponent } from './on-users-actions/edit-user/edit-user.component';
+import { AddUserComponent } from './on-users-actions/add-user/add-user.component';
+import {MatTableModule} from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -22,7 +27,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   declarations: [
     AppComponent,
     RegistrationComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent,
+    OnUsersActionsComponent,
+    ViewUsersComponent,
+    EditUserComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +47,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     HttpClientModule,
     MatSnackBarModule,
     AppRoutingModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatTableModule
   ],
   providers: [UserService, CompanyService],
   bootstrap: [AppComponent]
