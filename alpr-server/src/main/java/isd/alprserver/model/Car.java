@@ -28,4 +28,7 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Status status;
 }
