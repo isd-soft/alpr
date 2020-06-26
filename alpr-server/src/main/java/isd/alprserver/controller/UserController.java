@@ -6,6 +6,7 @@ import isd.alprserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class UserController {
 
     private final UserService userService;
 
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
@@ -25,18 +28,19 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Boolean> createUser(@RequestBody User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/update")
     public ResponseEntity<User> updateUser(@RequestBody UserDTO user) {
-//        User userById = userService.get(user.getId());
-//        userById.setFirstName(user.getFirstName());
-//        userById.setLastName(user.getLastName());
-//        userById.setAge(user.getAge());
-//        userById.setEmail(user.getEmail());
-//        userById.setPassword(user.getPassword());
-//        userService.updateUser(userById);
+        User userById = userService.getUserByEmail(user.getEmail());
+        userById.setFirstName(user.getFirstName());
+        userById.setLastName(user.getLastName());
+        userById.setAge(user.getAge());
+        userById.setEmail(user.getEmail());
+        userById.setPassword(user.getPassword());
+        userService.update(userById);
         return ResponseEntity.ok().build();
     }
 

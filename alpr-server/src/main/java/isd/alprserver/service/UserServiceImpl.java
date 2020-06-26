@@ -2,6 +2,7 @@ package isd.alprserver.service;
 
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
+import isd.alprserver.model.exceptions.UserCreationException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repository.RoleRepository;
 import isd.alprserver.repository.UserRepository;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImp implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -29,22 +30,19 @@ public class UserServiceImp implements UserDetailsService, UserService {
     }
 
     @Override
-    public boolean save(User user) {
+    public User getUserByEmail(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public boolean save(User user) throws UserCreationException{
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
-            return false;
+            throw new UserCreationException("The user with email "+user+" already exists.");
         }
         Role userRole = Role.builder().name("USER_ROLE").build();
         user.setRoles(Collections.singleton(roleRepository.save(userRole)));
         userRepository.save(user);
         return true;
-    }
-
-    public boolean deleteUser(int userId) {
-        if(userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -59,13 +57,13 @@ public class UserServiceImp implements UserDetailsService, UserService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws UserNotFoundException{
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.deleteById(id);
     }
 
     @Override
-    public User getById(int id) {
+    public User getById(int id) throws UserNotFoundException{
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 

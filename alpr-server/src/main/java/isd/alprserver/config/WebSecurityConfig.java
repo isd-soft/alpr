@@ -1,6 +1,6 @@
 package isd.alprserver.config;
 
-import isd.alprserver.service.UserServiceImp;
+import isd.alprserver.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    private final UserServiceImp userServiceImp;
+    private final UserServiceImpl userServiceImpl;
 
     private final JwtRequestFilter jwtRequestFilter;
 
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userServiceImp);
+        auth.userDetailsService(userServiceImpl);
     }
 
     @Override
@@ -65,6 +65,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userServiceImp).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userServiceImpl).passwordEncoder(bCryptPasswordEncoder());
     }
 }

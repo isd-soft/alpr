@@ -1,7 +1,7 @@
 package isd.alprserver.controller;
 
 import isd.alprserver.dto.UserDTO;
-import isd.alprserver.service.UserServiceImp;
+import isd.alprserver.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @CrossOrigin
 public class RegistrationController {
-    private final UserServiceImp userServiceImp;
+    private final UserServiceImpl userServiceImpl;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -22,7 +22,7 @@ public class RegistrationController {
     public ResponseEntity<String> addUser(@RequestBody @Valid UserDTO user) {
         System.out.println(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(!userServiceImp.save(user.toUser())) {
+        if(!userServiceImpl.save(user.toUser())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already used");
         }
 
