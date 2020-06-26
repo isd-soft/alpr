@@ -20,12 +20,12 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+        return ResponseEntity.ok(userService.getAll());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(user));
+    public ResponseEntity<Boolean> createUser(@RequestBody User user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/update")
@@ -42,16 +42,16 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable int id) {
-        userService.deleteUserById(id);
+        userService.deleteById(id);
     }
 
     @DeleteMapping
     public void deleteUser(@RequestBody User user) {
-        userService.deleteUser(user);
+        userService.delete(user);
     }
 
     @GetMapping("/{id}")
     public User findOneUser(@PathVariable int id) {
-        return userService.getUserById(id);
+        return userService.getById(id);
     }
 }

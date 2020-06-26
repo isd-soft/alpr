@@ -7,10 +7,10 @@ import isd.alprserver.model.User;
 import java.util.List;
 
 public interface UserService {
-    User saveUser(User user);
-    User updateUser(User user);
-    void deleteUser(User user);
-    void deleteUserById(int id);
-    User getUserById(int Id);
-    List<User> getAllUsers();
+    boolean save(User user);
+    User update(User user);
+    void delete(User user);
+    void deleteById(int id);
+    User getById(int Id);
+    List<User> getAll();
 }

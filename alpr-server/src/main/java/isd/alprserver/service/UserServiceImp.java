@@ -28,6 +28,7 @@ public class UserServiceImp implements UserDetailsService, UserService {
         return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
+    @Override
     public boolean save(User user) {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             return false;
@@ -47,34 +48,29 @@ public class UserServiceImp implements UserDetailsService, UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User update(User user) {
         return userRepository.save(user);
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void deleteUser(User user) {
+    public void delete(User user) {
         userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundException("User with id " + user.getId() + " not found"));
         userRepository.delete(user);
     }
 
     @Override
-    public void deleteUserById(int id) {
+    public void deleteById(int id) {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.deleteById(id);
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getById(int id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         return userRepository.findAll();
     }
 
