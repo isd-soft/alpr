@@ -1,6 +1,6 @@
 package isd.alprserver.config;
 
-import isd.alprserver.service.UserServiceImp;
+import isd.alprserver.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private final UserServiceImp userServiceImp;
+    private final UserServiceImpl userServiceImpl;
     private final JwtTokenUtil jwtTokenUtil;
 
 
@@ -44,7 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userServiceImp.loadUserByUsername(email);
+            UserDetails userDetails = userServiceImpl.loadUserByUsername(email);
             if(jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                         = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

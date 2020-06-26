@@ -4,7 +4,7 @@ import isd.alprserver.dto.UserDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Response;
 import isd.alprserver.service.CompanyService;
-import isd.alprserver.service.UserServiceImp;
+import isd.alprserver.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +17,8 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 public class RegistrationController {
-    private final UserServiceImp userServiceImp;
     private final CompanyService companyService;
+    private final UserServiceImpl userServiceImpl;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -26,9 +26,8 @@ public class RegistrationController {
     public ResponseEntity<Response<String>> addUser(@RequestBody @Valid UserDTO user) {
         System.out.println(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        Company company = companyService.getByName(user.getCompany());
-        if(!userServiceImp.save(user.toUser(), user.getCompany())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>("This email is already used"));
+        if(!userServiceImpl.save(user.toUser())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already used");
         }
 
         return ResponseEntity.ok(new Response<>("Successfully Registered"));
