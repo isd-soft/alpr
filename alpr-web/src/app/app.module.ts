@@ -22,6 +22,9 @@ import {MatTableModule} from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { CarListComponent } from './car-list/car-list.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -33,6 +36,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ViewUsersComponent,
     EditUserComponent,
     AddUserComponent
+    RegistrationComponent,
+    CarListComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +50,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatInputModule,
     MatSelectModule,
     HttpClientModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatPaginatorModule
     MatSnackBarModule,
     AppRoutingModule,
     MatCheckboxModule,
