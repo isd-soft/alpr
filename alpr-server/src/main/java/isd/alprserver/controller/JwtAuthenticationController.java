@@ -4,7 +4,7 @@ package isd.alprserver.controller;
 import isd.alprserver.config.JwtTokenUtil;
 import isd.alprserver.model.JwtRequest;
 import isd.alprserver.model.JwtResponse;
-import isd.alprserver.service.UserService;
+import isd.alprserver.service.UserServiceImp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,14 +27,14 @@ public class JwtAuthenticationController {
 
     private final JwtTokenUtil jwtTokenUtil;
 
-    private final UserService userService;
+    private final UserServiceImp userServiceImp;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest request) throws Exception {
         authenticate(request.getEmail(), request.getPassword());
-        final UserDetails userDetails = userService
+        final UserDetails userDetails = userServiceImp
                 .loadUserByUsername(request.getEmail());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));

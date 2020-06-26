@@ -17,8 +17,6 @@ import javax.validation.constraints.Size;
 @Builder
 @Data
 public class UserDTO {
-    private int id;
-
     @NotNull
     @Pattern(regexp = "([a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+(\\.[a-zA-Z]+)+)")
     private String email;
@@ -46,7 +44,6 @@ public class UserDTO {
 
     public User toUser() {
         return User.builder()
-                .id(id)
                 .email(email)
                 .password(password)
                 .age(age)

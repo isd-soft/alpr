@@ -15,7 +15,9 @@ import java.util.Set;
 @Builder
 public class Role implements GrantedAuthority {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     private String name;
 
     @Transient
