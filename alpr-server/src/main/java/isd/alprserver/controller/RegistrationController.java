@@ -26,8 +26,8 @@ public class RegistrationController {
     public ResponseEntity<Response<String>> addUser(@RequestBody @Valid UserDTO user) {
         System.out.println(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(!userServiceImpl.save(user.toUser())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email is already used");
+        if(!userServiceImpl.save(user.toUser(), user.getCompany())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>("This email is already used"));
         }
 
         return ResponseEntity.ok(new Response<>("Successfully Registered"));

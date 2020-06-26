@@ -28,9 +28,8 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<Boolean> createUser(@RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user, "")); //todo fix
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user, "")); //todo fix
     }
 
     @PutMapping("/update")

@@ -32,15 +32,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 
-    @Override
-    @Transactional
-    public boolean save(User user, String company) {
-    public User getUserByEmail(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
-    }
 
     @Override
-    public boolean save(User user) throws UserCreationException{
+    @Transactional
+    public boolean save(User user, String company) throws UserCreationException{
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new UserCreationException("The user with email "+user+" already exists.");
         }
@@ -78,4 +73,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findAll();
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("This user doesn't exist"));
+    }
 }
