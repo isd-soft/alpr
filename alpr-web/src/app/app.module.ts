@@ -22,9 +22,8 @@ import {MatTableModule} from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { CarListComponent } from './car-list/car-list.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from "@angular/material/paginator";
+import {MatDividerModule} from '@angular/material/divider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,8 +35,6 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     ViewUsersComponent,
     EditUserComponent,
     AddUserComponent
-    RegistrationComponent,
-    CarListComponent
   ],
   imports: [
     BrowserModule,
@@ -51,13 +48,12 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     MatSelectModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatTableModule,
-    MatPaginatorModule
-    MatSnackBarModule,
     AppRoutingModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [UserService, CompanyService],
   bootstrap: [AppComponent]

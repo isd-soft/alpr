@@ -1,1 +1,60 @@
-<p>add-user works!</p>
+<h2 mat-dialog-title>Add User</h2>
+
+<mat-dialog-content [formGroup]="addUserForm">
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Email" type="text"
+           name="mail" required formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="First Name" class="part"
+           name="firstName" type="text" required formControlName="firstName">
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="full-width">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Last Name"
+           name="lastName" type="text" required formControlName="lastName">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Age</mat-label>
+    <input matInput placeholder="Age" name="age" class="part"
+           type="number" required formControlName="age">
+  </mat-form-field>
+  <br>
+
+  <mat-form-field class="full-width">
+    <mat-label>Telephone Number</mat-label>
+    <input matInput placeholder="+373XXXXXXXX" name="telephone"
+           type="text" required formControlName="telephone">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="Password" name="password"
+           type="password" required formControlName="password">
+  </mat-form-field>
+  <br>
+
+  <div style="text-align: center;">
+    <mat-form-field class="full-width">
+      <mat-label>Company</mat-label>
+      <mat-select required formControlName="company">
+        <mat-option *ngFor="let company of companies"
+                    [value]="company.name">{{company.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-dialog-actions>
+    <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button mat-primary part"
+            [mat-dialog-close]="true" (click)="addUser()">Save
+    </button>
+  </mat-dialog-actions>
+
+</mat-dialog-content>
