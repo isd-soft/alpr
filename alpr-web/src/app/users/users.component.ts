@@ -12,7 +12,7 @@ import {CompanyService} from '../shared/company.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
 
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
     new MatTableDataSource<User>(this.users);
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
     'telephoneNumber', 'company', 'password', 'actions'];
-  addUserForm: FormGroup = this.formGenerator.generateUserRegisterGroup();
+  addUserForm: FormGroup = this.formGenerator.generateUserRegisterForm();
   companies = [];
 
   constructor(private userService: UserService,
@@ -62,6 +62,9 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-
+    let user: User = this.formExtractor.extractUser(this.addUserForm);
+    this.userService.add(user).toPromise()
+      .then()
+      .catch();
   }
 }

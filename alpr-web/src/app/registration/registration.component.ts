@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
 
   companies = [];
 
-  registrationForm = this.formGenerator.generateUserRegisterGroup();
+  registrationForm = this.formGenerator.generateUserRegisterForm();
 
   constructor(private userService: UserService,
               private snackBar: MatSnackBar,

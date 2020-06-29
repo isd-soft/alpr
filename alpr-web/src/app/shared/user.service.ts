@@ -34,4 +34,10 @@ export class UserService {
   logout() {
     localStorage.removeItem('token');
   }
+
+  add(user: User): Observable<any> {
+    console.log("I'm sending ma request");
+    return this.httpClient.post(this.url + '/users/add',
+      user);
+  }
 }
