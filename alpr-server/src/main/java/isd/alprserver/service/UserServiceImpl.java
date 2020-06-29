@@ -3,6 +3,7 @@ package isd.alprserver.service;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
+import isd.alprserver.model.exceptions.CompanyNotFoundException;
 import isd.alprserver.model.exceptions.UserCreationException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repository.CompanyRepository;
@@ -35,11 +36,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public boolean save(User user, String company) throws UserCreationException{
+    public boolean save(User user, String name) throws UserCreationException{
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new UserCreationException("The user with email "+user+" already exists.");
         }
-        companyRepository.getByName(company).get().getUsers().add(user);
+        Company company = companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("Company " + name + " doesn't exist" ));
+        company.getUsers().add(user);
+        user.setCompany(company);
         Role userRole = Role.builder().name("USER_ROLE").build();
         user.setRoles(Collections.singleton(roleRepository.save(userRole)));
         userRepository.save(user);
