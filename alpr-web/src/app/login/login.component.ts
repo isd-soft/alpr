@@ -30,8 +30,9 @@ export class LoginComponent implements OnInit {
           .then(responseString => alert("You are authenticated!"))
           .catch(error => console.error(error));
       })
-      .catch(_ => {
-        this.snackBar.open("Invalid email or password", "OK", {duration: 4000})
+      .catch(error => {
+        console.log(error);
+        this.snackBar.open(error.error.value, "OK", {duration: 4000})
       });
 
   }

@@ -17,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@ToString(exclude = "company")
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -50,6 +51,7 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @OneToMany(fetch = FetchType.LAZY)
