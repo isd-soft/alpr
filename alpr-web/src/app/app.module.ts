@@ -22,6 +22,8 @@ import {MatTableModule} from '@angular/material/table';
 import { LoginComponent } from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AppRoutingModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [UserService, CompanyService],
   bootstrap: [AppComponent]
