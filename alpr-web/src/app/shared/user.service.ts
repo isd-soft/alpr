@@ -7,9 +7,10 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class UserService {
   private url = 'http://localhost:8080';
+  private _currentToken;
 
   constructor(private httpClient: HttpClient) {
-
+    this._currentToken = localStorage.getItem('token');
   }
 
   registerUser(user: User): Observable<any> {
@@ -28,5 +29,15 @@ export class UserService {
 
   getAll(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url + '/users');
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('token');
+    this._currentToken = null;
+  }
+
+  public get currentToken() {
+    return this._currentToken;
   }
 }

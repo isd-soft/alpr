@@ -17,7 +17,8 @@ import {CompanyService} from '../shared/company.service';
 export class UsersComponent implements OnInit {
 
   users: User[];
-  usersDataSource: MatTableDataSource<User>;
+  usersDataSource: MatTableDataSource<User> =
+    new MatTableDataSource<User>(this.users);
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
     'telephoneNumber', 'company', 'password', 'actions'];
   addUserForm: FormGroup = this.formGenerator.generateUserRegisterGroup();
