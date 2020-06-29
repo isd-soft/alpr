@@ -14,10 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +42,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new UserCreationException("The user with email "+user+" already exists.");
         }
+        user = userRepository.save(user);
         Company company = companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("Company " + name + " doesn't exist" ));
-        company.getUsers().add(user);
         user.setCompany(company);
         Role userRole = Role.builder().name("USER_ROLE").build();
         user.setRoles(Collections.singleton(roleRepository.save(userRole)));
-        userRepository.save(user);
+        company.getUsers().add(user);
+        //userRepository.save(user);
         return true;
     }
 

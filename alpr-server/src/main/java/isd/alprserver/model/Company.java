@@ -3,6 +3,9 @@ package isd.alprserver.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,8 +24,11 @@ public class Company {
 
     private int nrParkingSpots;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<User> users;
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "company",
+            //orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
     public void setName(String name) {
         this.name = name;
