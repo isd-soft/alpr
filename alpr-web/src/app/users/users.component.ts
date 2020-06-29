@@ -16,7 +16,7 @@ import {CompanyService} from '../shared/company.service';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  users: User[] = [];
   usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>(this.users);
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
@@ -34,10 +34,13 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.userService.getAll()
-      .subscribe(users => this.users = users);
+      .subscribe(users => {
+        this.users = users;
+        this.updateTable();
+      });
+
     this.companyService.getAll()
       .subscribe(companies => this.companies = companies);
-    this.updateTable();
   }
 
   updateTable() {
@@ -56,10 +59,6 @@ export class UsersComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(addUserTemplate, dialogConfig);
-  }
-
-  close() {
-
   }
 
   addUser() {
