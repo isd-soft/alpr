@@ -1,11 +1,12 @@
 package isd.alprserver.service;
 
+import isd.alprserver.dto.CompanyDTO;
 import isd.alprserver.model.Company;
 
 import java.util.List;
 
 public interface CompanyService {
-    List<Company> getAllCompanies();
+    List<CompanyDTO> getAllCompanies();
 
     Company addCompany(Company company);
 

@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/user.model';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {UserService} from "../shared/user.service";
-import {CompanyModel} from "../shared/company.model";
-import {CompanyService} from "../shared/company.service";
+import {HttpErrorResponse} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {UserService} from '../shared/user.service';
+import {CompanyService} from '../shared/company.service';
 import {Router} from '@angular/router';
+import {FormExtractor} from '../utils/form.extractor';
+import {FormGenerator} from '../utils/form.generator';
 
 @Component({
   selector: 'app-registration',
@@ -15,48 +15,34 @@ import {Router} from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
   user: User = new User();
-  passwordConfirm: string = "";
+  passwordConfirm: string = '';
 
   companies = [];
 
-  registrationForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    age: ['', [Validators.required, Validators.min(18)]],
-    telephone: ['', [Validators.required, Validators.pattern("^\\+(373[0-9]{8})$")]],
-    password: ['', [Validators.required, Validators.minLength(2)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(2)]],
-    company: ['', Validators.required]
-  });
-  constructor(private fb: FormBuilder,
-              private userService: UserService,
+  registrationForm = this.formGenerator.generateUserRegisterForm();
+
+  constructor(private userService: UserService,
               private snackBar: MatSnackBar,
               private companyService: CompanyService,
-              private router: Router) { }
+              private router: Router,
+              private formExtractor: FormExtractor,
+              private formGenerator: FormGenerator) {
+  }
 
   ngOnInit(): void {
     this.companyService.getAll().subscribe(companies => this.companies = companies);
   }
 
   onRegister() {
-    this.user = new User(1,
-      this.registrationForm.get('email').value,
-      this.registrationForm.get('firstName').value,
-      this.registrationForm.get('lastName').value,
-      this.registrationForm.get('age').value,
-      this.registrationForm.get('telephone').value,
-      this.registrationForm.get('password').value,
-      this.registrationForm.get('company').value);
+    this.user = this.formExtractor.extractUser(this.registrationForm);
     this.passwordConfirm = this.registrationForm.get('confirmPassword').value;
-    if(this.user.password.localeCompare(this.passwordConfirm) !== 0) {
-      this.snackBar.open("Passwords don't match", "OK", {duration: 4000})
-    }
-    else {
+    if (this.user.password.localeCompare(this.passwordConfirm) !== 0) {
+      this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});
+    } else {
       this.userService.registerUser(this.user)
         .toPromise()
         .then(_ => {
-          this.snackBar.open("Successfully", "OK", {duration: 3000});
+          this.snackBar.open('Successfully', 'OK', {duration: 3000});
           this.router.navigate(['login']);
         })
         .catch(error => this.handleError(error));
@@ -64,7 +50,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   handleError(httpError: HttpErrorResponse): void {
-    this.snackBar.open(httpError.error.value, "OK", {duration: 4000})
+    this.snackBar.open(httpError.error.value, 'OK', {duration: 4000});
   }
 
 }

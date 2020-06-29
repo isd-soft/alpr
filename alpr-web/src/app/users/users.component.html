@@ -1,0 +1,136 @@
+<button mat-raised-button color="accent" class="all-margins"
+        (click)="onAdd(addUserTemplate)">Add a user
+</button>
+
+<mat-divider></mat-divider>
+
+<mat-card class="all-margins">
+  <mat-table [dataSource]="users">
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.lastName}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <mat-header-cell *matHeaderCellDef>Age</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.age}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="telephoneNumber">
+      <mat-header-cell *matHeaderCellDef>Telephone Number</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.telephoneNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="company">
+      <mat-header-cell *matHeaderCellDef>Company</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.company}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="password">
+      <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{'**********'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element; let user">
+        <button mat-raised-button color="primary" class="action"
+                (click)="onEdit(user.email)">Edit
+        </button>
+        <button mat-raised-button color="warn" class="action left-margin"
+                (click)="onDelete(user.email)">Remove
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let user; columns: columnsToDisplay"></mat-row>
+
+  </mat-table>
+</mat-card>
+
+<ng-template #addUserTemplate>
+  <h2 mat-dialog-title>Add User</h2>
+
+  <mat-dialog-content [formGroup]="addUserForm">
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" type="text"
+             name="mail" required formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field class="left-margin">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="First Name" class="no-left-margin"
+             name="firstName" type="text" required formControlName="firstName">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Last Name"
+             name="lastName" type="text" required formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field class="left-margin">
+      <mat-label>Age</mat-label>
+      <input matInput placeholder="Age" name="age" class="no-left-margin"
+             type="number" required formControlName="age">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Password" name="password"
+             type="password" required formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field class="left-margin">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required
+             formControlName="confirmPassword" class="no-left-margin">
+    </mat-form-field>
+
+    <br>
+
+    <mat-form-field>
+      <mat-label>Telephone Number</mat-label>
+      <input matInput placeholder="+373XXXXXXXX" name="telephone"
+             type="text" required formControlName="telephone">
+    </mat-form-field>
+
+    <mat-form-field class="left-margin">
+      <mat-label>Company</mat-label>
+      <mat-select required formControlName="company">
+        <mat-option *ngFor="let company of companies"
+                    [value]="company.name">{{company.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-dialog-actions>
+      <button class="mat-raised-button"
+              [mat-dialog-close]="true">Close
+      </button>
+      <button class="mat-raised-button mat-accent left-margin"
+              (click)="addUserForm.reset()">Clear
+      </button>
+      <button class="mat-raised-button mat-primary left-margin"
+              (click)="addUser()">Save
+      </button>
+    </mat-dialog-actions>
+
+  </mat-dialog-content>
+</ng-template>

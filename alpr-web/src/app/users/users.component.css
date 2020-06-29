@@ -1,0 +1,11 @@
+.all-margins {
+  margin: 1em;
+}
+
+.left-margin {
+  margin-left: 1em;
+}
+
+.no-left-margin {
+  margin-left: 0;
+}

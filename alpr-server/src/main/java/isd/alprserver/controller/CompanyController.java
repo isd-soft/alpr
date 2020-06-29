@@ -22,7 +22,7 @@ public class CompanyController {
 
     //getting all the companies
     @GetMapping
-    public  ResponseEntity<List<Company>> getAll(){
+    public  ResponseEntity<List<CompanyDTO>> getAll(){
         System.out.println("Inside Home Controller");
         return ResponseEntity.ok(companyService.getAllCompanies());
 

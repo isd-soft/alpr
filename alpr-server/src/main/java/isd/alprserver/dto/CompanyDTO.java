@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class CompanyDTO {
-    private int id;
+    private long id;
     private String name;
         public Company toCompany() {
             return Company.builder()
