@@ -33,8 +33,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getAll().subscribe(users => this.users = users);
-    this.companyService.getAll().subscribe(companies => this.companies = companies);
+    this.userService.getAll()
+      .subscribe(users => this.users = users);
+    this.companyService.getAll()
+      .subscribe(companies => this.companies = companies);
     this.updateTable();
   }
 
