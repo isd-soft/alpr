@@ -10,11 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
+@CrossOrigin("*")
 public class CarController {
     @Autowired
     private CarService carService;
 
-    @GetMapping("/list")
+    @GetMapping()
     private List<Car> getAllCars() {
         return carService.getAllCars();
     }
