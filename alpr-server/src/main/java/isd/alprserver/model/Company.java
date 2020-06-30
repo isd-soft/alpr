@@ -24,6 +24,7 @@ public class Company {
 
     private int nrParkingSpots;
 
+    @Transient
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "company",
             //orphanRemoval = true,

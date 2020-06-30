@@ -17,7 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,24 +31,33 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User not found"));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
 
     @Override
     @Transactional
-    public boolean save(User user, String name) throws UserCreationException{
-        if(userRepository.findByEmail(user.getEmail()).isPresent()){
-            throw new UserCreationException("The user with email "+user+" already exists.");
+    public boolean save(User user) throws UserCreationException {
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new UserCreationException("The user with email " + user + " already exists.");
         }
-        user = userRepository.save(user);
-        Company company = companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("Company " + name + " doesn't exist" ));
-        user.setCompany(company);
-        Role userRole = Role.builder().name("USER_ROLE").build();
-        user.setRoles(Collections.singleton(roleRepository.save(userRole)));
-        company.getUsers().add(user);
-        //userRepository.save(user);
-        return true;
+        if (user.getRole().getName().equals("USER_ROLE") ||
+                user.getRole().getName().equals("SYSTEM_ADMINISTRATOR_ROLE")) {
+            String companyName = user.getCompany().getName();
+            Company company = companyRepository.getByName(companyName).orElseThrow(() ->
+                    new CompanyNotFoundException("Company " + companyName + " doesn't exist"));
+            Role role = roleRepository.save(user.getRole());
+            userRepository.save(user);
+//            role.getUsers().add(user);
+
+            user.setRole(role);
+            user.setCompany(company);
+            company.getUsers().add(user);
+
+            return true;
+        }
+        throw new UserCreationException("The user'r role " +
+                user.getRole().getName() + " is not valid");
     }
 
     @Override
@@ -62,13 +72,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void deleteById(int id) throws UserNotFoundException{
+    public void deleteById(int id) throws UserNotFoundException {
         userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.deleteById(id);
     }
 
     @Override
-    public User getById(int id) throws UserNotFoundException{
+    public User getById(int id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
     }
 
@@ -76,15 +86,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public List<UserDTO> getAll() {
         List<User> users = userRepository.findAll();
         ArrayList<UserDTO> userDTOS = new ArrayList<>();
-        for (User user : users)
-        {
+        for (User user : users) {
             userDTOS.add(UserDTO.builder()
                     .age(user.getAge())
                     .company(user.getCompany().getName())
+                    .role(user.getRole().getName())
                     .email(user.getEmail())
                     .firstName(user.getFirstName())
                     .lastName(user.getLastName())
-                    .password(user.getPassword())
+                    .password("**********")
                     .telephoneNumber(user.getTelephoneNumber())
                     .build());
         }

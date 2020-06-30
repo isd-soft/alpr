@@ -1,11 +1,9 @@
 package isd.alprserver.controller;
 
 import isd.alprserver.dto.UserDTO;
-import isd.alprserver.model.Company;
 import isd.alprserver.model.Response;
 import isd.alprserver.service.CompanyService;
 import isd.alprserver.service.UserService;
-import isd.alprserver.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +22,11 @@ public class RegistrationController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping("/register")
-    public ResponseEntity<Response<String>> addUser(@RequestBody @Valid UserDTO user) {
-        System.out.println(user);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        if(!userService.save(user.toUser(), user.getCompany())) {
+    public ResponseEntity<Response<String>> addUser(@RequestBody @Valid UserDTO userDTO) {
+        System.out.println(userDTO);
+        userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+
+        if(!userService.save(userDTO.toUser())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>("This email is already used"));
         }
 
