@@ -1,5 +1,6 @@
 package isd.alprserver.service;
 
+import isd.alprserver.dto.UserDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
@@ -16,10 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -75,8 +73,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDTO> getAll() {
+        List<User> users = userRepository.findAll();
+        ArrayList<UserDTO> userDTOS = new ArrayList<>();
+        for (User user : users)
+        {
+            userDTOS.add(UserDTO.builder()
+                    .age(user.getAge())
+                    .company(user.getCompany().getName())
+                    .email(user.getEmail())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .password(user.getPassword())
+                    .telephoneNumber(user.getTelephoneNumber())
+                    .build());
+        }
+        return userDTOS;
     }
 
     @Override

@@ -6,7 +6,7 @@ export class FormGenerator {
   constructor(private fb: FormBuilder) {
   }
 
-  public generateUserRegisterGroup(): FormGroup {
+  public generateUserRegisterForm(): FormGroup {
     return this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       firstName: ['', Validators.required],

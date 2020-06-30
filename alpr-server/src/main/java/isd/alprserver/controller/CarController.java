@@ -18,7 +18,7 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @GetMapping("/list")
+    @GetMapping()
     private List<Car> getAllCars() {
         return carService.getAllCars();
     }

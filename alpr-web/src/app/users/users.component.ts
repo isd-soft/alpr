@@ -12,15 +12,16 @@ import {CompanyService} from '../shared/company.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
-  usersDataSource: MatTableDataSource<User>;
+  users: User[] = [];
+  usersDataSource: MatTableDataSource<User> =
+    new MatTableDataSource<User>(this.users);
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
     'telephoneNumber', 'company', 'password', 'actions'];
-  addUserForm: FormGroup = this.formGenerator.generateUserRegisterGroup();
+  addUserForm: FormGroup = this.formGenerator.generateUserRegisterForm();
   companies = [];
 
   constructor(private userService: UserService,
@@ -32,9 +33,14 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getAll().subscribe(users => this.users = users);
-    this.companyService.getAll().subscribe(companies => this.companies = companies);
-    this.updateTable();
+    this.userService.getAll()
+      .subscribe(users => {
+        this.users = users;
+        this.updateTable();
+      });
+
+    this.companyService.getAll()
+      .subscribe(companies => this.companies = companies);
   }
 
   updateTable() {
@@ -55,11 +61,10 @@ export class UsersComponent implements OnInit {
     this.dialog.open(addUserTemplate, dialogConfig);
   }
 
-  close() {
-
-  }
-
   addUser() {
-
+    let user: User = this.formExtractor.extractUser(this.addUserForm);
+    this.userService.add(user).toPromise()
+      .then()
+      .catch();
   }
 }

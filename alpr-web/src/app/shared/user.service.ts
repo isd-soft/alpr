@@ -7,9 +7,10 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class UserService {
   private url = 'http://localhost:8080';
+  public currentToken;
 
   constructor(private httpClient: HttpClient) {
-
+    this.currentToken = localStorage.getItem('token');
   }
 
   registerUser(user: User): Observable<any> {
@@ -28,5 +29,15 @@ export class UserService {
 
   getAll(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url + '/users');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+
+  add(user: User): Observable<any> {
+    console.log("I'm sending ma request");
+    return this.httpClient.post(this.url + '/users/add',
+      user);
   }
 }

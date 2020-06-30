@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class UserController {
 
 
@@ -22,7 +23,7 @@ public class UserController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 

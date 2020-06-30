@@ -3,12 +3,16 @@ import {LoginComponent} from './login/login.component';
 import {NgModule} from '@angular/core';
 import {RegistrationComponent} from './registration/registration.component';
 import {UsersComponent} from './users/users.component';
+import {AuthGuard} from './auth/auth.guard';
+import {CarListComponent} from "./car-list/car-list.component";
 
 
 const routes: Routes = [
   {path: '', component: RegistrationComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'users', component: UsersComponent}
+  {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
+  {path: 'cars', component: CarListComponent}
+
 ];
 
 @NgModule({

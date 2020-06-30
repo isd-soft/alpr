@@ -39,7 +39,7 @@
 
     <ng-container matColumnDef="password">
       <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
-      <mat-cell *matCellDef="let user">{{user.password}}</mat-cell>
+      <mat-cell *matCellDef="let user">{{'**********'}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -48,7 +48,7 @@
         <button mat-raised-button color="primary" class="action"
                 (click)="onEdit(user.email)">Edit
         </button>
-        <button mat-raised-button color="warn" class="action"
+        <button mat-raised-button color="warn" class="action left-margin"
                 (click)="onDelete(user.email)">Remove
         </button>
       </mat-cell>

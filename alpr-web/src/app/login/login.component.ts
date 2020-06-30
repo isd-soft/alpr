@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         console.log(response.token);
         localStorage.setItem("token", "Bearer " + response.token);
         localStorage.setItem("email", this.emailRef.nativeElement.value);
+        this.userService.currentToken = localStorage.getItem("token");
         this.userService.hello()
           .toPromise()
           .then(responseString => alert("You are authenticated!"))
