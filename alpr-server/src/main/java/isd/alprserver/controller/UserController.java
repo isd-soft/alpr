@@ -30,7 +30,7 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        userService.save(userDTO.toUser(), userDTO.getCompany());
+        userService.save(userDTO.toUser());
 //            return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDTO.toUser(),
 //                    userDTO.getCompany()));
         return new ResponseEntity<>(HttpStatus.CREATED);

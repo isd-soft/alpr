@@ -1,4 +1,4 @@
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -17,5 +17,12 @@ export class FormGenerator {
       confirmPassword: ['', [Validators.required, Validators.minLength(2)]],
       company: ['', Validators.required]
     });
+  }
+
+  public generateUserAddForm(): FormGroup {
+    let form = this.generateUserRegisterForm();
+    form.addControl('role',
+      new FormControl('', Validators.required));
+    return form;
   }
 }

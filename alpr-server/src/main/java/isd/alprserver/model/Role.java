@@ -4,14 +4,14 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Builder
 public class Role implements GrantedAuthority {
     @Id
@@ -21,7 +21,9 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @Transient
-    @ManyToMany(mappedBy = "roles")
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "role",
+            cascade = CascadeType.ALL)
     private Set<User> users;
 
     @Override

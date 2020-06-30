@@ -21,9 +21,10 @@ export class UsersComponent implements OnInit {
   usersDataSource: MatTableDataSource<User> =
     new MatTableDataSource<User>(this.users);
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
-    'telephoneNumber', 'company', 'password', 'actions'];
-  addUserForm: FormGroup = this.formGenerator.generateUserRegisterForm();
+    'telephoneNumber', 'company', 'password', 'role', 'actions'];
+  addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
   companies = [];
+  roles = ['USER_ROLE', 'SYSTEM_ADMINISTRATOR_ROLE']
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -56,13 +57,13 @@ export class UsersComponent implements OnInit {
 
   onDelete(user: User) {
     console.log(user);
-    this.userService.remove(user.id).toPromise()
-      .then(_ => {
-        this.snackBar.open('Successfully', 'OK', {duration: 3000});
-      })
-      .catch(_ => {
-        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
-      });
+    // this.userService.remove(user.id).toPromise()
+    //   .then(_ => {
+    //     this.snackBar.open('Successfully', 'OK', {duration: 3000});
+    //   })
+    //   .catch(_ => {
+    //     this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+    //   });
   }
 
   onAdd(addUserTemplate) {
