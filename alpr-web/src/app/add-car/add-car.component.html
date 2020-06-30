@@ -1,0 +1,34 @@
+<mat-toolbar>
+  <span>Car Registration</span>
+</mat-toolbar>
+<mat-card class="my-card">
+  <mat-card-content>
+
+    <form class="my-form" [formGroup]="registrationForm" (ngSubmit)="onRegister()">
+      <mat-form-field class="full-width">
+        <mat-label>License Plate</mat-label>
+        <input matInput placeholder="License Plate" type="text" name="licensePlate" required  formControlName="licensePlate">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Brand</mat-label>
+        <input matInput placeholder="Brand" name="brand" type="text" required formControlName="brand">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Model</mat-label>
+        <input matInput placeholder="Model" name="model" type="text" required formControlName="model">
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Color</mat-label>
+        <input matInput placeholder="Color" name="color" type="text" required formControlName="color">
+      </mat-form-field>
+    </form>
+
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button type="submit" (click)="onRegister()" color="primary" [disabled]="!registrationForm.valid">Register</button>
+  </mat-card-actions>
+</mat-card>

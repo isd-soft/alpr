@@ -3,9 +3,11 @@ package isd.alprserver.controller;
 import isd.alprserver.dto.CarDTO;
 import isd.alprserver.dto.LicensePlateDTO;
 import isd.alprserver.model.Car;
+import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,13 +49,14 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id) {
+    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id)
+            throws CarAlreadyExistsException {
         Car carById = carService.getCarById(id);
         carById.setBrand(car.getBrand());
         carById.setModel(car.getModel());
         carById.setColor(car.getColor());
         carById.setLicensePlate(car.getLicensePlate());
-        carService.add(carById);
+        carService.update(carById);
         return ResponseEntity.ok(carById);
     }
 
