@@ -28,9 +28,12 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Boolean> createUser(@RequestBody User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user, "")); //todo fix
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
+        userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        userService.save(userDTO.toUser(), userDTO.getCompany());
+//            return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userDTO.toUser(),
+//                    userDTO.getCompany()));
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
