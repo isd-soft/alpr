@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -57,14 +58,17 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Car> cars;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    }, fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles",
-                joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "roles_id"))
-    private Set<Role> roles;
+    //    @ManyToMany(cascade = {
+//            CascadeType.PERSIST,
+//            CascadeType.MERGE
+//    }, fetch = FetchType.EAGER)
+//    @JoinTable(name = "users_roles",
+//                joinColumns = @JoinColumn(name = "user_id"),
+//                inverseJoinColumns = @JoinColumn(name = "roles_id"))
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
+//    private Set<Role> roles;
 
     @Override
     public String getUsername() {
@@ -93,6 +97,6 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+        return Collections.singleton(getRole());
     }
 }

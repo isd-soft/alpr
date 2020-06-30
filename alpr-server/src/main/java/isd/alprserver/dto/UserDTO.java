@@ -1,6 +1,7 @@
 package isd.alprserver.dto;
 
 import isd.alprserver.model.Company;
+import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,7 +41,10 @@ public class UserDTO {
     @NotNull
     @Size(min = 2)
     private String password;
+
     private String company;
+
+    private String role;
 
     public User toUser() {
         return User.builder()
@@ -49,7 +53,10 @@ public class UserDTO {
                 .age(age)
                 .telephoneNumber(telephoneNumber)
                 .firstName(firstName)
+                .role(role != null ? Role.builder().name(role).build()
+                        : Role.builder().name("USER_ROLE").build())
                 .lastName(lastName)
+                .company(Company.builder().name(company).build())
                 .build();
     }
 }
