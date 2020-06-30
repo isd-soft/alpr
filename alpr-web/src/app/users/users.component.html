@@ -39,7 +39,15 @@
 
     <ng-container matColumnDef="password">
       <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
-      <mat-cell *matCellDef="let user">{{'**********'}}</mat-cell>
+      <mat-cell *matCellDef="let user">{{user.password}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
+      <mat-cell *matCellDef="let user">
+        {{user.role == 'SYSTEM_ADMINISTRATOR_ROLE' ?
+        'SYSTEM ADMIN' : 'USER'}}
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -118,6 +126,16 @@
         <mat-select required formControlName="company">
           <mat-option *ngFor="let company of companies"
                       [value]="company.name">{{company.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select required formControlName="role">
+          <mat-option *ngFor="let role of roles"
+                      [value]="role">{{role}}</mat-option>
         </mat-select>
       </mat-form-field>
 
