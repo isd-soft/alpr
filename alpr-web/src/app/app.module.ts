@@ -10,10 +10,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {UserService} from './shared/user.service';
 import {CompanyService} from './shared/company.service';
+import {CarService} from './shared/car.service';
 import {MatTableModule} from '@angular/material/table';
 import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -23,6 +24,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FormExtractor} from './utils/form.extractor';
 import {FormGenerator} from './utils/form.generator';
 import {UsersComponent} from './users/users.component';
+import {JwtInterceptor} from './auth/jwt.interceptor';
+import {ErrorInterceptor} from './auth/error.interceptor';
+import { AddCarComponent } from './add-car/add-car.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,8 @@ import {UsersComponent} from './users/users.component';
     RegistrationComponent,
     LoginComponent,
     RegistrationComponent,
-    UsersComponent
+    UsersComponent,
+    AddCarComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,11 @@ import {UsersComponent} from './users/users.component';
     MatDialogModule
   ],
   providers: [UserService, CompanyService,
-    FormExtractor, FormGenerator],
+    FormExtractor, FormGenerator, CarService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {

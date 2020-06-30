@@ -1,8 +1,11 @@
 package isd.alprserver.controller;
 
+import isd.alprserver.dto.CarDTO;
 import isd.alprserver.model.Car;
+import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
+@CrossOrigin("*")
 public class CarController {
     @Autowired
     private CarService carService;
@@ -25,24 +29,27 @@ public class CarController {
     }
 
     @DeleteMapping("/{id}")
-    private void deleteBook(@PathVariable("id") long id) {
+    private void deleteCar(@PathVariable("id") long id) {
         carService.delete(id);
     }
 
     @PutMapping("/{id}")
-    private ResponseEntity<Car> update(@RequestBody Car car, @PathVariable long id) {
+    private ResponseEntity<Car> update(@RequestBody CarDTO car, @PathVariable long id)
+            throws CarAlreadyExistsException {
         Car carById = carService.getCarById(id);
         carById.setBrand(car.getBrand());
         carById.setModel(car.getModel());
         carById.setColor(car.getColor());
         carById.setLicensePlate(car.getLicensePlate());
-        carService.add(carById);
+        carService.update(carById);
         return ResponseEntity.ok(carById);
     }
 
     @PostMapping("/add")
-    private void addCar(@RequestBody Car car) {
-        carService.add(car);
+    public ResponseEntity<Car> addCar(@RequestBody Car car) throws CarAlreadyExistsException {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(carService.add(car));
     }
 
 }

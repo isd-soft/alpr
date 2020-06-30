@@ -1,6 +1,7 @@
 package isd.alprserver.service;
 
 import isd.alprserver.model.Car;
+import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,17 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car getCarById(long id) {
-        return carRepository.findById(id).orElseThrow(() -> new CarNotFoundException("Car with id = " + id + " not found"));
+        return carRepository.findById(id)
+                .orElseThrow(() -> new CarNotFoundException("Car with id = " + id + " not found"));
     }
 
     @Override
-    public void add(Car car) {
-        carRepository.save(car);
+    public Car add(Car car) throws CarAlreadyExistsException {
+        if (carRepository.existsByLicensePlate(car.getLicensePlate())) {
+            throw new CarAlreadyExistsException();
+        }
+        car=carRepository.save(car);
+        return car;
     }
 
     @Override
