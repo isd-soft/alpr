@@ -36,8 +36,11 @@ export class UserService {
   }
 
   add(user: User): Observable<any> {
-    console.log("I'm sending ma request");
     return this.httpClient.post(this.url + '/users/add',
       user);
+  }
+
+  remove(userId: number): Observable<any> {
+    return this.httpClient.delete(this.url + '/users/' + userId);
   }
 }
