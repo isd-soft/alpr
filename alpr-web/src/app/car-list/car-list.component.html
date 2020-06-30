@@ -44,13 +44,13 @@
     <ng-container matColumnDef="owner">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
       <mat-cell class="duration-cell"
-                *matCellDef="let car">{{car.owner}}</mat-cell>
+                *matCellDef="let car">{{car.ownerName}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="telephoneNumber">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Telephone Number</mat-header-cell>
       <mat-cell class="duration-cell"
-                *matCellDef="let car">{{car.telephoneNumber}}</mat-cell>
+                *matCellDef="let car">{{car.ownerTelephone}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="InOut">

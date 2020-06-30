@@ -1,8 +1,10 @@
 package isd.alprserver.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import isd.alprserver.dto.CompanyDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +17,17 @@ import isd.alprserver.service.CompanyService;
 @RestController
 @RequestMapping("/companies")
 @CrossOrigin
+@RequiredArgsConstructor
 public class CompanyController {
-
-    @Autowired
-    CompanyService companyService;
+    private final CompanyService companyService;
 
     //getting all the companies
     @GetMapping
     public  ResponseEntity<List<CompanyDTO>> getAll(){
         System.out.println("Inside Home Controller");
-        return ResponseEntity.ok(companyService.getAllCompanies());
+        return ResponseEntity.ok(companyService.getAllCompanies().stream().map(
+                company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
+        ).collect(Collectors.toList()));
 
     }
 

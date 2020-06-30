@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {CompanyService} from '../shared/company.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-users',
@@ -29,13 +30,15 @@ export class UsersComponent implements OnInit {
               private router: Router,
               private formGenerator: FormGenerator,
               private formExtractor: FormExtractor,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
     this.userService.getAll()
       .subscribe(users => {
         this.users = users;
+        console.log(users[0])
         this.updateTable();
       });
 
@@ -51,8 +54,15 @@ export class UsersComponent implements OnInit {
 
   }
 
-  onDelete(email: any) {
-
+  onDelete(user: User) {
+    console.log(user);
+    this.userService.remove(user.id).toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 
   onAdd(addUserTemplate) {
@@ -62,9 +72,23 @@ export class UsersComponent implements OnInit {
   }
 
   addUser() {
-    let user: User = this.formExtractor.extractUser(this.addUserForm);
-    this.userService.add(user).toPromise()
-      .then()
-      .catch();
+    if (this.addUserForm.valid) {
+      let user: User = this.formExtractor.extractUser(this.addUserForm);
+      if (user.password.localeCompare(
+        this.addUserForm.get('confirmPassword').value) == 0) {
+        this.userService.add(user).toPromise()
+          .then(_ => {
+            this.snackBar.open('Successfully', 'OK', {duration: 3000});
+          })
+          .catch(_ => {
+            this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+          });
+      } else {
+        this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});
+      }
+    } else {
+      this.snackBar.open('Fill all the required fields, please',
+        'OK', {duration: 4000});
+    }
   }
 }

@@ -11,6 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "cars")
+@ToString(exclude = "user")
 public class Car {
 
     @Id

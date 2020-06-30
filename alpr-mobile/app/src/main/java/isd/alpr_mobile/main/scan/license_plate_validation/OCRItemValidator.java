@@ -34,6 +34,7 @@ public class OCRItemValidator implements Runnable {
         Matcher matcher = pattern.matcher(string);
         if (matcher.find()) {
             Log.i("ocr-plate", Objects.requireNonNull(matcher.group(1)));
+
             listener.onPlateFound(matcher.group(1));
         }
     }

@@ -4,6 +4,7 @@ import isd.alprserver.model.Car;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CarService {
     List<Car> getAllCars();
@@ -15,4 +16,8 @@ public interface CarService {
     Car update(Car car);
 
     void delete(long id);
+
+    void add(Car car, String email);
+
+    Optional<Car> getByLicensePlate(String licensePlate);
 }

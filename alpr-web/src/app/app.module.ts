@@ -64,7 +64,7 @@ import { AddCarComponent } from './add-car/add-car.component';
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [UserService, CompanyService,CarService,
+  providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
