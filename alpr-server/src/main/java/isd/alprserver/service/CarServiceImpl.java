@@ -63,4 +63,9 @@ public class CarServiceImpl implements CarService {
     public Optional<Car> getByLicensePlate(String licensePlate) {
         return this.carRepository.findByLicensePlate(licensePlate);
     }
+
+    @Override
+    public Optional<Car> getByLicensePlates(List<String> licensePlateList) {
+        return carRepository.findByLicensePlates(licensePlateList);
+    }
 }

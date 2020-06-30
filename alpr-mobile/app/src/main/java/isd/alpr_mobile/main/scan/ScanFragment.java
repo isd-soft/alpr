@@ -2,6 +2,7 @@ package isd.alpr_mobile.main.scan;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,9 @@ import com.google.android.gms.vision.text.TextRecognizer;
 import java.io.IOException;
 import java.util.Objects;
 
+import isd.alpr_mobile.DisplayMessageActivity;
 import isd.alpr_mobile.R;
+import isd.alpr_mobile.main.model.LicenseValidationResponse;
 import isd.alpr_mobile.main.scan.license_plate_validation.OnPlateFoundListener;
 
 public class ScanFragment extends Fragment implements SurfaceHolder.Callback, OnPlateFoundListener {
@@ -116,8 +119,11 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
     }
 
     @Override
-    public void onPlateFound(String licensePlateNumber) {
+    public void onPlateFound(LicenseValidationResponse response) {
         // todo: handle found license plate number (API request)
+        Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
+        intent.putExtra("response", response);
+        startActivity(intent);
     }
 }
 

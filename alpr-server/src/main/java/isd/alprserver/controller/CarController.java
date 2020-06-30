@@ -3,6 +3,7 @@ package isd.alprserver.controller;
 import isd.alprserver.dto.CarDTO;
 import isd.alprserver.dto.LicensePlateDTO;
 import isd.alprserver.model.Car;
+import isd.alprserver.model.LicenseValidationResponse;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -72,19 +74,25 @@ public class CarController {
     }
 
     @PostMapping()
-    public CarDTO validateLicensePlate(@RequestBody LicensePlateDTO licensePlate) {
-        Car car = carService.getByLicensePlate(licensePlate.getLicensePlate()).orElse(null);
-        return CarDTO.builder()
-                .id(car.getId())
-                .brand(car.getBrand())
-                .color(car.getColor())
-                .model(car.getModel())
-                .licensePlate(car.getLicensePlate())
-                .ownerCompany(car.getUser().getCompany().getName())
-                .ownerEmail(car.getUser().getEmail())
-                .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
-                .ownerTelephone(car.getUser().getTelephoneNumber())
-                .build();
+    public ResponseEntity<LicenseValidationResponse> validateLicensePlate(@RequestBody List<LicensePlateDTO> licensePlate) {
+        Optional<Car> car = carService.getByLicensePlates(licensePlate.stream().map(LicensePlateDTO::getLicensePlate).collect(Collectors.toList()));
+        return car.map(value -> ResponseEntity.ok(LicenseValidationResponse.builder()
+                .car(CarDTO.builder()
+                        .id(value.getId())
+                        .brand(value.getBrand())
+                        .color(value.getColor())
+                        .model(value.getModel())
+                        .licensePlate(value.getLicensePlate())
+                        .ownerCompany(value.getUser().getCompany().getName())
+                        .ownerEmail(value.getUser().getEmail())
+                        .ownerName(value.getUser().getFirstName() + " " + value.getUser().getLastName())
+                        .ownerTelephone(value.getUser().getTelephoneNumber())
+                        .build())
+                .status("Allowed")
+                .build()))
+                .orElseGet(() -> ResponseEntity.ok(LicenseValidationResponse.builder()
+                .car(null)
+                .status("Forbidden")
+                .build()));
     }
-
 }

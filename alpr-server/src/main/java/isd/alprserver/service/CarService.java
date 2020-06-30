@@ -20,4 +20,6 @@ public interface CarService {
     void add(Car car, String email);
 
     Optional<Car> getByLicensePlate(String licensePlate);
+
+    Optional<Car> getByLicensePlates(List<String> licensePlateList);
 }
