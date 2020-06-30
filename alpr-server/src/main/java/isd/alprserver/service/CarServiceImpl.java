@@ -33,7 +33,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car add(Car car) throws CarAlreadyExistsException {
-        if (carRepository.existsByLicensePlate(car.getLicensePlate())) {
+        if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
             throw new CarAlreadyExistsException();
         }
         car=carRepository.save(car);

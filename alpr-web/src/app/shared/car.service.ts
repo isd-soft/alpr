@@ -11,14 +11,11 @@ export class CarService{
   private url = 'http://localhost:8080/cars';
 
   getCars(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/cars');
+    return this.http.get<any[]>('http://localhost:8080/cars')};
 
-  registerCar(car: Car): Observable<any> {
-    return this.http.post(this.url + "/add", car,{
-             headers: new HttpHeaders({
-             'Content-Type':'application/json'
-             })
-             });
+  registerCar(car: CarModel): Observable<any> {
+    return this.http.post(this.url + "/add", car);
   }
-
 }
+
+

@@ -39,7 +39,7 @@ import { AddCarComponent } from './add-car/add-car.component';
     LoginComponent,
     RegistrationComponent,
     UsersComponent,
-    AddCarComponent
+    AddCarComponent,
     CarListComponent
   ],
   imports: [

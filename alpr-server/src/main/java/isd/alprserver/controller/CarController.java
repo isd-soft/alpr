@@ -49,7 +49,7 @@ public class CarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id) {
+    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id)
             throws CarAlreadyExistsException {
         Car carById = carService.getCarById(id);
         carById.setBrand(car.getBrand());

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Car} from '../shared/car.model';
+import {CarModel} from '../shared/car.model';
 import {CarService} from "../shared/car.service";
 import {Router} from '@angular/router';
 
@@ -12,7 +12,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./add-car.component.css']
 })
 export class AddCarComponent implements OnInit {
-  car: Car = new Car();
+  car: CarModel = new CarModel();
 
    registrationForm = this.fb.group({
       licensePlate: ['', Validators.required ],
@@ -30,11 +30,12 @@ export class AddCarComponent implements OnInit {
   }
 
   onRegister() {
-  this.car = new Car(1,
-  this.registrationForm.get('licensePlate').value,
-  this.registrationForm.get('brand').value,
-  this.registrationForm.get('model').value,
-  this.registrationForm.get('color').value);
+  this.car.licensePlate = this.registrationForm.get('licensePlate').value;
+  this.car.brand = this.registrationForm.get('brand').value;
+  this.car.model = this.registrationForm.get('model').value;
+  this.car.color = this.registrationForm.get('color').value;
+  this.car.ownerEmail = localStorage.getItem("email");
+  console.log(this.car);
   this.carService.registerCar(this.car)
         .toPromise()
         .then(_ => {
