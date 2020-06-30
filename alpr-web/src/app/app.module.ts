@@ -25,11 +25,11 @@ import {FormGenerator} from './utils/form.generator';
 import {UsersComponent} from './users/users.component';
 import {JwtInterceptor} from './auth/jwt.interceptor';
 import {ErrorInterceptor} from './auth/error.interceptor';
-import {CarListComponent} from "./car-list/car-list.component";
-import {CarService} from "./shared/car.service";
-import {MatIconModule} from "@angular/material/icon";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatSortModule} from "@angular/material/sort";
+import {CarListComponent} from './car-list/car-list.component';
+import {CarService} from './shared/car.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -62,7 +62,7 @@ import {MatSortModule} from "@angular/material/sort";
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [UserService, CompanyService,CarService,
+  providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

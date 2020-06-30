@@ -9,7 +9,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -54,8 +56,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Car> cars;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Car> cars = new ArrayList<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
