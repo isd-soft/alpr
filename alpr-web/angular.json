@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "alpr-web"
+  "defaultProject": "alpr-web",
+  "cli": {
+    "analytics": false
+  }
 }
