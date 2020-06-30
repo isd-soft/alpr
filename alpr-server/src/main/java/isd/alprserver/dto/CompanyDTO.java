@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 public class CompanyDTO {
     private long id;
     private String name;
+    private int nrParkingSpots;
         public Company toCompany() {
             return Company.builder()
                     .id(id)
-                    .name(name).build();
+                    .name(name)
+                    .nrParkingSpots(nrParkingSpots)
+                    .build();
         }
     }

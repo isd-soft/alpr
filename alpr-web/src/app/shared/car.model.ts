@@ -2,13 +2,14 @@
 
 export class CarModel {
   constructor(public id: number,
-              public brand: string = "",
-              public color: string = "",
               public licensePlate: string = "",
+              public brand: string = "",
               public model: string = "",
-               public owner: string = " ",
-              public telephoneNumber: number,
-              public InOut: string
+              public color: string = "",
+              public ownerEmail: string = " ",
+              public ownerName: string = "",
+              public ownerTelephone: string = "",
+              public status: string
 
   ){
 
