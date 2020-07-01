@@ -24,7 +24,8 @@ export class UsersComponent implements OnInit {
     'telephoneNumber', 'company', 'password', 'role', 'actions'];
   addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
   companies = [];
-  roles = ['USER_ROLE', 'SYSTEM_ADMINISTRATOR_ROLE']
+  roles = ['USER', 'SYSTEM_ADMINISTRATOR'];
+  editedUser: User;
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -36,34 +37,41 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getAll()
-      .subscribe(users => {
-        this.users = users;
-        console.log(users[0])
-        this.updateTable();
-      });
+    this.loadUsers();
 
     this.companyService.getAll()
       .subscribe(companies => this.companies = companies);
   }
 
-  updateTable() {
-    this.usersDataSource = new MatTableDataSource<User>(this.users);
+  loadUsers() {
+    this.userService.getAll()
+      .subscribe(users => {
+        this.users = users;
+        console.log(users[0]);
+        this.updateTable(this.users);
+      });
   }
 
-  onEdit(email: any) {
+  updateTable(users: User[]) {
+    this.usersDataSource = new MatTableDataSource<User>(users);
+  }
 
+  onEdit(editUserTemplate, user: User) {
+    this.editedUser = user;
+    // todo
   }
 
   onDelete(user: User) {
-    console.log(user);
-    // this.userService.remove(user.id).toPromise()
-    //   .then(_ => {
-    //     this.snackBar.open('Successfully', 'OK', {duration: 3000});
-    //   })
-    //   .catch(_ => {
-    //     this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
-    //   });
+    this.userService.removeByEmail(user.email).toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.users.splice(this.users.indexOf(user), 1);
+        // todo: user is not removed from array
+        this.updateTable(this.users);
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 
   onAdd(addUserTemplate) {
@@ -80,6 +88,7 @@ export class UsersComponent implements OnInit {
         this.userService.add(user).toPromise()
           .then(_ => {
             this.snackBar.open('Successfully', 'OK', {duration: 3000});
+            this.loadUsers();
           })
           .catch(_ => {
             this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
@@ -91,5 +100,13 @@ export class UsersComponent implements OnInit {
       this.snackBar.open('Fill all the required fields, please',
         'OK', {duration: 4000});
     }
+  }
+
+  resetUser() {
+    // todo
+  }
+
+  updateUser() {
+    // todo
   }
 }

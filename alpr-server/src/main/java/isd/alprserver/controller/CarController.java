@@ -3,6 +3,7 @@ package isd.alprserver.controller;
 import isd.alprserver.dto.CarDTO;
 import isd.alprserver.dto.LicensePlateDTO;
 import isd.alprserver.model.Car;
+import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class CarController {
     }
 
     @PostMapping("/add")
-    public void addCar(@RequestBody CarDTO carDTO) {
+    public void addCar(@RequestBody CarDTO carDTO) throws UserNotFoundException {
         Car car = Car.builder()
                 .licensePlate(carDTO.getLicensePlate())
                 .brand(carDTO.getBrand())

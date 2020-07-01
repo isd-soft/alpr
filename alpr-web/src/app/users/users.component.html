@@ -45,7 +45,7 @@
     <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
       <mat-cell *matCellDef="let user">
-        {{user.role == 'SYSTEM_ADMINISTRATOR_ROLE' ?
+        {{user.role == 'SYSTEM_ADMINISTRATOR' ?
         'SYSTEM ADMIN' : 'USER'}}
       </mat-cell>
     </ng-container>
@@ -54,12 +54,19 @@
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element; let user">
         <button mat-raised-button color="primary" class="action"
-                (click)="onEdit(user.email)">Edit
+                (click)="onEdit(editUserTemplate, user)">Edit
         </button>
-        <button mat-raised-button color="warn" class="action left-margin"
+        <button *ngIf="user.role === 'USER'; else disabledButton" mat-raised-button color="warn"
+                class="action left-margin"
                 (click)="onDelete(user)">Remove
         </button>
+        <ng-template #disabledButton>
+          <button mat-raised-button disabled color="warn" class="action left-margin"
+                  (click)="onDelete(user)">Remove
+          </button>
+        </ng-template>
       </mat-cell>
+
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
@@ -148,6 +155,93 @@
         </button>
         <button class="mat-raised-button mat-primary left-margin"
                 (click)="addUser()">Save
+        </button>
+      </mat-dialog-actions>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #editUserTemplate>
+  <div>
+    <h2 mat-dialog-title>Add User</h2>
+
+    <mat-dialog-content [formGroup]="addUserForm">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" type="text"
+               name="mail" required formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field class="left-margin">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" class="no-left-margin"
+               name="firstName" type="text" required formControlName="firstName">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name"
+               name="lastName" type="text" required formControlName="lastName">
+      </mat-form-field>
+
+      <mat-form-field class="left-margin">
+        <mat-label>Age</mat-label>
+        <input matInput placeholder="Age" name="age" class="no-left-margin"
+               type="number" required formControlName="age">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="Password" name="password"
+               type="password" required formControlName="password">
+      </mat-form-field>
+
+      <mat-form-field class="left-margin">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required
+               formControlName="confirmPassword" class="no-left-margin">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Telephone Number</mat-label>
+        <input matInput placeholder="+373XXXXXXXX" name="telephone"
+               type="text" required formControlName="telephone">
+      </mat-form-field>
+
+      <mat-form-field class="left-margin">
+        <mat-label>Company</mat-label>
+        <mat-select required formControlName="company">
+          <mat-option *ngFor="let company of companies"
+                      [value]="company.name">{{company.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select required formControlName="role">
+          <mat-option *ngFor="let role of roles"
+                      [value]="role">{{role}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
+        </button>
+        <button class="mat-raised-button mat-accent left-margin"
+                (click)="addUserForm.reset(); resetUser()">Reset
+        </button>
+        <button class="mat-raised-button mat-primary left-margin"
+                (click)="updateUser()">Save
         </button>
       </mat-dialog-actions>
 

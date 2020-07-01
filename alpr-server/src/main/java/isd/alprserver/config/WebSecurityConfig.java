@@ -43,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userServiceImpl);
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf()
@@ -50,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers("/users/**").permitAll()
                 .antMatchers("/companies/**").permitAll()
                 .antMatchers("/cars/**").permitAll()
                 .anyRequest().authenticated()
