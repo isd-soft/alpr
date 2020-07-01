@@ -34,6 +34,7 @@ public class CarController {
                 .ownerTelephone(car.getUser().getTelephoneNumber())
                 .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
                 .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
                 .build()
         ).collect(Collectors.toList()));
     }

@@ -33,8 +33,8 @@ public class Car {
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
 
-    private void setStatus(int cars_id, int status_id){
-
-        String sql = "UPDATE cars set statuses="+status_id+"where ID="+cars_id;
-    }
+//    private void setStatus(int cars_id, int status_id){
+//
+//        String sql = "UPDATE cars set statuses="+status_id+"where ID="+cars_id;
+//    }
 }

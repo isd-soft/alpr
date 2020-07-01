@@ -1,11 +1,14 @@
 package isd.alprserver.service;
 
 import isd.alprserver.model.Car;
+import isd.alprserver.model.Status;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
+import isd.alprserver.model.exceptions.StatusNotFoundException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repository.CarRepository;
+import isd.alprserver.repository.StatusRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
+    private final StatusRepository statusRepository;
 
     @Override
     public List<Car> getAllCars() {
@@ -54,9 +58,12 @@ public class CarServiceImpl implements CarService {
     @Transactional
     public void add(Car car, String email) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User doesn't exist"));
+        Status status = statusRepository.getByName("OUT").orElseThrow(()->new StatusNotFoundException("Status not found"));
         this.carRepository.save(car);
         user.getCars().add(car);
         car.setUser(user);
+        car.setStatus(status);
+
     }
 
     @Override
