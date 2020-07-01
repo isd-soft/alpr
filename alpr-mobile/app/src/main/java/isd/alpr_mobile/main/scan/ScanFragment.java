@@ -120,7 +120,6 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
 
     @Override
     public void onPlateFound(LicenseValidationResponse response) {
-        // todo: handle found license plate number (API request)
         Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
         intent.putExtra("response", response);
         startActivity(intent);

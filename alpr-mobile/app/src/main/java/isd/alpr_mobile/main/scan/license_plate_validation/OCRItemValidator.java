@@ -12,6 +12,8 @@ import com.google.android.gms.vision.text.TextBlock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -31,7 +33,8 @@ public class OCRItemValidator implements Runnable {
     private SparseArray<TextBlock> items;
     private Retrofit retrofit;
     private APIInterface api;
-    private static List<LicenseValidationResponse> responses = new ArrayList<>();
+    public static List<LicensePlate> plates = new ArrayList<>();
+    private ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
     public OCRItemValidator(SparseArray<TextBlock> items,
                             OnPlateFoundListener listener) {
@@ -53,26 +56,26 @@ public class OCRItemValidator implements Runnable {
 
         Pattern pattern = Pattern.compile("([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{1,3})");
         Matcher matcher = pattern.matcher(string);
-        if (matcher.find()) {
-            Call<LicenseValidationResponse> call = api.validateLicensePlate(new LicensePlate(matcher.group(1)));
+        if (matcher.find() && plates.size() < 5) {
+            readWriteLock.writeLock().lock();
+            plates.add(new LicensePlate(matcher.group(1)));
+            Log.i("ocr-plate", Objects.requireNonNull(matcher.group(1)));
+            readWriteLock.writeLock().unlock();
+        }
+        if(plates.size() >= 5) {
+            Call<LicenseValidationResponse> call = api.validateLicensePlate(plates);
             call.enqueue(new Callback<LicenseValidationResponse>() {
                 @Override
                 public void onResponse(Call<LicenseValidationResponse> call, Response<LicenseValidationResponse> response) {
-                    LicenseValidationResponse resp = response.body();
-                    responses.add(resp);
-                    if(responses.size() >= 5) {
-
-                    }
-                    listener.onPlateFound(resp);
-                    Log.i("ocr-plate", resp.toString());
+                    LicenseValidationResponse validationResponse = response.body();
+                    listener.onPlateFound(validationResponse);
                 }
 
                 @Override
                 public void onFailure(Call<LicenseValidationResponse> call, Throwable t) {
-                    Log.i("ocr-plate", t.toString());
+                    Log.i("ocr-plate", "Error " + t.toString());
                 }
             });
-            Log.i("ocr-plate", Objects.requireNonNull(matcher.group(1)));
         }
     }
 }
