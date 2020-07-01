@@ -8,28 +8,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {CarService} from "../shared/car.service";
 import {CarModel} from "../shared/car.model";
 
-// export interface PeriodicElement {
-//   model:string;
-//   licensePlate:string;
-//   brand:string;
-//   color:string;
-//   owner:string;
-//   telephoneNumber:string;
-//   InOut:string;
-// }
-//
-// const ELEMENT_DATA: PeriodicElement[] = [
-// { licensePlate: 'AB BC 213', brand:'Lincoln', model: 'Lincoln ',color:'blue',owner:'Rusu Sandra', telephoneNumber: '+37368809306', InOut: 'In'},
-// { licensePlate: 'CD FD 345', brand: 'Lancia',  model: 'Lancia ', color:'red', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'UN MD 123', brand: 'McLaren',  model: 'McLaren ', color:'black', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'QW WR 23', brand: 'BMW',  model: 'BMW ', color:'pink', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'DE RT 345', brand: 'Dacia' , model: 'Lincoln ', color:'orange', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'SD PL 343', brand: 'Pontiac',  model: 'Pontiac ', color:'green', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'AE RT 098', brand: 'Rolls-Royce',  model: 'Lincoln ', color:'white', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'YT IO 456', brand: 'SEAT',  model: 'SEAT ', color:'red', owner:'Rusu Sandra', telephoneNumber:'+37368809306', InOut: 'In'},
-// { licensePlate: 'QWE UT 123', brand: 'Scion',  model: 'Scion ', color:'blue', owner:'Rusu Sandra',telephoneNumber:'+37368809306',  InOut: 'In'},
-// { licensePlate: 'PU IO 345', brand:  'Saab',  model: 'Lincoln ', color:'black', owner:'Rusu Sandra', telephoneNumber:'+37368809306',  InOut: 'In'},
-// ];
 
 @Component({
   selector: 'app-car-list',

@@ -2,6 +2,7 @@ package isd.alprserver.service;
 
 import isd.alprserver.model.Car;
 import isd.alprserver.model.User;
+import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repository.CarRepository;
@@ -30,8 +31,12 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void add(Car car) {
-        carRepository.save(car);
+    public Car add(Car car) throws CarAlreadyExistsException {
+        if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
+            throw new CarAlreadyExistsException();
+        }
+        car=carRepository.save(car);
+        return car;
     }
 
     @Override

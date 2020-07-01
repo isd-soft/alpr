@@ -1,6 +1,7 @@
 package isd.alprserver.service;
 
 import isd.alprserver.model.Car;
+import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface CarService {
 
     Car getCarById(long id);
 
-    void add(Car car);
+    Car add(Car car) throws CarAlreadyExistsException;
 
     Car update(Car car);
 

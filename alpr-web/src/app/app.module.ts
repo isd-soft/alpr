@@ -25,11 +25,12 @@ import {FormGenerator} from './utils/form.generator';
 import {UsersComponent} from './users/users.component';
 import {JwtInterceptor} from './auth/jwt.interceptor';
 import {ErrorInterceptor} from './auth/error.interceptor';
-import {CarListComponent} from './car-list/car-list.component';
-import {CarService} from './shared/car.service';
-import {MatIconModule} from '@angular/material/icon';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSortModule} from '@angular/material/sort';
+import {CarListComponent} from "./car-list/car-list.component";
+import {CarService} from "./shared/car.service";
+import {MatIconModule} from "@angular/material/icon";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
+import { AddCarComponent } from './add-car/add-car.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {MatSortModule} from '@angular/material/sort';
     LoginComponent,
     RegistrationComponent,
     UsersComponent,
+    AddCarComponent,
     CarListComponent
   ],
   imports: [
