@@ -6,12 +6,13 @@ import javax.persistence.*;
 
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "cars")
-@ToString(exclude = "user")
 public class Car {
 
     @Id
@@ -32,4 +33,17 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", user=" + user.getId() +
+                ", status=" + status.getId() +
+                '}';
+    }
 }

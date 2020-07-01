@@ -7,7 +7,6 @@ import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repository.CarRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +46,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public void add(Car car, String email) {
+    public void add(Car car, String email) throws UserNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User doesn't exist"));
         this.carRepository.save(car);
         user.getCars().add(car);
