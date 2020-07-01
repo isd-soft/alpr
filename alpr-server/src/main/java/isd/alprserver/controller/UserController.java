@@ -48,14 +48,14 @@ public class UserController {
             userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         }
         userService.update(userDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable int id)
             throws UserNotFoundException, UserRemovalException {
         userService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
