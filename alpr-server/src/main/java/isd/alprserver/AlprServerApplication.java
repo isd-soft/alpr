@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 public class AlprServerApplication {
@@ -20,7 +21,8 @@ public class AlprServerApplication {
 //    @Bean
 //    public CommandLineRunner initRoles(RoleRepository roleRepository,
 //                                       UserService userService,
-//                                       CompanyRepository companyRepository) {
+//                                       CompanyRepository companyRepository,
+//                                       BCryptPasswordEncoder bCryptPasswordEncoder) {
 //
 //        return args -> {
 //            Role userRole = Role.builder()
@@ -37,7 +39,7 @@ public class AlprServerApplication {
 //                    .nrParkingSpots(22)
 //                    .build());
 //
-//            userService.insert(UserDTO.builder()
+//            UserDTO userDTO = UserDTO.builder()
 //                    .age(22)
 //                    .company("ISD")
 //                    .email("admin@mail.com")
@@ -46,7 +48,10 @@ public class AlprServerApplication {
 //                    .password("admin")
 //                    .telephoneNumber("+37377777777")
 //                    .role("SYSTEM_ADMINISTRATOR")
-//                    .build());
+//                    .build();
+//            userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+//
+//            userService.insert(userDTO);
 //        };
 //    }
 }
