@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../shared/user.service';
 import {Router} from '@angular/router';
 import {FormGenerator} from '../utils/form.generator';
@@ -9,13 +9,16 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {FormGroup} from '@angular/forms';
 import {CompanyService} from '../shared/company.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {CarModel} from '../shared/car.model';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
 
   users: User[] = [];
   usersDataSource: MatTableDataSource<User> =
@@ -23,9 +26,11 @@ export class UsersComponent implements OnInit {
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
     'telephoneNumber', 'company', 'password', 'role', 'actions'];
   addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
+  editUserForm: FormGroup;
   companies = [];
   roles = ['USER', 'SYSTEM_ADMINISTRATOR'];
   editedUser: User;
+  editPasswordChecked = false;
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -36,11 +41,10 @@ export class UsersComponent implements OnInit {
               private snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
-    this.loadUsers();
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
-    this.companyService.getAll()
-      .subscribe(companies => this.companies = companies);
+  ngOnInit() {
   }
 
   loadUsers() {
@@ -54,11 +58,15 @@ export class UsersComponent implements OnInit {
 
   updateTable(users: User[]) {
     this.usersDataSource = new MatTableDataSource<User>(users);
+    this.usersDataSource.paginator = this.paginator;
+    this.usersDataSource.sort = this.sort;
   }
 
   onEdit(editUserTemplate, user: User) {
     this.editedUser = user;
-    // todo
+    this.editUserForm = this.formGenerator
+      .generateUserEditForm(this.editedUser);
+    this.openTemplate(editUserTemplate);
   }
 
   onDelete(user: User) {
@@ -67,7 +75,7 @@ export class UsersComponent implements OnInit {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.users.splice(this.users.indexOf(user), 1);
         // todo: user is not removed from array
-        this.updateTable(this.users);
+        this.loadUsers();
       })
       .catch(_ => {
         this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
@@ -75,9 +83,7 @@ export class UsersComponent implements OnInit {
   }
 
   onAdd(addUserTemplate) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(addUserTemplate, dialogConfig);
+    this.openTemplate(addUserTemplate);
   }
 
   addUser() {
@@ -102,11 +108,45 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  resetUser() {
-    // todo
+  updateUser() {
+    let user: User = this.formExtractor.extractUser(this.editUserForm);
+    user.email = this.editedUser.email;
+
+    this.userService.update(user, this.editPasswordChecked)
+      .toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.loadUsers();
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 
-  updateUser() {
-    // todo
+  private openTemplate(template) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(template, dialogConfig);
+  }
+
+  ngAfterViewInit(): void {
+    this.userService.getAll().toPromise()
+      .then(users => {
+        this.users = users;
+        this.usersDataSource = new MatTableDataSource<User>(this.users);
+        this.usersDataSource.paginator = this.paginator;
+        this.usersDataSource.sort = this.sort;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+  }
+
+  applyFilter(filterValue: string) {
+    this.usersDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  clearInput() {
+    this.usersDataSource.filter = '';
   }
 }

@@ -42,4 +42,9 @@ export class UserService {
   removeByEmail(email: string): Observable<any> {
     return this.httpClient.delete(this.url + '/users?email=' + email);
   }
+
+  update(user: User, isPasswordChanged: boolean): Observable<any> {
+    return this.httpClient.put(this.url +
+      '/users/update?isPasswordChanged=' + isPasswordChanged, user);
+  }
 }
