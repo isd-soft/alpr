@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             user.setRole(role);
             user.setCompany(company);
             company.getUsers().add(user);
-
             return true;
         }
         throw new UserCreationException("The user'r role " +

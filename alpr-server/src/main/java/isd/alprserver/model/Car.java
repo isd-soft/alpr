@@ -3,6 +3,8 @@ package isd.alprserver.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 @Entity
@@ -21,10 +23,14 @@ public class Car {
     @Column(unique = true)
     private String licensePlate;
 
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+")
     private String brand;
 
     private String model;
 
+    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+")
     private String color;
 
     @ManyToOne(fetch = FetchType.LAZY)
