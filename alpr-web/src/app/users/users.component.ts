@@ -23,9 +23,11 @@ export class UsersComponent implements OnInit {
   columnsToDisplay = ['email', 'firstName', 'lastName', 'age',
     'telephoneNumber', 'company', 'password', 'role', 'actions'];
   addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
+  editUserForm: FormGroup;
   companies = [];
   roles = ['USER', 'SYSTEM_ADMINISTRATOR'];
   editedUser: User;
+  editPasswordChecked = false;
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -58,7 +60,9 @@ export class UsersComponent implements OnInit {
 
   onEdit(editUserTemplate, user: User) {
     this.editedUser = user;
-    // todo
+    this.editUserForm = this.formGenerator
+      .generateUserEditForm(this.editedUser);
+    this.openTemplate(editUserTemplate);
   }
 
   onDelete(user: User) {
@@ -67,7 +71,7 @@ export class UsersComponent implements OnInit {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.users.splice(this.users.indexOf(user), 1);
         // todo: user is not removed from array
-        this.updateTable(this.users);
+        this.loadUsers();
       })
       .catch(_ => {
         this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
@@ -75,9 +79,7 @@ export class UsersComponent implements OnInit {
   }
 
   onAdd(addUserTemplate) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-    this.dialog.open(addUserTemplate, dialogConfig);
+    this.openTemplate(addUserTemplate);
   }
 
   addUser() {
@@ -102,11 +104,24 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  resetUser() {
-    // todo
+  updateUser() {
+    let user: User = this.formExtractor.extractUser(this.editUserForm);
+    user.email = this.editedUser.email;
+
+    this.userService.update(user, this.editPasswordChecked)
+      .toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.loadUsers();
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 
-  updateUser() {
-    // todo
+  private openTemplate(template) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    this.dialog.open(template, dialogConfig);
   }
 }
