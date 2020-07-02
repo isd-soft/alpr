@@ -31,6 +31,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
 import { AddCarComponent } from './add-car/add-car.component';
+import { ProfileComponent } from './profile/profile.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { AddCarComponent } from './add-car/add-car.component';
     RegistrationComponent,
     UsersComponent,
     AddCarComponent,
-    CarListComponent
+    CarListComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { AddCarComponent } from './add-car/add-car.component';
     MatDialogModule,
     MatIconModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatToolbarModule
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator,
