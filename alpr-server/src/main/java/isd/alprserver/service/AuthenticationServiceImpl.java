@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             UserDTO userDTO = UserDTO.builder()
                     .role(user.getRole().getName())
                     .telephoneNumber(user.getTelephoneNumber())
-                    .password(user.getPassword())
+                    .password("**********")
                     .lastName(user.getLastName())
                     .firstName(user.getFirstName())
                     .email(user.getEmail())
