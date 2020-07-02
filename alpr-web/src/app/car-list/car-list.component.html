@@ -35,10 +35,15 @@
                 *matCellDef="let car">{{car.model}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="color">
+    <ng-container matColumnDef="color" >
       <mat-header-cell  *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
       <mat-cell class="duration-cell"
-                *matCellDef="let car">{{car.color}}</mat-cell>
+                *matCellDef="let car">
+        <span class="color-title">
+          {{car.color}}
+        </span>
+        <span   class="material-icons span-icon" style="color:{{car.color}}; margin-left: 1px">directions_car</span>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="owner">
@@ -55,10 +60,10 @@
 
     <ng-container matColumnDef="InOut">
       <mat-header-cell  *matHeaderCellDef mat-sort-header>IN/OUT</mat-header-cell>
-      <mat-cell class="duration-cell"
-                *matCellDef="let car">{{car.InOut}}</mat-cell>
-    </ng-container>
 
+      <mat-cell  [ngStyle]="{'color': car.status === 'OUT' ? 'red' : 'green', 'font-size': '16px', 'font-weight': 'bold' }" class="duration-cell"
+                *matCellDef="let car">{{car.status}}</mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
