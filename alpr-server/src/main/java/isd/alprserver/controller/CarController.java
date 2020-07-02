@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class CarController {
     private final CarService carService;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(carService.getAllCars().stream().map(
                 car -> CarDTO.builder()
@@ -46,21 +46,33 @@ public class CarController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCar(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteCar(@PathVariable("id") long id) {
         carService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id)
+//            throws CarAlreadyExistsException {
+//        Car carById = carService.getCarById(id);
+//        carById.setBrand(car.getBrand());
+//        carById.setModel(car.getModel());
+//        carById.setColor(car.getColor());
+//        carById.setLicensePlate(car.getLicensePlate());
+//        carService.update(carById);
+//        return ResponseEntity.ok(carById);
+//    }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id)
+    public ResponseEntity<Car> updateCar(@RequestBody CarDTO carDTO,
+                                         @PathVariable(name = "id") Long id)
             throws CarAlreadyExistsException {
-        Car carById = carService.getCarById(id);
-        carById.setBrand(car.getBrand());
-        carById.setModel(car.getModel());
-        carById.setColor(car.getColor());
-        carById.setLicensePlate(car.getLicensePlate());
-        carService.update(carById);
-        return ResponseEntity.ok(carById);
+        carService.update(id, carDTO);
+        return ResponseEntity.noContent().build();
     }
+
+
 
     @PostMapping("/add")
     public void addCar(@RequestBody CarDTO carDTO) throws UserNotFoundException {

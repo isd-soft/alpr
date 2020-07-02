@@ -1,5 +1,6 @@
 package isd.alprserver.service;
 
+import isd.alprserver.dto.CarDTO;
 import isd.alprserver.model.Car;
 import isd.alprserver.model.Status;
 import isd.alprserver.model.User;
@@ -44,8 +45,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car update(Car car) {
-        return carRepository.save(car);
+    @Transactional
+    public void update(Long id, CarDTO carDTO) {
+        Car carById = getCarById(id);
+        carById.setBrand(carDTO.getBrand());
+        carById.setModel(carDTO.getModel());
+        carById.setColor(carDTO.getColor());
+        carById.setLicensePlate(carDTO.getLicensePlate());
     }
 
     @Override

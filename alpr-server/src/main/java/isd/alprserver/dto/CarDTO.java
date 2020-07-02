@@ -19,5 +19,5 @@ public class CarDTO {
     private String ownerName;
     private String ownerTelephone;
     private String ownerCompany;
-    private String status="";
+    private String status;
 }

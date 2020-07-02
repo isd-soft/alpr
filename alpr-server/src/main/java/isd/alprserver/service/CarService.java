@@ -1,5 +1,6 @@
 package isd.alprserver.service;
 
+import isd.alprserver.dto.CarDTO;
 import isd.alprserver.model.Car;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
@@ -14,7 +15,7 @@ public interface CarService {
 
     Car add(Car car) throws CarAlreadyExistsException;
 
-    Car update(Car car);
+    void update(Long id, CarDTO carDTO);
 
     void delete(long id);
 

@@ -14,17 +14,17 @@ public class AlprServerApplication {
         SpringApplication.run(AlprServerApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner initRoles(RoleRepository roleRepository){
-//        return args -> {
-//                   Role userRole = Role.builder()
-//                .name("USER")
-//                .build();
-//        Role adminRole = Role.builder()
-//                .name("SYSTEM_ADMINISTRATOR")
-//                .build();
-//        roleRepository.save(userRole);
-//        roleRepository.save(adminRole);
-//        };
-//    }
+    @Bean
+    public CommandLineRunner initRoles(RoleRepository roleRepository){
+        return args -> {
+                   Role userRole = Role.builder()
+                .name("USER")
+                .build();
+        Role adminRole = Role.builder()
+                .name("SYSTEM_ADMINISTRATOR")
+                .build();
+        roleRepository.save(userRole);
+        roleRepository.save(adminRole);
+        };
+    }
 }
