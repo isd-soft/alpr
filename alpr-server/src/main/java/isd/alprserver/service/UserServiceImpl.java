@@ -1,5 +1,6 @@
 package isd.alprserver.service;
 
+import isd.alprserver.config.JwtTokenUtil;
 import isd.alprserver.dto.UserDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
@@ -25,6 +26,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CompanyRepository companyRepository;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Override
     @Transactional
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void insert(UserDTO userDTO) throws UserCreationException, RoleNotFoundException {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            throw new UserCreationException("The user with email " + userDTO + " already exists.");
+            throw new UserCreationException("The user with email " + userDTO.getEmail() + " already exists.");
         }
         User user = userDTO.toUser();
         user.setCompany(getCompanyOfUser(userDTO));
