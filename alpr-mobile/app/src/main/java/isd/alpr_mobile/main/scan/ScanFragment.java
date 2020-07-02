@@ -64,7 +64,6 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
 
     @Override
     public void onAttach(@NonNull Context context) {
-        Log.i("attach", "ok");
         super.onAttach(context);
         if (context instanceof OnScanFragmentInteractionListener) {
             mListener = (OnScanFragmentInteractionListener) context;
@@ -110,7 +109,6 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
                 // todo: continue if permission granted, else replace fragment to WriteFragment
                 return;
             }
-            Log.i("ocr-camera", "start");
             cameraSource.start(cameraView.getHolder());
         } catch (IOException e) {
             e.printStackTrace();
@@ -124,7 +122,6 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.i("attach", "destroyed");
         cameraSource.stop();
     }
 

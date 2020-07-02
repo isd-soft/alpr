@@ -8,8 +8,6 @@ import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,24 +75,6 @@ public class CarController {
 
     @PostMapping()
     public ResponseEntity<LicenseValidationResponse> validateLicensePlate(@RequestBody List<LicensePlateDTO> licensePlate) {
-        Optional<Car> car = carService.getByLicensePlates(licensePlate.stream().map(LicensePlateDTO::getLicensePlate).collect(Collectors.toList()));
-        return car.map(value -> ResponseEntity.ok(LicenseValidationResponse.builder()
-                .car(CarDTO.builder()
-                        .id(value.getId())
-                        .brand(value.getBrand())
-                        .color(value.getColor())
-                        .model(value.getModel())
-                        .licensePlate(value.getLicensePlate())
-                        .ownerCompany(value.getUser().getCompany().getName())
-                        .ownerEmail(value.getUser().getEmail())
-                        .ownerName(value.getUser().getFirstName() + " " + value.getUser().getLastName())
-                        .ownerTelephone(value.getUser().getTelephoneNumber())
-                        .build())
-                .status("Allowed")
-                .build()))
-                .orElseGet(() -> ResponseEntity.ok(LicenseValidationResponse.builder()
-                .car(CarDTO.builder().licensePlate(licensePlate.get(licensePlate.size() - 1).getLicensePlate()).build())
-                .status("Forbidden")
-                .build()));
+        return ResponseEntity.ok(carService.getByLicensePlates(licensePlate.stream().map(LicensePlateDTO::getLicensePlate).collect(Collectors.toList())));
     }
 }

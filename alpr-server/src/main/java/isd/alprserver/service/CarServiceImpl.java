@@ -1,6 +1,8 @@
 package isd.alprserver.service;
 
+import isd.alprserver.dto.CarDTO;
 import isd.alprserver.model.Car;
+import isd.alprserver.model.LicenseValidationResponse;
 import isd.alprserver.model.Status;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
@@ -11,6 +13,7 @@ import isd.alprserver.repository.CarRepository;
 import isd.alprserver.repository.StatusRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +42,7 @@ public class CarServiceImpl implements CarService {
         if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
             throw new CarAlreadyExistsException();
         }
-        car=carRepository.save(car);
+        car = carRepository.save(car);
         return car;
     }
 
@@ -62,7 +65,6 @@ public class CarServiceImpl implements CarService {
         user.getCars().add(car);
         car.setUser(user);
         car.setStatus(status);
-
     }
 
     @Override
@@ -71,7 +73,44 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Optional<Car> getByLicensePlates(List<String> licensePlateList) {
-        return carRepository.findByLicensePlates(licensePlateList);
+    @Transactional
+    public LicenseValidationResponse getByLicensePlates(List<String> licensePlateList) {
+        Optional<Car> car = carRepository.findByLicensePlates(licensePlateList);
+        if (car.isPresent()) {
+            CarDTO dto = CarDTO.builder()
+                    .licensePlate(car.get().getLicensePlate())
+                    .brand(car.get().getBrand())
+                    .color(car.get().getColor())
+                    .id(car.get().getId())
+                    .model(car.get().getModel())
+                    .ownerCompany(car.get().getUser().getCompany().getName())
+                    .ownerEmail(car.get().getUser().getEmail())
+                    .ownerTelephone(car.get().getUser().getTelephoneNumber())
+                    .ownerName(car.get().getUser().getFirstName() + " " + car.get().getUser().getLastName())
+                    .status(car.get().getStatus().getName())
+                    .build();
+            if(car.get().getStatus().getName().equals("IN")) {
+                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() + 1);
+                car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invaldi status")));
+                return LicenseValidationResponse.builder().car(dto).status("Left").build();
+            }
+            if (areAvailableSpots(car) && isOut(car)) {
+                car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
+                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() - 1);
+                return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
+            } else {
+                return LicenseValidationResponse.builder().car(dto).status("Forbidden").build();
+            }
+        } else {
+            return LicenseValidationResponse.builder().car(CarDTO.builder().licensePlate(licensePlateList.get(licensePlateList.size() - 1)).build()).status("Unknown").build();
+        }
+    }
+
+    private boolean areAvailableSpots(Optional<Car> car) {
+        return car.get().getUser().getCompany().getNrParkingSpots() > 0;
+    }
+
+    private boolean isOut(Optional<Car> car) {
+        return car.get().getStatus().getName().equals("OUT");
     }
 }

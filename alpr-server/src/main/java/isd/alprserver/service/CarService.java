@@ -1,6 +1,7 @@
 package isd.alprserver.service;
 
 import isd.alprserver.model.Car;
+import isd.alprserver.model.LicenseValidationResponse;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 
@@ -22,5 +23,5 @@ public interface CarService {
 
     Optional<Car> getByLicensePlate(String licensePlate);
 
-    Optional<Car> getByLicensePlates(List<String> licensePlateList);
+    LicenseValidationResponse getByLicensePlates(List<String> licensePlateList);
 }

@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,13 +17,6 @@ import java.util.Collections;
 import isd.alpr_mobile.DisplayMessageActivity;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
-import isd.alpr_mobile.main.model.LicenseValidationResponse;
-import isd.alpr_mobile.main.retrofit.APIClient;
-import isd.alpr_mobile.main.retrofit.APIInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 
 public class WriteFragment extends Fragment
@@ -34,14 +25,8 @@ public class WriteFragment extends Fragment
     private OnWriteFragmentInteractionListener mListener;
     private EditText plateInput;
     private Button checkBtn;
-    private Retrofit retrofit;
-    private APIInterface api;
 
-    public WriteFragment() {
-        // Required empty public constructor
-        retrofit = APIClient.getClient();
-        api = retrofit.create(APIInterface.class);
-    }
+    public WriteFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
