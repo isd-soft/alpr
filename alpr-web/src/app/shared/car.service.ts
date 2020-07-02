@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {CarModel} from "./car.model";
 import {CarListComponent} from "../car-list/car-list.component";
 import {Observable} from "rxjs";
+import {User} from "./user.model";
 
 
 @Injectable()
@@ -15,6 +16,25 @@ export class CarService{
 
   registerCar(car: CarModel): Observable<any> {
     return this.http.post(this.url + "/add", car);
+  }
+
+  //
+  // getAll(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.url + '/cars');
+  // }
+
+  removeByLicensePlate(licensePlate: string): Observable<any> {
+    return this.http.delete(this.url + '?licensePlate=' + licensePlate);
+  }
+
+  removeById(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id);
+  }
+
+  update(car: CarModel): Observable<any> {
+    console.log(JSON.stringify(car));
+    return this.http.put(this.url +
+      '/' + car.id, car);
   }
 }
 

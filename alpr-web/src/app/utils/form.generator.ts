@@ -1,6 +1,8 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Injectable} from '@angular/core';
 import {User} from '../shared/user.model';
+import {CarListComponent} from "../car-list/car-list.component";
+import {CarModel} from "../shared/car.model";
 
 @Injectable()
 export class FormGenerator {
@@ -38,6 +40,19 @@ export class FormGenerator {
       confirmPassword: [user.password, [Validators.required, Validators.minLength(2)]],
       company: [user.company, Validators.required],
       role: [user.role, Validators.required]
+    });
+  }
+
+
+  public generateCarEditForm(car: CarModel): FormGroup {
+    return this.fb.group({
+      id: [car.id],
+      licensePlate: [car.licensePlate, Validators.required],
+      brand: [car.brand, Validators.required],
+      model: [car.model, Validators.required],
+      color: [car.color, Validators.required],
+      ownerName: [car.ownerName, Validators.required],
+      ownerTelephone: [car.ownerTelephone, Validators.required]
     });
   }
 }
