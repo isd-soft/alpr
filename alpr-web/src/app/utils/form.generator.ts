@@ -28,8 +28,6 @@ export class FormGenerator {
   }
 
   public generateUserEditForm(user: User): FormGroup {
-    console.log(user.company);
-    console.log(user.telephoneNumber);
     return this.fb.group({
       email: [user.email, [Validators.required, Validators.email]],
       firstName: [user.firstName, [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],

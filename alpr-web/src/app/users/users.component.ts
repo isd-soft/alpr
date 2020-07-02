@@ -11,7 +11,6 @@ import {CompanyService} from '../shared/company.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {CarModel} from '../shared/car.model';
 
 @Component({
   selector: 'app-users',
@@ -51,7 +50,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userService.getAll()
       .subscribe(users => {
         this.users = users;
-        console.log(users[0]);
         this.updateTable(this.users);
       });
   }
@@ -74,7 +72,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
       .then(_ => {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.users.splice(this.users.indexOf(user), 1);
-        // todo: user is not removed from array
         this.loadUsers();
       })
       .catch(_ => {
@@ -138,7 +135,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.usersDataSource.sort = this.sort;
       })
       .catch(_ => {
-        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+        this.snackBar.open('Oops! Something went wrong; Users not loaded',
+          'OK', {duration: 3000});
+      });
+    this.companyService.getAll().toPromise()
+      .then(companies => {
+        this.companies = companies;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong; Companies not loaded',
+          'OK', {duration: 3000});
       });
   }
 
