@@ -8,12 +8,13 @@ import javax.validation.constraints.Pattern;
 
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "cars")
-@ToString(exclude = "user")
 public class Car {
 
     @Id
@@ -39,7 +40,16 @@ public class Car {
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
 
-    private void setStatus(int cars_id, int status_id){
-        String sql = "UPDATE cars set statuses="+status_id+"where ID="+cars_id;
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", color='" + color + '\'' +
+                ", user=" + user.getId() +
+                ", status=" + status.getId() +
+                '}';
     }
 }

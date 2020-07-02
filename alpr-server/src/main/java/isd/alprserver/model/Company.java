@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "companies")
 public class Company {
 
@@ -24,15 +27,20 @@ public class Company {
 
     private int nrParkingSpots;
 
-    @Transient
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "company",
             //orphanRemoval = true,
             cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nrParkingSpots=" + nrParkingSpots +
+                ", users=" + users.stream().map(User::getId).collect(Collectors.toList()) +
+                '}';
     }
 
 }

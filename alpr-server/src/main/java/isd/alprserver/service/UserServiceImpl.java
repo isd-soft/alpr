@@ -4,9 +4,7 @@ import isd.alprserver.dto.UserDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
-import isd.alprserver.model.exceptions.CompanyNotFoundException;
-import isd.alprserver.model.exceptions.UserCreationException;
-import isd.alprserver.model.exceptions.UserNotFoundException;
+import isd.alprserver.model.exceptions.*;
 import isd.alprserver.repository.CompanyRepository;
 import isd.alprserver.repository.RoleRepository;
 import isd.alprserver.repository.UserRepository;
@@ -30,55 +28,40 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public UserDetails loadUserByUsername(String email)
+            throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException("User not found"));
     }
-
 
     @Override
     @Transactional
-    public boolean save(User user) throws UserCreationException {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new UserCreationException("The user with email " + user + " already exists.");
+    public void insert(UserDTO userDTO) throws UserCreationException, RoleNotFoundException {
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+            throw new UserCreationException("The user with email " + userDTO + " already exists.");
         }
-        if (user.getRole().getName().equals("USER_ROLE") ||
-                user.getRole().getName().equals("SYSTEM_ADMINISTRATOR_ROLE")) {
-            String companyName = user.getCompany().getName();
-            Company company = companyRepository.getByName(companyName).orElseThrow(() ->
-                    new CompanyNotFoundException("Company " + companyName + " doesn't exist"));
-            Role role = roleRepository.save(user.getRole());
-            userRepository.save(user);
-//            role.getUsers().add(user);
+        User user = userDTO.toUser();
+        user.setCompany(getCompanyOfUser(userDTO));
+        user.setRole(getRoleOfUser(userDTO));
 
-            user.setRole(role);
-            user.setCompany(company);
-            company.getUsers().add(user);
-            return true;
+        userRepository.save(user);
+    }
+
+    @Override
+    public void deleteById(int id)
+            throws UserNotFoundException, UserRemovalException {
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException("User with id " + id + " not found"));
+        if (user.getRole().getName().equals("SYSTEM_ADMINISTRATOR_ROLE")) {
+            throw new UserRemovalException("System administrator can not be deleted");
         }
-        throw new UserCreationException("The user'r role " +
-                user.getRole().getName() + " is not valid");
-    }
-
-    @Override
-    public User update(User user) {
-        return userRepository.save(user);
-    }
-
-    @Override
-    public void delete(User user) {
-        userRepository.findById(user.getId()).orElseThrow(() -> new UserNotFoundException("User with id " + user.getId() + " not found"));
-        userRepository.delete(user);
-    }
-
-    @Override
-    public void deleteById(int id) throws UserNotFoundException {
-        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
         userRepository.deleteById(id);
     }
 
     @Override
     public User getById(int id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found"));
+        return userRepository.findById(id).orElseThrow(() -> new
+                UserNotFoundException("User with id " + id + " not found"));
     }
 
     @Override
@@ -101,7 +84,49 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    @Transactional
+    public void deleteByEmail(String email)
+            throws UserNotFoundException, UserRemovalException {
+        User userByEmail = getUserByEmail(email);
+        deleteById(userByEmail.getId());
+    }
+
+    @Override
+    @Transactional
+    public void update(UserDTO userDTO)
+            throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
+
+        User storedUser = userRepository.findByEmail(userDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User with email " +
+                        userDTO.getEmail() + " not found"));
+        if (storedUser.getRole().getName().equals("SYSTEM_ADMINISTRATOR")) {
+            throw new UserUpdatingException("System administrator can not be updated");
+        }
+
+        storedUser.setCompany(getCompanyOfUser(userDTO));
+        storedUser.setRole(getRoleOfUser(userDTO));
+        storedUser.setFirstName(userDTO.getFirstName());
+        storedUser.setAge(userDTO.getAge());
+        storedUser.setLastName(userDTO.getLastName());
+        storedUser.setPassword(userDTO.getPassword());
+        storedUser.setTelephoneNumber(userDTO.getTelephoneNumber());
+
+    }
+
+    @Override
+    @Transactional
     public User getUserByEmail(String email) {
-        return this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("This user doesn't exist"));
+        return this.userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException("This user doesn't exist"));
+    }
+
+    private Role getRoleOfUser(UserDTO userDTO) throws RoleNotFoundException {
+        return roleRepository.findByName(userDTO.getRole()).orElseThrow(() ->
+                new RoleNotFoundException("Role " + userDTO.getRole() + " does not exist"));
+    }
+
+    private Company getCompanyOfUser(UserDTO userDTO) {
+        return companyRepository.getByName(userDTO.getCompany()).orElseThrow(() ->
+                new CompanyNotFoundException("Company " + userDTO.getCompany() + " doesn't exist"));
     }
 }

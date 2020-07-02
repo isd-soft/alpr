@@ -14,6 +14,6 @@ export class FormExtractor {
       userDetailsForm.get('password').value,
       userDetailsForm.get('company').value,
       userDetailsForm.get('role') === null ?
-        'USER_ROLE' : userDetailsForm.get('role').value);
+        'USER' : userDetailsForm.get('role').value);
   }
 }

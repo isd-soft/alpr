@@ -8,3 +8,11 @@ table {
 #example-form-field {
   width: 200px;
 }
+
+.color-title {
+  width: 25%;
+}
+
+.span-icon {
+  margin: auto;
+}
