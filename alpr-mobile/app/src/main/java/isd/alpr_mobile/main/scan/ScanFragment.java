@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -21,10 +23,13 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import isd.alpr_mobile.DisplayMessageActivity;
 import isd.alpr_mobile.R;
+import isd.alpr_mobile.main.model.LicensePlate;
 import isd.alpr_mobile.main.model.LicenseValidationResponse;
 import isd.alpr_mobile.main.scan.license_plate_validation.OnPlateFoundListener;
 
@@ -52,7 +57,14 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        startSourceCamera();
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
+        Log.i("attach", "ok");
         super.onAttach(context);
         if (context instanceof OnScanFragmentInteractionListener) {
             mListener = (OnScanFragmentInteractionListener) context;
@@ -98,6 +110,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
                 // todo: continue if permission granted, else replace fragment to WriteFragment
                 return;
             }
+            Log.i("ocr-camera", "start");
             cameraSource.start(cameraView.getHolder());
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,6 +124,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.i("attach", "destroyed");
         cameraSource.stop();
     }
 
@@ -119,9 +133,9 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
     }
 
     @Override
-    public void onPlateFound(LicenseValidationResponse response) {
+    public void onPlateFound(List<LicensePlate> plates) {
         Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
-        intent.putExtra("response", response);
+        intent.putExtra("plates", plates.toArray());
         startActivity(intent);
     }
 }

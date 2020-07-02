@@ -24,14 +24,75 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_check_24" />
+        app:srcCompat="@drawable/ic_baseline_autorenew_24"
+        tools:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
     <TextView
-        android:id="@+id/name"
-        android:layout_width="161dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="24dp"
+        android:id="@+id/user"
+        android:layout_width="180dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/car" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="195dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="8sp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/license_plate"
+        android:layout_width="160dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status" />
+
+    <TextView
+        android:id="@+id/car"
+        android:layout_width="180dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="18sp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="18sp"
+        android:typeface="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/license_plate" />
+
+    <TextView
+        android:id="@+id/company"
+        android:layout_width="180dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="18sp"
+        android:textAlignment="center"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user" />
 </androidx.constraintlayout.widget.ConstraintLayout>

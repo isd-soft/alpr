@@ -91,7 +91,7 @@ public class CarController {
                 .status("Allowed")
                 .build()))
                 .orElseGet(() -> ResponseEntity.ok(LicenseValidationResponse.builder()
-                .car(null)
+                .car(CarDTO.builder().licensePlate(licensePlate.get(licensePlate.size() - 1).getLicensePlate()).build())
                 .status("Forbidden")
                 .build()));
     }
