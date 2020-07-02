@@ -7,10 +7,11 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class UserService {
   private url = 'http://localhost:8080';
-  public currentToken;
+  currentToken(): string{
+    return localStorage.getItem('token');
+  }
 
   constructor(private httpClient: HttpClient) {
-    this.currentToken = localStorage.getItem('token');
   }
 
   registerUser(user: User): Observable<any> {
