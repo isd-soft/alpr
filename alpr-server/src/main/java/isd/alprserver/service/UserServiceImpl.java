@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void update(UserDTO userDTO)
+    public void update(UserDTO userDTO, boolean isPasswordChanged)
             throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
 
         User storedUser = userRepository.findByEmail(userDTO.getEmail())
@@ -108,8 +108,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         storedUser.setFirstName(userDTO.getFirstName());
         storedUser.setAge(userDTO.getAge());
         storedUser.setLastName(userDTO.getLastName());
-        storedUser.setPassword(userDTO.getPassword());
         storedUser.setTelephoneNumber(userDTO.getTelephoneNumber());
+
+        if (isPasswordChanged) {
+            storedUser.setPassword(userDTO.getPassword());
+        }
 
     }
 

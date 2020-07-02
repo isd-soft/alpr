@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -24,51 +25,58 @@ public class UserController {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO)
+    public ResponseEntity<?> createUser(@RequestBody @Valid UserDTO userDTO)
             throws RoleNotFoundException {
 
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         userService.insert(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestParam boolean isPasswordChanged,
-                                        @RequestBody UserDTO userDTO)
+                                        @RequestBody @Valid UserDTO userDTO)
             throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
 
         if (isPasswordChanged) {
             userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         }
-        userService.update(userDTO);
+        userService.update(userDTO, isPasswordChanged);
         return ResponseEntity.noContent().build();
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable int id)
             throws UserNotFoundException, UserRemovalException {
+
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
+
     }
 
     @DeleteMapping
     public ResponseEntity<?> deleteUserByEmail(
-            @RequestParam(name = "email")
-                    String email) throws UserNotFoundException, UserRemovalException {
+            @RequestParam(name = "email") String email)
+            throws UserNotFoundException, UserRemovalException {
+
         userService.deleteByEmail(email);
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findOneUser(
-            @PathVariable int id) throws UserNotFoundException {
+    public ResponseEntity<User> findOneUser(@PathVariable int id)
+            throws UserNotFoundException {
+
         return ResponseEntity.ok(userService.getById(id));
+
     }
 }
