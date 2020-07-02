@@ -28,7 +28,6 @@ public class CompanyController {
         return ResponseEntity.ok(companyService.getAllCompanies().stream().map(
                 company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
         ).collect(Collectors.toList()));
-
     }
 
     //adding a company
@@ -55,13 +54,10 @@ public class CompanyController {
 
     //updating a company
     @PutMapping(value = "/update")
-    private ResponseEntity<Company> update(@RequestBody CompanyDTO company){
+    public ResponseEntity<Company> update(@RequestBody CompanyDTO company){
         Company companyById = companyService.getCompanyById(company.getId());
         companyById.setName(company.getName());
         companyService.addCompany(companyById);
         return ResponseEntity.ok(companyById);
     }
-
-
-
 }

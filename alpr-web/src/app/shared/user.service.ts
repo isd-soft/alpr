@@ -36,11 +36,10 @@ export class UserService {
   }
 
   add(user: User): Observable<any> {
-    return this.httpClient.post(this.url + '/users/add',
-      user);
+    return this.httpClient.post(this.url + '/users/add', user);
   }
 
-  remove(userId: number): Observable<any> {
-    return this.httpClient.delete(this.url + '/users/' + userId);
+  removeByEmail(email: string): Observable<any> {
+    return this.httpClient.delete(this.url + '/users?email=' + email);
   }
 }

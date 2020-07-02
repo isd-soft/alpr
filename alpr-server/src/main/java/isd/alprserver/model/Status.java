@@ -1,17 +1,21 @@
 package isd.alprserver.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@Entity
+
 @Table(name = "statuses")
-@Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Status
 {
     @Id
@@ -21,5 +25,14 @@ public class Status
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private Set<Car> cars;
+    private List<Car> cars;
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cars=" + cars.stream().map(Car::getId).collect(Collectors.toList()) +
+                '}';
+    }
 }

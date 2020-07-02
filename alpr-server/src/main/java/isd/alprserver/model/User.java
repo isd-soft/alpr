@@ -13,14 +13,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Collections;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@ToString(exclude = "company")
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -92,5 +93,21 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(getRole());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", company=" + company.getId() +
+                ", cars=" + cars.stream().map(Car::getId).collect(Collectors.toList()) +
+                ", role=" + role.getId() +
+                '}';
     }
 }
