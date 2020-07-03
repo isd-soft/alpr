@@ -12,7 +12,7 @@ export class UserService {
   }
 
   registerUser(user: User): Observable<any> {
-    return this.httpClient.post(this.url + '/register', user);
+    return this.httpClient.post<any>(this.url + '/register', user);
   }
 
 

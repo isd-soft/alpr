@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Alpr Mobile</string>
+    <string name="app_name">ALPR</string>
 
     <string name="scan">Scan</string>
     <string name="write">Write</string>
