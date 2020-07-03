@@ -47,7 +47,7 @@ export class FormGenerator {
   public generateCarEditForm(car: CarModel): FormGroup {
     return this.fb.group({
       id: [car.id],
-      licensePlate: [car.licensePlate, Validators.required],
+      licensePlate: [car.licensePlate, [Validators.required, Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
       brand: [car.brand, Validators.required],
       model: [car.model, Validators.required],
       color: [car.color, Validators.required],
