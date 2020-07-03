@@ -21,6 +21,10 @@
 .table {
 }
 
+.left-margin {
+  margin-left: 1em;
+}
+
 .profile-info-section {
   margin-bottom: 30px;
 }
