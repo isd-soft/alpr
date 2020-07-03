@@ -54,7 +54,7 @@ public class UserDTO {
                 .telephoneNumber(telephoneNumber)
                 .firstName(firstName)
                 .role(role != null ? Role.builder().name(role).build()
-                        : Role.builder().name("USER_ROLE").build())
+                        : Role.builder().name("USER").build())
                 .lastName(lastName)
                 .company(Company.builder().name(company).build())
                 .build();

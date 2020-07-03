@@ -96,11 +96,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void update(UserDTO userDTO, boolean isPasswordChanged)
-            throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
+            throws RoleNotFoundException, UserUpdatingException {
 
-        User storedUser = userRepository.findByEmail(userDTO.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("User with email " +
-                        userDTO.getEmail() + " not found"));
+        User storedUser = getUserByDTO(userDTO);
         if (storedUser.getRole().getName().equals("SYSTEM_ADMINISTRATOR")) {
             throw new UserUpdatingException("System administrator can not be updated");
         }
@@ -120,10 +118,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
+    public void changePassword(String email, String encryptedPassword) {
+
+    }
+
+    @Override
+    @Transactional
     public User getUserByEmail(String email) {
         return this.userRepository.findByEmail(email).orElseThrow(() ->
-                new UsernameNotFoundException("This user doesn't exist"));
+                new UsernameNotFoundException("User with email " +
+                        email + " not found"));
     }
+
+    private User getUserByDTO(UserDTO userDTO) {
+        return getUserByEmail(userDTO.getEmail());
+    }
+
 
     private Role getRoleOfUser(UserDTO userDTO) throws RoleNotFoundException {
         return roleRepository.findByName(userDTO.getRole()).orElseThrow(() ->

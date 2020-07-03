@@ -21,18 +21,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
 public class UserController {
 
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userService.getAll());
     }
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<?> createUser(@RequestBody @Valid UserDTO userDTO)
             throws RoleNotFoundException {
 
@@ -43,6 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<?> updateUser(@RequestParam boolean isPasswordChanged,
                                         @RequestBody @Valid UserDTO userDTO)
             throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
@@ -56,6 +58,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<?> deleteUserById(@PathVariable int id)
             throws UserNotFoundException, UserRemovalException {
 
@@ -65,6 +68,7 @@ public class UserController {
     }
 
     @DeleteMapping
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<?> deleteUserByEmail(
             @RequestParam(name = "email") String email)
             throws UserNotFoundException, UserRemovalException {
@@ -75,6 +79,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<User> findOneUser(@PathVariable int id)
             throws UserNotFoundException {
 
@@ -82,12 +87,13 @@ public class UserController {
 
     }
 
-//    @GetMapping
-//    public ResponseEntity<?> findUserByEmail(
-//            @RequestParam(name = "email") String email)
-//            throws UserNotFoundException {
-//        userService.getUserByEmail(email);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//
-//    }
+    @PutMapping("/password")
+    public ResponseEntity<?> changePassword(@RequestParam String email,
+                                            @RequestParam String password) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+
+        userService.changePassword(email, encryptedPassword);
+
+        return ResponseEntity.noContent().build();
+    }
 }
