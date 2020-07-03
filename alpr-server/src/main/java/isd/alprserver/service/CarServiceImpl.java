@@ -1,10 +1,7 @@
 package isd.alprserver.service;
 
 import isd.alprserver.dto.CarDTO;
-import isd.alprserver.model.Car;
-import isd.alprserver.model.LicenseValidationResponse;
-import isd.alprserver.model.Status;
-import isd.alprserver.model.User;
+import isd.alprserver.model.*;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.model.exceptions.StatusNotFoundException;
@@ -13,12 +10,12 @@ import isd.alprserver.repository.CarRepository;
 import isd.alprserver.repository.StatusRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +23,7 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
+    private final MailService mailService;
 
     @Override
     public List<Car> getAllCars() {
@@ -97,6 +95,9 @@ public class CarServiceImpl implements CarService {
             if (areAvailableSpots(car) && isOut(car)) {
                 car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
                 car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() - 1);
+//                if(car.get().getUser().getCompany().getNrParkingSpots() == 0) {
+//                    sendMailToOutUsers(car.get().getUser().getCompany());
+//                }
                 return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
             } else {
                 return LicenseValidationResponse.builder().car(dto).status("Forbidden").build();
@@ -106,11 +107,25 @@ public class CarServiceImpl implements CarService {
         }
     }
 
+    void sendMailToOutUsers(Company company) {
+//        getAllCars().stream()
+//                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+//                .filter(car -> car.getStatus().getName().equals("OUT"))
+//                .forEach(car -> mailService.sendEmail(car.getUser()));
+    }
+
     private boolean areAvailableSpots(Optional<Car> car) {
         return car.get().getUser().getCompany().getNrParkingSpots() > 0;
     }
 
     private boolean isOut(Optional<Car> car) {
         return car.get().getStatus().getName().equals("OUT");
+    }
+
+    @Override
+    public List<Car> getAllIn() {
+        return getAllCars().stream()
+                .filter(car -> car.getStatus().getName().equals("IN"))
+                .collect(Collectors.toList());
     }
 }

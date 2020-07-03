@@ -1,15 +1,15 @@
 package isd.alprserver;
 
-import isd.alprserver.model.Role;
-import isd.alprserver.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @SpringBootApplication
+@EnableScheduling
 public class AlprServerApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(AlprServerApplication.class, args);
     }
