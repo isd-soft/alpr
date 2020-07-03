@@ -1,5 +1,6 @@
 import {FormGroup} from '@angular/forms';
 import {User} from '../shared/user.model';
+import {CarModel} from "../shared/car.model";
 import {Injectable} from '@angular/core';
 
 @Injectable()
@@ -16,4 +17,17 @@ export class FormExtractor {
       userDetailsForm.get('role') === null ?
         'USER' : userDetailsForm.get('role').value);
   }
+
+  public extractCar(carDetailsForm: FormGroup) {
+    return new CarModel(
+      carDetailsForm.get('id').value,
+      carDetailsForm.get('licensePlate').value,
+      carDetailsForm.get('brand').value,
+      carDetailsForm.get('model').value,
+      carDetailsForm.get('color').value,
+      carDetailsForm.get('ownerName').value,
+      carDetailsForm.get('ownerTelephone').value)
+  }
 }
+
+

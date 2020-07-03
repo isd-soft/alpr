@@ -16,3 +16,19 @@ table {
 .span-icon {
   margin: auto;
 }
+
+.all-margins {
+  margin: 1em;
+}
+
+.left-margin {
+  margin-left: 1em;
+}
+
+.no-left-margin {
+  margin-left: 0;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
+}

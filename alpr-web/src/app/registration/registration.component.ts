@@ -37,9 +37,6 @@ export class RegistrationComponent implements OnInit {
     this.user = this.formExtractor.extractUser(this.registrationForm);
     this.passwordConfirm = this.registrationForm.get('confirmPassword').value;
 
-    console.log(this.passwordConfirm + " = passwordConfirm")
-    console.log(this.user.password + " = userPassword")
-
     if (this.user.password.localeCompare(this.passwordConfirm) !== 0) {
       this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});
     } else {

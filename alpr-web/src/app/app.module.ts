@@ -78,7 +78,8 @@ import { FooterComponent } from './footer/footer.component';
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [MatPaginatorModule]
 })
 export class AppModule {
 }
