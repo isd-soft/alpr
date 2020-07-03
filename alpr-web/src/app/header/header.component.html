@@ -2,9 +2,8 @@
   <span>ALPR</span>
 
   <div class="spacer"></div>
-  <a mat-button routerLink="profile" >Profile</a>
-  <a mat-button routerLink="addcar">Add Car</a>
-  <a mat-button routerLink="cars">Company's Cars</a>
-  <a mat-button >Change password</a>
-  <a mat-raised-button color="accent">Log Out</a>
+
+  <div *ngIf="user !== null">
+    <a mat-raised-button color="accent" (click)="logout()">Log Out</a>
+  </div>
 </mat-toolbar>
