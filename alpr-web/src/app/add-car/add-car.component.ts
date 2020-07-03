@@ -5,6 +5,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {CarModel} from '../shared/car.model';
 import {CarService} from "../shared/car.service";
 import {Router} from '@angular/router';
+import {AuthenticationService} from "../auth/authentication.service";
+import {User} from "../shared/user.model";
 
 @Component({
   selector: 'app-add-car',
@@ -13,6 +15,7 @@ import {Router} from '@angular/router';
 })
 export class AddCarComponent implements OnInit {
   car: CarModel = new CarModel();
+  user : User = new User();
 
    registrationForm = this.fb.group({
       licensePlate: ['', Validators.required],
@@ -24,9 +27,11 @@ export class AddCarComponent implements OnInit {
       constructor(private fb: FormBuilder,
                   private carService: CarService,
                   private snackBar: MatSnackBar,
-                  private router: Router) { }
+                  private router: Router,
+                  private authenticationService : AuthenticationService) { }
 
   ngOnInit(): void {
+  this.user = this.authenticationService.currentUserValue
   }
 
   onRegister() {
@@ -34,7 +39,7 @@ export class AddCarComponent implements OnInit {
   this.car.brand = this.registrationForm.get('brand').value;
   this.car.model = this.registrationForm.get('model').value;
   this.car.color = this.registrationForm.get('color').value;
-  this.car.ownerEmail = localStorage.getItem("email");
+  this.car.ownerEmail = this.user.email;
   console.log(this.car);
   this.carService.registerCar(this.car)
         .toPromise()
