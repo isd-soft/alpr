@@ -25,4 +25,5 @@ public interface CarService {
     Optional<Car> getByLicensePlate(String licensePlate);
 
     LicenseValidationResponse getByLicensePlates(List<String> licensePlateList);
+    List<Car> getAllIn();
 }

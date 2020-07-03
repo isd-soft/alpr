@@ -1,10 +1,7 @@
 package isd.alprserver.service;
 
 import isd.alprserver.dto.CarDTO;
-import isd.alprserver.model.Car;
-import isd.alprserver.model.LicenseValidationResponse;
-import isd.alprserver.model.Status;
-import isd.alprserver.model.User;
+import isd.alprserver.model.*;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.model.exceptions.StatusNotFoundException;
@@ -13,12 +10,13 @@ import isd.alprserver.repository.CarRepository;
 import isd.alprserver.repository.StatusRepository;
 import isd.alprserver.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +24,10 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
+    private final ParkingHistoryService parkingHistoryService;
 
     @Override
+    @Transactional
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
@@ -95,13 +95,15 @@ public class CarServiceImpl implements CarService {
                     .status(car.get().getStatus().getName())
                     .build();
             if(car.get().getStatus().getName().equals("IN")) {
-                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() + 1);
+                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                        .incrementParkingSpots();
                 car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invaldi status")));
                 return LicenseValidationResponse.builder().car(dto).status("Left").build();
             }
             if (areAvailableSpots(car) && isOut(car)) {
                 car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
-                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() - 1);
+                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                        .decrementParkingSpots();
                 return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
             } else {
                 return LicenseValidationResponse.builder().car(dto).status("Forbidden").build();
@@ -111,11 +113,22 @@ public class CarServiceImpl implements CarService {
         }
     }
 
+    private String getDateAsString() {
+        return new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
+    }
+
     private boolean areAvailableSpots(Optional<Car> car) {
-        return car.get().getUser().getCompany().getNrParkingSpots() > 0;
+        return parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId()).getNrParkingSpots() > 0;
     }
 
     private boolean isOut(Optional<Car> car) {
         return car.get().getStatus().getName().equals("OUT");
+    }
+
+    @Override
+    public List<Car> getAllIn() {
+        return getAllCars().stream()
+                .filter(car -> car.getStatus().getName().equals("IN"))
+                .collect(Collectors.toList());
     }
 }

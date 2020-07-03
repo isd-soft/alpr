@@ -13,4 +13,9 @@
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/write"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/notify_action"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="Notify"
+        app:showAsAction="ifRoom" />
 </menu>

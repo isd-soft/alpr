@@ -89,9 +89,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   addUser() {
     if (this.addUserForm.valid) {
-      let user: User = this.formExtractor.extractUser(this.addUserForm);
+      const user: User = this.formExtractor.extractUser(this.addUserForm);
       if (user.password.localeCompare(
-        this.addUserForm.get('confirmPassword').value) == 0) {
+        this.addUserForm.get('confirmPassword').value) === 0) {
         this.userService.add(user).toPromise()
           .then(_ => {
             this.snackBar.open('Successfully', 'OK', {duration: 3000});
