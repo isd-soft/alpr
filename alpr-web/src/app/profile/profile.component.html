@@ -1,0 +1,85 @@
+<section class="car-list-section">
+<!--<div class="mat-elevation-z8">-->
+  <section class="profile-info-section">
+    <mat-card class="my-card">
+      <mat-card-title class="full-width">Profile</mat-card-title>
+<!--      <div>-->
+<!--        <mat-label>First Name:</mat-label>-->
+<!--        <mat-label>*ngIf="firstName" {{user.firstName}}</mat-label></div>-->
+<!--      <div><mat-label>Last Name:</mat-label></div>-->
+<!--      <div><mat-label>Email:</mat-label></div>-->
+<!--      <div><mat-label>Age:</mat-label></div>-->
+<!--      <div><mat-label>Telephone:</mat-label></div>-->
+<!--      <div><mat-label>Company:</mat-label>-->
+<!--      </div>-->
+
+      <mat-card-content class="card-content">
+        <mat-form-field>
+          <mat-label>First Name:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.firstName">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Last Name:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.lastName">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.email">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Age:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.age">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Telephone:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Company:</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="user.company">
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <section class="car-list-table-section mat-elevation-z8">
+    <mat-table class="table" matSort [dataSource]="dataSource">
+      <ng-container matColumnDef="licensePlate">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+        <mat-cell class="description-cell"
+                  *matCellDef="let car">{{car.licensePlate}}</mat-cell>
+
+      </ng-container>
+
+      <ng-container matColumnDef="brand">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">{{car.brand}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">{{car.model}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="color" >
+        <mat-header-cell  *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">
+        <span class="color-title">
+          {{car.color}}
+        </span>
+          <span   class="material-icons span-icon" style="color:{{car.color}}; margin-left: 1px">directions_car</span>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns"
+               (click)="onRowClicked(row)">
+      </mat-row>
+
+    </mat-table>
+  </section>
+<!--</div>-->
+</section>

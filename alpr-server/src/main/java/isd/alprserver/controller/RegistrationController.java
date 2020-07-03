@@ -25,8 +25,8 @@ public class RegistrationController {
     public ResponseEntity<Response<String>> addUser(@RequestBody @Valid UserDTO userDTO)
             throws RoleNotFoundException {
 
-        System.out.println(userDTO);
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        userDTO.setRole("USER");
 
         userService.insert(userDTO);
 

@@ -31,16 +31,28 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {AddCarComponent} from './add-car/add-car.component';
+import { HomeComponent } from './home/home.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import { ProfileComponent } from './profile/profile.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import {AuthenticationService} from './auth/authentication.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     LoginComponent,
-    RegistrationComponent,
     UsersComponent,
     AddCarComponent,
-    CarListComponent
+    CarListComponent,
+    HomeComponent,
+    NavigationComponent,
+    ProfileComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -62,10 +74,12 @@ import {AddCarComponent} from './add-car/add-car.component';
     MatDialogModule,
     MatIconModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatToolbarModule,
+    MatTabsModule
   ],
   providers: [UserService, CompanyService, CarService,
-    FormExtractor, FormGenerator,
+    FormExtractor, FormGenerator, AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

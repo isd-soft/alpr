@@ -10,6 +10,7 @@ import isd.alprserver.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
 public class UserController {
 
     private final UserService userService;
@@ -79,4 +81,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
 
     }
+
+//    @GetMapping
+//    public ResponseEntity<?> findUserByEmail(
+//            @RequestParam(name = "email") String email)
+//            throws UserNotFoundException {
+//        userService.getUserByEmail(email);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//
+//    }
 }

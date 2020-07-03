@@ -15,7 +15,7 @@ export class AddCarComponent implements OnInit {
   car: CarModel = new CarModel();
 
    registrationForm = this.fb.group({
-      licensePlate: ['', Validators.required ],
+      licensePlate: ['', Validators.required],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       color: ['', Validators.required],

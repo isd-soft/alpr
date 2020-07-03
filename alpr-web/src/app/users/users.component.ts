@@ -11,7 +11,7 @@ import {CompanyService} from '../shared/company.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {CarModel} from '../shared/car.model';
+import {Role} from '../auth/role';
 
 @Component({
   selector: 'app-users',
@@ -28,9 +28,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
   addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
   editUserForm: FormGroup;
   companies = [];
-  roles = ['USER', 'SYSTEM_ADMINISTRATOR'];
   editedUser: User;
   editPasswordChecked = false;
+  roles = [Role.User, Role.Admin];
+  adminRole = Role.Admin;
+  userRole = Role.User;
+  value = '';
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -45,13 +48,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   ngOnInit() {
+    console.log(Role.Admin)
   }
 
   loadUsers() {
     this.userService.getAll()
       .subscribe(users => {
         this.users = users;
-        console.log(users[0]);
         this.updateTable(this.users);
       });
   }
@@ -74,7 +77,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
       .then(_ => {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.users.splice(this.users.indexOf(user), 1);
-        // todo: user is not removed from array
         this.loadUsers();
       })
       .catch(_ => {
@@ -138,7 +140,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.usersDataSource.sort = this.sort;
       })
       .catch(_ => {
-        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+        this.snackBar.open('Oops! Something went wrong; Users not loaded',
+          'OK', {duration: 3000});
+      });
+    this.companyService.getAll().toPromise()
+      .then(companies => {
+        this.companies = companies;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong; Companies not loaded',
+          'OK', {duration: 3000});
       });
   }
 

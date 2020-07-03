@@ -2,6 +2,7 @@ package isd.alprserver.service;
 
 import isd.alprserver.dto.CompanyDTO;
 import isd.alprserver.model.Company;
+import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.CompanyNotFoundException;
 import isd.alprserver.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
@@ -70,4 +71,5 @@ public class CompanyServiceImpl implements CompanyService
     {
         return this.companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("This company doesn't exist"));
     }
+
 }
