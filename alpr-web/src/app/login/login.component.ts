@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../shared/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,8 @@ export class LoginComponent implements OnInit {
   @ViewChild('password') passwordRef: ElementRef;
 
   constructor(private userService: UserService,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +33,7 @@ export class LoginComponent implements OnInit {
           .toPromise()
           .then(responseString => alert("You are authenticated!"))
           .catch(error => console.error(error));
+        this.router.navigate(['profile'])
       })
       .catch(error => {
         console.log(error);

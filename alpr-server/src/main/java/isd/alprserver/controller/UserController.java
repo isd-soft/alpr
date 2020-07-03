@@ -79,4 +79,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
 
     }
+
+    @GetMapping
+    public ResponseEntity<?> findUserByEmail(
+            @RequestParam(name = "email") String email)
+            throws UserNotFoundException {
+        userService.getUserByEmail(email);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

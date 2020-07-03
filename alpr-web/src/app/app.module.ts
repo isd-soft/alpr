@@ -33,6 +33,8 @@ import {MatSortModule} from "@angular/material/sort";
 import { AddCarComponent } from './add-car/add-car.component';
 import { ProfileComponent } from './profile/profile.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     UsersComponent,
     AddCarComponent,
     CarListComponent,
-    ProfileComponent
+    ProfileComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

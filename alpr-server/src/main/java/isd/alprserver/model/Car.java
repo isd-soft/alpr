@@ -22,6 +22,8 @@ public class Car {
     private long id;
 
     @Column(unique = true)
+    @NotNull
+    @Pattern(regexp = "([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{1,3})")
     private String licensePlate;
 
     @NotNull
