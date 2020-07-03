@@ -7,6 +7,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,6 +15,7 @@ public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
 
     @Override
+    @Transactional(readOnly = true)
     public void sendEmail(User user, int nrParkingSpots) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());

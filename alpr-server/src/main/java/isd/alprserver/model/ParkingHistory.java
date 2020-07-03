@@ -31,4 +31,12 @@ public class ParkingHistory {
     public String toString() {
         return id + " " + "company(" + companyId + ") " + date + " " + nrParkingSpots;
     }
+
+    public void decrementParkingSpots() {
+        nrParkingSpots -= 1;
+    }
+
+    public void incrementParkingSpots() {
+        nrParkingSpots += 1;
+    }
 }

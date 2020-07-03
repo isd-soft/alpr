@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,9 +24,10 @@ public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
     private final StatusRepository statusRepository;
-    private final MailService mailService;
+    private final ParkingHistoryService parkingHistoryService;
 
     @Override
+    @Transactional
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
@@ -93,16 +95,15 @@ public class CarServiceImpl implements CarService {
                     .status(car.get().getStatus().getName())
                     .build();
             if(car.get().getStatus().getName().equals("IN")) {
-                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() + 1);
+                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                        .incrementParkingSpots();
                 car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invaldi status")));
                 return LicenseValidationResponse.builder().car(dto).status("Left").build();
             }
             if (areAvailableSpots(car) && isOut(car)) {
                 car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
-                car.get().getUser().getCompany().setNrParkingSpots(car.get().getUser().getCompany().getNrParkingSpots() - 1);
-//                if(car.get().getUser().getCompany().getNrParkingSpots() == 0) {
-//                    sendMailToOutUsers(car.get().getUser().getCompany());
-//                }
+                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                        .decrementParkingSpots();
                 return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
             } else {
                 return LicenseValidationResponse.builder().car(dto).status("Forbidden").build();
@@ -112,15 +113,12 @@ public class CarServiceImpl implements CarService {
         }
     }
 
-    void sendMailToOutUsers(Company company) {
-//        getAllCars().stream()
-//                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-//                .filter(car -> car.getStatus().getName().equals("OUT"))
-//                .forEach(car -> mailService.sendEmail(car.getUser()));
+    private String getDateAsString() {
+        return new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
     }
 
     private boolean areAvailableSpots(Optional<Car> car) {
-        return car.get().getUser().getCompany().getNrParkingSpots() > 0;
+        return parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId()).getNrParkingSpots() > 0;
     }
 
     private boolean isOut(Optional<Car> car) {

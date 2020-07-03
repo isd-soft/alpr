@@ -25,8 +25,9 @@ public class EmailSenderService {
     private final CarService carService;
 
     //"0 0 0 * * *"
-    @Scheduled(cron = "0 0 0 * * *")
-    void updateParkingHistory() {
+    @Scheduled(cron = "*/10 * * * * *")
+    public void updateParkingHistory() {
+//        System.out.println("here");
 //        companyService.getCompanies()
 //                .forEach(company -> {
 //                    ParkingHistory history = ParkingHistory.builder().
@@ -40,20 +41,20 @@ public class EmailSenderService {
 //        System.out.println("done");
     }
 
-    @Scheduled(cron = "*/13 * 9-11 * * ?")
+    @Scheduled(cron = "*/10 * 9-18 * * ?")
     @Transactional
-    void check() {
-//        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
-//        companyService.getCompanies()
-//                .forEach(company -> {
-//                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
-//                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
-//                        history.setLastSentNotification(history.getNrParkingSpots());
-//                        carService.getAllCars().stream()
-//                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-//                                .filter(car -> car.getStatus().getName().equals("OUT"))
-//                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
-//                    }
-//                });
+    public void check() {
+        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
+        companyService.getCompanies()
+                .forEach(company -> {
+                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
+                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
+                        history.setLastSentNotification(history.getNrParkingSpots());
+                        carService.getAllCars().stream()
+                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+                                .filter(car -> car.getStatus().getName().equals("OUT"))
+                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
+                    }
+                });
     }
 }

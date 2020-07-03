@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +61,7 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_notify, container, false);
+        final View view = inflater.inflate(R.layout.fragment_notify, container, false);
         tableLayout = (TableLayout) view.findViewById(R.id.table);
         Call<List<Car>> call = APIClient.getClient().create(APIInterface.class).getAllInCars();
         call.enqueue(new Callback<List<Car>>() {
@@ -72,6 +73,7 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
                     TableRow row = new TableRow(getContext());
                     TextView textView = new TextView(getContext());
                     textView.setText(car.licensePlate);
+
                     row.addView(textView);
                     Button button = new Button(getContext());
                     button.setText(">");
@@ -85,6 +87,14 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
                                 @Override
                                 public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
                                     Log.i("ocr-cars", response.body().response);
+                                    Snackbar.make(view, response.body().response, Snackbar.LENGTH_LONG)
+                                            .setAction("OK", new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    
+                                                }
+                                            })
+                                            .show();
                                 }
 
                                 @Override
