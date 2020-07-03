@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
               private snackBar: MatSnackBar,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
               private router: Router) {
   }
 

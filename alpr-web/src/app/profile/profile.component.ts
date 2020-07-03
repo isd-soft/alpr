@@ -6,6 +6,7 @@ import {CarService} from "../shared/car.service";
 import {User} from "../shared/user.model";
 import {UserService} from "../shared/user.service";
 import {Router} from '@angular/router';
+import {AuthenticationService} from "../auth/authentication.service";
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   constructor(private carService: CarService,
               private userService: UserService,
-              private router: Router) { }
+              private router: Router,
+              private authenticationService : AuthenticationService) { }
 
   onRowClicked(row) {
       console.log('Row clicked: ', row);
@@ -39,7 +41,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-        this.userService.getByEmail(localStorage.getItem("email")).subscribe(user => this.user = user);
+   this.user = authenticationService.currentUserValue()
   }
 
 }
