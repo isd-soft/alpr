@@ -15,7 +15,7 @@ import {FormGenerator} from '../utils/form.generator';
 })
 export class RegistrationComponent implements OnInit {
   user: User = new User();
-  passwordConfirm: string = '';
+  passwordConfirm = '';
 
   companies = [];
 
@@ -46,12 +46,14 @@ export class RegistrationComponent implements OnInit {
           this.snackBar.open('Successfully', 'OK', {duration: 3000});
           this.router.navigate(['login']);
         })
-        .catch(error => this.handleError(error));
+        .catch(error => {
+          this.handleError(error);
+        });
     }
   }
 
-  handleError(httpError: HttpErrorResponse): void {
-    this.snackBar.open(httpError.error.value, 'OK', {duration: 4000});
+  handleError(httpError: string): void {
+    this.snackBar.open(httpError, 'OK', {duration: 4000});
   }
 
 }

@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="user !== null">
   <nav mat-tab-nav-bar [backgroundColor]="'primary'">
 
     <a mat-tab-link *ngFor="let navLink of links"

@@ -49,12 +49,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
+        this.nav.setSelectedItemId(R.id.scan_plate_action);
         replaceFrame(scanFragment);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        this.nav.setSelectedItemId(R.id.scan_plate_action);
         replaceFrame(scanFragment);
     }
 

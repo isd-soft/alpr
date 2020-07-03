@@ -91,7 +91,7 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
                                             .setAction("OK", new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
-                                                    
+
                                                 }
                                             })
                                             .show();
