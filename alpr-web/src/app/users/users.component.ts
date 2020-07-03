@@ -11,6 +11,7 @@ import {CompanyService} from '../shared/company.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {Role} from '../auth/role';
 
 @Component({
   selector: 'app-users',
@@ -27,9 +28,12 @@ export class UsersComponent implements OnInit, AfterViewInit {
   addUserForm: FormGroup = this.formGenerator.generateUserAddForm();
   editUserForm: FormGroup;
   companies = [];
-  roles = ['USER', 'SYSTEM_ADMINISTRATOR'];
   editedUser: User;
   editPasswordChecked = false;
+  roles = [Role.User, Role.Admin];
+  adminRole = Role.Admin;
+  userRole = Role.User;
+  value = '';
 
   constructor(private userService: UserService,
               private companyService: CompanyService,
@@ -44,6 +48,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   ngOnInit() {
+    console.log(Role.Admin)
   }
 
   loadUsers() {
