@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
       this.carService.getCars().toPromise().then(cars => {
-        this.cars = cars;
+        this.cars = cars.filter(car => car.ownerEmail.localeCompare(this.authenticationService.currentUserValue.email) === 0);
         this.dataSource = new MatTableDataSource<CarModel>(this.cars);
         this.dataSource.sort = this.sort;
       });
