@@ -18,40 +18,40 @@ public class AlprServerApplication {
         SpringApplication.run(AlprServerApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner initRoles(RoleRepository roleRepository,
-                                       UserService userService,
-                                       CompanyRepository companyRepository,
-                                       BCryptPasswordEncoder bCryptPasswordEncoder) {
-
-        return args -> {
-            Role userRole = Role.builder()
-                    .name("USER")
-                    .build();
-            Role adminRole = Role.builder()
-                    .name("SYSTEM_ADMINISTRATOR")
-                    .build();
-            roleRepository.save(userRole);
-            roleRepository.save(adminRole);
-
-            companyRepository.save(Company.builder()
-                    .name("ISD")
-                    .nrParkingSpots(22)
-                    .build());
-
-            UserDTO userDTO = UserDTO.builder()
-                    .age(22)
-                    .company("ISD")
-                    .email("admin@mail.com")
-                    .firstName("admin")
-                    .lastName("admin")
-                    .password("admin")
-                    .telephoneNumber("+37377777777")
-                    .role("SYSTEM_ADMINISTRATOR")
-                    .build();
-            userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-
-            userService.insert(userDTO);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner initRoles(RoleRepository roleRepository,
+//                                       UserService userService,
+//                                       CompanyRepository companyRepository,
+//                                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+//
+//        return args -> {
+//            Role userRole = Role.builder()
+//                    .name("USER")
+//                    .build();
+//            Role adminRole = Role.builder()
+//                    .name("SYSTEM_ADMINISTRATOR")
+//                    .build();
+//            roleRepository.save(userRole);
+//            roleRepository.save(adminRole);
+//
+//            companyRepository.save(Company.builder()
+//                    .name("ISD")
+//                    .nrParkingSpots(22)
+//                    .build());
+//
+//            UserDTO userDTO = UserDTO.builder()
+//                    .age(22)
+//                    .company("ISD")
+//                    .email("admin@mail.com")
+//                    .firstName("admin")
+//                    .lastName("admin")
+//                    .password("admin")
+//                    .telephoneNumber("+37377777777")
+//                    .role("SYSTEM_ADMINISTRATOR")
+//                    .build();
+//            userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+//
+//            userService.insert(userDTO);
+//        };
+//    }
 }
