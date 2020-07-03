@@ -20,11 +20,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     let user: User = this.authenticationService.currentUserValue;
-    console.log(user.role + "user role in home")
     if (user.role == Role.Admin) {
       this.router.navigate(['/cars']);
     } else {
-      this.router.navigate(['/register']);
+      this.router.navigate(['/profile']);
     }
   }
 

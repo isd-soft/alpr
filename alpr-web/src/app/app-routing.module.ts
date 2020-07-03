@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   {path: 'cars', component: CarListComponent, canActivate: [AuthGuard]},
   {path: 'addcar', component: AddCarComponent, canActivate: [AuthGuard]},
-  {path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
 
 

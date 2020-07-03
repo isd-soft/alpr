@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   };
 
   ngOnInit(): void {
-   this.user = authenticationService.currentUserValue()
+   this.user = this.authenticationService.currentUserValue
   }
 
 }
