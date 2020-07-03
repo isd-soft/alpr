@@ -25,12 +25,16 @@ import {FormGenerator} from './utils/form.generator';
 import {UsersComponent} from './users/users.component';
 import {JwtInterceptor} from './auth/jwt.interceptor';
 import {ErrorInterceptor} from './auth/error.interceptor';
-import {CarListComponent} from "./car-list/car-list.component";
-import {CarService} from "./shared/car.service";
+import {CarListComponent} from './car-list/car-list.component';
+import {CarService} from './shared/car.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {AddCarComponent} from './add-car/add-car.component';
+import { HomeComponent } from './home/home.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from "@angular/material/icon";
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatSortModule} from "@angular/material/sort";
-import { AddCarComponent } from './add-car/add-car.component';
 import { ProfileComponent } from './profile/profile.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
@@ -45,6 +49,8 @@ import { FooterComponent } from './footer/footer.component';
     UsersComponent,
     AddCarComponent,
     CarListComponent,
+    HomeComponent,
+    NavigationComponent
     ProfileComponent,
     HeaderComponent,
     FooterComponent
@@ -71,6 +77,7 @@ import { FooterComponent } from './footer/footer.component';
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule
+    MatTabsModule
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator,
