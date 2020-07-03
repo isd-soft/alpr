@@ -76,7 +76,8 @@ import {AuthenticationService} from './auth/authentication.service';
     MatPaginatorModule,
     MatSortModule,
     MatToolbarModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService,

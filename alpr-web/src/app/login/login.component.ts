@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
       .then(response => {
         console.log(response.token);
         this.snackBar.open('Successfully', 'OK', {duration: 4000});
-        this.router.navigate(['profile'])
+        this.router.navigate(['/'])
       })
       .catch(error => {
+        this.snackBar.open("Oops! Something went wrong. Bad Credentials?", 'OK', {duration: 4000});
         console.log(error);
-        this.snackBar.open(error.error.value, 'OK', {duration: 4000});
       });
   }
 

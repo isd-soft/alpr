@@ -48,7 +48,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   ngOnInit() {
-    console.log(Role.Admin)
   }
 
   loadUsers() {
