@@ -23,13 +23,15 @@ export class AuthenticationService {
   login(email: string, password: string) {
     return this.http.post<any>(this.url + `/authenticate`,
       {email, password})
-      .pipe(map(user => {
-        if (user && user.token) {
+      .pipe(map(jwtAuthResponse => {
+        if (jwtAuthResponse.user && jwtAuthResponse.token) {
+          let user: User = jwtAuthResponse.user;
+          user.token = jwtAuthResponse.token;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
 
-        return user;
+        return jwtAuthResponse;
       }));
   }
 

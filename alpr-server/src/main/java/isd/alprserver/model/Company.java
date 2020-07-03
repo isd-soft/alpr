@@ -42,4 +42,5 @@ public class Company {
                 ", users=" + users.stream().map(User::getId).collect(Collectors.toList()) +
                 '}';
     }
+
 }

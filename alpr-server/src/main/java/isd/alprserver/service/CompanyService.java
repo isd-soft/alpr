@@ -2,6 +2,7 @@ package isd.alprserver.service;
 
 import isd.alprserver.dto.CompanyDTO;
 import isd.alprserver.model.Company;
+import isd.alprserver.model.User;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface CompanyService {
     Company updateCompany(Company company);
 
     Company getByName(String name);
+
 }

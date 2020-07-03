@@ -61,7 +61,7 @@
     <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
       <mat-cell *matCellDef="let user">
-        {{user.role == 'SYSTEM_ADMINISTRATOR' ?
+        {{user.role == adminRole ?
         'SYSTEM ADMIN' : 'USER'}}
       </mat-cell>
     </ng-container>
@@ -72,11 +72,11 @@
 
         <button mat-raised-button color="primary"
                 (click)="onEdit(editUserTemplate, user)"
-                *ngIf="user.role === 'USER'; else noActions">Edit
+                *ngIf="user.role === userRole; else noActions">Edit
         </button>
         <button mat-raised-button color="warn" class="left-margin"
                 (click)="onDelete(user)"
-                *ngIf="user.role === 'USER'; else noActions">Remove
+                *ngIf="user.role === userRole; else noActions">Remove
         </button>
       </mat-cell>
 
@@ -86,7 +86,7 @@
     <mat-row *matRowDef="let user; columns: columnsToDisplay"></mat-row>
 
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
 </mat-card>
 
 <ng-template #addUserTemplate>

@@ -2,6 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../shared/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthenticationService} from '../auth/authentication.service';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService,
               private snackBar: MatSnackBar,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
       .then(response => {
         console.log(response.token);
         this.snackBar.open('Successfully', 'OK', {duration: 4000});
+        this.router.navigate(['profile'])
       })
       .catch(error => {
         console.log(error);
