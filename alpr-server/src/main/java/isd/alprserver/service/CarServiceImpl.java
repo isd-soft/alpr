@@ -97,7 +97,7 @@ public class CarServiceImpl implements CarService {
             if(car.get().getStatus().getName().equals("IN")) {
                 parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
                         .incrementParkingSpots();
-                car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invaldi status")));
+                car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
                 return LicenseValidationResponse.builder().car(dto).status("Left").build();
             }
             if (areAvailableSpots(car) && isOut(car)) {
