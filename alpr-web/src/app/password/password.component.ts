@@ -34,7 +34,9 @@ export class PasswordComponent implements OnInit {
 
     if (this.user.role === Role.User) {
       this.userService.hasCars(this.user.email).toPromise()
-        .then(_ => this.hasCars = true)
+        .then(response => {
+          this.hasCars = response;
+        })
         .catch(_ => this.snackBar.open(
           'Oops! Something went wrong', 'OK', {duration: 3000}));
     }
