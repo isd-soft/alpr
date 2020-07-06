@@ -40,6 +40,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +79,7 @@ import {AuthenticationService} from './auth/authentication.service';
     MatToolbarModule,
     MatTabsModule,
     HttpClientModule
+
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService,

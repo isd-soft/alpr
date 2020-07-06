@@ -12,12 +12,7 @@ export class AppComponent {
   title = 'alpr-web';
 
 
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
-    // this.matIconRegistry.addSvgIcon( 'icon', this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/img/logo.svg"));
-
-    // iconRegistry.addSvgIcon('icon',
-    //   sanitizer.bypassSecurityTrustResourceUrl('assets/img/logo.svg'));
-
+  constructor() {
   }
 
 }
