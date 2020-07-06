@@ -23,4 +23,6 @@ public interface UserService {
     void deleteByEmail(String email) throws UserNotFoundException, UserRemovalException;
 
     void update(UserDTO userDTO, boolean isPasswordChanged) throws UserNotFoundException, RoleNotFoundException, UserUpdatingException;
+
+    void changePassword(String email, String encryptedPassword);
 }

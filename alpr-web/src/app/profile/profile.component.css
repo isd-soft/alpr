@@ -15,9 +15,14 @@
 
 .card-content {
   width: 100%;
-}
+  font-size: 15px;
+  }
 
 .table {
+}
+
+.left-margin {
+  margin-left: 1em;
 }
 
 .profile-info-section {

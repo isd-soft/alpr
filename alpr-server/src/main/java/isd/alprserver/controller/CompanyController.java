@@ -32,9 +32,10 @@ public class CompanyController {
 
     //adding a company
     @PostMapping("/add")
-    public ResponseEntity<Company> add(@RequestParam String name) {
+    public ResponseEntity<Company> add(@RequestBody CompanyDTO companyDTO) {
         Company company = new Company();
-        company.setName(name);
+        company.setName(companyDTO.getName());
+        company.setNrParkingSpots(companyDTO.getNrParkingSpots());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(companyService.addCompany(company));
@@ -57,6 +58,7 @@ public class CompanyController {
     public ResponseEntity<Company> update(@RequestBody CompanyDTO company){
         Company companyById = companyService.getCompanyById(company.getId());
         companyById.setName(company.getName());
+        companyById.setNrParkingSpots(company.getNrParkingSpots());
         companyService.addCompany(companyById);
         return ResponseEntity.ok(companyById);
     }

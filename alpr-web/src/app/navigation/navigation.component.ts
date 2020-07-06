@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/user.model';
 import {AuthenticationService} from '../auth/authentication.service';
-import {Router} from '@angular/router';
 import {Role} from '../auth/role';
 
 @Component({
@@ -14,14 +13,13 @@ export class NavigationComponent implements OnInit {
   user: User;
   links: any[];
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(user => {
       this.user = user;
-      if (this.user.role == Role.Admin) {
+      if (this.user && this.user.role == Role.Admin) {
         this.links = [
           {
             link: 'cars',
@@ -44,12 +42,12 @@ export class NavigationComponent implements OnInit {
           {
             link: 'addcar',
             name: 'Add Car'
-          },
-          {
-            link: '',
-            name: 'Change password'
           }];
       }
+      this.links.push({
+        link: 'password',
+        name: 'Change password'
+      });
     });
   }
 }

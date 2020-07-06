@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import isd.alpr_mobile.R;
+import isd.alpr_mobile.main.notify.NotifyFragment;
 import isd.alpr_mobile.main.scan.OnScanFragmentInteractionListener;
 import isd.alpr_mobile.main.scan.ScanFragment;
 import isd.alpr_mobile.main.write.OnWriteFragmentInteractionListener;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView nav;
     private ScanFragment scanFragment;
     private WriteFragment writeFragment;
+    private NotifyFragment notifyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,20 @@ public class MainActivity extends AppCompatActivity
 
         scanFragment = new ScanFragment();
         writeFragment = new WriteFragment();
+        notifyFragment = new NotifyFragment();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        this.nav.setSelectedItemId(R.id.scan_plate_action);
+        replaceFrame(scanFragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.nav.setSelectedItemId(R.id.scan_plate_action);
         replaceFrame(scanFragment);
     }
 
@@ -56,6 +67,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.write_plate_action:
                 replaceFrame(writeFragment);
+                break;
+            case R.id.notify_action:
+                replaceFrame(notifyFragment);
                 break;
         }
         // todo: get stored fragment in getSupportFragmentManager() instead of creating new

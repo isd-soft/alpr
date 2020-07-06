@@ -73,6 +73,84 @@
           <span   class="material-icons span-icon" style="color:{{car.color}}; margin-left: 1px">directions_car</span>
         </mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element; let car">
+
+          <button mat-raised-button color="primary"
+                  (click)="onEdit(editCarTemplate, car)">Edit
+          </button>
+          <button mat-raised-button color="warn" class="left-margin"
+                  (click)="onDelete(car)">Remove
+          </button>
+        </mat-cell>
+
+      </ng-container>
+
+      <ng-template #editCarTemplate>
+        <div>
+          <div mat-dialog-title>
+            <h2>Edit Car</h2>
+            <mat-divider></mat-divider>
+            <h5>{{editedCar.licensePlate}}</h5>
+          </div>
+          <mat-dialog-content [formGroup]="editCarForm">
+
+            <mat-form-field>
+              <mat-label>Brand</mat-label>
+              <input matInput placeholder="brand" class="no-left-margin"
+                     name="brand" type="text" required
+                     formControlName="brand">
+            </mat-form-field>
+
+            <mat-form-field class="left-margin">
+              <mat-label>Model</mat-label>
+              <input matInput placeholder="model"
+                     name="model" type="text"
+                     required formControlName="model">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field class="no-left-margin">
+              <mat-label>Color</mat-label>
+              <input matInput placeholder="color" name="color"
+                     type="text" required formControlName="color">
+            </mat-form-field>
+
+            <mat-form-field class="left-margin">
+              <mat-label>Owner</mat-label>
+              <input matInput placeholder="owner"
+                     name="owner" type="text" required
+                     formControlName="ownerName">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+              <mat-label>TelephoneNumber</mat-label>
+              <input matInput placeholder="ownerTelephone" name="ownerTelephone"
+                     class="no-left-margin" type="text"
+                     required formControlName="ownerTelephone">
+            </mat-form-field>
+
+            <mat-dialog-actions class="no-bottom-margin">
+              <button class="mat-raised-button"
+                      [mat-dialog-close]="true">Close
+              </button>
+              <button class="mat-raised-button mat-primary left-margin"
+                      [mat-dialog-close]="true" (click)="updateCar()" >Update
+              </button>
+            </mat-dialog-actions>
+
+          </mat-dialog-content>
+        </div>
+      </ng-template>
+
+      <ng-template #noActions>
+      </ng-template>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
       <mat-row *matRowDef="let row; columns: displayedColumns"
