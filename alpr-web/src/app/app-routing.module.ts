@@ -10,6 +10,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {HomeComponent} from './home/home.component';
 import {LoginGuard} from './auth/login.guard';
 import {CompaniesComponent} from './companies/companies.component';
+import {PasswordComponent} from './password/password.component';
 
 
 
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'companies', component: CompaniesComponent, canActivate: [AuthGuard]},
   {path: 'addcar', component: AddCarComponent, canActivate: [AuthGuard]},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'password', component: PasswordComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -40,6 +40,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
+import { PasswordComponent } from './password/password.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import {AuthenticationService} from './auth/authentication.service';
     NavigationComponent,
     ProfileComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
