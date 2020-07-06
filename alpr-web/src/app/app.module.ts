@@ -41,7 +41,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import { PasswordComponent } from './password/password.component';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -82,8 +83,9 @@ import { PasswordComponent } from './password/password.component';
     MatSortModule,
     MatToolbarModule,
     MatTabsModule,
-    HttpClientModule
-
+    HttpClientModule,
+    MatSidenavModule,
+    NgbModule
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService,
