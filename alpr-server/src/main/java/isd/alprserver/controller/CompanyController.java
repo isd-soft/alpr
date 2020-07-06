@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import isd.alprserver.model.Company;
 import isd.alprserver.service.CompanyService;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/companies")
@@ -32,7 +34,7 @@ public class CompanyController {
 
     //adding a company
     @PostMapping("/add")
-    public ResponseEntity<Company> add(@RequestBody CompanyDTO companyDTO) {
+    public ResponseEntity<Company> add(@RequestBody @Valid CompanyDTO companyDTO) {
         Company company = new Company();
         company.setName(companyDTO.getName());
         company.setNrParkingSpots(companyDTO.getNrParkingSpots());

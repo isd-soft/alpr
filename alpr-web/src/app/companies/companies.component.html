@@ -36,7 +36,7 @@
 
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element; let companyModel" mat-sort-header class="align-right">
+      <mat-cell *matCellDef="let element; let companyModel"  class="align-right">
 
         <button mat-raised-button color="primary"
                 (click)="onEdit(editCompanyTemplate, companyModel)">Edit
@@ -68,7 +68,7 @@
       </mat-form-field>
 
       <mat-form-field class="left-margin">
-        <mat-label>nrParkingSpots</mat-label>
+        <mat-label>Number of Parking Spots</mat-label>
         <input matInput placeholder="nrParkingSpots" name="nrParkingSpots" class="no-left-margin"
                type="number" required formControlName="nrParkingSpots">
       </mat-form-field>
@@ -100,18 +100,16 @@
     </div>
     <mat-dialog-content [formGroup]="editCompanyForm">
 
-      <mat-form-field class="left-margin">
+      <mat-form-field >
         <mat-label>Name</mat-label>
         <input matInput placeholder="name"
                name="name" type="text"
                required formControlName="name">
       </mat-form-field>
-
       <br>
-
       <mat-form-field>
-        <mat-label>nrParkingSpots</mat-label>
-        <input matInput placeholder="nrParkingSpots" name="nrParkingSpots"
+        <mat-label>Number of Parking Spots</mat-label>
+        <input matInput placeholder="Number of Parking Spots" name="nrParkingSpots"
                class="no-left-margin" type="number"
                required formControlName="nrParkingSpots">
       </mat-form-field>
