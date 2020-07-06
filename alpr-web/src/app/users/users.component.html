@@ -9,7 +9,7 @@
 
   <mat-form-field id="example-form-field">
 
-    <mat-label class="material-icons" >search</mat-label>
+    <mat-label class="material-icons">search</mat-label>
     <label>
       <input (keyup)="applyFilter($event.target.value)"
              matInput placeholder="Search for user"
@@ -23,12 +23,12 @@
 
   <mat-table matSort [dataSource]="usersDataSource">
 
-    <ng-container matColumnDef="email"  >
-      <mat-header-cell class="email-container" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-      <mat-cell  class="email-container" *matCellDef="let user">{{user.email}}</mat-cell>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="firstName"  >
+    <ng-container matColumnDef="firstName">
       <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
       <mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
     </ng-container>
@@ -54,7 +54,7 @@
     </ng-container>
 
     <ng-container matColumnDef="password">
-      <mat-header-cell *matHeaderCellDef >Password</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Password</mat-header-cell>
       <mat-cell *matCellDef="let user">{{user.password}}</mat-cell>
     </ng-container>
 
