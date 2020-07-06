@@ -6,6 +6,7 @@ import isd.alprserver.model.exceptions.RoleNotFoundException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.exceptions.UserRemovalException;
 import isd.alprserver.model.exceptions.UserUpdatingException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
@@ -24,5 +25,7 @@ public interface UserService {
 
     void update(UserDTO userDTO, boolean isPasswordChanged) throws UserNotFoundException, RoleNotFoundException, UserUpdatingException;
 
-    void changePassword(String email, String encryptedPassword);
+    void changePassword(String email, String oldPassword, String newPassword, String licensePlate, BCryptPasswordEncoder bCryptPasswordEncoder) throws UserUpdatingException;
+
+    boolean hasCars(String email);
 }
