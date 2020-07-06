@@ -1,3 +1,4 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <mat-toolbar>
   <span>Registration</span>
 </mat-toolbar>
@@ -50,7 +51,10 @@
 
   </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-raised-button type="submit" (click)="onRegister()" color="primary" [disabled]="!registrationForm.valid">Register</button>
+  <mat-card-actions class="container">
+    <button mat-raised-button type="submit" (click)="onRegister()"
+            color="primary" [disabled]="!registrationForm.valid">Register</button>
+    <button mat-raised-button (click)="moveToLogin()"
+            style="margin-top: 1em" color="accent">Login</button>
   </mat-card-actions>
 </mat-card>
