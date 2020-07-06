@@ -13,3 +13,11 @@
 .no-bottom-margin {
   margin-bottom: 0;
 }
+
+#firstName {
+  padding-left: 100px;
+
+}
+.email-container{
+  width: 100px!important;
+}
