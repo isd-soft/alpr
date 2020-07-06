@@ -42,6 +42,7 @@ import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import { PasswordComponent } from './password/password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,6 +83,7 @@ import { PasswordComponent } from './password/password.component';
     MatToolbarModule,
     MatTabsModule,
     HttpClientModule
+
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService,
