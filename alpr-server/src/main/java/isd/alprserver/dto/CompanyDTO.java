@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Data
 public class CompanyDTO {
 
-    @NotNull
+//    @NotNull
     private long id;
 
     @NotNull
@@ -26,7 +26,7 @@ public class CompanyDTO {
 
         public Company toCompany() {
             return Company.builder()
-//                    .id(id)
+                    .id(id)
                     .name(name)
                     .nrParkingSpots(nrParkingSpots)
                     .build();

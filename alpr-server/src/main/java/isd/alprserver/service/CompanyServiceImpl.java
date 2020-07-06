@@ -52,6 +52,7 @@ public class CompanyServiceImpl implements CompanyService
     }
 
     @Override
+    @Transactional
     public Company updateCompany(Company company) {
         return companyRepository.save(company);
     }
@@ -60,5 +61,4 @@ public class CompanyServiceImpl implements CompanyService
     public Company getByName(String name) {
         return this.companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("This company doesn't exist"));
     }
-
 }
