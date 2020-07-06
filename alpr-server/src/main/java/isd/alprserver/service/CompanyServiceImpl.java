@@ -52,7 +52,6 @@ public class CompanyServiceImpl implements CompanyService
     }
 
     @Override
-    @Transactional
     public Company updateCompany(Company company) {
         return companyRepository.save(company);
     }
