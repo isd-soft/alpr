@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         } else if (hasCars(email)) {
             Optional<Car> car = carRepository.findByLicensePlate(licensePlate);
             if (!car.isPresent()) {
-                throw new CarNotFoundException(
+                throw new UserUpdatingException(
                         "Car with license plate " + licensePlate + " not found");
             } else {
                 if (car.get().getUser() == user) {
@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(newPassword));
         } else {
-            throw new UserUpdatingException("Old password does not match new");
+            throw new UserUpdatingException("Incorrect old password");
         }
     }
 
