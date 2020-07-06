@@ -1,8 +1,9 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Injectable} from '@angular/core';
 import {User} from '../shared/user.model';
-import {CarListComponent} from "../car-list/car-list.component";
-import {CarModel} from "../shared/car.model";
+import {CarModel} from '../shared/car.model';
+import {CompanyModel} from '../shared/company.model';
+
 
 @Injectable()
 export class FormGenerator {
@@ -23,7 +24,7 @@ export class FormGenerator {
   }
 
   public generateUserAddForm(): FormGroup {
-    let form = this.generateUserRegisterForm();
+    const form = this.generateUserRegisterForm();
     form.addControl('role',
       new FormControl('', Validators.required));
     return form;
@@ -47,12 +48,38 @@ export class FormGenerator {
   public generateCarEditForm(car: CarModel): FormGroup {
     return this.fb.group({
       id: [car.id],
-      licensePlate: [car.licensePlate, Validators.required],
+      licensePlate: [car.licensePlate, [Validators.required,
+        Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
       brand: [car.brand, Validators.required],
       model: [car.model, Validators.required],
       color: [car.color, Validators.required],
       ownerName: [car.ownerName, Validators.required],
       ownerTelephone: [car.ownerTelephone, Validators.required]
+    });
+  }
+
+  public generateCompanyAddForm(): FormGroup {
+    return this.fb.group({
+      name: ['', Validators.required],
+      nrParkingSpots: ['', Validators.required]
+    });
+  }
+
+  public generateCompanyEditForm(companyModel: CompanyModel): FormGroup {
+    console.log(companyModel.name);
+    return this.fb.group({
+      name: [companyModel.name, Validators.required],
+      nrParkingSpots: [companyModel.nrParkingSpots, Validators.required]
+    });
+  }
+
+  public generateChangePasswordForm(): FormGroup {
+    return this.fb.group({
+      licensePlate: ['', Validators.pattern
+      ('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      newPasswordConfirm: ['', Validators.required]
     });
   }
 }

@@ -23,12 +23,12 @@
 
   <mat-table matSort [dataSource]="usersDataSource">
 
-    <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-      <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+    <ng-container matColumnDef="email"  >
+      <mat-header-cell class="email-container" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell  class="email-container" *matCellDef="let user">{{user.email}}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="firstName" >
+    <ng-container  matColumnDef="firstName"  >
       <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
       <mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
     </ng-container>

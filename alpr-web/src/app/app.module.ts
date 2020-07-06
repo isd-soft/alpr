@@ -33,12 +33,15 @@ import {MatSortModule} from '@angular/material/sort';
 import {AddCarComponent} from './add-car/add-car.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { CompaniesComponent } from './companies/companies.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfileComponent } from './profile/profile.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
+import { PasswordComponent } from './password/password.component';
+
 
 @NgModule({
   declarations: [
@@ -48,11 +51,13 @@ import {AuthenticationService} from './auth/authentication.service';
     UsersComponent,
     AddCarComponent,
     CarListComponent,
+    CompaniesComponent,
     HomeComponent,
     NavigationComponent,
     ProfileComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +83,7 @@ import {AuthenticationService} from './auth/authentication.service';
     MatToolbarModule,
     MatTabsModule,
     HttpClientModule
+
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService,

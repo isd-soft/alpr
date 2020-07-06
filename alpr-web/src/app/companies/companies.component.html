@@ -1,0 +1,134 @@
+<!--suppress HtmlFormInputWithoutLabel, TypeScriptUnresolvedVariable -->
+<mat-divider></mat-divider>
+
+<mat-card class="all-margins">
+
+  <button mat-raised-button color="accent" class="all-margins"
+          (click)="onAdd(addCompanyTemplate)">Add a company
+  </button>
+
+  <mat-form-field id="example-form-field">
+
+    <mat-label class="material-icons" >search</mat-label>
+    <label>
+      <input (keyup)="applyFilter($event.target.value)"
+             matInput placeholder="Search for company"
+             type="text" [(ngModel)]="value">
+    </label>
+    <button mat-button *ngIf="value" matSuffix mat-icon-button
+            aria-label="Clear" (click)="value=''" type="button">
+      <mat-icon (click)="clearInput()">close</mat-icon>
+    </button>
+  </mat-form-field>
+
+
+  <mat-table matSort [dataSource]="companiesDataSource" >
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</mat-header-cell>
+      <mat-cell *matCellDef="let companyModel">{{companyModel.name}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nrParkingSpots">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Number of Parking Spots</mat-header-cell>
+      <mat-cell *matCellDef="let companyModel">{{companyModel.nrParkingSpots}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element; let companyModel"  class="align-right">
+
+        <button mat-raised-button color="primary"
+                (click)="onEdit(editCompanyTemplate, companyModel)">Edit
+        </button>
+
+        <button mat-raised-button color="warn" class="left-margin"
+                (click)="onDelete(companyModel)">Remove
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let companyModel; columns: columnsToDisplay"></mat-row>
+
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</mat-card>
+
+<ng-template #addCompanyTemplate>
+  <div>
+    <h2 mat-dialog-title>Add Company</h2>
+
+    <mat-dialog-content [formGroup]="addCompanyForm">
+
+      <mat-form-field>
+        <mat-label>name</mat-label>
+        <input matInput placeholder="name"
+               name="name" type="text" required formControlName="name">
+      </mat-form-field>
+
+      <mat-form-field class="left-margin">
+        <mat-label>Number of Parking Spots</mat-label>
+        <input matInput placeholder="nrParkingSpots" name="nrParkingSpots" class="no-left-margin"
+               type="number" required formControlName="nrParkingSpots">
+      </mat-form-field>
+
+      <br>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
+        </button>
+        <button class="mat-raised-button mat-accent left-margin"
+                (click)="addCompanyForm.reset()">Clear
+        </button>
+        <button class="mat-raised-button mat-primary left-margin"
+                (click)="addCompany()">Save
+        </button>
+      </mat-dialog-actions>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #editCompanyTemplate>
+  <div>
+    <div mat-dialog-title>
+      <h2>Edit Company</h2>
+      <mat-divider></mat-divider>
+      <h5>{{editedCompany.name}}</h5>
+    </div>
+    <mat-dialog-content [formGroup]="editCompanyForm">
+
+      <mat-form-field >
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="name"
+               name="name" type="text"
+               required formControlName="name">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Number of Parking Spots</mat-label>
+        <input matInput placeholder="Number of Parking Spots" name="nrParkingSpots"
+               class="no-left-margin" type="number"
+               required formControlName="nrParkingSpots">
+      </mat-form-field>
+
+      <br>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
+        </button>
+        <button class="mat-raised-button mat-primary left-margin"
+                [mat-dialog-close]="true"
+                (click)="updateCompany()">Update
+        </button>
+      </mat-dialog-actions>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #noActions>
+</ng-template>

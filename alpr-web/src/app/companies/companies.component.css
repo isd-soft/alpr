@@ -14,10 +14,8 @@
   margin-bottom: 0;
 }
 
-#firstName {
-  padding-left: 100px;
-
-}
-.email-container{
-  width: 100px!important;
+.align-right{
+  display: flex;
+  padding: 0;
+  justify-content: flex-end;
 }

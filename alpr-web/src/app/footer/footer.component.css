@@ -1,4 +1,50 @@
-.footer {
-  position:fixed;
-  bottom:0px;
+/*.footer {*/
+/*  position:fixed;*/
+/*  bottom:0px;*/
+/*}*/
+
+/*.company-details a {*/
+/*  color: #939393 !important;*/
+/*}*/
+
+
+html {
+  position: relative;
+  min-height: 100%;
 }
+
+#sticky-footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 90px;
+  line-height: 15px;
+  background: #3f51b5;
+}
+
+.phone {
+  padding-left: 90px;
+}
+
+.container-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.material-icons {
+  font-size: 30px;
+}
+
+a{
+  color: #FFFFFF;
+  font-size: 13px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
