@@ -44,17 +44,17 @@ public class EmailSenderService {
     @Scheduled(cron = "*/10 * 9-18 * * ?")
     @Transactional
     public void check() {
-        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
-        companyService.getCompanies()
-                .forEach(company -> {
-                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
-                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
-                        history.setLastSentNotification(history.getNrParkingSpots());
-                        carService.getAllCars().stream()
-                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-                                .filter(car -> car.getStatus().getName().equals("OUT"))
-                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
-                    }
-                });
+//        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
+//        companyService.getCompanies()
+//                .forEach(company -> {
+//                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
+//                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
+//                        history.setLastSentNotification(history.getNrParkingSpots());
+//                        carService.getAllCars().stream()
+//                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+//                                .filter(car -> car.getStatus().getName().equals("OUT"))
+//                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
+//                    }
+//                });
     }
 }
