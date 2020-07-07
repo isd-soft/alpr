@@ -48,7 +48,11 @@ export class NavigationComponent implements OnInit {
           {
             link: '',
             name: 'Change password'
-          }];
+          },
+          {
+            link: 'companycars',
+            name: 'Company\'s Cars'
+           }];
       }
     });
   }

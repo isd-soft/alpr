@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(basePackageClasses = {CarController.class})
 public class CarControllerAdvice {
     @ExceptionHandler({CarNotFoundException.class, CarAlreadyExistsException.class})
-    public ResponseEntity<String> handleCarNotFound(Exception e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<?> handleCarNotFound(Exception e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }

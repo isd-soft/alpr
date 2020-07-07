@@ -39,6 +39,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
+import { CompanyCarsComponent } from './company-cars/company-cars.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {AuthenticationService} from './auth/authentication.service';
     NavigationComponent,
     ProfileComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    CompanyCarsComponent
   ],
   imports: [
     BrowserModule,

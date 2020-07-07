@@ -18,11 +18,6 @@ export class CarService{
     return this.http.post(this.url + "/add", car);
   }
 
-  //
-  // getAll(): Observable<any[]> {
-  //   return this.http.get<any[]>(this.url + '/cars');
-  // }
-
   removeByLicensePlate(licensePlate: string): Observable<any> {
     return this.http.delete(this.url + '?licensePlate=' + licensePlate);
   }

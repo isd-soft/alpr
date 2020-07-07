@@ -5,7 +5,7 @@ public class CarAlreadyExistsException extends Exception {
     public CarAlreadyExistsException() {
     }
 
-    public CarAlreadyExistsException(String message) {
-        super(message);
+    public CarAlreadyExistsException(String s) {
+        super(s);
     }
 }

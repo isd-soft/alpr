@@ -1,7 +1,10 @@
 package isd.alprserver.service;
 
 import isd.alprserver.dto.CarDTO;
-import isd.alprserver.model.*;
+import isd.alprserver.model.Car;
+import isd.alprserver.model.LicenseValidationResponse;
+import isd.alprserver.model.Status;
+import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.model.exceptions.StatusNotFoundException;
@@ -37,10 +40,11 @@ public class CarServiceImpl implements CarService {
         return carRepository.findById(id).orElseThrow(() -> new CarNotFoundException("Car with id = " + id + " not found"));
     }
 
+
     @Override
     public Car add(Car car) throws CarAlreadyExistsException {
         if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
-            throw new CarAlreadyExistsException();
+            throw new CarAlreadyExistsException("The car with this license plate already exists.");
         }
         car = carRepository.save(car);
         return car;
@@ -63,9 +67,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public void add(Car car, String email) throws UserNotFoundException {
+    public void add(Car car, String email) throws UserNotFoundException, CarAlreadyExistsException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User doesn't exist"));
-        Status status = statusRepository.getByName("OUT").orElseThrow(()->new StatusNotFoundException("Status not found"));
+        Status status = statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Status not found"));
+        Optional<Car> byLicensePlate = this.carRepository.findByLicensePlate(car.getLicensePlate());
+        if(byLicensePlate.isPresent()){
+            throw new CarAlreadyExistsException("Car with license plate " + car.getLicensePlate() + " already exists");
+        }
         this.carRepository.save(car);
         user.getCars().add(car);
         car.setUser(user);
@@ -94,7 +102,7 @@ public class CarServiceImpl implements CarService {
                     .ownerName(car.get().getUser().getFirstName() + " " + car.get().getUser().getLastName())
                     .status(car.get().getStatus().getName())
                     .build();
-            if(car.get().getStatus().getName().equals("IN")) {
+            if (car.get().getStatus().getName().equals("IN")) {
                 parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
                         .incrementParkingSpots();
                 car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invaldi status")));
@@ -131,4 +139,6 @@ public class CarServiceImpl implements CarService {
                 .filter(car -> car.getStatus().getName().equals("IN"))
                 .collect(Collectors.toList());
     }
+
+
 }

@@ -20,7 +20,7 @@ public interface CarService {
 
     void delete(long id);
 
-    void add(Car car, String email) throws UserNotFoundException;
+    void add(Car car, String email) throws UserNotFoundException, CarAlreadyExistsException;
 
     Optional<Car> getByLicensePlate(String licensePlate);
 

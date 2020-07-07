@@ -8,6 +8,7 @@ import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.service.CarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,7 +76,7 @@ public class CarController {
 
 
     @PostMapping("/add")
-    public void addCar(@RequestBody CarDTO carDTO) throws UserNotFoundException {
+    public ResponseEntity<?> addCar(@RequestBody CarDTO carDTO) throws CarAlreadyExistsException, UserNotFoundException {
         Car car = Car.builder()
                 .licensePlate(carDTO.getLicensePlate())
                 .brand(carDTO.getBrand())
@@ -83,6 +84,7 @@ public class CarController {
                 .color(carDTO.getColor())
                 .build();
         this.carService.add(car, carDTO.getOwnerEmail());
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping()
