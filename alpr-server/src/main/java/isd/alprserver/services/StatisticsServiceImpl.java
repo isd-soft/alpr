@@ -1,6 +1,7 @@
 package isd.alprserver.services;
 
-import isd.alprserver.model.shared.EverRegisteredResponse;
+import isd.alprserver.model.shared.CarStatisticsResponse;
+import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.CarAudit;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.model.statistics.UserAudit;
@@ -37,10 +38,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public EverRegisteredResponse getRegisterStatistics() {
-        return EverRegisteredResponse.builder()
+    public CarStatisticsResponse getCarStatistics() {
+        return CarStatisticsResponse.builder()
                 .carsNumber(getAllRegisteredCarsEverNumber())
-                .peopleNumber(getAllRegisteredUsersEverNumber())
                 .scansNumber(getAllPlatesScannedEverNumber())
                 .build();
     }
@@ -55,6 +55,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private int getAllPlatesScannedEverNumber() {
         return scanAuditRepository.countAll();
+    @Override
+    public UserStatisticsResponse getUserStatistics() {
+        return UserStatisticsResponse.builder()
+                .peopleNumber(getAllRegisteredUsersEverNumber())
+                .build();
     }
 
     @Override
@@ -75,5 +80,17 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<ScanAudit> getAllInLastWeek() {
         return scanAuditRepository.findAllInLastWeek(new Date());
+    }
+
+    private Long getAllRegisteredUsersEverNumber() {
+        return userAuditRepository.countAll();
+    }
+
+    private Long getAllRegisteredCarsEverNumber() {
+        return carAuditRepository.countAll();
+    }
+
+    private Long getAllPlatesScannedEverNumber() {
+        return scanAuditRepository.countAll();
     }
 }

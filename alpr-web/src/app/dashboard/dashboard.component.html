@@ -1,35 +1,68 @@
 <div class="container-fluid" style="margin-top: 1em">
-Dashboard works
   <br>
-    <div class="row">
-      <div class="col">
-        <mat-card id="info1">
-          Info
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> wed wer  234</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw er 3423</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw er5 43</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w er wer  345</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw e  345</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>we rwer  345</div>
-          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erwe r 43534</div>
+  <div class="row">
+    <div class="col">
+      <mat-card id="info">
 
-        </mat-card>
-      </div>
+        <mat-list>
+          <div mat-subheader>Users Statistics</div>
+          <mat-list-item>
+            <mat-icon mat-list-icon>person_add</mat-icon>
+            <div matline>
+              Users ever registered: {{registeredUsersNumber}}
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+
+          <div mat-subheader>Cars Statistics</div>
+          <mat-list-item>
+            <mat-icon mat-list-icon>directions_car</mat-icon>
+            <div matline>
+              Cars ever registered: {{registeredCarsNumber}}
+            </div>
+          </mat-list-item>
+
+          <mat-list-item>
+            <mat-icon>phone_android</mat-icon>
+            <div matline>
+              Scans ever happened: {{scannedPlatesNumber}}
+            </div>
+          </mat-list-item>
+        </mat-list>
+
+      </mat-card>
     </div>
-    <div class="row">
-      <div class="col">
-        <mat-card id="info">
-          Card
-        </mat-card>      </div>
-      <div class="col">
-        <mat-card id="charttt">
-          Card
-        </mat-card>      </div>
-      <div class="col">
-        <mat-card id="chart2">
-          Card
-        </mat-card>      </div>
+    <div class="col">
+      <mat-card id="systemInfo">
+        <mat-list>
+          <div mat-subheader>System Information</div>
+          <mat-list-item>
+            First: example
+          </mat-list-item>
+          <mat-list-item>
+            Another: example
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
     </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-card id="info1">
+        Card
+      </mat-card>
+    </div>
+    <div class="col">
+      <mat-card id="charttt">
+        Card
+      </mat-card>
+    </div>
+    <div class="col">
+      <mat-card id="chart2">
+        Card
+      </mat-card>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col">

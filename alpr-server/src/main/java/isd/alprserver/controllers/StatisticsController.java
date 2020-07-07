@@ -2,6 +2,9 @@ package isd.alprserver.controllers;
 
 import isd.alprserver.model.shared.EverRegisteredResponse;
 import isd.alprserver.model.statistics.ScanAudit;
+import isd.alprserver.dtos.AllowedRejectedCounterDTO;
+import isd.alprserver.model.shared.CarStatisticsResponse;
+import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,23 +23,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
 public class StatisticsController {
+
     private final StatisticsService statisticsService;
 
     @GetMapping("/all-statuses")
     public ResponseEntity<AllowedRejectedCounterDTO> getTotalNrAllowedRejectedCars() {
         return ResponseEntity.ok(
-                isd.alprserver.dto.AllowedRejectedCounterDTO
-                .builder()
-                .allowedCars(statisticsService.getTotalNrAllowedCars())
-                .rejectedCars(statisticsService.getTotalNrRejectedCars())
-                .build()
+                AllowedRejectedCounterDTO
+                        .builder()
+                        .allowedCars(statisticsService.getTotalNrAllowedCars())
+                        .rejectedCars(statisticsService.getTotalNrRejectedCars())
+                        .build()
 
         );
     }
 
-    @GetMapping("/register")
-    public ResponseEntity<EverRegisteredResponse> getRegisterStatistics() {
-        return ResponseEntity.ok(statisticsService.getRegisterStatistics());
+    @GetMapping("/cars")
+    public ResponseEntity<CarStatisticsResponse> getCarsStatistics() {
+        return ResponseEntity.ok(statisticsService.getCarStatistics());
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<UserStatisticsResponse> getUsersStatistics() {
+        return ResponseEntity.ok(statisticsService.getUserStatistics());
     }
 
     @GetMapping("/all-last-week")

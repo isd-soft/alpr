@@ -11,10 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Data
 @Builder
-public class EverRegisteredResponse {
-    @NotNull
-    private long peopleNumber;
-
+public class CarStatisticsResponse {
     @NotNull
     private long carsNumber;
 

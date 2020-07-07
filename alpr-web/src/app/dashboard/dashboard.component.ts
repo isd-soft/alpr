@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -17,7 +18,12 @@ export type ChartOptions = {
 export class DashboardComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   public chartOptions: Partial<ChartOptions>;
-  constructor(private statisticsService: StatisticsService) {
+  registeredUsersNumber: number;
+  registeredCarsNumber: number;
+  scannedPlatesNumber: number;
+
+  constructor(private statisticsService: StatisticsService,
+              private snackBar: MatSnackBar) {
     this.chartOptions = {
       series: [0, 0],
       chart: {
@@ -49,6 +55,25 @@ export class DashboardComponent implements OnInit {
         this.chartOptions.series = [response.allowedCars, response.rejectedCars];
       })
       .catch(error => console.log(error));
+
+    this.statisticsService.getCarsStatistics()
+      .toPromise()
+      .then(response => {
+        this.registeredCarsNumber = response.carsNumber;
+        this.scannedPlatesNumber = response.scansNumber;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+
+    this.statisticsService.getUsersStatistics()
+      .toPromise()
+      .then(response => {
+        this.registeredUsersNumber = response.peopleNumber;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 
 }
