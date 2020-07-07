@@ -1,4 +1,4 @@
-package isd.alpr_mobile;
+package isd.alpr_mobile.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
 import isd.alpr_mobile.main.model.LicenseValidationResponse;
 import isd.alpr_mobile.main.retrofit.APIClient;

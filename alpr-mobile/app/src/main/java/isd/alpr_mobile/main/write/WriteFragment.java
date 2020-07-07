@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Collections;
 
-import isd.alpr_mobile.DisplayMessageActivity;
+import isd.alpr_mobile.main.DisplayMessageActivity;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
 
