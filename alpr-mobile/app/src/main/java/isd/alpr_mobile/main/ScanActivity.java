@@ -1,78 +1,54 @@
-package isd.alpr_mobile.main.scan;
+package isd.alpr_mobile.main;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-import isd.alpr_mobile.main.DisplayMessageActivity;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
+import isd.alpr_mobile.main.model.LicenseValidationResponse;
+import isd.alpr_mobile.main.model.Mail;
+import isd.alpr_mobile.main.model.MailResponse;
+import isd.alpr_mobile.main.retrofit.APIClient;
+import isd.alpr_mobile.main.retrofit.APIInterface;
+import isd.alpr_mobile.main.scan.OCRProcessor;
+import isd.alpr_mobile.main.scan.RequestCode;
 import isd.alpr_mobile.main.scan.license_plate_validation.OnPlateFoundListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ScanFragment extends Fragment implements SurfaceHolder.Callback, OnPlateFoundListener {
-    private OnScanFragmentInteractionListener mListener;
+public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Callback, OnPlateFoundListener {
+
     private SurfaceView cameraView;
     private CameraSource cameraSource;
 
-    public ScanFragment() {
-        // Required empty public constructor
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scan);
+        cameraView = findViewById(R.id.surface);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scan, container, false);
-        cameraView = view.findViewById(R.id.surfaceView);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    protected void onStart() {
+        super.onStart();
         startSourceCamera();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        startSourceCamera();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof OnScanFragmentInteractionListener) {
-            mListener = (OnScanFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnScanFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     private void startSourceCamera() {
@@ -99,7 +75,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
             if (ActivityCompat.checkSelfPermission(getApplicationContext(),
                     Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
-                        Objects.requireNonNull(getActivity()),
+                        Objects.requireNonNull(this),
                         new String[]{Manifest.permission.CAMERA},
                         RequestCode.CAMERA_REQUEST_PERMISSION_ID.ordinal());
                 // todo: continue if permission granted, else replace fragment to WriteFragment
@@ -121,15 +97,35 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
         cameraSource.stop();
     }
 
-    private Context getApplicationContext() {
-        return Objects.requireNonNull(getActivity()).getApplicationContext();
+    private void showSnackBack(String message) {
+        Snackbar.make(findViewById(R.id.surface), message, Snackbar.LENGTH_LONG)
+                .setAction("OK", v -> { })
+                .show();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onPlateFound(List<LicensePlate> plates) {
-        Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
-        intent.putExtra("plates", plates.toArray());
-        startActivity(intent);
+        Call<MailResponse> call = APIClient.getClient().create(APIInterface.class).sendEmailNotificationByLicensePlate(plates.get(4));
+        call.enqueue(new Callback<MailResponse>() {
+            @Override
+            public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
+                if(response.body() != null)
+                    showSnackBack(response.body().response);
+                else
+                    showSnackBack("Email was not sent! Try again");
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<MailResponse> call, Throwable t) {
+                showSnackBack("Error sending message!");
+                finish();
+            }
+        });
     }
 }
-
