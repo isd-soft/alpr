@@ -44,6 +44,7 @@ import { PasswordComponent } from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 // @ts-ignore
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     HeaderComponent,
     FooterComponent,
-    PasswordComponent
+    PasswordComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

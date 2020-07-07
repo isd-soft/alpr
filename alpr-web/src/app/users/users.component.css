@@ -14,14 +14,13 @@
   margin-bottom: 0;
 }
 
-#firstName {
-  padding-left: 100px;
-
+.user-list-section{
+  margin-bottom: 8em;
 }
 
 mat-cell:nth-child(1),
 mat-header-cell:nth-child(1) {
-  flex: 0 0 22%;
+  flex: 0 0 20%;
 }
 
 mat-cell:nth-child(2),

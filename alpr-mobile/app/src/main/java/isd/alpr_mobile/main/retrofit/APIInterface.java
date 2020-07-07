@@ -21,4 +21,9 @@ public interface APIInterface {
 
     @POST("/email")
     Call<MailResponse> sendEmailNotification(@Body Mail mail);
+
+    @POST("email/license-plate")
+    Call<MailResponse> sendEmailNotificationByLicensePlate(@Body LicensePlate plate);
+
+
 }
