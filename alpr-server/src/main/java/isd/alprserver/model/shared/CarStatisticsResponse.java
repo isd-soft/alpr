@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class CarStatisticsResponse {
     @NotNull
-    private Long carsNumber;
+    private long carsNumber;
 
     @NotNull
-    private Long scansNumber;
+    private long scansNumber;
 }

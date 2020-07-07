@@ -10,7 +10,14 @@ import isd.alprserver.repositories.ScanAuditRepository;
 import isd.alprserver.repositories.UserAuditRepository;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.health.HealthEndpoint;
+import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.PostConstruct;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +25,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final UserAuditRepository userAuditRepository;
     private final CarAuditRepository carAuditRepository;
     private final ScanAuditRepository scanAuditRepository;
+    private final HealthEndpoint healthEndpoint;
+    private final MetricsEndpoint metricsEndpoint;
+
+    @PostConstruct
+    public void foo(){
+        System.out.println(healthEndpoint.health());
+        System.out.println(metricsEndpoint.listNames());
+    }
 
     @Override
     public UserAudit auditUserRegistration(UserAudit userAudit) {
@@ -42,6 +57,18 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .build();
     }
 
+    private long getAllRegisteredUsersEverNumber() {
+        return userAuditRepository.countAll();
+    }
+
+    private long getAllRegisteredCarsEverNumber() {
+        return carAuditRepository.countAll();
+    }
+
+    private int getAllPlatesScannedEverNumber() {
+        return scanAuditRepository.countAll();
+    }
+
     @Override
     public UserStatisticsResponse getUserStatistics() {
         return UserStatisticsResponse.builder()
@@ -51,23 +78,21 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public int getTotalNrAllowedCars() {
-        return scanAuditRepository.findTotalNrByStatus("ALLOWED");
+        return scanAuditRepository.countAllByStatusAndIsAllowed("IN", true);
     }
 
     @Override
     public int getTotalNrRejectedCars() {
-        return scanAuditRepository.findTotalNrByStatus("REJECTED");
+        return scanAuditRepository.countAllByStatusAndIsAllowed("IN", false);
     }
 
-    private Long getAllRegisteredUsersEverNumber() {
-        return userAuditRepository.countAll();
+    @Override
+    public void addScanAudit(ScanAudit scanAudit) {
+        this.scanAuditRepository.save(scanAudit);
     }
 
-    private Long getAllRegisteredCarsEverNumber() {
-        return carAuditRepository.countAll();
-    }
-
-    private Long getAllPlatesScannedEverNumber() {
-        return scanAuditRepository.countAll();
+    @Override
+    public List<ScanAudit> getAllInLastWeek() {
+        return scanAuditRepository.findAllInLastWeek(new Date());
     }
 }

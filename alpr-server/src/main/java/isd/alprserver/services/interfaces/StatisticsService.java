@@ -6,7 +6,9 @@ import isd.alprserver.model.statistics.CarAudit;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.model.statistics.UserAudit;
 
-public interface StatisticsService{
+import java.util.List;
+
+public interface StatisticsService {
 
     UserAudit auditUserRegistration(UserAudit userAudit);
 
@@ -21,4 +23,8 @@ public interface StatisticsService{
     int getTotalNrAllowedCars();
 
     int getTotalNrRejectedCars();
+
+    void addScanAudit(ScanAudit scanAudit);
+
+    List<ScanAudit> getAllInLastWeek();
 }

@@ -48,6 +48,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {StatisticsService} from './shared/statistics.service';
     HttpClientModule,
     MatSidenavModule,
     NgbModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    MatListModule
   ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,

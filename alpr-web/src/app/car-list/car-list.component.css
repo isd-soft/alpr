@@ -1,29 +1,8 @@
-table {
+table{
   width: 100%;
 
 }
 
-@media only screen and (max-width: 1000px) {
-  .color-title {
-    display: none;
-  }
-}
-
-
-.car-list-section {
-  margin-bottom: 100px;
-}
-#example-form-field {
-  width: 200px;
-}
-
-.color-title {
-  width: 25%;
-}
-
-.span-icon {
-  margin: auto;
-}
 
 .all-margins {
   margin: 1em;
@@ -41,23 +20,33 @@ table {
   margin-bottom: 0;
 }
 
-.example-container {
-  height: 400px;
-  overflow: auto;
+.align-right{
+  display: flex;
+  padding: 0;
+  justify-content: flex-end;
 }
 
-mat-header-row{
-  position: sticky;
-  top:0;
-  background: white;
+
+.car-list-section {
+  margin: 10px;
+  margin-bottom: 100px;
+
 }
 
-mat-paginator{
-  position: sticky;
-  bottom: 0;
+.span-icon {
+  margin: auto;
 }
 
-.fit-content {
-  max-width: fit-content;
+.color-title {
+  width: 25%;
 }
+
+#example-form-field {
+  width: 200px;
+}
+
+.all-margins {
+  margin: 1em;
+}
+
 
