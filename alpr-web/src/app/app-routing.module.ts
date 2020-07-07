@@ -11,6 +11,7 @@ import {HomeComponent} from './home/home.component';
 import {LoginGuard} from './auth/login.guard';
 import {CompaniesComponent} from './companies/companies.component';
 import {PasswordComponent} from './password/password.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 
 
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path: 'addcar', component: AddCarComponent, canActivate: [AuthGuard]},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'password', component: PasswordComponent, canActivate: [AuthGuard]}
+  {path: 'password', component: PasswordComponent, canActivate: [AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

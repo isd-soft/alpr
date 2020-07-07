@@ -22,6 +22,11 @@ export class NavigationComponent implements OnInit {
       if (this.user && this.user.role == Role.Admin) {
         this.links = [
           {
+            link: 'dashboard',
+            name: 'Dashboard'
+          }
+          ,
+          {
             link: 'cars',
             name: 'Cars'
           },
@@ -32,7 +37,8 @@ export class NavigationComponent implements OnInit {
           {
             link: 'companies',
             name: 'Companies'
-          }];
+          }
+        ];
       } else {
         this.links = [
           {
