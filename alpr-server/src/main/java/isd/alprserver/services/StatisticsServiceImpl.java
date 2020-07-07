@@ -55,6 +55,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private int getAllPlatesScannedEverNumber() {
         return scanAuditRepository.countAll();
+    }
+
     @Override
     public UserStatisticsResponse getUserStatistics() {
         return UserStatisticsResponse.builder()
@@ -80,17 +82,5 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<ScanAudit> getAllInLastWeek() {
         return scanAuditRepository.findAllInLastWeek(new Date());
-    }
-
-    private Long getAllRegisteredUsersEverNumber() {
-        return userAuditRepository.countAll();
-    }
-
-    private Long getAllRegisteredCarsEverNumber() {
-        return carAuditRepository.countAll();
-    }
-
-    private Long getAllPlatesScannedEverNumber() {
-        return scanAuditRepository.countAll();
     }
 }

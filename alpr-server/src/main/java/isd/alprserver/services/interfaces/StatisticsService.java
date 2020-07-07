@@ -8,7 +8,6 @@ import isd.alprserver.model.statistics.UserAudit;
 
 import java.util.List;
 
-public interface StatisticsService{
 public interface StatisticsService {
 
     UserAudit auditUserRegistration(UserAudit userAudit);

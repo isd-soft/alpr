@@ -1,6 +1,5 @@
 package isd.alprserver.controllers;
 
-import isd.alprserver.model.shared.EverRegisteredResponse;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.dtos.AllowedRejectedCounterDTO;
 import isd.alprserver.model.shared.CarStatisticsResponse;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import isd.alprserver.dto.AllowedRejectedCounterDTO;
 
 import java.util.List;
 
