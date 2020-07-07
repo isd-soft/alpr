@@ -3,6 +3,7 @@ package isd.alpr_mobile.main.write;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Collections;
 
-import isd.alpr_mobile.DisplayMessageActivity;
+import isd.alpr_mobile.main.DisplayMessageActivity;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
 
@@ -34,6 +35,7 @@ public class WriteFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_write, container, false);
         findViews(view);
         checkBtn.setOnClickListener(this);
+        plateInput.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         return view;
     }
 
@@ -66,6 +68,12 @@ public class WriteFragment extends Fragment
         Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
         intent.putExtra("plates", Collections.singletonList(new LicensePlate(licensePlate)).toArray());
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        plateInput.setText("");
     }
 
     private void setDataVisible() {

@@ -40,4 +40,7 @@ export class LoginComponent implements OnInit {
       });
   }
 
+  moveToRegister() {
+    this.router.navigate(['/register']);
+  }
 }

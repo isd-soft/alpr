@@ -1,12 +1,14 @@
 <mat-toolbar color="primary" class="mat-elevation-z8">
-<!--  <mat-card>-->
-  <img id="icon" src="assets/img/logo4.png" alt=""/>
-<!--  </mat-card>-->
+  <!--  <mat-card>-->
+  <img id="icon" src="../../assets/img/ic_launcher1.png" alt=""/>
+  <!--  </mat-card>-->
   <span>ALPR</span>
 
   <div class="spacer"></div>
 
-  <div *ngIf="user !== null">
+  <app-navigation></app-navigation>
+
+  <div *ngIf="user !== null" style="margin: 1em">
     <a mat-raised-button color="accent" (click)="logout()">Log Out</a>
   </div>
 </mat-toolbar>

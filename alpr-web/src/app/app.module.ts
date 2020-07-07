@@ -33,6 +33,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {AddCarComponent} from './add-car/add-car.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { CompaniesComponent } from './companies/companies.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { ProfileComponent } from './profile/profile.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -40,6 +41,13 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import { CompanyCarsComponent } from './company-cars/company-cars.component';
+import { PasswordComponent } from './password/password.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+// @ts-ignore
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {StatisticsService} from './shared/statistics.service';
 
 @NgModule({
   declarations: [
@@ -49,12 +57,16 @@ import { CompanyCarsComponent } from './company-cars/company-cars.component';
     UsersComponent,
     AddCarComponent,
     CarListComponent,
+    CompaniesComponent,
     HomeComponent,
     NavigationComponent,
     ProfileComponent,
     HeaderComponent,
     FooterComponent,
     CompanyCarsComponent
+    FooterComponent,
+    PasswordComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -79,10 +91,13 @@ import { CompanyCarsComponent } from './company-cars/company-cars.component';
     MatSortModule,
     MatToolbarModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSidenavModule,
+    NgbModule,
+    NgApexchartsModule
   ],
   providers: [UserService, CompanyService, CarService,
-    FormExtractor, FormGenerator, AuthenticationService,
+    FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

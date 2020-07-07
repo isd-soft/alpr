@@ -1,19 +1,13 @@
 package isd.alprserver.utility;
 
-import isd.alprserver.model.ParkingHistory;
-import isd.alprserver.service.CarService;
-import isd.alprserver.service.CompanyService;
-import isd.alprserver.service.MailService;
-import isd.alprserver.service.ParkingHistoryService;
+import isd.alprserver.services.interfaces.CarService;
+import isd.alprserver.services.interfaces.CompanyService;
+import isd.alprserver.services.interfaces.MailService;
+import isd.alprserver.services.interfaces.ParkingHistoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -41,9 +35,9 @@ public class EmailSenderService {
 //        System.out.println("done");
     }
 
-//    @Scheduled(cron = "*/10 * 9-18 * * ?")
-//    @Transactional
-//    public void check() {
+    @Scheduled(cron = "*/10 * 9-18 * * ?")
+    @Transactional
+    public void check() {
 //        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
 //        companyService.getCompanies()
 //                .forEach(company -> {
@@ -56,5 +50,5 @@ public class EmailSenderService {
 //                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
 //                    }
 //                });
-//    }
+    }
 }

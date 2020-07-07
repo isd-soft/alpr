@@ -49,15 +49,18 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        this.nav.setSelectedItemId(R.id.scan_plate_action);
-        replaceFrame(scanFragment);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        this.nav.setSelectedItemId(R.id.scan_plate_action);
-        replaceFrame(scanFragment);
+        if(this.nav.getSelectedItemId() == R.id.scan_plate_action) {
+            replaceFrame(scanFragment);
+        } else if(this.nav.getSelectedItemId() == R.id.write_plate_action) {
+            replaceFrame(writeFragment);
+        } else {
+            replaceFrame(notifyFragment);
+        }
     }
 
     private boolean replaceFrameByItem(MenuItem item) {
@@ -88,7 +91,5 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onValidPlate(String licensePlate) {
-        // todo: handle API server response (change to WriteFragment, fill edit text with valid number, show given data)
-    }
+    public void onValidPlate(String licensePlate) { }
 }

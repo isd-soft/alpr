@@ -1,4 +1,54 @@
-.footer {
-  position:fixed;
-  bottom:0px;
+/*.footer {*/
+/*  position:fixed;*/
+/*  bottom:0px;*/
+/*}*/
+
+/*.company-details a {*/
+/*  color: #939393 !important;*/
+/*}*/
+
+html {
+  position: relative;
+  min-height: 100%;
 }
+
+#sticky-footer{
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 90px;
+  line-height: 15px;
+  text-align: center;
+  background: #3f51b5;
+}
+
+
+.phone {
+  padding-left: 90px;
+}
+
+.container-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.material-icons {
+  font-size: 30px;
+}
+
+a{
+  color: rgba(255,255,255,.5)!important;
+  font-size: 13px;
+}
+
+.icon{
+  color: #FFFFFF;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

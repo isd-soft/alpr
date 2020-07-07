@@ -1,7 +1,9 @@
 import {FormGroup} from '@angular/forms';
 import {User} from '../shared/user.model';
-import {CarModel} from "../shared/car.model";
+import {CarModel} from '../shared/car.model';
 import {Injectable} from '@angular/core';
+import {CompanyModel} from '../shared/company.model';
+
 
 @Injectable()
 export class FormExtractor {
@@ -27,6 +29,13 @@ export class FormExtractor {
       carDetailsForm.get('color').value,
       carDetailsForm.get('ownerName').value,
       carDetailsForm.get('ownerTelephone').value)
+  }
+
+  public extractCompany(companyDetailsForm: FormGroup) {
+    return new CompanyModel(
+      1,
+      companyDetailsForm.get('name').value,
+      companyDetailsForm.get('nrParkingSpots').value);
   }
 }
 

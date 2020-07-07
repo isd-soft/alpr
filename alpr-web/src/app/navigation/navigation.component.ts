@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/user.model';
 import {AuthenticationService} from '../auth/authentication.service';
-import {Router} from '@angular/router';
 import {Role} from '../auth/role';
 
 @Component({
@@ -14,8 +13,7 @@ export class NavigationComponent implements OnInit {
   user: User;
   links: any[];
 
-  constructor(private authenticationService: AuthenticationService,
-              private router: Router) {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit(): void {
@@ -23,6 +21,11 @@ export class NavigationComponent implements OnInit {
       this.user = user;
       if (this.user && this.user.role == Role.Admin) {
         this.links = [
+          {
+            link: 'dashboard',
+            name: 'Dashboard'
+          }
+          ,
           {
             link: 'cars',
             name: 'Cars'
@@ -34,7 +37,8 @@ export class NavigationComponent implements OnInit {
           {
             link: 'companies',
             name: 'Companies'
-          }];
+          }
+        ];
       } else {
         this.links = [
           {
@@ -46,14 +50,14 @@ export class NavigationComponent implements OnInit {
             name: 'Add Car'
           },
           {
-            link: '',
-            name: 'Change password'
-          },
-          {
             link: 'companycars',
             name: 'Company\'s Cars'
-           }];
+          }];
       }
+      this.links.push({
+        link: 'password',
+        name: 'Change password'
+      });
     });
   }
 }
