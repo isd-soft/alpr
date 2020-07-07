@@ -6,10 +6,12 @@ import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.*;
+import isd.alprserver.model.statistics.UserAudit;
 import isd.alprserver.repositories.CarRepository;
 import isd.alprserver.repositories.CompanyRepository;
 import isd.alprserver.repositories.RoleRepository;
 import isd.alprserver.repositories.UserRepository;
+import isd.alprserver.services.interfaces.StatisticsService;
 import isd.alprserver.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final RoleRepository roleRepository;
     private final CompanyRepository companyRepository;
     private final CarRepository carRepository;
+    private final StatisticsService statisticsService;
 
     @Override
     @Transactional
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void insert(UserDTO userDTO) throws UserCreationException, RoleNotFoundException {
+    public void create(UserDTO userDTO) throws UserCreationException, RoleNotFoundException {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new UserCreationException("The user with email " + userDTO.getEmail() + " already exists.");
         }
@@ -50,7 +54,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setCompany(getCompanyOfUser(userDTO));
         user.setRole(getRoleOfUser(userDTO));
 
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        Date registrationDate = new Date();
+
+        UserAudit userAudit = UserAudit.builder()
+                .email(user.getEmail())
+                .telephoneNumber(user.getTelephoneNumber())
+                .registrationDate(registrationDate)
+                .build();
+
+        statisticsService.auditUserRegistration(userAudit);
     }
 
     @Override

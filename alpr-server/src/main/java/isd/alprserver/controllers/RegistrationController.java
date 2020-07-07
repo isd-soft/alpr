@@ -28,7 +28,7 @@ public class RegistrationController {
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         userDTO.setRole("USER");
 
-        userService.insert(userDTO);
+        userService.create(userDTO);
 
         return ResponseEntity.ok(new Response<>("Successfully Registered"));
     }

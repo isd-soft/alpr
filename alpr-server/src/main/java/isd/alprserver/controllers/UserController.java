@@ -38,7 +38,7 @@ public class UserController {
             throws RoleNotFoundException {
 
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
-        userService.insert(userDTO);
+        userService.create(userDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
