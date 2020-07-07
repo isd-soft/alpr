@@ -52,10 +52,7 @@ public class CarServiceImpl implements CarService {
         }
         car = carRepository.save(car);
 
-        statisticsService.auditCarRegistration(CarAudit.builder()
-                .licensePlate(car.getLicensePlate())
-                .registrationDate(new Date())
-                .build());
+        saveRegistrationStatistics(car);
 
         return car;
     }
@@ -84,6 +81,15 @@ public class CarServiceImpl implements CarService {
         user.getCars().add(car);
         car.setUser(user);
         car.setStatus(status);
+
+        saveRegistrationStatistics(car);
+    }
+
+    private void saveRegistrationStatistics(Car car) {
+        statisticsService.auditCarRegistration(CarAudit.builder()
+                .licensePlate(car.getLicensePlate())
+                .registrationDate(new Date())
+                .build());
     }
 
     @Override
