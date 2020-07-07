@@ -19,3 +19,10 @@
   padding: 0;
   justify-content: flex-end;
 }
+
+
+.car-list-section {
+  /*margin: 10px;*/
+  margin-bottom: 100px;
+
+}

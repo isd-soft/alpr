@@ -82,6 +82,9 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.3.1.RELEASE</version>
         </dependency>
+
+
+
     </dependencies>
 
     <build>
