@@ -70,7 +70,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   onDelete(companyModel: CompanyModel) {
     this.companyService.removeById(companyModel.id).toPromise()
       .then(_ => {
-        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.snackBar.open('Successfully deleted', 'OK', {duration: 3000});
         this.companies.splice(this.companies.indexOf(companyModel), 1);
         this.updateTable(this.companies);
       })
@@ -89,16 +89,20 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
       console.log(JSON.stringify(companyModel));
       this.companyService.add(companyModel).toPromise()
           .then(_ => {
-            this.snackBar.open('Successfully', 'OK', {duration: 3000});
+            this.snackBar.open('Success', 'OK', {duration: 3000});
             this.loadCompanies();
           })
-          .catch(_ => {
-            this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+          .catch(error => {
+            this.handleError(error);
           });
       } else {
       this.snackBar.open('Fill all the required fields, please',
         'OK', {duration: 4000});
     }
+  }
+
+  handleError(httpError: string): void {
+    this.snackBar.open(httpError, 'ok', {duration: 4000});
   }
 
 
@@ -109,7 +113,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     this.companyService.update(companyModel)
       .toPromise()
       .then(_ => {
-        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.snackBar.open('Successfully updated', 'OK', {duration: 3000});
         this.loadCompanies();
       })
       .catch(_ => {

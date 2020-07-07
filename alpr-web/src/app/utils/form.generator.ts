@@ -1,7 +1,6 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Injectable} from '@angular/core';
 import {User} from '../shared/user.model';
-import {CarListComponent} from '../car-list/car-list.component';
 import {CarModel} from '../shared/car.model';
 import {CompanyModel} from '../shared/company.model';
 
@@ -71,6 +70,16 @@ export class FormGenerator {
     return this.fb.group({
       name: [companyModel.name, Validators.required],
       nrParkingSpots: [companyModel.nrParkingSpots, Validators.required]
+    });
+  }
+
+  public generateChangePasswordForm(): FormGroup {
+    return this.fb.group({
+      licensePlate: ['', Validators.pattern
+      ('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')],
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      newPasswordConfirm: ['', Validators.required]
     });
   }
 }

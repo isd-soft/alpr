@@ -1,11 +1,12 @@
 package isd.alprserver.service;
 
-import isd.alprserver.config.JwtTokenUtil;
 import isd.alprserver.dto.UserDTO;
+import isd.alprserver.model.Car;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.Role;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.*;
+import isd.alprserver.repository.CarRepository;
 import isd.alprserver.repository.CompanyRepository;
 import isd.alprserver.repository.RoleRepository;
 import isd.alprserver.repository.UserRepository;
@@ -13,11 +14,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CompanyRepository companyRepository;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final CarRepository carRepository;
 
     @Override
     @Transactional
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             throws UserNotFoundException, UserRemovalException {
         User user = userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException("User with id " + id + " not found"));
-        if (user.getRole().getName().equals("SYSTEM_ADMINISTRATOR_ROLE")) {
+        if (user.getRole().getName().equals("SYSTEM_ADMINISTRATOR")) {
             throw new UserRemovalException("System administrator can not be deleted");
         }
         userRepository.deleteById(id);
@@ -118,8 +121,52 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void changePassword(String email, String encryptedPassword) {
+    public void changePassword(String email, String oldPassword,
+                               String newPassword, String licensePlate,
+                               BCryptPasswordEncoder bCryptPasswordEncoder)
+            throws UserUpdatingException {
 
+        User user = getUserByEmail(email);
+
+        if (user.getRole().getName().equals("SYSTEM_ADMINISTRATOR")) {
+            changeOldPasswordToNew(oldPassword, newPassword, user,
+                    bCryptPasswordEncoder);
+        } else if (hasCars(email)) {
+            Optional<Car> car = carRepository.findByLicensePlate(licensePlate);
+            if (!car.isPresent()) {
+                throw new UserUpdatingException(
+                        "Car with license plate " + licensePlate + " not found");
+            } else {
+                if (car.get().getUser() == user) {
+                    changeOldPasswordToNew(oldPassword, newPassword, user,
+                            bCryptPasswordEncoder);
+                } else {
+                    throw new UserUpdatingException("Car with license plate " +
+                            licensePlate + " does not belong to user " + email);
+                }
+            }
+        } else {
+            changeOldPasswordToNew(oldPassword, newPassword, user,
+                    bCryptPasswordEncoder);
+        }
+    }
+
+    private void changeOldPasswordToNew(String oldPassword, String newPassword, User user,
+                                        BCryptPasswordEncoder bCryptPasswordEncoder)
+            throws UserUpdatingException {
+
+        if (bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(newPassword));
+        } else {
+            throw new UserUpdatingException("Incorrect old password");
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean hasCars(String email) {
+
+        return (getUserByEmail(email).getCars().size() > 0);
     }
 
     @Override

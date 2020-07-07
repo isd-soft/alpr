@@ -49,7 +49,6 @@ public class DisplayMessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LicenseValidationResponse> call, Response<LicenseValidationResponse> response) {
                 LicenseValidationResponse validationResponse = response.body();
-                Log.i("response", validationResponse.toString());
                 if(validationResponse.getStatus().equals("Forbidden")) {
                     ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_forbidden);
                     ((TextView)findViewById(R.id.status)).setText("Forbidden");

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../shared/user.model';
-import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserService} from '../shared/user.service';
 import {CompanyService} from '../shared/company.service';
@@ -56,4 +55,7 @@ export class RegistrationComponent implements OnInit {
     this.snackBar.open(httpError, 'OK', {duration: 4000});
   }
 
+  moveToLogin() {
+    this.router.navigate(['/login'])
+  }
 }

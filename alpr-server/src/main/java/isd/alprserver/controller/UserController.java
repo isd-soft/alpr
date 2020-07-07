@@ -39,9 +39,10 @@ public class UserController {
 
         userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         userService.insert(userDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
 
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
@@ -53,8 +54,8 @@ public class UserController {
             userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         }
         userService.update(userDTO, isPasswordChanged);
-        return ResponseEntity.noContent().build();
 
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
@@ -63,8 +64,8 @@ public class UserController {
             throws UserNotFoundException, UserRemovalException {
 
         userService.deleteById(id);
-        return ResponseEntity.noContent().build();
 
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
@@ -74,8 +75,8 @@ public class UserController {
             throws UserNotFoundException, UserRemovalException {
 
         userService.deleteByEmail(email);
-        return new ResponseEntity<>(HttpStatus.OK);
 
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -84,16 +85,25 @@ public class UserController {
             throws UserNotFoundException {
 
         return ResponseEntity.ok(userService.getById(id));
-
     }
 
     @PutMapping("/password")
     public ResponseEntity<?> changePassword(@RequestParam String email,
-                                            @RequestParam String password) {
-        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+                                            @RequestParam String oldPassword,
+                                            @RequestParam String newPassword,
+                                            @RequestParam(required = false)
+                                                    String licensePlate)
+            throws UserUpdatingException {
 
-        userService.changePassword(email, encryptedPassword);
+        userService.changePassword(email, oldPassword,
+                newPassword, licensePlate, bCryptPasswordEncoder);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/hascars")
+    public ResponseEntity<Boolean> hasCars(@RequestParam String email) {
+
+        return ResponseEntity.ok(userService.hasCars(email));
     }
 }

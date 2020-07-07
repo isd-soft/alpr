@@ -8,10 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import isd.alprserver.model.Company;
 import isd.alprserver.service.CompanyService;
+
+import javax.validation.Valid;
 
 
 @RestController
@@ -32,7 +35,7 @@ public class CompanyController {
 
     //adding a company
     @PostMapping("/add")
-    public ResponseEntity<Company> add(@RequestBody CompanyDTO companyDTO) {
+    public ResponseEntity<Company> add(@RequestBody @Valid CompanyDTO companyDTO) {
         Company company = new Company();
         company.setName(companyDTO.getName());
         company.setNrParkingSpots(companyDTO.getNrParkingSpots());
@@ -56,10 +59,6 @@ public class CompanyController {
     //updating a company
     @PutMapping(value = "/update")
     public ResponseEntity<Company> update(@RequestBody CompanyDTO company){
-        Company companyById = companyService.getCompanyById(company.getId());
-        companyById.setName(company.getName());
-        companyById.setNrParkingSpots(company.getNrParkingSpots());
-        companyService.addCompany(companyById);
-        return ResponseEntity.ok(companyById);
+        return ResponseEntity.ok(companyService.updateCompany(company.toCompany()));
     }
 }

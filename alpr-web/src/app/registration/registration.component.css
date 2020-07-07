@@ -9,16 +9,23 @@
   width: 100%;
 }
 
+button {
+  width: 20%;
+  margin: 10px;
+}
+
 span {
   margin: auto auto;
 }
 
-button {
-  width: 20%;
-  position: relative;
-  left: 40%;
-}
-
 .my-card {
   width: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }

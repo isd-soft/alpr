@@ -41,9 +41,9 @@ public class EmailSenderService {
 //        System.out.println("done");
     }
 
-//    @Scheduled(cron = "*/10 * 9-18 * * ?")
-//    @Transactional
-//    public void check() {
+    @Scheduled(cron = "*/10 * 9-18 * * ?")
+    @Transactional
+    public void check() {
 //        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
 //        companyService.getCompanies()
 //                .forEach(company -> {
@@ -56,5 +56,5 @@ public class EmailSenderService {
 //                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
 //                    }
 //                });
-//    }
+    }
 }
