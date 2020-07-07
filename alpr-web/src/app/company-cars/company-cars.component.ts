@@ -47,7 +47,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
      @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
      ngAfterViewInit() {
-       this.carService.getCars().toPromise().then(cars => {
+       this.carService.getCarsByCompanyName(this.authenticationService.currentUserValue.company).toPromise().then(cars => {
          this.cars = cars;
          this.dataSource = new MatTableDataSource<CarModel>(this.cars);
          this.dataSource.sort = this.sort;
@@ -63,11 +63,11 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
      }
 
       loadCars() {
-        this.carService.getCars().toPromise().then(cars => {
-        this.cars = cars.filter(car => car.ownerEmail.localeCompare(this.authenticationService.currentUserValue.company) === 0);
+       this.carService.getCarsByCompanyName(this.authenticationService.currentUserValue.company).subscribe(cars => {
+        this.cars = cars;
         console.log(cars[0]);
         this.updateTable(this.cars);
-        });
+      });
     }
 
        updateTable(cars: CarModel[]) {

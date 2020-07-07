@@ -63,7 +63,7 @@ import {StatisticsService} from './shared/statistics.service';
     ProfileComponent,
     HeaderComponent,
     FooterComponent,
-    CompanyCarsComponent
+    CompanyCarsComponent,
     FooterComponent,
     PasswordComponent,
     DashboardComponent

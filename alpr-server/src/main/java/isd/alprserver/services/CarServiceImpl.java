@@ -4,7 +4,6 @@ import isd.alprserver.dtos.CarDTO;
 import isd.alprserver.model.Car;
 import isd.alprserver.model.Status;
 import isd.alprserver.model.User;
-import isd.alprserver.model.LicenseValidationResponse;
 import isd.alprserver.model.exceptions.CarAlreadyExistsException;
 import isd.alprserver.model.exceptions.CarNotFoundException;
 import isd.alprserver.model.exceptions.StatusNotFoundException;
@@ -94,6 +93,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Optional<Car> getByLicensePlate(String licensePlate) {
         return this.carRepository.findByLicensePlate(licensePlate);
+    }
+
+    @Override
+    public List<Car> getByCompanyName(String name) {
+        return this.carRepository.findByCompanyName(name);
     }
 
     @Override

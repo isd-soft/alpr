@@ -14,6 +14,9 @@ export class CarService{
   getCars(): Observable<any[]>{
     return this.http.get<any[]>('http://localhost:8080/cars')};
 
+  getCarsByCompanyName(companyName: string): Observable<any> {
+    return  this.http.get<any[]>(this.url + '/company/' + companyName)}
+
   registerCar(car: CarModel): Observable<any> {
     return this.http.post(this.url + "/add", car);
   }
