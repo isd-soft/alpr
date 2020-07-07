@@ -1,6 +1,6 @@
 package isd.alprserver.config;
 
-import isd.alprserver.service.UserServiceImpl;
+import isd.alprserver.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
