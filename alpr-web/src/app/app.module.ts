@@ -47,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -65,34 +66,35 @@ import {StatisticsService} from './shared/statistics.service';
     PasswordComponent,
     DashboardComponent
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NoopAnimationsModule,
-    MaterialModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    HttpClientModule,
-    MatSnackBarModule,
-    AppRoutingModule,
-    MatCheckboxModule,
-    MatSnackBarModule,
-    MatTableModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatToolbarModule,
-    MatTabsModule,
-    HttpClientModule,
-    MatSidenavModule,
-    NgbModule,
-    NgApexchartsModule
-  ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule,
+        MaterialModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        HttpClientModule,
+        MatSnackBarModule,
+        AppRoutingModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatIconModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatToolbarModule,
+        MatTabsModule,
+        HttpClientModule,
+        MatSidenavModule,
+        NgbModule,
+        NgApexchartsModule,
+        MatListModule
+    ],
   providers: [UserService, CompanyService, CarService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
