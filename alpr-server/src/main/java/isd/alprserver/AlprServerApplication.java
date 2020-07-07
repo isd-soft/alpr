@@ -1,20 +1,8 @@
 package isd.alprserver;
 
-import isd.alprserver.dto.UserDTO;
-import isd.alprserver.model.Company;
-import isd.alprserver.model.Role;
-import isd.alprserver.model.Status;
-import isd.alprserver.repository.CompanyRepository;
-import isd.alprserver.repository.RoleRepository;
-import isd.alprserver.repository.StatusRepository;
-import isd.alprserver.service.UserService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
 @SpringBootApplication
 @EnableScheduling
