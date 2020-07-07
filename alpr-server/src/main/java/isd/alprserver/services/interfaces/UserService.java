@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserService{
     void create(UserDTO userDTO) throws RoleNotFoundException;
 
     void deleteById(int id) throws UserNotFoundException, UserRemovalException;
