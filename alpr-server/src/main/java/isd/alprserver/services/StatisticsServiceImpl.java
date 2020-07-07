@@ -54,4 +54,13 @@ public class StatisticsServiceImpl implements StatisticsService {
         return scanAuditRepository.countAll();
     }
 
+    @Override
+    public int getTotalNrAllowedCars() {
+        return scanAuditRepository.findTotalNrByStatus("ALLOWED");
+    }
+
+    @Override
+    public int getTotalNrRejectedCars() {
+        return scanAuditRepository.findTotalNrByStatus("REJECTED");
+    }
 }

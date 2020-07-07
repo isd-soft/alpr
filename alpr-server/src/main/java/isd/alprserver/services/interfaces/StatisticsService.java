@@ -6,6 +6,7 @@ import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.model.statistics.UserAudit;
 
 public interface StatisticsService {
+
     UserAudit auditUserRegistration(UserAudit userAudit);
 
     CarAudit auditCarRegistration(CarAudit carAudit);
@@ -13,4 +14,8 @@ public interface StatisticsService {
     ScanAudit auditPlateScanning(ScanAudit scanAudit);
 
     EverRegisteredResponse getRegisterStatistics();
+
+    int getTotalNrAllowedCars();
+
+    int getTotalNrRejectedCars();
 }
