@@ -3,7 +3,6 @@ package isd.alprserver.controllers;
 import isd.alprserver.dto.AllowedRejectedDTO;
 import isd.alprserver.service.StatisticsService;
 import isd.alprserver.model.shared.EverRegisteredResponse;
-import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
