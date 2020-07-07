@@ -14,14 +14,15 @@ html {
 }
 
 #sticky-footer{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
   height: 90px;
   line-height: 15px;
+  text-align: center;
   background: #3f51b5;
 }
+
 
 .phone {
   padding-left: 90px;
@@ -38,8 +39,12 @@ html {
 }
 
 a{
-  color: #FFFFFF;
+  color: rgba(255,255,255,.5)!important;
   font-size: 13px;
+}
+
+.icon{
+  color: #FFFFFF;
 }
 
 .container {
