@@ -1,6 +1,7 @@
 package isd.alprserver.services;
 
-import isd.alprserver.model.shared.EverRegisteredResponse;
+import isd.alprserver.model.shared.CarStatisticsResponse;
+import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.CarAudit;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.model.statistics.UserAudit;
@@ -34,12 +35,28 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
-    public EverRegisteredResponse getRegisterStatistics() {
-        return EverRegisteredResponse.builder()
+    public CarStatisticsResponse getCarStatistics() {
+        return CarStatisticsResponse.builder()
                 .carsNumber(getAllRegisteredCarsEverNumber())
-                .peopleNumber(getAllRegisteredUsersEverNumber())
                 .scansNumber(getAllPlatesScannedEverNumber())
                 .build();
+    }
+
+    @Override
+    public UserStatisticsResponse getUserStatistics() {
+        return UserStatisticsResponse.builder()
+                .peopleNumber(getAllRegisteredUsersEverNumber())
+                .build();
+    }
+
+    @Override
+    public int getTotalNrAllowedCars() {
+        return scanAuditRepository.findTotalNrByStatus("ALLOWED");
+    }
+
+    @Override
+    public int getTotalNrRejectedCars() {
+        return scanAuditRepository.findTotalNrByStatus("REJECTED");
     }
 
     private Long getAllRegisteredUsersEverNumber() {
@@ -52,15 +69,5 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private Long getAllPlatesScannedEverNumber() {
         return scanAuditRepository.countAll();
-    }
-
-    @Override
-    public int getTotalNrAllowedCars() {
-        return scanAuditRepository.findTotalNrByStatus("ALLOWED");
-    }
-
-    @Override
-    public int getTotalNrRejectedCars() {
-        return scanAuditRepository.findTotalNrByStatus("REJECTED");
     }
 }

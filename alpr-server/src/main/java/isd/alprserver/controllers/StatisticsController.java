@@ -1,6 +1,7 @@
 package isd.alprserver.controllers;
 
-import isd.alprserver.model.shared.EverRegisteredResponse;
+import isd.alprserver.model.shared.CarStatisticsResponse;
+import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +31,13 @@ public class StatisticsController {
         );
     }
 
-    @GetMapping("/register")
-    private ResponseEntity<EverRegisteredResponse> getRegisterStatistics() {
-        return ResponseEntity.ok(statisticsService.getRegisterStatistics());
+    @GetMapping("/cars")
+    private ResponseEntity<CarStatisticsResponse> getCarsStatistics() {
+        return ResponseEntity.ok(statisticsService.getCarStatistics());
+    }
+
+    @GetMapping("/users")
+    private ResponseEntity<UserStatisticsResponse> getUsersStatistics() {
+        return ResponseEntity.ok(statisticsService.getUserStatistics());
     }
 }
