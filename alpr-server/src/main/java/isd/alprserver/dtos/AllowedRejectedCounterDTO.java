@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AllowedRejectedDTO {
+public class AllowedRejectedCounterDTO {
     private int rejectedCars;
     private int allowedCars;
 }

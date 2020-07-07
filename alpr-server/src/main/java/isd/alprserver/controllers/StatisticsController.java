@@ -1,8 +1,7 @@
 package isd.alprserver.controllers;
 
-import isd.alprserver.dto.AllowedRejectedDTO;
-import isd.alprserver.service.StatisticsService;
 import isd.alprserver.model.shared.EverRegisteredResponse;
+import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +19,9 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/all-statuses")
-    public ResponseEntity<AllowedRejectedDTO> getTotalNrAllowedRejectedCars() {
+    public ResponseEntity<isd.alprserver.dto.AllowedRejectedCounterDTO> getTotalNrAllowedRejectedCars() {
         return ResponseEntity.ok(
-                AllowedRejectedDTO
+                isd.alprserver.dto.AllowedRejectedCounterDTO
                 .builder()
                 .allowedCars(statisticsService.getTotalNrAllowedCars())
                 .rejectedCars(statisticsService.getTotalNrRejectedCars())
