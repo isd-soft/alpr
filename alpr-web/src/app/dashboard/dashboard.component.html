@@ -1,3 +1,57 @@
 <div class="container-fluid" style="margin-top: 1em">
-asdfasdf
+Dashboard works
+  <br>
+    <div class="row">
+      <div class="col">
+        <mat-card id="info1">
+          Info
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> wed wer  234</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw er 3423</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw er5 43</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w er wer  345</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erw e  345</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>we rwer  345</div>
+          <div class="row"><mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>w erwe r 43534</div>
+
+        </mat-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-card id="info">
+          Card
+        </mat-card>      </div>
+      <div class="col">
+        <mat-card id="charttt">
+          Card
+        </mat-card>      </div>
+      <div class="col">
+        <mat-card id="chart2">
+          Card
+        </mat-card>      </div>
+    </div>
+
+  <div class="row">
+    <div class="col">
+      <mat-card id="chart">
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [labels]="chartOptions.labels"
+          [responsive]="chartOptions.responsive">
+        </apx-chart>
+      </mat-card>
+    </div>
+    <div class="col">
+      <mat-card>
+        Card-Pie
+      </mat-card>
+    </div>
+    <div class="col">
+      <mat-card>
+        Card-Pie
+      </mat-card>
+    </div>
+  </div>
+
 </div>

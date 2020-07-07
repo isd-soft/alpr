@@ -45,6 +45,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 // @ts-ignore
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {StatisticsService} from './shared/statistics.service';
 
 @NgModule({
   declarations: [
@@ -88,10 +90,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatTabsModule,
     HttpClientModule,
     MatSidenavModule,
-    NgbModule
+    NgbModule,
+    NgApexchartsModule
   ],
   providers: [UserService, CompanyService, CarService,
-    FormExtractor, FormGenerator, AuthenticationService,
+    FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],

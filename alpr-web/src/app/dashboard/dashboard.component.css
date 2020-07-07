@@ -1,0 +1,8 @@
+.container-fluid {
+  height: 100%;
+  width: 100%;
+}
+
+mat-card {
+  margin: 10px;
+}
