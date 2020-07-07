@@ -10,4 +10,7 @@ public interface ScanAuditRepository extends JpaRepository<ScanAudit, Long> {
     @Query(nativeQuery = true,
             value = "select count(*) from scan_audit sa where sa.status=:status")
     int findTotalNrByStatus(String status);
+
+    @Query("SELECT COUNT(s) FROM ScanAudit s")
+    Long countAll();
 }

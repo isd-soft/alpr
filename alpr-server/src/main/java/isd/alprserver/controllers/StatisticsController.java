@@ -2,6 +2,7 @@ package isd.alprserver.controllers;
 
 import isd.alprserver.dto.AllowedRejectedDTO;
 import isd.alprserver.service.StatisticsService;
+import isd.alprserver.model.shared.EverRegisteredResponse;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,10 @@ public class StatisticsController {
                 .build()
 
         );
+    }
+
+    @GetMapping("/register")
+    private ResponseEntity<EverRegisteredResponse> getRegisterStatistics() {
+        return ResponseEntity.ok(statisticsService.getRegisterStatistics());
     }
 }
