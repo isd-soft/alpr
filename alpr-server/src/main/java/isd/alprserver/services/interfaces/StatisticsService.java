@@ -6,7 +6,7 @@ import isd.alprserver.model.statistics.CarAudit;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.model.statistics.UserAudit;
 
-public interface StatisticsService{
+public interface StatisticsService {
 
     UserAudit auditUserRegistration(UserAudit userAudit);
 

@@ -1,4 +1,4 @@
-package isd.alprserver.dto;
+package isd.alprserver.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
