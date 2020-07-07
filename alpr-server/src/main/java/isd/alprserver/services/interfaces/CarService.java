@@ -9,7 +9,7 @@ import isd.alprserver.model.exceptions.UserNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CarService {
+public interface CarService{
     List<Car> getAllCars();
 
     Car getCarById(long id);

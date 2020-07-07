@@ -5,7 +5,7 @@ import isd.alprserver.model.exceptions.CompanyCreationException;
 
 import java.util.List;
 
-public interface CompanyService {
+public interface CompanyService{
     List<Company> getAllCompanies();
 
     Company addCompany(Company company) throws CompanyCreationException;
