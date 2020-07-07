@@ -1,6 +1,7 @@
 package isd.alprserver.controllers;
 
 import isd.alprserver.model.shared.EverRegisteredResponse;
+import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import isd.alprserver.dto.AllowedRejectedCounterDTO;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -19,7 +23,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
 
     @GetMapping("/all-statuses")
-    public ResponseEntity<isd.alprserver.dto.AllowedRejectedCounterDTO> getTotalNrAllowedRejectedCars() {
+    public ResponseEntity<AllowedRejectedCounterDTO> getTotalNrAllowedRejectedCars() {
         return ResponseEntity.ok(
                 isd.alprserver.dto.AllowedRejectedCounterDTO
                 .builder()
@@ -31,7 +35,12 @@ public class StatisticsController {
     }
 
     @GetMapping("/register")
-    private ResponseEntity<EverRegisteredResponse> getRegisterStatistics() {
+    public ResponseEntity<EverRegisteredResponse> getRegisterStatistics() {
         return ResponseEntity.ok(statisticsService.getRegisterStatistics());
+    }
+
+    @GetMapping("/all-last-week")
+    public ResponseEntity<List<ScanAudit>> getLastWeek() {
+        return ResponseEntity.ok(statisticsService.getAllInLastWeek());
     }
 }

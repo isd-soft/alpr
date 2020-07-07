@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getTotalAllowedRejectedCars()
       .toPromise()
       .then(response => {
-        this.chartOptions.series = [response.allowedCars + 1, response.rejectedCars + 1];
+        this.chartOptions.series = [response.allowedCars, response.rejectedCars];
       })
       .catch(error => console.log(error));
   }

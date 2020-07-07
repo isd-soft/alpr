@@ -5,12 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
+
 @Repository
 public interface ScanAuditRepository extends JpaRepository<ScanAudit, Long> {
-    @Query(nativeQuery = true,
-            value = "select count(*) from scan_audit sa where sa.status=:status")
-    int findTotalNrByStatus(String status);
+    int countAllByStatusAndIsAllowed(String status, boolean isAllowed);
 
-    @Query("SELECT COUNT(s) FROM ScanAudit s")
-    Long countAll();
+    @Query(nativeQuery = true, value = "select count(*) from car_audit ca")
+    int countAll();
+
+    @Query(nativeQuery = true,
+            value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.status='IN'")
+    List<ScanAudit> findAllInLastWeek(Date currentDate);
 }

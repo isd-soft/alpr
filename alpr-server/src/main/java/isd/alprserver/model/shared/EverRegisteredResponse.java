@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class EverRegisteredResponse {
     @NotNull
-    private Long peopleNumber;
+    private long peopleNumber;
 
     @NotNull
-    private Long carsNumber;
+    private long carsNumber;
 
     @NotNull
-    private Long scansNumber;
+    private long scansNumber;
 }

@@ -11,6 +11,9 @@ import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StatisticsServiceImpl implements StatisticsService {
@@ -42,25 +45,35 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .build();
     }
 
-    private Long getAllRegisteredUsersEverNumber() {
+    private long getAllRegisteredUsersEverNumber() {
         return userAuditRepository.countAll();
     }
 
-    private Long getAllRegisteredCarsEverNumber() {
+    private long getAllRegisteredCarsEverNumber() {
         return carAuditRepository.countAll();
     }
 
-    private Long getAllPlatesScannedEverNumber() {
+    private int getAllPlatesScannedEverNumber() {
         return scanAuditRepository.countAll();
     }
 
     @Override
     public int getTotalNrAllowedCars() {
-        return scanAuditRepository.findTotalNrByStatus("ALLOWED");
+        return scanAuditRepository.countAllByStatusAndIsAllowed("IN", true);
     }
 
     @Override
     public int getTotalNrRejectedCars() {
-        return scanAuditRepository.findTotalNrByStatus("REJECTED");
+        return scanAuditRepository.countAllByStatusAndIsAllowed("IN", false);
+    }
+
+    @Override
+    public void addScanAudit(ScanAudit scanAudit) {
+        this.scanAuditRepository.save(scanAudit);
+    }
+
+    @Override
+    public List<ScanAudit> getAllInLastWeek() {
+        return scanAuditRepository.findAllInLastWeek(new Date());
     }
 }

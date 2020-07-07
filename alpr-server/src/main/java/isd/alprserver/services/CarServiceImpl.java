@@ -10,6 +10,7 @@ import isd.alprserver.model.exceptions.StatusNotFoundException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.shared.LicenseValidationResponse;
 import isd.alprserver.model.statistics.CarAudit;
+import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.repositories.CarRepository;
 import isd.alprserver.repositories.StatusRepository;
 import isd.alprserver.repositories.UserRepository;
@@ -109,22 +110,57 @@ public class CarServiceImpl implements CarService {
                     .status(car.get().getStatus().getName())
                     .build();
             if (car.get().getStatus().getName().equals("IN")) {
+                addScanAuditOut(car.get());
                 parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
                         .incrementParkingSpots();
                 car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
                 return LicenseValidationResponse.builder().car(dto).status("Left").build();
             }
             if (areAvailableSpots(car) && isOut(car)) {
+                addScanAuditInAllowed(car.get());
                 car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
                 parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
                         .decrementParkingSpots();
                 return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
             } else {
+                addScanAuditInRejected(car.get());
                 return LicenseValidationResponse.builder().car(dto).status("Forbidden").build();
             }
         } else {
             return LicenseValidationResponse.builder().car(CarDTO.builder().licensePlate(licensePlateList.get(licensePlateList.size() - 1)).build()).status("Unknown").build();
         }
+    }
+
+    private void addScanAuditOut(Car car) {
+        statisticsService.addScanAudit(
+                ScanAudit.builder()
+                        .scanDate(new Date())
+                        .status("OUT")
+                        .licensePlate(car.getLicensePlate())
+                        .build()
+        );
+    }
+
+    private void addScanAuditInAllowed(Car car) {
+        statisticsService.addScanAudit(
+                ScanAudit.builder()
+                        .licensePlate(car.getLicensePlate())
+                        .status("IN")
+                        .isAllowed(true)
+                        .scanDate(new Date())
+                        .build()
+        );
+    }
+
+    private void addScanAuditInRejected(Car car) {
+        statisticsService.addScanAudit(
+                ScanAudit.builder()
+                        .licensePlate(car.getLicensePlate())
+                        .scanDate(new Date())
+                        .isAllowed(false)
+                        .status("IN")
+                        .build()
+        );
     }
 
     private String getDateAsString() {
