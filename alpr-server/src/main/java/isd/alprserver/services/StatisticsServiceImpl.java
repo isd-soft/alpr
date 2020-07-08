@@ -61,11 +61,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private long getAllRegisteredUsersEverNumber() {
-        return userAuditRepository.countAll();
+        return userAuditRepository.count();
     }
 
     private long getAllRegisteredCarsEverNumber() {
-        return carAuditRepository.countAll();
+        return carAuditRepository.count();
     }
 
     private long getAllPlatesScannedEverNumber() {
