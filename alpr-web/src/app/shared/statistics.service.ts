@@ -37,22 +37,22 @@ export class StatisticsService {
     return  this.httpClient.get( 'http://localhost:8080/actuator/health');
   }
   public getCpuCount(): Observable<any> {
-    return  this.httpClient.get( this.metricsUrl +'/system.cpu.count');
+    return  this.httpClient.get( this.metricsUrl + '/system.cpu.count');
   }
   public getUptime(): Observable<any> {
-    return  this.httpClient.get( this.metricsUrl +'/process.uptime');
+    return  this.httpClient.get( this.metricsUrl + '/process.uptime');
   }
 
   public getHttpRequest(): Observable<any> {
-    return  this.httpClient.get( this.metricsUrl +'/http.server.requests');
+    return  this.httpClient.get( this.metricsUrl + '/http.server.requests');
   }
 
   public getTotalMemory(): Observable<any> {
-    return  this.httpClient.get( this.metricsUrl +'/jvm.memory.max');
+    return  this.httpClient.get( this.metricsUrl + '/jvm.memory.max');
   }
 
   public getUsedMemory(): Observable<any> {
-    return  this.httpClient.get( this.metricsUrl +'/jvm.memory.used');
+    return  this.httpClient.get( this.metricsUrl + '/jvm.memory.used');
   }
 
 }

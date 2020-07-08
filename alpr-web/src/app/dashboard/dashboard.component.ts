@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.appInfo = response.app;
         console.log(this.appInfo);
-      })
+      });
 
 
     this.statisticsService.getHealth()
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.healthInfo = response;
         console.log(this.healthInfo);
-      })
+      });
 
 
     this.statisticsService.getCpuCount()
@@ -137,7 +137,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.cpuInfo = response;
         console.log(this.cpuInfo);
-      })
+      });
 
     this.statisticsService.getUptime()
       .toPromise()
@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.uptimeInfo = response;
         console.log(this.uptimeInfo);
-      })
+      });
 
     this.statisticsService.getHttpRequest()
       .toPromise()
@@ -153,7 +153,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.httpInfo = response;
         console.log(this.httpInfo);
-      })
+      });
 
     this.statisticsService.getTotalMemory()
       .toPromise()
@@ -161,7 +161,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.totalMemoryInfo = response;
         console.log(this.totalMemoryInfo);
-      })
+      });
 
     this.statisticsService.getUsedMemory()
       .toPromise()
@@ -169,7 +169,7 @@ export class DashboardComponent implements OnInit {
         console.log(response);
         this.usedMemoryInfo = response;
         console.log(this.usedMemoryInfo);
-      })
+      });
   }
 
   private initColumnChart(data: any[]): void {
@@ -236,7 +236,6 @@ export class DashboardComponent implements OnInit {
     this.pieChartOptions = {
       series: [data.allowedCars, data.rejectedCars],
       chart: {
-        width: 380,
         type: 'pie'
       },
       labels: ['Allowed', 'Rejected'],
@@ -260,7 +259,6 @@ export class DashboardComponent implements OnInit {
     this.carsPerCompanyChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
-        width: 380,
         type: 'pie'
       },
       labels: data.map(entry => entry.name),
