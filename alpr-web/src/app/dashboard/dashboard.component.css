@@ -6,3 +6,9 @@
 mat-card {
   margin: 10px;
 }
+
+.chart-title {
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: sans-serif;
+}

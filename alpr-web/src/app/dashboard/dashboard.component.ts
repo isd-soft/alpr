@@ -38,6 +38,13 @@ export class DashboardComponent implements OnInit {
     labels: null,
     responsive: null
   };
+  public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
+    series: null,
+    chart: null,
+    labels: null,
+    responsive: null
+  };
+
   public columnChartOptions: Partial<ColumnChartOptions> = {
     series: null,
     chart: null,
@@ -67,6 +74,9 @@ export class DashboardComponent implements OnInit {
         this.initPieChart(response);
       })
       .catch(error => console.log(error));
+    this.statisticsService.getCarsPerCompany()
+      .toPromise()
+      .then(response => this.initCarsPerCompanyChart(response));
   }
 
   ngOnInit(): void {
@@ -158,6 +168,30 @@ export class DashboardComponent implements OnInit {
         type: 'pie'
       },
       labels: ['Allowed', 'Rejected'],
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      ]
+    };
+  }
+
+  private initCarsPerCompanyChart(data): void {
+    this.carsPerCompanyChartOptions = {
+      series: data.map(entry => entry.cars),
+      chart: {
+        width: 380,
+        type: 'pie'
+      },
+      labels: data.map(entry => entry.name),
       responsive: [
         {
           breakpoint: 480,
