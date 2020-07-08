@@ -1,41 +1,66 @@
 <div class="container-fluid" style="margin-top: 1em">
   <br>
   <div class="row">
-    <div class="col">
-      <mat-card id="info">
 
-        <mat-list>
-          <div mat-subheader>Users Statistics</div>
-          <mat-list-item>
-            <mat-icon mat-list-icon>person_add</mat-icon>
-            <div matline>
-              Users ever registered: {{registeredUsersNumber}}
+    <div class="col-6">
+      <mat-card>
+        <div class="row h-100">
+
+          <div class="col-4 ">
+            <div class="embed-responsive embed-responsive-1by1 text-center">
+              <div class="embed-responsive-item">
+                <div class="rounded-circle border border-success h-100 w-100 d-table">
+                  <div class="d-table-cell align-middle">
+                    <img class="icon" src="../../assets/img/person.svg" alt=""/>
+                    <br>
+                    <span class="title">
+                      USERS
+                    </span>
+                    <br>
+                    <span class="statistics-number">{{registeredUsersNumber}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
-          <mat-divider></mat-divider>
+          </div>
 
-          <div mat-subheader>Cars Statistics</div>
-          <mat-list-item>
-            <mat-icon mat-list-icon>directions_car</mat-icon>
-            <div matline>
-              Cars ever registered: {{registeredCarsNumber}}
+          <div class="col-4">
+            <div class="embed-responsive embed-responsive-1by1 text-center">
+              <div class="embed-responsive-item">
+                <div class="rounded-circle border border-primary h-100 w-100 d-table">
+                  <div class="d-table-cell align-middle">
+                    <img class="icon" src="../../assets/img/car.svg" alt=""/>
+                    <br>
+                    <span class="title">CARS</span>
+                    <br>
+                    <span class="statistics-number">{{registeredCarsNumber}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
+          </div>
 
-          <mat-list-item>
-            <mat-icon>phone_android</mat-icon>
-            <div matline>
-              Scans ever happened: {{scannedPlatesNumber}}
+          <div class="col-4">
+            <div class="embed-responsive embed-responsive-1by1 text-center">
+              <div class="embed-responsive-item">
+                <div class="rounded-circle border border-info h-100 w-100 d-table">
+                  <div class="d-table-cell align-middle">
+                    <img class="icon" src="../../assets/img/phone.svg" alt=""/>
+                    <br>
+                    <span class="title">SCANS</span>
+                    <br>
+                    <span class="statistics-number">{{scannedPlatesNumber}}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
-        </mat-list>
+          </div>
 
+        </div>
       </mat-card>
     </div>
 
-
-
-    <div class="col">
+    <div class="col-6">
       <mat-card id="systemInfo">
         <mat-list>
           <div mat-subheader><mat-icon class="icon">info</mat-icon><span class="info-system"> System Information:</span></div>
@@ -82,11 +107,8 @@
         </mat-list>
       </mat-card>
     </div>
+
   </div>
-
-
-
-
   <div class="row">
     <div class="col">
       <mat-card id="info1">
@@ -107,23 +129,43 @@
 
   <div class="row">
     <div class="col">
-      <mat-card id="chart">
+      <mat-card id="chart-pie" style="text-align: center">
+        <span class="chart-title">Total accepted vs rejected cars</span>
         <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [labels]="chartOptions.labels"
-          [responsive]="chartOptions.responsive">
+          [series]="pieChartOptions.series"
+          [chart]="pieChartOptions.chart"
+          [labels]="pieChartOptions.labels"
+          [responsive]="pieChartOptions.responsive">
         </apx-chart>
       </mat-card>
     </div>
     <div class="col">
-      <mat-card>
-        Card-Pie
+      <mat-card id="chart-column" style="text-align: center">
+        <span class="chart-title">Daily number of accepted and rejected cars</span>
+        <apx-chart
+          [series]="columnChartOptions.series"
+          [chart]="columnChartOptions.chart"
+          [dataLabels]="columnChartOptions.dataLabels"
+          [plotOptions]="columnChartOptions.plotOptions"
+          [yaxis]="columnChartOptions.yaxis"
+          [xaxis]="columnChartOptions.xaxis"
+          [legend]="columnChartOptions.legend"
+          [fill]="columnChartOptions.fill"
+          [stroke]="columnChartOptions.stroke"
+          [tooltip]="columnChartOptions.tooltip"
+        >
+        </apx-chart>
       </mat-card>
     </div>
     <div class="col">
-      <mat-card>
-        Card-Pie
+      <mat-card id="chart-cars-per-company" style="text-align: center">
+        <span class="chart-title">Cars per company</span>
+        <apx-chart
+          [series]="carsPerCompanyChartOptions.series"
+          [chart]="carsPerCompanyChartOptions.chart"
+          [labels]="carsPerCompanyChartOptions.labels"
+          [responsive]="carsPerCompanyChartOptions.responsive"
+          ></apx-chart>
       </mat-card>
     </div>
   </div>

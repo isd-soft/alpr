@@ -1,5 +1,6 @@
 package isd.alprserver.services;
 
+import isd.alprserver.model.Company;
 import isd.alprserver.model.shared.CarStatisticsResponse;
 import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.CarAudit;
@@ -8,6 +9,7 @@ import isd.alprserver.model.statistics.UserAudit;
 import isd.alprserver.repositories.CarAuditRepository;
 import isd.alprserver.repositories.ScanAuditRepository;
 import isd.alprserver.repositories.UserAuditRepository;
+import isd.alprserver.services.interfaces.CompanyService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.health.HealthEndpoint;
@@ -25,6 +27,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final UserAuditRepository userAuditRepository;
     private final CarAuditRepository carAuditRepository;
     private final ScanAuditRepository scanAuditRepository;
+    private final CompanyService companyService;
     private final HealthEndpoint healthEndpoint;
     private final MetricsEndpoint metricsEndpoint;
 
@@ -58,15 +61,15 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private long getAllRegisteredUsersEverNumber() {
-        return userAuditRepository.countAll();
+        return userAuditRepository.count();
     }
 
     private long getAllRegisteredCarsEverNumber() {
-        return carAuditRepository.countAll();
+        return carAuditRepository.count();
     }
 
-    private int getAllPlatesScannedEverNumber() {
-        return scanAuditRepository.countAll();
+    private long getAllPlatesScannedEverNumber() {
+        return scanAuditRepository.count();
     }
 
     @Override
@@ -94,5 +97,10 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<ScanAudit> getAllInLastWeek() {
         return scanAuditRepository.findAllInLastWeek(new Date());
+    }
+
+    @Override
+    public List<Company> getAllCompanies() {
+        return companyService.getAllCompanies();
     }
 }

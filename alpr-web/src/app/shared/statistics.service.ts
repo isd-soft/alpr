@@ -22,6 +22,14 @@ export class StatisticsService {
     return this.httpClient.get(this.url + '/users');
   }
 
+  public getAllowedRejectedCarsLastWeek(): Observable<{id: number, scanDate: string, status: string, licensePlate: string, allowed: boolean}[]> {
+    return this.httpClient.get<any[]>(this.url + '/all-last-week');
+  }
+
+  public getCarsPerCompany(): Observable<{name: string, cars: number}[]> {
+    return this.httpClient.get<any[]>(this.url + '/cars-per-company');
+  }
+
   public getInfo(): Observable<any> {
     return  this.httpClient.get( 'http://localhost:8080/actuator/info');
   }

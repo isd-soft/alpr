@@ -7,6 +7,30 @@ mat-card {
   margin: 10px;
 }
 
+.chart-title {
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.rounded-circle {
+  border-width: 1vw !important;
+}
+
+.icon {
+  max-width: 4vw;
+  max-height: 4vw;
+}
+
+.title {
+  font-size: 2vw;
+  color: lightslategray;
+}
+
+.statistics-number{
+  font-size: 2vw;
+}
+
 .icon{
   color: red;
   padding-right: 30px;

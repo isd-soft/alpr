@@ -1,5 +1,6 @@
 package isd.alprserver.controllers;
 
+import isd.alprserver.dtos.CompanyWithCarsDTO;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.dtos.AllowedRejectedCounterDTO;
 import isd.alprserver.model.shared.CarStatisticsResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("*")
@@ -49,5 +51,24 @@ public class StatisticsController {
     @GetMapping("/all-last-week")
     public ResponseEntity<List<ScanAudit>> getLastWeek() {
         return ResponseEntity.ok(statisticsService.getAllInLastWeek());
+    }
+
+    @GetMapping("/cars-per-company")
+    public ResponseEntity<List<CompanyWithCarsDTO>> getAllCompaniesWithCars() {
+        return ResponseEntity.ok(
+            statisticsService.getAllCompanies()
+                .stream()
+                .map(company -> CompanyWithCarsDTO.
+                        builder()
+                        .name(company.getName())
+                        .cars(
+                                company.getUsers().stream()
+                                        .map(user -> user.getCars().size())
+                                .reduce(0, Integer::sum)
+                        )
+                        .build()
+                )
+                .collect(Collectors.toList())
+        );
     }
 }
