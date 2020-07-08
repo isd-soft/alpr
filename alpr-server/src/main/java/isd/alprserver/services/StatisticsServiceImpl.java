@@ -65,8 +65,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         return carAuditRepository.countAll();
     }
 
-    private int getAllPlatesScannedEverNumber() {
-        return scanAuditRepository.countAll();
+    private long getAllPlatesScannedEverNumber() {
+        return scanAuditRepository.count();
     }
 
     @Override
