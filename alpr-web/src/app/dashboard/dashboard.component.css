@@ -11,7 +11,16 @@ mat-card {
   border-width: 1vw !important;
 }
 
-.icon{
+.icon {
   max-width: 4vw;
   max-height: 4vw;
+}
+
+.title {
+  font-size: 2vw;
+  color: lightslategray;
+}
+
+.statistics-number{
+  font-size: 2vw;
 }

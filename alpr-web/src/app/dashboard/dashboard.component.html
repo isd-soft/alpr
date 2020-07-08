@@ -13,7 +13,11 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/person.svg" alt=""/>
                     <br>
-                    Users Registered: {{registeredUsersNumber}}
+                    <span class="title">
+                      USERS
+                    </span>
+                    <br>
+                    <span class="statistics-number">{{registeredUsersNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -27,7 +31,9 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/car.svg" alt=""/>
                     <br>
-                    Cars Registered: {{registeredCarsNumber}}
+                    <span class="title">CARS</span>
+                    <br>
+                    <span class="statistics-number">{{registeredCarsNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -41,7 +47,9 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/phone.svg" alt=""/>
                     <br>
-                    Scans made: {{scannedPlatesNumber}}
+                    <span class="title">SCANS</span>
+                    <br>
+                    <span class="statistics-number">{{scannedPlatesNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -111,7 +119,7 @@
           [fill]="columnChartOptions.fill"
           [stroke]="columnChartOptions.stroke"
           [tooltip]="columnChartOptions.tooltip"
-          >
+        >
         </apx-chart>
       </mat-card>
     </div>
