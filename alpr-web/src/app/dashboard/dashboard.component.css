@@ -6,3 +6,12 @@
 mat-card {
   margin: 10px;
 }
+
+.rounded-circle {
+  border-width: 1vw !important;
+}
+
+.icon{
+  max-width: 4vw;
+  max-height: 4vw;
+}

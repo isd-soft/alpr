@@ -1,38 +1,60 @@
 <div class="container-fluid" style="margin-top: 1em">
   <br>
   <div class="row">
-    <div class="col">
-      <mat-card id="info">
 
-        <mat-list>
-          <div mat-subheader>Users Statistics</div>
-          <mat-list-item>
-            <mat-icon mat-list-icon>person_add</mat-icon>
-            <div matline>
-              Users ever registered: {{registeredUsersNumber}}
+    <div class="col-6">
+      <div class="container">
+        <mat-card>
+          <div class="row h-100">
+
+            <div class="col-4 ">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-success h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/person.svg" alt=""/>
+                      <br>
+                      Users Registered: {{registeredUsersNumber}}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
-          <mat-divider></mat-divider>
 
-          <div mat-subheader>Cars Statistics</div>
-          <mat-list-item>
-            <mat-icon mat-list-icon>directions_car</mat-icon>
-            <div matline>
-              Cars ever registered: {{registeredCarsNumber}}
+            <div class="col-4">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-primary h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/car.svg" alt=""/>
+                      <br>
+                      Cars Registered: {{registeredCarsNumber}}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
 
-          <mat-list-item>
-            <mat-icon mat-list-icon>phone_android</mat-icon>
-            <div matline>
-              Scans ever happened: {{scannedPlatesNumber}}
+            <div class="col-4">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-info h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/phone.svg" alt=""/>
+                      <br>
+                      Scans made: {{registeredUsersNumber}}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </mat-list-item>
-        </mat-list>
 
-      </mat-card>
+          </div>
+        </mat-card>
+      </div>
     </div>
-    <div class="col">
+
+    <div class="col-6">
       <mat-card id="systemInfo">
         <mat-list>
           <div mat-subheader>System Information</div>
@@ -45,6 +67,7 @@
         </mat-list>
       </mat-card>
     </div>
+
   </div>
   <div class="row">
     <div class="col">
