@@ -2,6 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {AppModel} from "../shared/app.model";
+import {HealthModel} from "../shared/health.model";
+import {CpuModel} from "../shared/cpu.model";
+import {UptimeModel} from "../shared/uptime.model";
+import {HttpRequestModel} from "../shared/httpRequest.model";
+import {totalMemoryModel} from "../shared/totalMemory.model";
+import {usedMemoryModel} from "../shared/usedMemory.model";
 import {scan} from 'rxjs/operators';
 
 export type PieChartOptions = {
@@ -60,6 +67,13 @@ export class DashboardComponent implements OnInit {
   registeredUsersNumber: number;
   registeredCarsNumber: number;
   scannedPlatesNumber: number;
+  appInfo: AppModel = new AppModel();
+  healthInfo: HealthModel = new HealthModel();
+  cpuInfo: CpuModel = new CpuModel();
+  uptimeInfo: UptimeModel = new UptimeModel();
+  httpInfo: HttpRequestModel = new HttpRequestModel();
+  totalMemoryInfo: totalMemoryModel = new totalMemoryModel();
+  usedMemoryInfo: usedMemoryModel = new usedMemoryModel();
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
@@ -98,6 +112,64 @@ export class DashboardComponent implements OnInit {
       .catch(_ => {
         this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
       });
+
+    this.statisticsService.getInfo()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.appInfo = response.app;
+        console.log(this.appInfo);
+      })
+
+
+    this.statisticsService.getHealth()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.healthInfo = response;
+        console.log(this.healthInfo);
+      })
+
+
+    this.statisticsService.getCpuCount()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.cpuInfo = response;
+        console.log(this.cpuInfo);
+      })
+
+    this.statisticsService.getUptime()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.uptimeInfo = response;
+        console.log(this.uptimeInfo);
+      })
+
+    this.statisticsService.getHttpRequest()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.httpInfo = response;
+        console.log(this.httpInfo);
+      })
+
+    this.statisticsService.getTotalMemory()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.totalMemoryInfo = response;
+        console.log(this.totalMemoryInfo);
+      })
+
+    this.statisticsService.getUsedMemory()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+        this.usedMemoryInfo = response;
+        console.log(this.usedMemoryInfo);
+      })
   }
 
   private initColumnChart(data: any[]): void {

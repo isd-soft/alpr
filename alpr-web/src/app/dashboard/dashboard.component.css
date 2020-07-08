@@ -17,7 +17,40 @@ mat-card {
   border-width: 1vw !important;
 }
 
-.icon{
+.icon {
   max-width: 4vw;
   max-height: 4vw;
+}
+
+.title {
+  font-size: 2vw;
+  color: lightslategray;
+}
+
+.statistics-number{
+  font-size: 2vw;
+}
+
+.icon{
+  color: red;
+  padding-right: 30px;
+  font: 40px
+}
+
+.system-info {
+  size: 60px;
+}
+
+.health, .info, .metrics {
+  color: #3f51b5;
+  font-size: 25px;
+}
+.value {
+  color: #3f51b5;
+}
+
+.info-system {
+  font-size: 30px;
+  color: #3f51b5;
+
 }

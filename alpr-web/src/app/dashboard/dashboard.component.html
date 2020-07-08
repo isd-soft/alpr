@@ -13,7 +13,11 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/person.svg" alt=""/>
                     <br>
-                    Users Registered: {{registeredUsersNumber}}
+                    <span class="title">
+                      USERS
+                    </span>
+                    <br>
+                    <span class="statistics-number">{{registeredUsersNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -27,7 +31,9 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/car.svg" alt=""/>
                     <br>
-                    Cars Registered: {{registeredCarsNumber}}
+                    <span class="title">CARS</span>
+                    <br>
+                    <span class="statistics-number">{{registeredCarsNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -41,7 +47,9 @@
                   <div class="d-table-cell align-middle">
                     <img class="icon" src="../../assets/img/phone.svg" alt=""/>
                     <br>
-                    Scans made: {{scannedPlatesNumber}}
+                    <span class="title">SCANS</span>
+                    <br>
+                    <span class="statistics-number">{{scannedPlatesNumber}}</span>
                   </div>
                 </div>
               </div>
@@ -55,13 +63,47 @@
     <div class="col-6">
       <mat-card id="systemInfo">
         <mat-list>
-          <div mat-subheader>System Information</div>
-          <mat-list-item>
-            First: example
-          </mat-list-item>
-          <mat-list-item>
-            Another: example
-          </mat-list-item>
+          <div mat-subheader><mat-icon class="icon">info</mat-icon><span class="info-system"> System Information:</span></div>
+          <mat-label class="info">Info</mat-label>
+          <li>Application name : <span class="value">{{appInfo.name}} </span></li>
+          <li>Description : <span class="value">{{appInfo.description}} </span> </li>
+          <li>Application version : <span class="value">{{appInfo.version}} </span></li>
+          <li>Java version :<span class="value"> {{appInfo.java.version}} </span> </li>
+
+          <mat-label class="health">Health</mat-label>
+          <li>The state of application : <span class="value"> {{healthInfo.status}}</span> </li>
+          <li>DataBase : <span class="value">{{healthInfo.components.db.details.database}}</span> </li>
+          <li>Total diskspace :<span class="value"> {{healthInfo.components.diskSpace.details.total}} bytes </span></li>
+          <li>Free diskspace : <span class="value"> {{healthInfo.components.diskSpace.details.free}} bytes </span> </li>
+
+          <mat-label class="metrics">Metrics</mat-label>
+          <li *ngFor="let measurement of cpuInfo.measurements">
+            The number of processors available:
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of uptimeInfo.measurements">
+            The uptime:
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+
+          <li *ngFor="let measurement of httpInfo.measurements; let i = index;" [attr.data-index]="i">
+            <span *ngIf="i == 0">Count of http server requests :</span>
+            <span *ngIf="i == 1">Total time of http server requests :</span>
+            <span *ngIf="i == 2">Maximum of  http server requests :</span>
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of totalMemoryInfo.measurements">
+            The maximum amount of memory in bytes :
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of usedMemoryInfo.measurements">
+            The amount of used memory :
+            <span class="value">{{measurement.value}}</span>
+          </li>
         </mat-list>
       </mat-card>
     </div>
@@ -111,7 +153,7 @@
           [fill]="columnChartOptions.fill"
           [stroke]="columnChartOptions.stroke"
           [tooltip]="columnChartOptions.tooltip"
-          >
+        >
         </apx-chart>
       </mat-card>
     </div>
