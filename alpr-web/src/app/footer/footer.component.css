@@ -15,7 +15,7 @@ html {
 
 #sticky-footer{
   position: absolute;
-  bottom: 0px;
+  bottom: -90px;
   height: 90px;
   line-height: 15px;
   text-align: center;

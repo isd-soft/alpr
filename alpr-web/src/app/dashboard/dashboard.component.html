@@ -89,18 +89,32 @@
 
   <div class="row">
     <div class="col">
-      <mat-card id="chart">
+      <mat-card id="chart-pie" style="text-align: center">
+        <span class="chart-title">Total accepted vs rejected cars</span>
         <apx-chart
-          [series]="chartOptions.series"
-          [chart]="chartOptions.chart"
-          [labels]="chartOptions.labels"
-          [responsive]="chartOptions.responsive">
+          [series]="pieChartOptions.series"
+          [chart]="pieChartOptions.chart"
+          [labels]="pieChartOptions.labels"
+          [responsive]="pieChartOptions.responsive">
         </apx-chart>
       </mat-card>
     </div>
     <div class="col">
-      <mat-card>
-        Card-Pie
+      <mat-card id="chart-column" style="text-align: center">
+        <span class="chart-title">Daily number of accepted and rejected cars</span>
+        <apx-chart
+          [series]="columnChartOptions.series"
+          [chart]="columnChartOptions.chart"
+          [dataLabels]="columnChartOptions.dataLabels"
+          [plotOptions]="columnChartOptions.plotOptions"
+          [yaxis]="columnChartOptions.yaxis"
+          [xaxis]="columnChartOptions.xaxis"
+          [legend]="columnChartOptions.legend"
+          [fill]="columnChartOptions.fill"
+          [stroke]="columnChartOptions.stroke"
+          [tooltip]="columnChartOptions.tooltip"
+          >
+        </apx-chart>
       </mat-card>
     </div>
     <div class="col">
