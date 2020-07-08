@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class StatisticsService {
   private url = 'http://localhost:8080/statistics';
+  private metricsUrl ="http://localhost:8080/actuator/metrics"
 
   constructor(private httpClient: HttpClient) {
   }
@@ -20,4 +21,30 @@ export class StatisticsService {
   public getUsersStatistics(): Observable<any> {
     return this.httpClient.get(this.url + '/users');
   }
+
+  public getInfo(): Observable<any> {
+    return  this.httpClient.get( 'http://localhost:8080/actuator/info');
+  }
+  public getHealth(): Observable<any> {
+    return  this.httpClient.get( 'http://localhost:8080/actuator/health');
+  }
+  public getCpuCount(): Observable<any> {
+    return  this.httpClient.get( this.metricsUrl +'/system.cpu.count');
+  }
+  public getUptime(): Observable<any> {
+    return  this.httpClient.get( this.metricsUrl +'/process.uptime');
+  }
+
+  public getHttpRequest(): Observable<any> {
+    return  this.httpClient.get( this.metricsUrl +'/http.server.requests');
+  }
+
+  public getTotalMemory(): Observable<any> {
+    return  this.httpClient.get( this.metricsUrl +'/jvm.memory.max');
+  }
+
+  public getUsedMemory(): Observable<any> {
+    return  this.httpClient.get( this.metricsUrl +'/jvm.memory.used');
+  }
+
 }
