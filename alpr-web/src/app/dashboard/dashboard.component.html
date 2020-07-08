@@ -124,8 +124,14 @@
       </mat-card>
     </div>
     <div class="col">
-      <mat-card>
-        Card-Pie
+      <mat-card id="chart-cars-per-company" style="text-align: center">
+        <span class="chart-title">Cars per company</span>
+        <apx-chart
+          [series]="carsPerCompanyChartOptions.series"
+          [chart]="carsPerCompanyChartOptions.chart"
+          [labels]="carsPerCompanyChartOptions.labels"
+          [responsive]="carsPerCompanyChartOptions.responsive"
+          ></apx-chart>
       </mat-card>
     </div>
   </div>

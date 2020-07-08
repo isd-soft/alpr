@@ -1,5 +1,6 @@
 package isd.alprserver.services.interfaces;
 
+import isd.alprserver.model.Company;
 import isd.alprserver.model.shared.CarStatisticsResponse;
 import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.CarAudit;
@@ -27,4 +28,6 @@ public interface StatisticsService {
     void addScanAudit(ScanAudit scanAudit);
 
     List<ScanAudit> getAllInLastWeek();
+
+    List<Company> getAllCompanies();
 }
