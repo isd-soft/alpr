@@ -41,7 +41,7 @@
         <span class="color-title">
           {{car.color}}
         </span>
-        <span class="material-icons span-icon" style="color:{{car.color}}; margin-left: 1px">directions_car</span>
+        <span class="material-icons span-icon" [ngStyle]="{'color': car.color}">directions_car</span>
       </mat-cell>
     </ng-container>
 
