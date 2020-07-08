@@ -48,6 +48,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
 import {MatListModule} from '@angular/material/list';
+import { AnnouncementComponent } from './announcement/announcement.component';
+import {AnnouncementService} from "./shared/announcement.service";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -64,7 +67,8 @@ import {MatListModule} from '@angular/material/list';
     HeaderComponent,
     FooterComponent,
     PasswordComponent,
-    DashboardComponent
+    DashboardComponent,
+    AnnouncementComponent
   ],
   imports: [
     BrowserModule,
@@ -93,9 +97,10 @@ import {MatListModule} from '@angular/material/list';
     MatSidenavModule,
     NgbModule,
     NgApexchartsModule,
-    MatListModule
+    MatListModule,
+    ScrollingModule
   ],
-  providers: [UserService, CompanyService, CarService,
+  providers: [UserService, CompanyService, CarService, AnnouncementService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}

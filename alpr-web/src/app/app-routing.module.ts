@@ -12,6 +12,7 @@ import {LoginGuard} from './auth/login.guard';
 import {CompaniesComponent} from './companies/companies.component';
 import {PasswordComponent} from './password/password.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
+import {AnnouncementComponent} from "./announcement/announcement.component";
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [LoginGuard]},
   {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   {path: 'cars', component: CarListComponent, canActivate: [AuthGuard]},
+  {path: 'announcements', component: AnnouncementComponent, canActivate: [AuthGuard]},
   {path: 'companies', component: CompaniesComponent, canActivate: [AuthGuard]},
   {path: 'addcar', component: AddCarComponent, canActivate: [AuthGuard]},
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
