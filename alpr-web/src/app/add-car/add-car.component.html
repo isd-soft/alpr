@@ -1,3 +1,4 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <mat-toolbar>
   <span>Car Registration</span>
 </mat-toolbar>
@@ -28,6 +29,7 @@
 
       <div class="input-group mb-3 full-width">
         <div class="custom-file">
+          <!--suppress TypeScriptUnresolvedVariable -->
           <input #carFileInput type="file" class="custom-file-input"
                  id="carFileInput" aria-describedby="inputGroupFileAddon01"
                  (change)="handleFileInput($event.target.files)"

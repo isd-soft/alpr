@@ -123,6 +123,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   addCar() {
     const car: CarModel = this.formExtractor.extractAddCar(this.addCarForm);
+    car.photo = this.carPhotoToAdd;
     this.carService.registerCar(car)
       .toPromise()
       .then(_ => {
@@ -187,12 +188,10 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   handleEditCarFileInput(files: FileList) {
-    let fileToUpload = files.item(0);
-
     this.fileHandler.loadCarPhoto(files)
       .then(result => {
         this.carPhotoToEdit = result;
-        this.uploadInputLabel = fileToUpload.name;
+        this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
@@ -200,12 +199,10 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   handleAddCarFileInput(files: FileList) {
-    let fileToUpload = files.item(0);
-
     this.fileHandler.loadCarPhoto(files)
       .then(result => {
         this.carPhotoToAdd = result;
-        this.uploadInputLabel = fileToUpload.name;
+        this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});

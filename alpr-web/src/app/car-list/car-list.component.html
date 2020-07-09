@@ -87,165 +87,6 @@
         </mat-cell>
       </ng-container>
 
-      <ng-template #addCarTemplate>
-        <div>
-          <div mat-dialog-title>
-            <h2>Add Car</h2>
-          </div>
-          <mat-dialog-content [formGroup]="addCarForm">
-            <mat-form-field>
-              <mat-label>License Plate</mat-label>
-              <input matInput placeholder="licensePlate" class="no-left-margin"
-                     name="licensePlate" type="text" required
-                     formControlName="licensePlate">
-            </mat-form-field>
-
-            <mat-form-field class="left-margin">
-              <mat-label>Brand</mat-label>
-              <input matInput placeholder="brand"
-                     name="brand" type="text" required
-                     formControlName="brand">
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field class="no-left-margin">
-              <mat-label>Model</mat-label>
-              <input matInput placeholder="model"
-                     name="model" type="text"
-                     required formControlName="model">
-            </mat-form-field>
-
-
-            <mat-form-field class="left-margin">
-              <mat-label>Color</mat-label>
-              <input matInput placeholder="color" name="color"
-                     type="text" required formControlName="color">
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field class="no-left-margin">
-              <mat-label>Owner Email</mat-label>
-              <mat-select required formControlName="ownerEmail">
-                <mat-option *ngFor="let user of users"
-                            [value]="user.email">{{user.email}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-
-            <mat-dialog-actions class="no-bottom-margin">
-              <button class="mat-raised-button"
-                      [mat-dialog-close]="true">Close
-              </button>
-              <button class="mat-raised-button mat-accent left-margin"
-                      (click)="addCarForm.reset()">Clear
-              </button>
-              <button class="mat-raised-button mat-primary left-margin"
-                      (click)="addCar()">Save
-              </button>
-            </mat-dialog-actions>
-
-          </mat-dialog-content>
-        </div>
-      </ng-template>
-
-      <ng-template #editCarTemplate>
-        <div mat-dialog-title>
-          <h2>Edit Car</h2>
-          <mat-divider></mat-divider>
-          <h5>{{editedCar.licensePlate}}</h5>
-        </div>
-        <mat-dialog-content [formGroup]="editCarForm">
-          <div class="row">
-            <div class="col">
-              <mat-form-field>
-                <mat-label>Brand</mat-label>
-                <input matInput placeholder="brand"
-                       name="brand" type="text" required
-                       formControlName="brand">
-              </mat-form-field>
-
-              <br>
-
-              <mat-form-field>
-                <mat-label>Model</mat-label>
-                <input matInput placeholder="model"
-                       name="model" type="text"
-                       required formControlName="model">
-              </mat-form-field>
-
-              <br>
-
-              <mat-form-field>
-                <mat-label>Color</mat-label>
-                <input matInput placeholder="color" name="color"
-                       type="text" required formControlName="color">
-              </mat-form-field>
-
-              <br>
-
-              <mat-form-field>
-                <mat-label>Owner</mat-label>
-                <input matInput placeholder="owner"
-                       name="owner" type="text" required
-                       formControlName="ownerName">
-              </mat-form-field>
-
-              <br>
-
-              <mat-form-field>
-                <mat-label>TelephoneNumber</mat-label>
-                <input matInput placeholder="ownerTelephone" name="ownerTelephone"
-                       class="no-left-margin" type="text"
-                       required formControlName="ownerTelephone">
-              </mat-form-field>
-
-              <div class="input-group mb-3 full-width">
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input"
-                         id="carFileInput" aria-describedby="inputGroupFileAddon01"
-                         (change)="handleEditCarFileInput($event.target.files)">
-                  <label class="custom-file-label" for="carFileInput">
-                    {{uploadInputLabel}}
-                  </label>
-                </div>
-              </div>
-
-              <mat-dialog-actions class="no-bottom-margin">
-                <button class="mat-raised-button"
-                        [mat-dialog-close]="true">Close
-                </button>
-                <button class="mat-raised-button mat-primary left-margin"
-                        [mat-dialog-close]="true" (click)="updateCar()">Update
-                </button>
-              </mat-dialog-actions>
-            </div>
-            <div class="col">
-              <mat-card>
-                <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-                <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-                  <div style="text-align: center">
-                    <img matCardImage [src]="carPhotoToEdit"
-                         alt="car photo" class="edit-car-photo">
-                  </div>
-                </div>
-                <mat-card-actions>
-                  <div *ngIf="carPhotoToEdit">
-                    <button mat-raised-button
-                            (click)="this.carPhotoToEdit = null"
-                            class="action">Set Default
-                    </button>
-                  </div>
-                </mat-card-actions>
-              </mat-card>
-            </div>
-
-          </div>
-        </mat-dialog-content>
-      </ng-template>
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>
 
@@ -254,6 +95,196 @@
     <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
   </div>
 </section>
+
+<ng-template #addCarTemplate>
+  <div>
+    <div mat-dialog-title>
+      <h2>Add Car</h2>
+    </div>
+    <mat-dialog-content [formGroup]="addCarForm" style="height: 100%">
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>License Plate</mat-label>
+            <input matInput placeholder="licensePlate"
+                   name="licensePlate" type="text" required
+                   formControlName="licensePlate">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="brand"
+                   name="brand" type="text" required
+                   formControlName="brand">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Model</mat-label>
+            <input matInput placeholder="model"
+                   name="model" type="text"
+                   required formControlName="model">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="color" name="color"
+                   type="text" required formControlName="color">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Owner Email</mat-label>
+            <mat-select required formControlName="ownerEmail">
+              <mat-option *ngFor="let user of users"
+                          [value]="user.email">{{user.email}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <br>
+
+          <div class="input-group mb-3" style="width: 75%">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input"
+                     id="carAddFileInput" aria-describedby="inputGroupFileAddon02"
+                     (change)="handleAddCarFileInput($event.target.files)">
+              <label class="custom-file-label" for="carAddFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="carPhotoToAdd">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="this.carPhotoToAdd = null">Set Default
+              </button>
+            </div>
+          </div>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addCarForm.reset()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addCar()">Save
+            </button>
+          </mat-dialog-actions>
+        </div>
+        <div class="col">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="carPhotoToAdd; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="carPhotoToAdd"
+                     alt="car photo" class="edit-car-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #editCarTemplate>
+  <div mat-dialog-title>
+    <h2>Edit Car</h2>
+    <mat-divider></mat-divider>
+    <h5>{{editedCar.licensePlate}}</h5>
+  </div>
+  <mat-dialog-content [formGroup]="editCarForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <input matInput placeholder="brand"
+                 name="brand" type="text" required
+                 formControlName="brand">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>Model</mat-label>
+          <input matInput placeholder="model"
+                 name="model" type="text"
+                 required formControlName="model">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>Color</mat-label>
+          <input matInput placeholder="color" name="color"
+                 type="text" required formControlName="color">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>Owner</mat-label>
+          <input matInput placeholder="owner"
+                 name="owner" type="text" required
+                 formControlName="ownerName">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>TelephoneNumber</mat-label>
+          <input matInput placeholder="ownerTelephone" name="ownerTelephone"
+                 class="no-left-margin" type="text"
+                 required formControlName="ownerTelephone">
+        </mat-form-field>
+
+        <div class="input-group mb-3" style="width: 75%">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input"
+                   id="carEditFileInput" aria-describedby="inputGroupFileAddon01"
+                   (change)="handleEditCarFileInput($event.target.files)">
+            <label class="custom-file-label" for="carEditFileInput">
+              {{uploadInputLabel}}
+            </label>
+          </div>
+          <div class='input-group-append' *ngIf="carPhotoToEdit">
+            <button class="btn btn-outline-secondary action" type="button"
+                    (click)="this.carPhotoToEdit = null">Set Default
+            </button>
+          </div>
+        </div>
+
+        <mat-dialog-actions class="no-bottom-margin">
+          <button class="mat-raised-button"
+                  [mat-dialog-close]="true">Close
+          </button>
+          <button class="mat-raised-button mat-primary left-margin"
+                  [mat-dialog-close]="true" (click)="updateCar()">Update
+          </button>
+        </mat-dialog-actions>
+      </div>
+      <div class="col">
+        <mat-card>
+          <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+          <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+            <div style="text-align: center">
+              <img matCardImage [src]="carPhotoToEdit"
+                   alt="car photo" class="edit-car-photo">
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+    </div>
+  </mat-dialog-content>
+</ng-template>
 
 <ng-template #carPhotoTemplate>
   <div>
