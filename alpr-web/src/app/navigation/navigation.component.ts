@@ -52,6 +52,10 @@ export class NavigationComponent implements OnInit {
           {
             link: 'addcar',
             name: 'Add Car'
+          },
+          {
+            link: 'companycars',
+            name: 'Company\'s Cars'
           }];
       }
       this.links.push({

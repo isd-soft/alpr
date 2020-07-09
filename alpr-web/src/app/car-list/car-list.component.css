@@ -1,6 +1,7 @@
-table{
+table {
   width: 100%;
 }
+
 .all-margins {
   margin: 1em;
 }
@@ -17,15 +18,17 @@ table{
   margin-bottom: 0;
 }
 
-.align-right{
+.align-right {
   display: flex;
   padding: 0;
   justify-content: flex-end;
 }
 
+
 .car-list-section {
   margin: 10px;
   margin-bottom: 100px;
+
 }
 
 .span-icon {
@@ -38,6 +41,35 @@ table{
 
 #example-form-field {
   width: 200px;
+}
+
+.all-margins {
+  margin: 1em;
+}
+
+.car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+}
+
+.default-car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+}
+
+.edit-car-photo {
+  max-height: 42vh;
+  max-width: 30vw;
+  width: 100%;
+}
+
+.default-edit-car-photo {
+  max-height: 25vh;
+  max-width: 25vw;
+}
+
+input {
+  width: 100%;
 }
 
 

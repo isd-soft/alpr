@@ -44,6 +44,18 @@ export class FormGenerator {
     });
   }
 
+    public generateCarAddForm(): FormGroup {
+     return this.fb.group({
+      id: ['', Validators.required],
+      licensePlate: ['', [Validators.required,
+        Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
+      brand: ['', Validators.required],
+      model: ['', Validators.required],
+      color: ['', Validators.required],
+      ownerEmail: ['', [Validators.required, Validators.email]],
+    });
+  }
+
 
   public generateCarEditForm(car: CarModel): FormGroup {
     return this.fb.group({

@@ -28,8 +28,18 @@ export class FormExtractor {
       carDetailsForm.get('model').value,
       carDetailsForm.get('color').value,
       carDetailsForm.get('ownerName').value,
-      carDetailsForm.get('ownerTelephone').value)
+      carDetailsForm.get('ownerTelephone').value);
   }
+
+    public extractAddCar(carDetailsForm: FormGroup) {
+      return new CarModel(
+        1,
+        carDetailsForm.get('licensePlate').value,
+        carDetailsForm.get('brand').value,
+        carDetailsForm.get('model').value,
+        carDetailsForm.get('color').value,
+        carDetailsForm.get('ownerEmail').value);
+    }
 
   public extractCompany(companyDetailsForm: FormGroup) {
     return new CompanyModel(
