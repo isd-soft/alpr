@@ -34,7 +34,6 @@ mat-card {
 .icon-info{
   color: red;
   padding-right: 30px;
-  font: 40px
 }
 
 .system-info {
@@ -54,3 +53,10 @@ mat-card {
   color: #3f51b5;
 
 }
+
+.chart-donut {
+  max-width: 380px;
+  margin: 35px auto;
+  padding: 0;
+}
+

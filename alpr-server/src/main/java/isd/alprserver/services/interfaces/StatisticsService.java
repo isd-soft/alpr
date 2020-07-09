@@ -30,4 +30,6 @@ public interface StatisticsService {
     List<ScanAudit> getAllInLastWeek();
 
     List<Company> getAllCompanies();
+
+    List<ScanAudit> getAllScansForToday();
 }
