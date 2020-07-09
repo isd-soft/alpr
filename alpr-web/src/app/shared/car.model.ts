@@ -1,6 +1,6 @@
 export class CarModel {
 
-  constructor(public id: number= 1,
+  constructor(public id: number = 1,
               public licensePlate: string = '',
               public brand: string = '',
               public model: string = '',
@@ -8,11 +8,12 @@ export class CarModel {
               public ownerEmail: string = '',
               public ownerName: string = '',
               public ownerTelephone: string = '',
-              public status: string = ''
-
-  ){
+              public status: string = '',
+              public photo?: string
+  ) {
 
   }
+
   /*
   get licensePlate(): string {
           return this.licensePlate;
