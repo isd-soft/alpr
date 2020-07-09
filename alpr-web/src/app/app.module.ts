@@ -42,6 +42,8 @@ import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {ChartsModule} from "ng2-charts";
+
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -72,6 +74,7 @@ import {AnnouncementComponent} from './announcement/announcement.component';
     PasswordComponent,
     DashboardComponent,
     AnnouncementComponent
+
   ],
   imports: [
     BrowserModule,
@@ -101,7 +104,9 @@ import {AnnouncementComponent} from './announcement/announcement.component';
     NgbModule,
     NgApexchartsModule,
     MatListModule,
-    ScrollingModule
+    ScrollingModule,
+    ChartsModule
+
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
