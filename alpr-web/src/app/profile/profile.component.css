@@ -17,6 +17,9 @@
 .card-content {
   width: 100%;
   font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   }
 
 .table {
@@ -29,3 +32,5 @@
 .profile-info-section {
   margin-bottom: 30px;
 }
+
+

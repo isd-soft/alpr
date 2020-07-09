@@ -158,10 +158,30 @@
         >
         </apx-chart>
       </mat-card>
+
+      <mat-card id="chart-column" style="text-align: center">
+        <span class="chart-title">Daily number of cars entered/exited</span>
+        <apx-chart
+          [series]="columnChartOptions.series"
+          [chart]="columnChartOptions.chart"
+          [dataLabels]="columnChartOptions.dataLabels"
+          [plotOptions]="columnChartOptions.plotOptions"
+          [yaxis]="columnChartOptions.yaxis"
+          [xaxis]="columnChartOptions.xaxis"
+          [legend]="columnChartOptions.legend"
+          [fill]="columnChartOptions.fill"
+          [stroke]="columnChartOptions.stroke"
+          [tooltip]="columnChartOptions.tooltip"
+        >
+        </apx-chart>
+      </mat-card>
+
+
     </div>
     <div class="col">
 
     </div>
   </div>
+
 
 </div>
