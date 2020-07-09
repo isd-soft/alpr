@@ -1,5 +1,6 @@
 package isd.alprserver.controllers;
 
+import isd.alprserver.dtos.CarsPerHoursDTO;
 import isd.alprserver.dtos.CompanyWithCarsDTO;
 import isd.alprserver.model.statistics.ScanAudit;
 import isd.alprserver.dtos.AllowedRejectedCounterDTO;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,5 +72,36 @@ public class StatisticsController {
                 )
                 .collect(Collectors.toList())
         );
+    }
+    @GetMapping("/cars-per-morning")
+    public ResponseEntity<List<CarsPerHoursDTO>> getNumberOfCarsMorning() {
+        return ResponseEntity.ok(
+            statisticsService.getAllScansForToday().stream().map(
+                    audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHours()).build()
+            )
+                    .filter(audit -> audit.getHour() < 11)
+                .collect(Collectors.groupingBy(CarsPerHoursDTO::getHour))
+                .entrySet().stream()
+                .map(entry -> CarsPerHoursDTO.builder().hour(entry.getKey()).cars(entry.getValue().size()).build())
+                .collect(Collectors.toList())
+
+        );
+
+    }
+
+    @GetMapping("/cars-per-evening")
+    public ResponseEntity<List<CarsPerHoursDTO>> getNumberOfCarsEvening() {
+        return ResponseEntity.ok(
+                statisticsService.getAllScansForToday().stream().map(
+                        audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHours()).build()
+                )
+                        .filter(audit -> audit.getHour() > 17)
+                        .collect(Collectors.groupingBy(CarsPerHoursDTO::getHour))
+                        .entrySet().stream()
+                        .map(entry -> CarsPerHoursDTO.builder().hour(entry.getKey()).cars(entry.getValue().size()).build())
+                        .collect(Collectors.toList())
+
+        );
+
     }
 }

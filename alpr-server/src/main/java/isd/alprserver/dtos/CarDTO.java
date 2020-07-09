@@ -20,4 +20,5 @@ public class CarDTO {
     private String ownerTelephone;
     private String ownerCompany;
     private String status;
+    private String photo;
 }

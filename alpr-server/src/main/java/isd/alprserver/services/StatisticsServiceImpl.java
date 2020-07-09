@@ -18,6 +18,7 @@ import javax.annotation.PostConstruct;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -92,5 +93,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
+    }
+
+    @Override
+    public List<ScanAudit> getAllScansForToday() {
+        Date today = new Date();
+        return scanAuditRepository.findAll()
+                .stream()
+                .filter(audit -> audit.getScanDate().getDay() == today.getDay() && audit.getScanDate().getMonth() == today.getMonth() && audit.getScanDate().getYear() == today.getYear())
+                .collect(Collectors.toList());
     }
 }

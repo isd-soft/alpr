@@ -55,4 +55,12 @@ export class StatisticsService {
     return  this.httpClient.get( this.metricsUrl + '/jvm.memory.used');
   }
 
+  public getNumberScansMorning(): Observable<{hour: number, cars: number}[]> {
+    return this.httpClient.get<any[]>(this.url + '/cars-per-morning');
+  }
+
+  public getNumberScansEvening(): Observable<{hour: number, cars: number}[]> {
+    return this.httpClient.get<any[]>(this.url + '/cars-per-evening');
+  }
+
 }

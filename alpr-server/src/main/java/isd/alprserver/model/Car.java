@@ -42,6 +42,8 @@ public class Car {
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
 
+    private byte[] photo;
+
     @Override
     public String toString() {
         return "Car{" +
