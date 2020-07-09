@@ -13,6 +13,7 @@ import { FormGenerator} from "../utils/form.generator";
 import {FormExtractor} from "../utils/form.extractor";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {UserService} from "../shared/user.service";
 
 
 @Component({
@@ -25,15 +26,17 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class CarListComponent implements OnInit, AfterViewInit {
   displayedColumns = ["licensePlate", "brand", "model", "color", "owner", "telephoneNumber", "InOut", "actions"];
   cars: CarModel[];
+  users = [];
   dataSource = new MatTableDataSource(this.cars);
   value = '';
-
+  addCarForm: FormGroup = this.formGenerator.generateCarAddForm();
   editedCar: CarModel;
   editCarForm: FormGroup;
 
 
 
   constructor(private carService: CarService,
+              private userService: UserService,
               private formGenerator: FormGenerator,
               private formExtractor: FormExtractor,
               private dialog: MatDialog,
@@ -58,8 +61,19 @@ export class CarListComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<CarModel>(this.cars);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-    });
-  };
+       }).catch(_ => {
+              this.snackBar.open('Oops! Something went wrong; Cars not loaded',
+                'OK', {duration: 3000});
+            });
+       this.userService.getAll().toPromise()
+            .then(users => {
+              this.users = users;
+            })
+            .catch(_ => {
+              this.snackBar.open('Oops! Something went wrong; Users not loaded',
+                'OK', {duration: 3000});
+            });
+  }
 
   clearInput() {
     this.dataSource.filter = '';
@@ -68,6 +82,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+      this.loadCars();
+      this.carService.getCars()
+        .subscribe(cars => this.cars = cars);
   }
 
 
@@ -91,11 +108,28 @@ export class CarListComponent implements OnInit, AfterViewInit {
       });
   }
 
-  updateCar() {
-    let car: CarModel = this.formExtractor.extractCar(this.editCarForm);
-    car.licensePlate = this.editedCar.licensePlate;
+    onAdd(addCarTemplate) {
+      this.openTemplate(addCarTemplate);
+    }
 
-    this.carService.update(car)
+    addCar() {
+        const car: CarModel = this.formExtractor.extractAddCar(this.addCarForm);
+          this.carService.registerCar(car)
+            .toPromise()
+            .then(_ => {
+              this.snackBar.open('Successfully', 'OK', {duration: 3000});
+              this.loadCars();
+            })
+            .catch(_ => {
+              this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+            });
+     }
+
+     updateCar() {
+     let car: CarModel = this.formExtractor.extractCar(this.editCarForm);
+     car.licensePlate = this.editedCar.licensePlate;
+
+     this.carService.update(car)
       .toPromise()
       .then(_ => {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
@@ -104,7 +138,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .catch(_ => {
         this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
       });
-  }
+      }
 
 
   private openTemplate(template) {

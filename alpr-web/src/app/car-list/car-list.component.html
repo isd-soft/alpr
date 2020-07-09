@@ -1,6 +1,6 @@
 <section class="car-list-section">
 
-  <button mat-raised-button color="accent" class="all-margins" [routerLink]="'/addcar'">Add Car</button>
+  <button mat-raised-button color="accent" class="all-margins" (click)="onAdd(addCarTemplate)">Add a car</button>
 
   <mat-form-field id="example-form-field">
 
@@ -79,7 +79,70 @@
       </mat-cell>
     </ng-container>
 
+    <ng-template #addCarTemplate>
+      <div>
+        <div mat-dialog-title>
+          <h2>Add Car</h2>
+        </div>
+        <mat-dialog-content [formGroup]="addCarForm">
+          <mat-form-field>
+            <mat-label>License Plate</mat-label>
+            <input matInput placeholder="licensePlate" class="no-left-margin"
+                   name="licensePlate" type="text" required
+                   formControlName="licensePlate">
+          </mat-form-field>
 
+          <mat-form-field class="left-margin">
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="brand"
+                   name="brand" type="text" required
+                   formControlName="brand">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field class="no-left-margin">
+            <mat-label>Model</mat-label>
+            <input matInput placeholder="model"
+                   name="model" type="text"
+                   required formControlName="model">
+          </mat-form-field>
+
+
+          <mat-form-field class="left-margin">
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="color" name="color"
+                   type="text" required formControlName="color">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field class="no-left-margin">
+            <mat-label>Owner Email</mat-label>
+            <mat-select required formControlName="ownerEmail">
+              <mat-option *ngFor="let user of users"
+                          [value]="user.email">{{user.email}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addCarForm.reset()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addCar()">Save
+            </button>
+          </mat-dialog-actions>
+
+        </mat-dialog-content>
+      </div>
+    </ng-template>
     <ng-template #editCarTemplate>
     <div>
       <div mat-dialog-title>
@@ -126,6 +189,7 @@
                  class="no-left-margin" type="text"
                  required formControlName="ownerTelephone">
         </mat-form-field>
+
 
         <mat-dialog-actions class="no-bottom-margin">
           <button class="mat-raised-button"
