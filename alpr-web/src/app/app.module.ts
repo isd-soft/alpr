@@ -50,6 +50,9 @@ import {StatisticsService} from './shared/statistics.service';
 import {MatListModule} from '@angular/material/list';
 import {FileHandler} from './utils/file.handler';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {AnnouncementService} from './shared/announcement.service';
+import {CompanyCarsComponent} from './company-cars/company-cars.component';
+import {AnnouncementComponent} from './announcement/announcement.component';
 
 @NgModule({
   declarations: [
