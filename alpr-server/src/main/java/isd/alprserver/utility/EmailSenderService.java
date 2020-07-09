@@ -1,5 +1,6 @@
 package isd.alprserver.utility;
 
+import isd.alprserver.model.ParkingHistory;
 import isd.alprserver.services.interfaces.CarService;
 import isd.alprserver.services.interfaces.CompanyService;
 import isd.alprserver.services.interfaces.MailService;
@@ -8,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @Component
 @RequiredArgsConstructor

@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserAuditRepository extends JpaRepository<UserAudit, Long> {
-    @Query("SELECT COUNT(u) FROM UserAudit u")
-    Long countAll();
 }

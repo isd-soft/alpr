@@ -1,4 +1,3 @@
-
 <mat-toolbar>
   <span>Car Registration</span>
 </mat-toolbar>
@@ -8,7 +7,8 @@
     <form class="my-form" [formGroup]="registrationForm" (ngSubmit)="onRegister()">
       <mat-form-field class="full-width">
         <mat-label>License Plate</mat-label>
-        <input matInput placeholder="License Plate" type="text" name="licensePlate" required  formControlName="licensePlate">
+        <input matInput placeholder="License Plate" type="text" name="licensePlate" required
+               formControlName="licensePlate">
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -25,12 +25,34 @@
         <mat-label>Color</mat-label>
         <input matInput placeholder="Color" name="color" type="text" required formControlName="color">
       </mat-form-field>
+
+      <div class="input-group mb-3 full-width">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input"
+                 id="carFileInput" aria-describedby="inputGroupFileAddon01"
+                 (change)="handleFileInput($event.target.files)">
+          <label class="custom-file-label" for="carFileInput">Upload photo</label>
+        </div>
+      </div>
+
+      <mat-card class="car-photo-preview" *ngIf="imgURL">
+        <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+        <img matCardImage [src]="imgURL" *ngIf="imgURL" alt="car photo">
+        <mat-card-actions>
+          <button mat-raised-button (click)="removeUploadedCar()"
+                  class="action">Remove
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
     </form>
 
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button type="submit" (click)="onRegister()" color="primary" [disabled]="!registrationForm.valid">Register</button>
+    <button mat-raised-button type="submit" (click)="onRegister()" color="primary" [disabled]="!registrationForm.valid">
+      Register
+    </button>
   </mat-card-actions>
 </mat-card>
 

@@ -1,7 +1,6 @@
 table{
   width: 100%;
 }
-
 .all-margins {
   margin: 1em;
 }
@@ -24,11 +23,9 @@ table{
   justify-content: flex-end;
 }
 
-
 .car-list-section {
   margin: 10px;
   margin-bottom: 100px;
-
 }
 
 .span-icon {
@@ -41,10 +38,6 @@ table{
 
 #example-form-field {
   width: 200px;
-}
-
-.all-margins {
-  margin: 1em;
 }
 
 

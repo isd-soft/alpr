@@ -23,3 +23,13 @@ button {
 .my-card {
   width: 100%;
 }
+
+.car-photo-preview img{
+  max-width: 60vw;
+  max-height: 60vw;
+}
+
+.action{
+  width: auto;
+  left: auto;
+}

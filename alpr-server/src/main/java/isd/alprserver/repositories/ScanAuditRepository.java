@@ -12,9 +12,6 @@ import java.util.List;
 public interface ScanAuditRepository extends JpaRepository<ScanAudit, Long> {
     int countAllByStatusAndIsAllowed(String status, boolean isAllowed);
 
-    @Query(nativeQuery = true, value = "select count(*) from car_audit ca")
-    int countAll();
-
     @Query(nativeQuery = true,
             value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.status='IN'")
     List<ScanAudit> findAllInLastWeek(Date currentDate);
