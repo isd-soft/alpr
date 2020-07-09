@@ -194,7 +194,6 @@ export class DashboardComponent implements OnInit {
       ],
       chart: {
         type: 'bar',
-        height: 350
       },
       plotOptions: {
         bar: {

@@ -3,12 +3,50 @@
     <mat-card *ngFor="let announcement of announcements" class="item" [ngStyle]="{'background-color': announcement.priority.toLowerCase()}">
       <div class="announcement">
         <span class="title">{{announcement.title}}</span>
-        {{announcement.description}}
-        {{announcement.date}}
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('YELLOW') === 0">notification_important</mat-icon>
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('ORANGE') === 0">warning</mat-icon>
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('RED') === 0">error</mat-icon>
+        <div class="row-box">
+          <div class="icon-box">
+            <div class="icon-container">
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('YELLOW') === 0">notification_important</mat-icon>
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('ORANGE') === 0">warning</mat-icon>
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('RED') === 0">error</mat-icon>
+            </div>
+            <span class="date-box">{{announcement.date}}</span>
+          </div>
+          <div class="description-box">
+            {{announcement.description}}
+          </div>
+        </div>
       </div>
+      <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)">
+        <mat-icon style="margin: auto">close</mat-icon>
+      </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
+  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()">Add Announcement</button>
+
+  <div *ngIf="showForm" class="form">
+    <mat-card class="form-container">
+      <button mat-button class="remove-button" (click)="closeForm()">
+        <mat-icon style="margin: auto">close</mat-icon>
+      </button>
+      <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="announcement.title">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput class="description-input" [(ngModel)]="announcement.description"></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Priority</mat-label>
+        <mat-select [(ngModel)]="announcement.priority">
+          <mat-option value="YELLOW">Low</mat-option>
+          <mat-option value="ORANGE">Medium</mat-option>
+          <mat-option value="RED">High</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="add-form-button" (click)="addAnnouncement()">Add</button>
+    </mat-card>
+  </div>
+
 </div>

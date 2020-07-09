@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AnnouncementDTO {
+    private long id;
     private String title;
     private String description;
     private String priority;

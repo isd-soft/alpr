@@ -1,7 +1,8 @@
 .scrollable {
   width: 80vw;
-  height: 80vh;
-  border: 1px solid black;
+  height: 72vh;
+  border: 3px solid #3f51b5;
+  border-radius: 10px;
   margin: 20px;
   display: flex;
   flex-direction: column;
@@ -18,20 +19,88 @@
   width: 98%;
   height: 25%;
   margin: 8px auto;
+  padding: 2px;
+  position: relative;
 }
 
 .icon {
-  font-size: 30px;
+  font-size: 50px;
+  margin-left: 22px;
 }
 
 .title {
   font-size: 25px;
   font-weight: bold;
   text-decoration: underline;
+  text-align: center;
+  margin: 2px;
 }
 
 .announcement {
   display: flex;
   flex-direction: column;
+}
 
+.row-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon-box {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.description-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 80%;
+  margin: 2px auto;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.date-box {
+  margin-left: 10px;
+}
+
+.remove-button {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 30px;
+  padding: 1px
+}
+
+.add-button {
+  width: 15vw;
+  height: 50px;
+  font-size: 24px;
+}
+
+.form-container {
+  width: 50vw;
+  height: 80vh;
+  position: fixed;
+  top: 10vh;
+  left: 25vw;
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+}
+
+.description-input {
+  height: 30vh;
+}
+
+.add-form-button {
+  position: absolute;
+  bottom: 20px;
+  margin: 0 auto;
+  width: 30%;
+  height: 45px;
+  left: 35%;
 }

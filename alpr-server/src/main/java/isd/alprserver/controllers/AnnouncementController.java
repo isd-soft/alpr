@@ -20,7 +20,7 @@ public class AnnouncementController {
     private final AnnouncementService announcementService;
 
     @PostMapping()
-    public void addAnnouncement(@RequestBody AnnouncementDTO dto) {
+    public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementDTO dto) {
         Announcement announcement = Announcement
                 .builder()
                 .date(LocalDate.now())
@@ -39,6 +39,7 @@ public class AnnouncementController {
                 break;
         }
         announcementService.add(announcement);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping()
@@ -48,13 +49,20 @@ public class AnnouncementController {
                 .stream()
                 .map(
                         ann -> AnnouncementDTO.builder()
-                        .title(ann.getTitle())
-                        .description(ann.getDescription())
-                        .date(ann.getDate())
-                        .priority(ann.getPriority().toString())
-                        .build()
+                                .id(ann.getId())
+                                .title(ann.getTitle())
+                                .description(ann.getDescription())
+                                .date(ann.getDate())
+                                .priority(ann.getPriority().toString())
+                                .build()
                         )
                 .collect(Collectors.toList())
         );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeAnnouncement(@PathVariable long id) {
+        announcementService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 }

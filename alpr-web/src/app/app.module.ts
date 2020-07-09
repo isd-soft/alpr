@@ -51,6 +51,8 @@ import {MatListModule} from '@angular/material/list';
 import { AnnouncementComponent } from './announcement/announcement.component';
 import {AnnouncementService} from "./shared/announcement.service";
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     FooterComponent,
     PasswordComponent,
     DashboardComponent,
-    AnnouncementComponent
+    AnnouncementComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -100,14 +103,14 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     MatListModule,
     ScrollingModule
   ],
-  providers: [UserService, CompanyService, CarService, AnnouncementService,
+  providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
-
   bootstrap: [AppComponent],
-  exports: [MatPaginatorModule]
+  exports: [MatPaginatorModule],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule {
 }

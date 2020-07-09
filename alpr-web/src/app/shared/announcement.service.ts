@@ -13,7 +13,11 @@ export class AnnouncementService {
     return this.httpClient.get<AnnouncementModel[]>(this.url);
   }
 
-  public addAnnouncement(announcement: AnnouncementModel): void {
-    this.httpClient.post(this.url, announcement);
+  public addAnnouncement(announcement: AnnouncementModel): Observable<any> {
+    return this.httpClient.post(this.url, announcement);
+  }
+
+  public removeAnnouncement(id: number): Observable<any> {
+    return this.httpClient.delete(this.url + `/${id}`);
   }
 }
