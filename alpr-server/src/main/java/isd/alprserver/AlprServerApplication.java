@@ -1,10 +1,20 @@
 package isd.alprserver;
 
+import isd.alprserver.dtos.UserDTO;
+import isd.alprserver.model.Company;
+import isd.alprserver.model.Role;
+import isd.alprserver.model.Status;
+import isd.alprserver.repositories.CompanyRepository;
+import isd.alprserver.repositories.RoleRepository;
+import isd.alprserver.repositories.StatusRepository;
+import isd.alprserver.services.interfaces.UserService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @SpringBootApplication
@@ -48,7 +58,7 @@ public class AlprServerApplication {
 //                    .build();
 //            userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 //
-//            userService.insert(userDTO);
+//            userService.create(userDTO);
 //
 //            statusRepository.save(Status.builder()
 //                    .name("OUT")
