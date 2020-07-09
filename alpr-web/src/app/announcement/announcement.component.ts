@@ -4,6 +4,11 @@ import {AnnouncementModel} from '../shared/announcement.model';
 import {ConfirmationDialogService} from '../shared/confirmation-dialog.service';
 import {AuthenticationService} from '../auth/authentication.service';
 import {Role} from '../auth/role';
+import {MatDialog} from "@angular/material/dialog";
+import {AddCommentDialogComponent} from "../add-comment-dialog/add-comment-dialog.component";
+import {CommentModel} from "../shared/comment.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {ViewCommentDialogComponent} from "../view-comment-dialog/view-comment-dialog.component";
 
 @Component({
   selector: 'app-announcement',
@@ -14,14 +19,20 @@ export class AnnouncementComponent implements OnInit {
   public announcements: AnnouncementModel[] = [];
   public showForm = false;
   public isAdmin = true;
+  public showAllComments = false;
+  public showCommentForm = false;
+  private userEmail = '';
+  private commentDescription = '';
   announcement: AnnouncementModel = new AnnouncementModel();
   constructor(private announcementService: AnnouncementService,
               private confirmationDialogService: ConfirmationDialogService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
     authenticationService.currentUser
       .subscribe(user => {
         this.isAdmin = user.role === Role.Admin;
-        console.log(user);
+        this.userEmail = user.email;
       });
   }
 
@@ -67,6 +78,36 @@ export class AnnouncementComponent implements OnInit {
         this.showForm = false;
       })
       .catch(error => console.log(error));
+  }
+
+  showComments(id: number) {
+    this.announcementService.getAllComments(id)
+      .toPromise()
+      .then(data => {
+        this.dialog.open(ViewCommentDialogComponent, {
+          width: '50vw',
+          data: {comments: data}
+        });
+      });
+  }
+
+  addComment(id: number) {
+    this.commentDescription = '';
+    const dialogRef = this.dialog.open(AddCommentDialogComponent, {
+      width: '400px',
+      data: {userEmail: this.userEmail, description: this.commentDescription}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        const comment = new CommentModel(this.userEmail, result.slice(1));
+        this.announcementService.addComment(id, comment)
+          .toPromise()
+          .then(_ => {
+            this.snackBar.open('Comment added!', 'OK', {duration: 2000});
+          });
+      }
+    });
   }
 
 }

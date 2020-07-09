@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Comments</h2>
+<mat-dialog-content class="mat-typography">
+
+  <mat-card *ngFor="let comment of data.comments">
+    <div class="user-email">
+      {{comment.userEmail}}
+    </div>
+    <br>
+    <div class="description">
+      {{comment.description}}
+    </div>
+  </mat-card>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

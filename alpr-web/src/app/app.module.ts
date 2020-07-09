@@ -53,6 +53,8 @@ import {AnnouncementService} from "./shared/announcement.service";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
+import { AddCommentDialogComponent } from './add-comment-dialog/add-comment-dialog.component';
+import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
     PasswordComponent,
     DashboardComponent,
     AnnouncementComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    AddCommentDialogComponent,
+    ViewCommentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +114,7 @@ import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
-  entryComponents: [ConfirmationDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent]
 })
 export class AppModule {
 }

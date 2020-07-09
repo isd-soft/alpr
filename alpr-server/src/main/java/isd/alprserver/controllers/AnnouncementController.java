@@ -1,8 +1,12 @@
 package isd.alprserver.controllers;
 
 import isd.alprserver.dtos.AnnouncementDTO;
+import isd.alprserver.dtos.CommentDTO;
 import isd.alprserver.model.Announcement;
 import isd.alprserver.model.AnnouncementPriority;
+import isd.alprserver.model.Comment;
+import isd.alprserver.model.exceptions.UserNotFoundException;
+import isd.alprserver.model.shared.Response;
 import isd.alprserver.services.interfaces.AnnouncementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -76,5 +80,26 @@ public class AnnouncementController {
     public ResponseEntity<?> removeAnnouncement(@PathVariable long id) {
         announcementService.remove(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/add-comment/{id}")
+    public ResponseEntity<?> addCommentToAnnouncement(@PathVariable long id, @RequestBody CommentDTO commentDTO) {
+        announcementService.addComment(
+                id,
+                Comment.builder()
+                        .description(commentDTO.getDescription())
+                        .userEmail(commentDTO.getUserEmail())
+                .build()
+        );
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/comments/{id}")
+    public ResponseEntity<List<CommentDTO>> getAllCommentFromAnnouncement(@PathVariable long id) throws UserNotFoundException {
+        return ResponseEntity.ok(
+          announcementService.getAllComments(id).stream()
+                .map(comment -> CommentDTO.builder().description(comment.getDescription()).userEmail(comment.getUserEmail()).build())
+                .collect(Collectors.toList())
+        );
     }
 }

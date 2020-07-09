@@ -23,9 +23,15 @@
       <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)" *ngIf="isAdmin">
         <mat-icon style="margin: auto">close</mat-icon>
       </button>
+      <button mat-raised-button class="view-button" (click)="showComments(announcement.id)">
+        <mat-icon> comment</mat-icon>
+      </button>
+      <button mat-raised-button class="add-comment-button" (click)="addComment(announcement.id)">
+        <mat-icon> add_comment</mat-icon>
+      </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
-  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin">Add Announcement</button>
+  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin && !showForm">Add Announcement</button>
 
   <div *ngIf="showForm" class="form">
     <mat-card class="form-container">
