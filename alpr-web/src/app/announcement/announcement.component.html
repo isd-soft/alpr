@@ -1,5 +1,8 @@
 <div class="div-center">
   <cdk-virtual-scroll-viewport itemSize="50" class="scrollable">
+    <div class="message" *ngIf="announcements.length === 0">
+      <span>No Announcements</span>
+    </div>
     <mat-card *ngFor="let announcement of announcements" class="item" [ngStyle]="{'background-color': announcement.priority.toLowerCase()}">
       <div class="announcement">
         <span class="title">{{announcement.title}}</span>
@@ -17,12 +20,12 @@
           </div>
         </div>
       </div>
-      <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)">
+      <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)" *ngIf="isAdmin">
         <mat-icon style="margin: auto">close</mat-icon>
       </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
-  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()">Add Announcement</button>
+  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin">Add Announcement</button>
 
   <div *ngIf="showForm" class="form">
     <mat-card class="form-container">

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,18 @@ public class AnnouncementController {
                                 .priority(ann.getPriority().toString())
                                 .build()
                         )
+                        .sorted((announcementDTO, t1) -> {
+                            if (announcementDTO.getDate().isAfter(t1.getDate()))
+                                return -1;
+                            else if(announcementDTO.getDate().isBefore(t1.getDate()))
+                                return 1;
+                            else if(announcementDTO.getId() > t1.getId())
+                                return -1;
+                            else
+                                return 0;
+                        })
                 .collect(Collectors.toList())
+
         );
     }
 

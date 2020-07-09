@@ -104,3 +104,19 @@
   height: 45px;
   left: 35%;
 }
+
+.message {
+  width: 100%;
+  height: 72vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+
+.message span {
+  font-size: 60px;
+  margin: auto auto;
+  font-family: sans-serif;
+}

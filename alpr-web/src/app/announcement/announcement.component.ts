@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AnnouncementService} from '../shared/announcement.service';
 import {AnnouncementModel} from '../shared/announcement.model';
-import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogService} from '../shared/confirmation-dialog.service';
+import {AuthenticationService} from '../auth/authentication.service';
+import {Role} from '../auth/role';
 
 @Component({
   selector: 'app-announcement',
@@ -12,9 +13,17 @@ import {ConfirmationDialogService} from '../shared/confirmation-dialog.service';
 export class AnnouncementComponent implements OnInit {
   public announcements: AnnouncementModel[] = [];
   public showForm = false;
+  public isAdmin = true;
   announcement: AnnouncementModel = new AnnouncementModel();
   constructor(private announcementService: AnnouncementService,
-              private confirmationDialogService: ConfirmationDialogService) { }
+              private confirmationDialogService: ConfirmationDialogService,
+              private authenticationService: AuthenticationService) {
+    authenticationService.currentUser
+      .subscribe(user => {
+        this.isAdmin = user.role === Role.Admin;
+        console.log(user);
+      });
+  }
 
   ngOnInit(): void {
     this.updateList();
@@ -24,7 +33,7 @@ export class AnnouncementComponent implements OnInit {
     this.announcementService.getAllAnnouncements()
       .toPromise()
       .then(result => {
-        this.announcements = result.reverse();
+        this.announcements = result;
         console.log(this.announcements);
       })
       .catch(error => console.log(error));
