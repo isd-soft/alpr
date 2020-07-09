@@ -8,6 +8,7 @@ import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.shared.LicenseValidationResponse;
 import isd.alprserver.services.interfaces.CarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,24 @@ public class CarController {
     @GetMapping("/{id}")
     public Car getCarById(@PathVariable long id) {
         return carService.getCarById(id);
+    }
+
+    @GetMapping("/company/{companyName}")
+    public ResponseEntity<List<CarDTO>> getCarsByCompanyName(@PathVariable String companyName) {
+        return ResponseEntity.ok(carService.getByCompanyName(companyName).stream().map(
+                car -> CarDTO.builder()
+                        .id(car.getId())
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .model(car.getModel())
+                        .color(car.getColor())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
+                        .build()
+        ).collect(Collectors.toList()));
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +83,7 @@ public class CarController {
 
 
     @PostMapping("/add")
-    public void addCar(@RequestBody CarDTO carDTO) throws UserNotFoundException {
+    public ResponseEntity<?> addCar(@RequestBody CarDTO carDTO) throws CarAlreadyExistsException, UserNotFoundException {
         Car car = Car.builder()
                 .licensePlate(carDTO.getLicensePlate())
                 .brand(carDTO.getBrand())
@@ -75,6 +94,7 @@ public class CarController {
                         null)
                 .build();
         this.carService.add(car, carDTO.getOwnerEmail());
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping()

@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {CarService} from '../shared/car.service';
@@ -7,6 +6,8 @@ import {CarModel} from '../shared/car.model';
 import {FormGroup} from '@angular/forms';
 import {FormGenerator} from '../utils/form.generator';
 import {FormExtractor} from '../utils/form.extractor';
+import {UserService} from '../shared/user.service';
+import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -23,19 +24,21 @@ import {FileHandler} from '../utils/file.handler';
 export class CarListComponent implements OnInit, AfterViewInit {
   displayedColumns = ['licensePlate', 'brand', 'model', 'color', 'owner', 'telephoneNumber', 'InOut', 'actions'];
   cars: CarModel[];
+  users = [];
   dataSource = new MatTableDataSource(this.cars);
   value = '';
-
+  addCarForm: FormGroup = this.formGenerator.generateCarAddForm();
   editedCar: CarModel;
   editCarForm: FormGroup;
   carPhotoToView: any;
   carPhotoToEdit: any;
   carPhotoToAdd: any;
 
-  defaulUploadInputLabel: string = 'Upload Photo';
-  uploadInputLabel: string = this.defaulUploadInputLabel;
+  defaultUploadInputLabel: string = 'Upload Photo';
+  uploadInputLabel: string = this.defaultUploadInputLabel;
 
   constructor(private carService: CarService,
+              private userService: UserService,
               private formGenerator: FormGenerator,
               private formExtractor: FormExtractor,
               private dialog: MatDialog,
@@ -62,8 +65,19 @@ export class CarListComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<CarModel>(this.cars);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    }).catch(_ => {
+      this.snackBar.open('Oops! Something went wrong; Cars not loaded',
+        'OK', {duration: 3000});
     });
-  };
+    this.userService.getAll().toPromise()
+      .then(users => {
+        this.users = users;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong; Users not loaded',
+          'OK', {duration: 3000});
+      });
+  }
 
   clearInput() {
     this.dataSource.filter = '';
@@ -71,6 +85,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    this.loadCars();
+    this.carService.getCars()
+      .subscribe(cars => this.cars = cars);
   }
 
 
@@ -81,7 +98,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
     } else {
       this.carPhotoToEdit = null;
     }
-    this.uploadInputLabel = this.defaulUploadInputLabel;
+    this.uploadInputLabel = this.defaultUploadInputLabel;
     this.editCarForm = this.formGenerator
       .generateCarEditForm(this.editedCar);
     this.openTemplate(editCarTemplate);
@@ -93,6 +110,23 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .then(_ => {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.cars.splice(this.cars.indexOf(car), 1);
+        this.loadCars();
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+  }
+
+  onAdd(addCarTemplate) {
+    this.openTemplate(addCarTemplate);
+  }
+
+  addCar() {
+    const car: CarModel = this.formExtractor.extractAddCar(this.addCarForm);
+    this.carService.registerCar(car)
+      .toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
         this.loadCars();
       })
       .catch(_ => {

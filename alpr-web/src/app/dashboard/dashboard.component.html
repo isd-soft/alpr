@@ -1,109 +1,145 @@
 <div class="container-fluid" style="margin-top: 1em">
   <br>
+
   <div class="row">
-
     <div class="col-6">
-      <mat-card>
-        <div class="row h-100">
+      <div class="row">
+        <div class="col">
+        <mat-card>
+          <div class="row h-100">
 
-          <div class="col-4 ">
-            <div class="embed-responsive embed-responsive-1by1 text-center">
-              <div class="embed-responsive-item">
-                <div class="rounded-circle border border-success h-100 w-100 d-table">
-                  <div class="d-table-cell align-middle">
-                    <img class="icon" src="../../assets/img/person.svg" alt=""/>
-                    <br>
-                    <span class="title">
+            <div class="col-4 ">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-success h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/person.svg" alt=""/>
+                      <br>
+                      <span class="title">
                       USERS
                     </span>
-                    <br>
-                    <span class="statistics-number">{{registeredUsersNumber}}</span>
+                      <br>
+                      <span class="statistics-number">{{registeredUsersNumber}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-4">
-            <div class="embed-responsive embed-responsive-1by1 text-center">
-              <div class="embed-responsive-item">
-                <div class="rounded-circle border border-primary h-100 w-100 d-table">
-                  <div class="d-table-cell align-middle">
-                    <img class="icon" src="../../assets/img/car.svg" alt=""/>
-                    <br>
-                    <span class="title">CARS</span>
-                    <br>
-                    <span class="statistics-number">{{registeredCarsNumber}}</span>
+            <div class="col-4">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-primary h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/car.svg" alt=""/>
+                      <br>
+                      <span class="title">CARS</span>
+                      <br>
+                      <span class="statistics-number">{{registeredCarsNumber}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="col-4">
-            <div class="embed-responsive embed-responsive-1by1 text-center">
-              <div class="embed-responsive-item">
-                <div class="rounded-circle border border-info h-100 w-100 d-table">
-                  <div class="d-table-cell align-middle">
-                    <img class="icon" src="../../assets/img/phone.svg" alt=""/>
-                    <br>
-                    <span class="title">SCANS</span>
-                    <br>
-                    <span class="statistics-number">{{scannedPlatesNumber}}</span>
+            <div class="col-4">
+              <div class="embed-responsive embed-responsive-1by1 text-center">
+                <div class="embed-responsive-item">
+                  <div class="rounded-circle border border-info h-100 w-100 d-table">
+                    <div class="d-table-cell align-middle">
+                      <img class="icon" src="../../assets/img/phone.svg" alt=""/>
+                      <br>
+                      <span class="title">SCANS</span>
+                      <br>
+                      <span class="statistics-number">{{scannedPlatesNumber}}</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
+        </mat-card>
         </div>
-      </mat-card>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-card id="chart-pie" style="text-align: center">
+            <span class="chart-title">Total accepted vs rejected cars</span>
+            <apx-chart
+              [series]="pieChartOptions.series"
+              [chart]="pieChartOptions.chart"
+              [labels]="pieChartOptions.labels"
+              [responsive]="pieChartOptions.responsive">
+            </apx-chart>
+          </mat-card>
+        </div>
+        <div class="col">
+          <mat-card id="chart-cars-per-company" style="text-align: center">
+            <span class="chart-title">Cars per company</span>
+            <apx-chart
+              [series]="carsPerCompanyChartOptions.series"
+              [chart]="carsPerCompanyChartOptions.chart"
+              [labels]="carsPerCompanyChartOptions.labels"
+              [responsive]="carsPerCompanyChartOptions.responsive"
+            ></apx-chart>
+          </mat-card>
+        </div>
+      </div>
     </div>
 
     <div class="col-6">
       <mat-card id="systemInfo">
         <mat-list>
-          <div mat-subheader>System Information</div>
-          <mat-list-item>
-            First: example
-          </mat-list-item>
-          <mat-list-item>
-            Another: example
-          </mat-list-item>
+          <div mat-subheader><mat-icon class="icon-info">info</mat-icon><span class="info-system"> System Information:</span></div>
+          <mat-label class="info">Info</mat-label>
+          <li>Application name : <span class="value">{{appInfo.name}} </span></li>
+          <li>Description : <span class="value">{{appInfo.description}} </span></li>
+          <li>Application version : <span class="value">{{appInfo.version}} </span></li>
+          <li>Java version :<span class="value"> {{appInfo.java.version}} </span></li>
+
+          <mat-label class="health">Health</mat-label>
+          <li>The state of application : <span class="value"> {{healthInfo.status}}</span></li>
+          <li>DataBase : <span class="value">{{healthInfo.components.db.details.database}}</span></li>
+          <li>Total diskspace :<span class="value"> {{healthInfo.components.diskSpace.details.total}} bytes </span></li>
+          <li>Free diskspace : <span class="value"> {{healthInfo.components.diskSpace.details.free}} bytes </span></li>
+
+          <mat-label class="metrics">Metrics</mat-label>
+          <li *ngFor="let measurement of cpuInfo.measurements">
+            The number of processors available:
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of uptimeInfo.measurements">
+            The uptime:
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+
+          <li *ngFor="let measurement of httpInfo.measurements; let i = index;" [attr.data-index]="i">
+            <span *ngIf="i == 0">Count of http server requests :</span>
+            <span *ngIf="i == 1">Total time of http server requests :</span>
+            <span *ngIf="i == 2">Maximum of  http server requests :</span>
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of totalMemoryInfo.measurements">
+            The maximum amount of memory in bytes :
+            <span class="value">{{measurement.value}}</span>
+          </li>
+
+          <li *ngFor="let measurement of usedMemoryInfo.measurements">
+            The amount of used memory :
+            <span class="value">{{measurement.value}}</span>
+          </li>
         </mat-list>
       </mat-card>
     </div>
 
   </div>
-  <div class="row">
-    <div class="col">
-      <mat-card id="info1">
-        Card
-      </mat-card>
-    </div>
-    <div class="col">
-      <mat-card id="charttt">
-        Card
-      </mat-card>
-    </div>
-    <div class="col">
-      <mat-card id="chart2">
-        Card
-      </mat-card>
-    </div>
-  </div>
 
   <div class="row">
     <div class="col">
-      <mat-card id="chart-pie" style="text-align: center">
-        <span class="chart-title">Total accepted vs rejected cars</span>
-        <apx-chart
-          [series]="pieChartOptions.series"
-          [chart]="pieChartOptions.chart"
-          [labels]="pieChartOptions.labels"
-          [responsive]="pieChartOptions.responsive">
-        </apx-chart>
-      </mat-card>
     </div>
     <div class="col">
       <mat-card id="chart-column" style="text-align: center">
@@ -124,15 +160,7 @@
       </mat-card>
     </div>
     <div class="col">
-      <mat-card id="chart-cars-per-company" style="text-align: center">
-        <span class="chart-title">Cars per company</span>
-        <apx-chart
-          [series]="carsPerCompanyChartOptions.series"
-          [chart]="carsPerCompanyChartOptions.chart"
-          [labels]="carsPerCompanyChartOptions.labels"
-          [responsive]="carsPerCompanyChartOptions.responsive"
-          ></apx-chart>
-      </mat-card>
+
     </div>
   </div>
 

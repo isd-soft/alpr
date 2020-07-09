@@ -19,11 +19,15 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(user => {
       this.user = user;
-      if (this.user && this.user.role == Role.Admin) {
+      if (this.user && this.user.role === Role.Admin) {
         this.links = [
           {
             link: 'dashboard',
             name: 'Dashboard'
+          },
+          {
+            link: 'announcements',
+            name: 'Announcements'
           }
           ,
           {
@@ -48,6 +52,10 @@ export class NavigationComponent implements OnInit {
           {
             link: 'addcar',
             name: 'Add Car'
+          },
+          {
+            link: 'companycars',
+            name: 'Company\'s Cars'
           }];
       }
       this.links.push({

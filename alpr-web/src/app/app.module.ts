@@ -49,6 +49,7 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
 import {MatListModule} from '@angular/material/list';
 import {FileHandler} from './utils/file.handler';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -64,8 +65,10 @@ import {FileHandler} from './utils/file.handler';
     ProfileComponent,
     HeaderComponent,
     FooterComponent,
+    CompanyCarsComponent,
     PasswordComponent,
-    DashboardComponent
+    DashboardComponent,
+    AnnouncementComponent
   ],
   imports: [
     BrowserModule,
@@ -94,9 +97,10 @@ import {FileHandler} from './utils/file.handler';
     MatSidenavModule,
     NgbModule,
     NgApexchartsModule,
-    MatListModule
+    MatListModule,
+    ScrollingModule
   ],
-  providers: [UserService, CompanyService, CarService,
+  providers: [UserService, CompanyService, CarService, AnnouncementService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     FileHandler,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

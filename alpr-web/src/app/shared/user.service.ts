@@ -31,6 +31,10 @@ export class UserService {
     return this.httpClient.delete(this.url + '/users?email=' + email);
   }
 
+  getCarsByEmail(email: string): Observable<any> {
+       return this.httpClient.get<any[]>(this.url + '/users/cars?email=' + email);
+  }
+
   update(user: User, isPasswordChanged: boolean): Observable<any> {
     return this.httpClient.put(this.url +
       '/users/update?isPasswordChanged=' + isPasswordChanged, user);
