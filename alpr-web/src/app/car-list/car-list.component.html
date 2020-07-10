@@ -5,7 +5,8 @@
 
   <mat-card class="all-margins">
     <button mat-raised-button color="accent" class="all-margins"
-            (click)="onAdd(addCarTemplate)">Add a car</button>
+            (click)="onAdd(addCarTemplate)">Add a car
+    </button>
 
     <mat-form-field id="example-form-field">
 
@@ -273,15 +274,17 @@
           </button>
         </mat-dialog-actions>
       </div>
-      <div class="col-6">
+      <div class="col">
         <mat-card>
           <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-          <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-            <div style="text-align: center">
-              <img matCardImage [src]="carPhotoToEdit"
-                   alt="car photo" class="edit-car-photo">
+
+            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="carPhotoToEdit"
+                     alt="car photo" class="edit-car-photo">
+              </div>
             </div>
-          </div>
+
         </mat-card>
       </div>
 

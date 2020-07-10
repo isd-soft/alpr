@@ -186,12 +186,12 @@
         <div class="col-6">
           <mat-card>
             <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-              <div style="text-align: center">
-                <img matCardImage [src]="carPhotoToEdit"
-                     alt="car photo" class="edit-car-photo">
+              <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+                <div style="text-align: center">
+                  <img mat-card-image [src]="carPhotoToEdit"
+                       alt="car photo" class="edit-car-photo">
+                </div>
               </div>
-            </div>
           </mat-card>
         </div>
       </div>
