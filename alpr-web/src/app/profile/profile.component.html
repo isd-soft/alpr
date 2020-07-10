@@ -43,7 +43,7 @@
     </mat-card>
   </section>
 
-  <section class="car-list-table-section mat-elevation-z8">
+  <mat-card class="all-margins">
     <mat-table class="table" matSort [dataSource]="dataSource">
       <ng-container matColumnDef="licensePlate">
         <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
@@ -102,7 +102,7 @@
       </mat-row>
 
     </mat-table>
-  </section>
+  </mat-card>
 </section>
 
 <ng-template #editCarTemplate>
@@ -114,7 +114,7 @@
     </div>
     <mat-dialog-content [formGroup]="editCarForm">
       <div class="row">
-        <div class="col">
+        <div class="col-6">
           <mat-form-field>
             <mat-label>Brand</mat-label>
             <input matInput placeholder="brand"
@@ -157,7 +157,7 @@
                    required formControlName="ownerTelephone">
           </mat-form-field>
 
-          <div class="input-group mb-3" style="width: 75%">
+          <div class="input-group mb-3" style="width: 100%">
             <div class="custom-file">
               <!--suppress TypeScriptUnresolvedVariable -->
               <input type="file" class="custom-file-input"
@@ -183,7 +183,7 @@
             </button>
           </mat-dialog-actions>
         </div>
-        <div class="col">
+        <div class="col-6">
           <mat-card>
             <mat-card-subtitle>Photo Preview</mat-card-subtitle>
             <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">

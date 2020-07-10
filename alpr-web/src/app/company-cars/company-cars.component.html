@@ -1,10 +1,11 @@
-<section class="car-list-section">
-
+<mat-card class="all-margins">
   <mat-form-field id="example-form-field">
 
-    <mat-label class="material-icons" >search</mat-label>
+    <mat-label class="material-icons">search</mat-label>
     <label>
-      <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search for car" type="text" [(ngModel)]="value">
+      <!--suppress TypeScriptUnresolvedVariable -->
+      <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search for car" type="text"
+             [(ngModel)]="value">
     </label>
     <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
       <mat-icon (click)="clearInput()">close</mat-icon>
@@ -12,68 +13,67 @@
   </mat-form-field>
 
 
-  <div class="mat-elevation-z8">
-    <mat-table   matSort [dataSource]="dataSource">
+  <mat-table matSort [dataSource]="dataSource">
 
+    <ng-container matColumnDef="licensePlate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+      <mat-cell class="description-cell"
+                *matCellDef="let car">{{car.licensePlate}}</mat-cell>
 
-      <ng-container matColumnDef="licensePlate">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
-        <mat-cell class="description-cell"
-                  *matCellDef="let car">{{car.licensePlate}}</mat-cell>
+    </ng-container>
 
-      </ng-container>
+    <ng-container matColumnDef="brand">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let car">{{car.brand}}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="brand">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.brand}}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="model">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let car">{{car.model}}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="model">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.model}}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="color" >
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">
+    <ng-container matColumnDef="color">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let car">
         <span class="color-title">
           {{car.color}}
         </span>
-          <span   class="material-icons span-icon" [ngStyle]="{'color': car.color}">directions_car</span>
-        </mat-cell>
-      </ng-container>
+        <span class="material-icons span-icon" [ngStyle]="{'color': car.color}">directions_car</span>
+      </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="owner">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.ownerName}}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="owner">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Owner</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let car">{{car.ownerName}}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="telephoneNumber">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Telephone Number</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.ownerTelephone}}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="telephoneNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Telephone Number</mat-header-cell>
+      <mat-cell class="duration-cell"
+                *matCellDef="let car">{{car.ownerTelephone}}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="InOut">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>IN/OUT</mat-header-cell>
+    <ng-container matColumnDef="InOut">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>IN/OUT</mat-header-cell>
 
-        <mat-cell  [ngStyle]="{'color': car.status === 'OUT' ? 'red' : 'green', 'font-size': '16px', 'font-weight': 'bold' }" class="duration-cell"
-                   *matCellDef="let car">{{car.status}}</mat-cell>
-      </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-cell
+        [ngStyle]="{'color': car.status === 'OUT' ? 'red' : 'green', 'font-size': '16px', 'font-weight': 'bold' }"
+        class="duration-cell"
+        *matCellDef="let car">{{car.status}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns"
-               (click)="onRowClicked(row)">
-      </mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"
+             (click)="onRowClicked(row)">
+    </mat-row>
 
-    </mat-table>
+  </mat-table>
 
-    <mat-paginator  [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
 
-    </mat-paginator>
-  </div>
-</section>
+  </mat-paginator>
+</mat-card>

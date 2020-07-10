@@ -1,24 +1,26 @@
 <!--suppress HtmlFormInputWithoutLabel, TypeScriptUnresolvedVariable -->
 <section class="car-list-section">
 
-  <button mat-raised-button color="accent" class="all-margins" (click)="onAdd(addCarTemplate)">Add a car</button>
+  <mat-divider></mat-divider>
 
-  <mat-form-field id="example-form-field">
+  <mat-card class="all-margins">
+    <button mat-raised-button color="accent" class="all-margins"
+            (click)="onAdd(addCarTemplate)">Add a car</button>
 
-    <mat-label class="material-icons">search</mat-label>
-    <label>
-      <!--suppress TypeScriptUnresolvedVariable -->
-      <input (keyup)="applyFilter($event.target.value)" matInput placeholder="Search for car" type="text"
-             [(ngModel)]="value">
-    </label>
-    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
-      <mat-icon (click)="clearInput()">close</mat-icon>
-    </button>
-  </mat-form-field>
+    <mat-form-field id="example-form-field">
 
+      <mat-label class="material-icons">search</mat-label>
+      <label>
+        <!--suppress TypeScriptUnresolvedVariable -->
+        <input (keyup)="applyFilter($event.target.value)" matInput
+               placeholder="Search for car" type="text" [(ngModel)]="value">
+      </label>
+      <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
+        <mat-icon (click)="clearInput()">close</mat-icon>
+      </button>
+    </mat-form-field>
 
-  <div class="example-container mat-elevation-z8 ">
-    <table mat-table matSort [dataSource]="dataSource">
+    <mat-table matSort [dataSource]="dataSource">
 
       <ng-container matColumnDef="licensePlate">
         <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
@@ -91,10 +93,10 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClicked(row)"></mat-row>
 
-    </table>
+    </mat-table>
 
     <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
-  </div>
+  </mat-card>
 </section>
 
 <ng-template #addCarTemplate>
@@ -104,7 +106,7 @@
     </div>
     <mat-dialog-content [formGroup]="addCarForm" style="height: 100%">
       <div class="row">
-        <div class="col">
+        <div class="col-6">
           <mat-form-field>
             <mat-label>License Plate</mat-label>
             <input matInput placeholder="licensePlate"
@@ -151,7 +153,7 @@
 
           <br>
 
-          <div class="input-group mb-3" style="width: 75%">
+          <div class="input-group mb-3" style="width: 100%">
             <div class="custom-file">
               <input type="file" class="custom-file-input"
                      id="carAddFileInput" aria-describedby="inputGroupFileAddon02"
@@ -179,7 +181,7 @@
             </button>
           </mat-dialog-actions>
         </div>
-        <div class="col">
+        <div class="col-6">
           <mat-card>
             <mat-card-subtitle>Photo Preview</mat-card-subtitle>
             <div *ngIf="carPhotoToAdd; else defaultEditCarPhoto">
@@ -203,7 +205,7 @@
   </div>
   <mat-dialog-content [formGroup]="editCarForm">
     <div class="row">
-      <div class="col">
+      <div class="col-6">
         <mat-form-field>
           <mat-label>Brand</mat-label>
           <input matInput placeholder="brand"
@@ -246,7 +248,7 @@
                  required formControlName="ownerTelephone">
         </mat-form-field>
 
-        <div class="input-group mb-3" style="width: 75%">
+        <div class="input-group mb-3" style="width: 100%">
           <div class="custom-file">
             <input type="file" class="custom-file-input"
                    id="carEditFileInput" aria-describedby="inputGroupFileAddon01"
@@ -271,7 +273,7 @@
           </button>
         </mat-dialog-actions>
       </div>
-      <div class="col">
+      <div class="col-6">
         <mat-card>
           <mat-card-subtitle>Photo Preview</mat-card-subtitle>
           <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
