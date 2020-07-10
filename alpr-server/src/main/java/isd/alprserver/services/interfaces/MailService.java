@@ -6,4 +6,6 @@ public interface MailService{
     void sendNoMoreParkingSpotsEmail(User user, int nrParkingSpots) ;
 
     void sendParkingNotificationEmail(String email);
+
+    void sendNotificationFromAdmin(String email, String subject, String text);
 }

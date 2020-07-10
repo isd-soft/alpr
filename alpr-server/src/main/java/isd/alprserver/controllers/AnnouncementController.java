@@ -4,6 +4,8 @@ import isd.alprserver.dtos.AnnouncementDTO;
 import isd.alprserver.model.Announcement;
 import isd.alprserver.model.AnnouncementPriority;
 import isd.alprserver.services.interfaces.AnnouncementService;
+import isd.alprserver.services.interfaces.MailService;
+import isd.alprserver.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AnnouncementController {
     private final AnnouncementService announcementService;
+    private final UserService userService;
+    private final MailService mailService;
 
     @PostMapping()
     public void addAnnouncement(@RequestBody AnnouncementDTO dto) {
@@ -39,6 +43,7 @@ public class AnnouncementController {
                 break;
         }
         announcementService.add(announcement);
+        sendAnnouncements(dto);
     }
 
     @GetMapping()
@@ -47,7 +52,7 @@ public class AnnouncementController {
                 announcementService.getAll()
                 .stream()
                 .map(
-                        ann -> AnnouncementDTO.builder()
+                         ann -> AnnouncementDTO.builder()
                         .title(ann.getTitle())
                         .description(ann.getDescription())
                         .date(ann.getDate())
@@ -58,9 +63,8 @@ public class AnnouncementController {
         );
     }
 
-    private void sendAnnouncements(@RequestBody AnnouncementDTO dto){
-
-
+    private void sendAnnouncements(AnnouncementDTO dto){
+        userService.getAll().stream().forEach(userDTO -> mailService.sendNotificationFromAdmin(userDTO.getEmail(), dto.getTitle(), dto.getDescription()) );
 
     }
 }

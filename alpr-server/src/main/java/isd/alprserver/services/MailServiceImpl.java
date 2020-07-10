@@ -40,12 +40,12 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendNotificationFromAdmin(User user, )  throws MailException {
+    public void sendNotificationFromAdmin(String email, String subject, String text)  throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());
+        message.setTo(email);
         message.setFrom("alprs003@gmail.com");
-        message.setSubject("Parking Notification");
-        message.setText("An announcement for all the users");
+        message.setSubject(subject);
+        message.setText(text);
         javaMailSender.send(message);
     }
 }
