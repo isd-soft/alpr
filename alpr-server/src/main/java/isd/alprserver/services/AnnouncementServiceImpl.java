@@ -1,10 +1,13 @@
 package isd.alprserver.services;
 
+import isd.alprserver.dtos.AnnouncementDTO;
 import isd.alprserver.model.Announcement;
 import isd.alprserver.model.Comment;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repositories.AnnouncementRepository;
 import isd.alprserver.services.interfaces.AnnouncementService;
+import isd.alprserver.services.interfaces.MailService;
+import isd.alprserver.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,10 +19,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnnouncementServiceImpl implements AnnouncementService {
     private final AnnouncementRepository announcementRepository;
+    private final MailService mailService;
+    private final UserService userService;
 
     @Override
     public void add(Announcement announcement) {
         announcementRepository.save(announcement);
+        sendAnnouncements(announcement);
     }
 
     @Override
@@ -63,5 +69,9 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     public List<Comment> getAllComments(long id) throws UserNotFoundException {
         Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Invalid announcement id " + id));
         return announcement.getComments();
+    }
+    private void sendAnnouncements(Announcement announcement){
+        userService.getAll().forEach(userDTO -> mailService.sendNotificationFromAdmin(userDTO.getEmail(), announcement.getTitle(), announcement.getDescription()) );
+
     }
 }

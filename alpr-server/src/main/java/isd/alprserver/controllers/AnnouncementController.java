@@ -25,8 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AnnouncementController {
     private final AnnouncementService announcementService;
-    private final UserService userService;
-    private final MailService mailService;
+
 
     @PostMapping()
     public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementDTO dto) {
@@ -49,7 +48,7 @@ public class AnnouncementController {
         }
         announcementService.add(announcement);
         return ResponseEntity.ok().build();
-        sendAnnouncements(dto);
+
     }
 
     @GetMapping()
@@ -103,30 +102,20 @@ public class AnnouncementController {
     @GetMapping("/comments/{id}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsFromAnnouncement(@PathVariable long id) throws UserNotFoundException {
         return ResponseEntity.ok(
-          announcementService.getAllComments(id).stream()
-                .sorted((comment, t1) -> {
-                    if (comment.getDate().isAfter(t1.getDate()))
-                        return -1;
-                    else if(comment.getDate().isBefore(t1.getDate()))
-                        return 1;
-                    else if(comment.getId() > t1.getId())
-                        return -1;
-                    return 0;
-                })
-                  .map(comment -> CommentDTO.builder().description(comment.getDescription()).userEmail(comment.getUserEmail()).date(comment.getDate()).build())
-                         ann -> AnnouncementDTO.builder()
-                        .title(ann.getTitle())
-                        .description(ann.getDescription())
-                        .date(ann.getDate())
-                        .priority(ann.getPriority().toString())
-                        .build()
-                        )
-                .collect(Collectors.toList())
+                announcementService.getAllComments(id).stream()
+                        .sorted((comment, t1) -> {
+                            if (comment.getDate().isAfter(t1.getDate()))
+                                return -1;
+                            else if(comment.getDate().isBefore(t1.getDate()))
+                                return 1;
+                            else if(comment.getId() > t1.getId())
+                                return -1;
+                            return 0;
+                        })
+                        .map(comment -> CommentDTO.builder().description(comment.getDescription()).userEmail(comment.getUserEmail()).date(comment.getDate()).build())
+                        .collect(Collectors.toList())
         );
     }
 
-    private void sendAnnouncements(AnnouncementDTO dto){
-        userService.getAll().stream().forEach(userDTO -> mailService.sendNotificationFromAdmin(userDTO.getEmail(), dto.getTitle(), dto.getDescription()) );
-
-    }
+    
 }
