@@ -1,17 +1,18 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <section class="car-list-section">
-<!--<div class="mat-elevation-z8">-->
+  <!--<div class="mat-elevation-z8">-->
   <section class="profile-info-section">
     <mat-card class="my-card">
       <mat-card-title class="full-width">Profile</mat-card-title>
-<!--      <div>-->
-<!--        <mat-label>First Name:</mat-label>-->
-<!--        <mat-label>*ngIf="firstName" {{user.firstName}}</mat-label></div>-->
-<!--      <div><mat-label>Last Name:</mat-label></div>-->
-<!--      <div><mat-label>Email:</mat-label></div>-->
-<!--      <div><mat-label>Age:</mat-label></div>-->
-<!--      <div><mat-label>Telephone:</mat-label></div>-->
-<!--      <div><mat-label>Company:</mat-label>-->
-<!--      </div>-->
+      <!--      <div>-->
+      <!--        <mat-label>First Name:</mat-label>-->
+      <!--        <mat-label>*ngIf="firstName" {{user.firstName}}</mat-label></div>-->
+      <!--      <div><mat-label>Last Name:</mat-label></div>-->
+      <!--      <div><mat-label>Email:</mat-label></div>-->
+      <!--      <div><mat-label>Age:</mat-label></div>-->
+      <!--      <div><mat-label>Telephone:</mat-label></div>-->
+      <!--      <div><mat-label>Company:</mat-label>-->
+      <!--      </div>-->
 
       <mat-card-content class="card-content">
         <mat-form-field>
@@ -23,7 +24,7 @@
           <input matInput [disabled]="true" [(ngModel)]="user.lastName">
         </mat-form-field>
         <mat-form-field>
-          <mat-label >Email:</mat-label>
+          <mat-label>Email:</mat-label>
           <input matInput [disabled]="true" [(ngModel)]="user.email">
         </mat-form-field>
         <mat-form-field>
@@ -45,32 +46,38 @@
   <section class="car-list-table-section mat-elevation-z8">
     <mat-table class="table" matSort [dataSource]="dataSource">
       <ng-container matColumnDef="licensePlate">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+        <!--suppress TypeScriptUnresolvedVariable -->
         <mat-cell class="description-cell"
                   *matCellDef="let car">{{car.licensePlate}}</mat-cell>
 
       </ng-container>
 
       <ng-container matColumnDef="brand">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <!--suppress TypeScriptUnresolvedVariable -->
         <mat-cell class="duration-cell"
                   *matCellDef="let car">{{car.brand}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="model">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
         <mat-cell class="duration-cell"
                   *matCellDef="let car">{{car.model}}</mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="color" >
-        <mat-header-cell  *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+      <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
         <mat-cell class="duration-cell"
                   *matCellDef="let car">
         <span class="color-title">
           {{car.color}}
         </span>
-          <span   class="material-icons span-icon"  [ngStyle]="{'color': car.color}">directions_car</span>
+          <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
+            <span class="material-icons span-icon"
+                  [ngStyle]="{'color': car.color}">directions_car
+            </span>
+          </button>
         </mat-cell>
       </ng-container>
 
@@ -88,69 +95,6 @@
 
       </ng-container>
 
-      <ng-template #editCarTemplate>
-        <div>
-          <div mat-dialog-title>
-            <h2>Edit Car</h2>
-            <mat-divider></mat-divider>
-            <h5>{{editedCar.licensePlate}}</h5>
-          </div>
-          <mat-dialog-content [formGroup]="editCarForm">
-
-            <mat-form-field>
-              <mat-label>Brand</mat-label>
-              <input matInput placeholder="brand" class="no-left-margin"
-                     name="brand" type="text" required
-                     formControlName="brand">
-            </mat-form-field>
-
-            <mat-form-field class="left-margin">
-              <mat-label>Model</mat-label>
-              <input matInput placeholder="model"
-                     name="model" type="text"
-                     required formControlName="model">
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field class="no-left-margin">
-              <mat-label>Color</mat-label>
-              <input matInput placeholder="color" name="color"
-                     type="text" required formControlName="color">
-            </mat-form-field>
-
-            <mat-form-field class="left-margin">
-              <mat-label>Owner</mat-label>
-              <input matInput placeholder="owner"
-                     name="owner" type="text" required
-                     formControlName="ownerName">
-            </mat-form-field>
-
-            <br>
-
-            <mat-form-field>
-              <mat-label>TelephoneNumber</mat-label>
-              <input matInput placeholder="ownerTelephone" name="ownerTelephone"
-                     class="no-left-margin" type="text"
-                     required formControlName="ownerTelephone">
-            </mat-form-field>
-
-            <mat-dialog-actions class="no-bottom-margin">
-              <button class="mat-raised-button"
-                      [mat-dialog-close]="true">Close
-              </button>
-              <button class="mat-raised-button mat-primary left-margin"
-                      [mat-dialog-close]="true" (click)="updateCar()" >Update
-              </button>
-            </mat-dialog-actions>
-
-          </mat-dialog-content>
-        </div>
-      </ng-template>
-
-      <ng-template #noActions>
-      </ng-template>
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
       <mat-row *matRowDef="let row; columns: displayedColumns"
@@ -159,5 +103,131 @@
 
     </mat-table>
   </section>
-<!--</div>-->
 </section>
+
+<ng-template #editCarTemplate>
+  <div>
+    <div mat-dialog-title>
+      <h2>Edit Car</h2>
+      <mat-divider></mat-divider>
+      <h5>{{editedCar.licensePlate}}</h5>
+    </div>
+    <mat-dialog-content [formGroup]="editCarForm">
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="brand"
+                   name="brand" type="text" required
+                   formControlName="brand">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Model</mat-label>
+            <input matInput placeholder="model"
+                   name="model" type="text"
+                   required formControlName="model">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="color" name="color"
+                   type="text" required formControlName="color">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Owner</mat-label>
+            <input matInput placeholder="owner"
+                   name="owner" type="text" required
+                   formControlName="ownerName">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>TelephoneNumber</mat-label>
+            <input matInput placeholder="ownerTelephone" name="ownerTelephone"
+                   class="no-left-margin" type="text"
+                   required formControlName="ownerTelephone">
+          </mat-form-field>
+
+          <div class="input-group mb-3" style="width: 75%">
+            <div class="custom-file">
+              <!--suppress TypeScriptUnresolvedVariable -->
+              <input type="file" class="custom-file-input"
+                     id="carEditFileInput" aria-describedby="inputGroupFileAddon01"
+                     (change)="handleEditCarFileInput($event.target.files)">
+              <label class="custom-file-label" for="carEditFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="carPhotoToEdit">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="this.carPhotoToEdit = null">Set Default
+              </button>
+            </div>
+          </div>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    [mat-dialog-close]="true" (click)="updateCar()">Update
+            </button>
+          </mat-dialog-actions>
+        </div>
+        <div class="col">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="carPhotoToEdit"
+                     alt="car photo" class="edit-car-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #carPhotoTemplate>
+  <div>
+    <h2 mat-dialog-title>Car Photo</h2>
+
+    <mat-dialog-content>
+
+      <div *ngIf="carPhotoToView; else defaultPhoto">
+        <img [src]="carPhotoToView" alt="Car Photo Preview"
+             class="car-photo-preview">
+      </div>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
+        </button>
+      </mat-dialog-actions>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #defaultPhoto>
+  <img src="../../assets/img/default_car.jpg" alt="Car Photo Preview"
+       class="default-car-photo-preview">
+</ng-template>
+
+<ng-template #defaultEditCarPhoto>
+  <div style="text-align: center">
+    <img matCardImage src="../../assets/img/default_car.jpg" alt="Car Photo Preview"
+         class="default-edit-car-photo">
+  </div>
+</ng-template>
