@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class ParkingHistoryServiceImpl implements ParkingHistoryService {
     }
 
     @Override
-    public ParkingHistory getByDateAndCompanyId(String date, long companyId) {
+    public ParkingHistory getByDateAndCompanyId(LocalDate date, long companyId) {
         return parkingHistoryRepository.findByDateAndCompanyId(date, companyId).orElseThrow(() -> new CompanyNotFoundException("Invalid company id"));
     }
 }

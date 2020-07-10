@@ -89,16 +89,26 @@ public class AnnouncementController {
                 Comment.builder()
                         .description(commentDTO.getDescription())
                         .userEmail(commentDTO.getUserEmail())
+                        .date(LocalDate.now())
                 .build()
         );
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/comments/{id}")
-    public ResponseEntity<List<CommentDTO>> getAllCommentFromAnnouncement(@PathVariable long id) throws UserNotFoundException {
+    public ResponseEntity<List<CommentDTO>> getAllCommentsFromAnnouncement(@PathVariable long id) throws UserNotFoundException {
         return ResponseEntity.ok(
           announcementService.getAllComments(id).stream()
-                .map(comment -> CommentDTO.builder().description(comment.getDescription()).userEmail(comment.getUserEmail()).build())
+                .sorted((comment, t1) -> {
+                    if (comment.getDate().isAfter(t1.getDate()))
+                        return -1;
+                    else if(comment.getDate().isBefore(t1.getDate()))
+                        return 1;
+                    else if(comment.getId() > t1.getId())
+                        return -1;
+                    return 0;
+                })
+                  .map(comment -> CommentDTO.builder().description(comment.getDescription()).userEmail(comment.getUserEmail()).date(comment.getDate()).build())
                 .collect(Collectors.toList())
         );
     }

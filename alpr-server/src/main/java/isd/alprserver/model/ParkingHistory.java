@@ -3,9 +3,7 @@ package isd.alprserver.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Builder
@@ -21,7 +19,7 @@ public class ParkingHistory {
 
     private long companyId;
 
-    private String date;
+    private LocalDate date;
 
     private int nrParkingSpots;
 

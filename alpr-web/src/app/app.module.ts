@@ -55,6 +55,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
 import { AddCommentDialogComponent } from './add-comment-dialog/add-comment-dialog.component';
 import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-dialog.component';
+import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
     AnnouncementComponent,
     ConfirmationDialogComponent,
     AddCommentDialogComponent,
-    ViewCommentDialogComponent
+    ViewCommentDialogComponent,
+    AddAnnouncementDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,7 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
-  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent, AddAnnouncementDialogComponent]
 })
 export class AppModule {
 }

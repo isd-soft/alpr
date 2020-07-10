@@ -32,30 +32,4 @@
     </mat-card>
   </cdk-virtual-scroll-viewport>
   <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin && !showForm">Add Announcement</button>
-
-  <div *ngIf="showForm" class="form">
-    <mat-card class="form-container">
-      <button mat-button class="remove-button" (click)="closeForm()">
-        <mat-icon style="margin: auto">close</mat-icon>
-      </button>
-      <mat-form-field appearance="fill">
-        <mat-label>Title</mat-label>
-        <input matInput [(ngModel)]="announcement.title">
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Description</mat-label>
-        <textarea matInput class="description-input" [(ngModel)]="announcement.description"></textarea>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Priority</mat-label>
-        <mat-select [(ngModel)]="announcement.priority">
-          <mat-option value="YELLOW">Low</mat-option>
-          <mat-option value="ORANGE">Medium</mat-option>
-          <mat-option value="RED">High</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button color="primary" class="add-form-button" (click)="addAnnouncement()">Add</button>
-    </mat-card>
-  </div>
-
 </div>

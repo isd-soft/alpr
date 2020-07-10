@@ -65,42 +65,18 @@
   margin-left: 10px;
 }
 
-.remove-button {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  font-size: 30px;
-  padding: 1px
-}
-
 .add-button {
   width: 15vw;
   height: 50px;
   font-size: 24px;
 }
 
-.form-container {
-  width: 50vw;
-  height: 80vh;
-  position: fixed;
-  top: 10vh;
-  left: 25vw;
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-}
-
-.description-input {
-  height: 30vh;
-}
-
-.add-form-button {
+.remove-button {
   position: absolute;
-  bottom: 20px;
-  margin: 0 auto;
-  width: 30%;
-  height: 45px;
-  left: 35%;
+  top: 1px;
+  right: 1px;
+  font-size: 30px;
+  padding: 1px
 }
 
 .message {

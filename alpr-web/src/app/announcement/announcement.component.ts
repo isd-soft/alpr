@@ -4,11 +4,12 @@ import {AnnouncementModel} from '../shared/announcement.model';
 import {ConfirmationDialogService} from '../shared/confirmation-dialog.service';
 import {AuthenticationService} from '../auth/authentication.service';
 import {Role} from '../auth/role';
-import {MatDialog} from "@angular/material/dialog";
-import {AddCommentDialogComponent} from "../add-comment-dialog/add-comment-dialog.component";
-import {CommentModel} from "../shared/comment.model";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {ViewCommentDialogComponent} from "../view-comment-dialog/view-comment-dialog.component";
+import {MatDialog} from '@angular/material/dialog';
+import {AddCommentDialogComponent} from '../add-comment-dialog/add-comment-dialog.component';
+import {CommentModel} from '../shared/comment.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ViewCommentDialogComponent} from '../view-comment-dialog/view-comment-dialog.component';
+import {AddAnnouncementDialogComponent} from "../add-announcement-dialog/add-announcement-dialog.component";
 
 @Component({
   selector: 'app-announcement',
@@ -19,8 +20,6 @@ export class AnnouncementComponent implements OnInit {
   public announcements: AnnouncementModel[] = [];
   public showForm = false;
   public isAdmin = true;
-  public showAllComments = false;
-  public showCommentForm = false;
   private userEmail = '';
   private commentDescription = '';
   announcement: AnnouncementModel = new AnnouncementModel();
@@ -63,10 +62,19 @@ export class AnnouncementComponent implements OnInit {
   showAddForm() {
     this.announcement = new AnnouncementModel();
     this.showForm = true;
-  }
+    const dialogRef = this.dialog.open(AddAnnouncementDialogComponent, {
+      data: {announcement: this.announcement}
+    });
 
-  closeForm() {
-    this.showForm = false;
+    dialogRef.afterClosed().subscribe(response => {
+      if (response !== undefined) {
+        this.announcement = response;
+        this.addAnnouncement();
+      }
+      else {
+        this.showForm = false;
+      }
+    });
   }
 
   addAnnouncement() {

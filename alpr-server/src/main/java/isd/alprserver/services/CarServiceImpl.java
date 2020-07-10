@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -117,7 +118,7 @@ public class CarServiceImpl implements CarService {
                     .build();
             if (car.get().getStatus().getName().equals("IN")) {
                 addScanAuditOut(car.get());
-                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                parkingHistoryService.getByDateAndCompanyId(LocalDate.now(), car.get().getUser().getCompany().getId())
                         .incrementParkingSpots();
                 car.get().setStatus(statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
                 return LicenseValidationResponse.builder().car(dto).status("Left").build();
@@ -125,7 +126,7 @@ public class CarServiceImpl implements CarService {
             if (areAvailableSpots(car) && isOut(car)) {
                 addScanAuditInAllowed(car.get());
                 car.get().setStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status")));
-                parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId())
+                parkingHistoryService.getByDateAndCompanyId(LocalDate.now(), car.get().getUser().getCompany().getId())
                         .decrementParkingSpots();
                 return LicenseValidationResponse.builder().car(dto).status("Allowed").build();
             } else {
@@ -168,13 +169,8 @@ public class CarServiceImpl implements CarService {
                         .build()
         );
     }
-
-    private String getDateAsString() {
-        return new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
-    }
-
     private boolean areAvailableSpots(Optional<Car> car) {
-        return parkingHistoryService.getByDateAndCompanyId(getDateAsString(), car.get().getUser().getCompany().getId()).getNrParkingSpots() > 0;
+        return parkingHistoryService.getByDateAndCompanyId(LocalDate.now(), car.get().getUser().getCompany().getId()).getNrParkingSpots() > 0;
     }
 
     private boolean isOut(Optional<Car> car) {

@@ -1,17 +1,29 @@
-<h2 mat-dialog-title>Comments</h2>
-<mat-dialog-content class="mat-typography">
+<div class="container">
+  <h2 mat-dialog-title>Comments</h2>
+  <mat-dialog-content class="mat-typography">
 
-  <mat-card *ngFor="let comment of data.comments">
-    <div class="user-email">
-      {{comment.userEmail}}
+    <div class="no-comments" *ngIf="data.comments.length === 0">
+      <span>No Comments</span>
     </div>
-    <br>
-    <div class="description">
-      {{comment.description}}
-    </div>
-  </mat-card>
 
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close (click)="onCloseClick()">Close</button>
-</mat-dialog-actions>
+    <mat-card *ngFor="let comment of data.comments" class="item">
+      <div class="user-email">
+        {{comment.userEmail}}
+      </div>
+      <br>
+      <div class="description">
+        {{comment.description}}
+      </div>
+      <div class="date">
+        {{comment.date}}
+      </div>
+    </mat-card>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close (click)="onCloseClick()" class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>
+

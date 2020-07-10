@@ -1,4 +1,47 @@
 .description {
   width: 100%;
   word-wrap: break-word;
+  background-color: lightgray;
+  padding: 5px;
+  border-radius: 8px;
+  color: black;
+}
+
+.user-email {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.item {
+  margin: 7px;
+  position: relative;
+}
+
+.no-comments {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  padding: 7px;
+}
+
+.no-comments span {
+  font-size: 40px;
+  margin: 5px;
+  color: dimgray;
+}
+
+.date {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+}
+
+.container {
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 5px;
 }
