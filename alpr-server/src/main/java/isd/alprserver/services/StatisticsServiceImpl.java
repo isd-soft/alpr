@@ -91,6 +91,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Override
+    public List<ScanAudit> getAllAllowedLastWeek() {
+        return scanAuditRepository.findAllAllowedLastWeek(new Date());
+    }
+
+    @Override
     public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
     }

@@ -42,7 +42,7 @@ import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ChartsModule} from "ng2-charts";
+//import {ChartsModule} from "ng2-charts";
 
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -105,7 +105,7 @@ import {AnnouncementComponent} from './announcement/announcement.component';
     NgApexchartsModule,
     MatListModule,
     ScrollingModule,
-    ChartsModule
+  //  ChartsModule
 
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService,

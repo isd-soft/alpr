@@ -16,5 +16,7 @@ public interface ScanAuditRepository extends JpaRepository<ScanAudit, Long> {
             value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.status='IN'")
     List<ScanAudit> findAllInLastWeek(Date currentDate);
 
-
+    @Query(nativeQuery = true,
+            value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.is_allowed = true")
+    List<ScanAudit> findAllAllowedLastWeek(Date currentDate);
 }
