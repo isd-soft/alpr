@@ -1,6 +1,8 @@
-<button mat-fab color="primary" aria-label="Refresh charts" class="refresh-button" (click)="initCharts()">
-  <mat-icon>refresh</mat-icon>
-</button>
+<div class="button-container">
+  <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+    <mat-icon>refresh</mat-icon>
+  </button>
+</div>
 <div class="container-fluid" style="margin-top: 1em">
   <br>
 
@@ -67,30 +69,6 @@
 
 
       <div class="row">
-        <div class="col">
-          <mat-card id="chart-pie" style="text-align: center">
-            <span class="chart-title">Total accepted vs rejected cars</span>
-            <apx-chart
-              [series]="pieChartOptions.series"
-              [chart]="pieChartOptions.chart"
-              [labels]="pieChartOptions.labels"
-              [responsive]="pieChartOptions.responsive">
-            </apx-chart>
-          </mat-card>
-        </div>
-
-
-        <div class="col">
-          <mat-card id="chart-cars-per-company" style="text-align: center">
-            <span class="chart-title">Cars per company</span>
-            <apx-chart
-              [series]="carsPerCompanyChartOptions.series"
-              [chart]="carsPerCompanyChartOptions.chart"
-              [labels]="carsPerCompanyChartOptions.labels"
-              [responsive]="carsPerCompanyChartOptions.responsive"
-            ></apx-chart>
-          </mat-card>
-        </div>
 
       </div>
     </div>
@@ -148,38 +126,62 @@
 
   <div class="row">
     <div class="col">
-      <div class="row">
-        <div class="col">
-          <mat-card class="chart-donut" style="text-align: center">
-    <span class="chart-title">Number of cars in the morning<span class="material-icons"
-                                                                 [ngStyle]="{'color' : 'yellow'}">wb_sunny</span>
-    </span>
-            <div id="donut-chart-morning">
-              <apx-chart
-                [series]="MorningDonutChartOptions.series"
-                [chart]="MorningDonutChartOptions.chart"
-                [labels]="MorningDonutChartOptions.labels"
-                [responsive]="MorningDonutChartOptions.responsive"
-              ></apx-chart>
-            </div>
-          </mat-card>
+      <mat-card style="text-align: center">
+        <span class="chart-title">Number of cars in the morning
+          <mat-icon [ngStyle]="{'color' : 'yellow'}">wb_sunny</mat-icon>
+        </span>
+        <div id="donut-chart-morning">
+          <apx-chart
+            [series]="MorningDonutChartOptions.series"
+            [chart]="MorningDonutChartOptions.chart"
+            [labels]="MorningDonutChartOptions.labels"
+            [responsive]="MorningDonutChartOptions.responsive"
+          ></apx-chart>
         </div>
-        <div class="col">
-          <mat-card class="chart-donut" style="text-align: center">
-    <span class="chart-title">Number of cars in the evening <span class="material-icons">nights_stay</span>
-    </span>
-            <div id="donut-chart-evening">
-              <apx-chart
-                [series]="EveningDonutChartOptions.series"
-                [chart]="EveningDonutChartOptions.chart"
-                [labels]="EveningDonutChartOptions.labels"
-                [responsive]="EveningDonutChartOptions.responsive"
-              ></apx-chart>
-            </div>
-          </mat-card>
-        </div>
-      </div>
+      </mat-card>
     </div>
+    <div class="col">
+      <mat-card style="text-align: center">
+            <span class="chart-title">Number of cars in the evening
+              <mat-icon>nights_stay</mat-icon>
+            </span>
+        <div id="donut-chart-evening">
+          <apx-chart
+            [series]="EveningDonutChartOptions.series"
+            [chart]="EveningDonutChartOptions.chart"
+            [labels]="EveningDonutChartOptions.labels"
+            [responsive]="EveningDonutChartOptions.responsive"
+          ></apx-chart>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col">
+      <mat-card id="chart-pie" style="text-align: center">
+        <span class="chart-title">Total accepted vs rejected cars</span>
+        <apx-chart
+          [series]="pieChartOptions.series"
+          [chart]="pieChartOptions.chart"
+          [labels]="pieChartOptions.labels"
+          [responsive]="pieChartOptions.responsive">
+        </apx-chart>
+      </mat-card>
+    </div>
+
+
+    <div class="col">
+      <mat-card id="chart-cars-per-company" style="text-align: center">
+        <span class="chart-title">Cars per company</span>
+        <apx-chart
+          [series]="carsPerCompanyChartOptions.series"
+          [chart]="carsPerCompanyChartOptions.chart"
+          [labels]="carsPerCompanyChartOptions.labels"
+          [responsive]="carsPerCompanyChartOptions.responsive"
+        ></apx-chart>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col">
       <mat-card id="chart-column-cars-entered" style="text-align: center">
         <span class="chart-title">Daily number of cars entered/exited </span>
@@ -197,11 +199,6 @@
         >
         </apx-chart>
       </mat-card>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
     </div>
     <div class="col">
       <mat-card id="chart-column" style="text-align: center">
