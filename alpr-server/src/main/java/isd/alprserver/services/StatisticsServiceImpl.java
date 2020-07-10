@@ -12,8 +12,6 @@ import isd.alprserver.repositories.UserAuditRepository;
 import isd.alprserver.services.interfaces.CompanyService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.health.HealthEndpoint;
-import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -29,14 +27,6 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final CarAuditRepository carAuditRepository;
     private final ScanAuditRepository scanAuditRepository;
     private final CompanyService companyService;
-    private final HealthEndpoint healthEndpoint;
-    private final MetricsEndpoint metricsEndpoint;
-
-    @PostConstruct
-    public void foo(){
-        System.out.println(healthEndpoint.health());
-        System.out.println(metricsEndpoint.listNames());
-    }
 
     @Override
     public UserAudit auditUserRegistration(UserAudit userAudit) {
@@ -98,6 +88,11 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<ScanAudit> getAllInLastWeek() {
         return scanAuditRepository.findAllInLastWeek(new Date());
+    }
+
+    @Override
+    public List<ScanAudit> getAllAllowedLastWeek() {
+        return scanAuditRepository.findAllAllowedLastWeek(new Date());
     }
 
     @Override

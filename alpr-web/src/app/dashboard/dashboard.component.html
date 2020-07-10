@@ -149,6 +149,29 @@
     <div class="col">
     </div>
     <div class="col">
+      <mat-card id="chart-column-cars-entered" style="text-align: center">
+        <span class="chart-title">Daily number of cars entered/exited </span>
+        <apx-chart
+          [series]="carsEnterExitedChartOptions.series"
+          [chart]="carsEnterExitedChartOptions.chart"
+          [dataLabels]="carsEnterExitedChartOptions.dataLabels"
+          [plotOptions]="carsEnterExitedChartOptions.plotOptions"
+          [yaxis]="carsEnterExitedChartOptions.yaxis"
+          [xaxis]="carsEnterExitedChartOptions.xaxis"
+          [legend]="carsEnterExitedChartOptions.legend"
+          [fill]="carsEnterExitedChartOptions.fill"
+          [stroke]="carsEnterExitedChartOptions.stroke"
+          [tooltip]="carsEnterExitedChartOptions.tooltip"
+        >
+        </apx-chart>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
       <mat-card id="chart-column" style="text-align: center">
         <span class="chart-title">Daily number of accepted and rejected cars</span>
         <apx-chart
