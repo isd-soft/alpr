@@ -32,12 +32,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_message);
 
         Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        button.setOnClickListener(v -> finish());
 
         List<LicensePlate> plates = new ArrayList<>();
         Object[] platesArray = (Object[]) getIntent().getSerializableExtra("plates");
@@ -82,8 +77,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LicenseValidationResponse> call, Throwable t) {
-                Log.i("ocr-plate", "Error " + t.toString());
-                ((TextView)findViewById(R.id.status)).setText("Oops");
+                ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_error);
+                ((TextView)findViewById(R.id.status)).setText("Error");
             }
         });
     }

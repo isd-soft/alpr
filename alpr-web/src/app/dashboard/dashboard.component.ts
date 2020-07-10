@@ -60,6 +60,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   @ViewChild('donut-chart-evening') donutChartEvening: ChartComponent;
   public EveningDonutChartOptions: Partial<EveningChartOptions>;
+  public MorningDonutChartOptions: Partial<MorningChartOptions> = {
+    series: null,
+    chart: null,
+    responsive: null,
+    labels: null,
+  };
+
+  @ViewChild('donut-chart-evening') donutChartEvening: ChartComponent;
+  public EveningDonutChartOptions: Partial<EveningChartOptions> = {
+    series: null,
+    chart: null,
+    responsive: null,
+    labels: null,
+  };
 
 
   @ViewChild('chart-pie') pieChart: ChartComponent;
@@ -130,7 +144,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
+  }
 
+  ngOnInit(): void {
+    this.initCharts();
+  }
+
+  initCharts(): void {
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
       .then(result => {
@@ -187,66 +207,56 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.statisticsService.getInfo()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.appInfo = response.app;
-        console.log(this.appInfo);
       });
 
 
     this.statisticsService.getHealth()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.healthInfo = response;
-        console.log(this.healthInfo);
       });
 
 
     this.statisticsService.getCpuCount()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.cpuInfo = response;
-        console.log(this.cpuInfo);
       });
 
     this.statisticsService.getUptime()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.uptimeInfo = response;
-        console.log(this.uptimeInfo);
       });
 
     this.statisticsService.getHttpRequest()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.httpInfo = response;
-        console.log(this.httpInfo);
       });
 
     this.statisticsService.getTotalMemory()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.totalMemoryInfo = response;
-        console.log(this.totalMemoryInfo);
       });
 
     this.statisticsService.getUsedMemory()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.usedMemoryInfo = response;
-        console.log(this.usedMemoryInfo);
       });
 
     this.statisticsService.getNumberScansMorning()
       .toPromise()
       .then(response => {
-        console.log(response);
+        this.initCarsInTheMorningDonutChart(response);
       });
+
+    this.statisticsService.getNumberScansEvening()
+      .toPromise()
+      .then(response => this.initCarsInTheEveningDonutChart(response));
   }
 
   private initCarsEnteredExited(data: any[]): void {
@@ -310,64 +320,63 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   private initColumnChart(data: any[]): void {
-    const keys: string[] = [];
-    data.forEach(scanning => {
-      if (keys.indexOf(scanning.scanDate) < 0) {
-        keys.push(scanning.scanDate);
-      }
-    });
-    const allowedValues: number[] = [];
-    const rejectedValues: number[] = [];
-    keys.forEach(key => {
-      const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-      const allowed: number = temp.filter(s => s.allowed).length;
-      const rejected: number = temp.length - allowed;
-      allowedValues.push(allowed);
-      rejectedValues.push(rejected);
-    });
-    this.columnChartOptions = {
-      series: [
-        {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
-      ],
-      chart: {
-        type: 'bar',
-        height: 350
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-          endingShape: 'rounded'
+      const keys: string[] = [];
+      data.forEach(scanning => {
+        if (keys.indexOf(scanning.scanDate) < 0) {
+          keys.push(scanning.scanDate);
         }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ['transparent']
-      },
-      xaxis: {
-        categories: keys
-      },
-      yaxis: {
-        title: {
-          text: 'Nr. of cars',
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      tooltip: {
-        y: {
-          formatter(val) {
-            return val + ' cars';
+      });
+      const allowedValues: number[] = [];
+      const rejectedValues: number[] = [];
+      keys.forEach(key => {
+        const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
+        const allowed: number  = temp.filter(s => s.allowed).length;
+        const rejected: number  = temp.length - allowed;
+        allowedValues.push(allowed);
+        rejectedValues.push(rejected);
+      });
+      this.columnChartOptions = {
+        series: [
+          {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
+        ],
+        chart: {
+          type: 'bar',
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: keys
+        },
+        yaxis: {
+          title: {
+            text: 'Nr. of cars',
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter(val) {
+              return val + ' cars';
+            }
           }
         }
-      }
-    };
-  }
+      };
+    }
 
 
   private initPieChart(data): void {
@@ -417,7 +426,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   private initCarsInTheMorningDonutChart(data): void {
-    console.log(data);
     this.MorningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
@@ -441,7 +449,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   private initCarsInTheEveningDonutChart(data): void {
-    console.log(data);
     this.EveningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {

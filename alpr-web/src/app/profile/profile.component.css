@@ -6,6 +6,10 @@
   width: 200px;
 }
 
+input {
+  min-width:200px;
+}
+
 .color-title {
   width: 25%;
 }
@@ -17,6 +21,8 @@
 .card-content {
   width: 100%;
   font-size: 15px;
+  display:flex;
+  justify-content:space-between;
   }
 
 .table {
@@ -28,36 +34,4 @@
 
 .profile-info-section {
   margin-bottom: 30px;
-}
-
-.no-bottom-margin {
-  margin-bottom: 0;
-}
-
-.car-photo-preview {
-  max-width: 45vw;
-  max-height: 45vh;
-  object-fit: cover;
-}
-
-.default-car-photo-preview {
-  max-width: 45vw;
-  max-height: 45vh;
-  object-fit: cover;
-}
-
-.edit-car-photo {
-  max-height: 40vh;
-  max-width: 40vw;
-  object-fit: cover;
-}
-
-.default-edit-car-photo {
-  max-height: 25vh;
-  max-width: 25vw;
-  object-fit: cover;
-}
-
-input {
-  width: 100%;
 }

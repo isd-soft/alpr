@@ -34,12 +34,7 @@ public class MainActivity extends AppCompatActivity
 
         frameLayout = findViewById(R.id.frames);
         nav = findViewById(R.id.nav);
-        nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                return replaceFrameByItem(item);
-            }
-        });
+        nav.setOnNavigationItemSelectedListener(item -> replaceFrameByItem(item));
 
         scanFragment = new ScanFragment();
         writeFragment = new WriteFragment();

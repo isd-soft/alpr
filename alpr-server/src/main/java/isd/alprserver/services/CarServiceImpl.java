@@ -156,6 +156,7 @@ public class CarServiceImpl implements CarService {
                 ScanAudit.builder()
                         .scanDate(new Date())
                         .status("OUT")
+                        .isAllowed(true)
                         .licensePlate(car.getLicensePlate())
                         .build()
         );
