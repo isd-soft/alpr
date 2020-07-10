@@ -1,6 +1,7 @@
 package isd.alprserver.services;
 
 import isd.alprserver.model.Announcement;
+import isd.alprserver.model.Comment;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.repositories.AnnouncementRepository;
 import isd.alprserver.services.interfaces.AnnouncementService;
@@ -46,5 +47,21 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     @Override
     public Optional<Announcement> getById(long id) {
         return announcementRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public void addComment(long id, Comment comment) {
+        Optional<Announcement> announcement = announcementRepository.findById(id);
+        if(announcement.isPresent()) {
+            announcement.get().getComments().add(comment);
+            comment.setAnnouncement(announcement.get());
+        }
+    }
+
+    @Override
+    public List<Comment> getAllComments(long id) throws UserNotFoundException {
+        Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Invalid announcement id " + id));
+        return announcement.getComments();
     }
 }

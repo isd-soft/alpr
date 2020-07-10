@@ -27,6 +27,7 @@ button {
 .car-photo-preview img{
   max-width: 60vw;
   max-height: 60vw;
+  object-fit: cover;
 }
 
 .action{

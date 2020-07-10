@@ -24,14 +24,22 @@ public class EmailSenderService {
 
     //"0 0 0 * * *"
     @Scheduled(cron = "*/10 * * * * *")
+    @Transactional
     public void updateParkingHistory() {
 //        System.out.println("here");
 //        companyService.getCompanies()
 //                .forEach(company -> {
 //                    ParkingHistory history = ParkingHistory.builder().
-//                            date(new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5])
+//                            date(LocalDate.now())
 //                            .companyId(company.getId())
-//                            .nrParkingSpots(company.getNrParkingSpots())
+//                            .nrParkingSpots(
+//                                    company.getNrParkingSpots() -
+//                                            (int) carService.getAllCars()
+//                                    .stream()
+//                                    .filter(car -> car.getStatus().getName().equals("IN"))
+//                                    .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+//                                    .count()
+//                            )
 //                            .lastSentNotification(-1)
 //                            .build();
 //                    parkingHistoryService.save(history);
@@ -42,17 +50,17 @@ public class EmailSenderService {
     @Scheduled(cron = "*/10 * 9-18 * * ?")
     @Transactional
     public void check() {
-//        String date = new Date().toString().substring(0, 7) + " " + new Date().toString().split(" ")[5];
-//        companyService.getCompanies()
-//                .forEach(company -> {
-//                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
-//                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
-//                        history.setLastSentNotification(history.getNrParkingSpots());
-//                        carService.getAllCars().stream()
-//                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-//                                .filter(car -> car.getStatus().getName().equals("OUT"))
-//                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
-//                    }
-//                });
+        LocalDate date = LocalDate.now();
+        companyService.getCompanies()
+                .forEach(company -> {
+                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
+                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
+                        history.setLastSentNotification(history.getNrParkingSpots());
+                        carService.getAllCars().stream()
+                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+                                .filter(car -> car.getStatus().getName().equals("OUT"))
+                                .forEach(car -> mailService.sendEmail(car.getUser(), history.getNrParkingSpots()));
+                    }
+                });
     }
 }

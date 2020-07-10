@@ -1,0 +1,12 @@
+<h1 mat-dialog-title style="margin: 0 auto">Hi {{data.userEmail}}</h1>
+<div mat-dialog-content>
+  <p>Do you want to add a comment?</p>
+  <mat-form-field>
+    <mat-label>Enter comment</mat-label>
+    <input matInput [(ngModel)]="data.description">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="'!' + data.description" cdkFocusInitial>Add</button>
+</div>

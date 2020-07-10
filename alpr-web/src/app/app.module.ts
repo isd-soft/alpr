@@ -49,11 +49,16 @@ import {DashboardComponent} from './dashboard/dashboard.component';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
 import {MatListModule} from '@angular/material/list';
-import {FileHandler} from './utils/file.handler';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { AnnouncementComponent } from './announcement/announcement.component';
 import {AnnouncementService} from './shared/announcement.service';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogService} from './shared/confirmation-dialog.service';
+import { AddCommentDialogComponent } from './add-comment-dialog/add-comment-dialog.component';
+import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-dialog.component';
+import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
+import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
-import {AnnouncementComponent} from './announcement/announcement.component';
 
 @NgModule({
   declarations: [
@@ -72,8 +77,11 @@ import {AnnouncementComponent} from './announcement/announcement.component';
     CompanyCarsComponent,
     PasswordComponent,
     DashboardComponent,
-    AnnouncementComponent
-
+    AnnouncementComponent,
+    ConfirmationDialogComponent,
+    AddCommentDialogComponent,
+    ViewCommentDialogComponent,
+    AddAnnouncementDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -107,15 +115,15 @@ import {AnnouncementComponent} from './announcement/announcement.component';
 
 
   ],
-  providers: [UserService, CompanyService, CarService, AnnouncementService,
+  providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
     FileHandler,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
   ],
-
   bootstrap: [AppComponent],
-  exports: [MatPaginatorModule]
+  exports: [MatPaginatorModule],
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent, AddAnnouncementDialogComponent]
 })
 export class AppModule {
 }
