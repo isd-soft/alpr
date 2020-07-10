@@ -1,0 +1,24 @@
+<div class="form">
+  <mat-card class="form-container">
+    <button mat-button class="remove-button" (click)="onNoClick()">
+      <mat-icon style="margin: auto">close</mat-icon>
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="data.announcement.title" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput class="description-input" [(ngModel)]="data.announcement.description" required></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Priority</mat-label>
+      <mat-select [(ngModel)]="data.announcement.priority" required>
+        <mat-option value="YELLOW">Low</mat-option>
+        <mat-option value="ORANGE">Medium</mat-option>
+        <mat-option value="RED">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="add-form-button" [mat-dialog-close]="data.announcement" [disabled]="areEmptyFields()">Add</button>
+  </mat-card>
+</div>

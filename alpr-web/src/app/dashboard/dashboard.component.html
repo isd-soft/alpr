@@ -16,8 +16,8 @@
                         <img class="icon" src="../../assets/img/person.svg" alt=""/>
                         <br>
                         <span class="title">
-                      USERS
-                    </span>
+                        USERS
+                        </span>
                         <br>
                         <span class="statistics-number">{{registeredUsersNumber}}</span>
                       </div>
@@ -173,7 +173,7 @@
     </div>
     <div class="col">
       <mat-card id="chart-column" style="text-align: center">
-        <span class="chart-title">Daily number of accepted and rejected cars </span>
+        <span class="chart-title">Daily number of accepted and rejected cars</span>
         <apx-chart
           [series]="columnChartOptions.series"
           [chart]="columnChartOptions.chart"
@@ -194,35 +194,36 @@
 
 
 <div class="row">
-<div class="col">
-  <mat-card class="chart-donut" style="text-align: center">
-    <span class="chart-title">Number of cars in the morning <span class="material-icons" [ngStyle]="{'color' : 'yellow'}">wb_sunny</span>
+  <div class="col">
+    <mat-card class="chart-donut" style="text-align: center">
+    <span class="chart-title">Number of cars in the morning<span class="material-icons"
+                                                                 [ngStyle]="{'color' : 'yellow'}">wb_sunny</span>
     </span>
-    <div id="donut-chart-morning">
-      <apx-chart
-        [series]="MorningDonutChartOptions.series"
-        [chart]="MorningDonutChartOptions.chart"
-        [labels]="MorningDonutChartOptions.labels"
-        [responsive]="MorningDonutChartOptions.responsive"
-      ></apx-chart>
-    </div>
-  </mat-card>
-</div>
+      <div id="donut-chart-morning">
+        <apx-chart
+          [series]="MorningDonutChartOptions.series"
+          [chart]="MorningDonutChartOptions.chart"
+          [labels]="MorningDonutChartOptions.labels"
+          [responsive]="MorningDonutChartOptions.responsive"
+        ></apx-chart>
+      </div>
+    </mat-card>
+  </div>
 
-<div class="col">
-  <mat-card class="chart-donut" style="text-align: center">
+  <div class="col">
+    <mat-card class="chart-donut" style="text-align: center">
     <span class="chart-title">Number of cars in the evening <span class="material-icons">nights_stay</span>
     </span>
-    <div id="donut-chart-evening">
-      <apx-chart
-        [series]="EveningDonutChartOptions.series"
-        [chart]="EveningDonutChartOptions.chart"
-        [labels]="EveningDonutChartOptions.labels"
-        [responsive]="EveningDonutChartOptions.responsive"
-      ></apx-chart>
-    </div>
-  </mat-card>
-</div>
+      <div id="donut-chart-evening">
+        <apx-chart
+          [series]="EveningDonutChartOptions.series"
+          [chart]="EveningDonutChartOptions.chart"
+          [labels]="EveningDonutChartOptions.labels"
+          [responsive]="EveningDonutChartOptions.responsive"
+        ></apx-chart>
+      </div>
+    </mat-card>
+  </div>
 </div>
 
 
