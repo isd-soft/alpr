@@ -1,3 +1,4 @@
+<!--suppress HtmlFormInputWithoutLabel -->
 <mat-toolbar>
   <span>Car Registration</span>
 </mat-toolbar>
@@ -28,16 +29,20 @@
 
       <div class="input-group mb-3 full-width">
         <div class="custom-file">
-          <input type="file" class="custom-file-input"
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <input #carFileInput type="file" class="custom-file-input"
                  id="carFileInput" aria-describedby="inputGroupFileAddon01"
-                 (change)="handleFileInput($event.target.files)">
-          <label class="custom-file-label" for="carFileInput">Upload photo</label>
+                 (change)="handleFileInput($event.target.files)"
+                 accept="image/jpeg">
+          <label class="custom-file-label" for="carFileInput">
+            {{label}}
+          </label>
         </div>
       </div>
 
       <mat-card class="car-photo-preview" *ngIf="imgURL">
         <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-        <img matCardImage [src]="imgURL" *ngIf="imgURL" alt="car photo">
+        <img matCardImage [src]="imgURL" alt="car photo">
         <mat-card-actions>
           <button mat-raised-button (click)="removeUploadedCar()"
                   class="action">Remove

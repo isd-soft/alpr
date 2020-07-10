@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+
+}
+
+.car-list-section {
+  margin: 20px;
+}
+#example-form-field {
+  width: 200px;
+}
+
+.color-title {
+  width: 25%;
+}
+
+.span-icon {
+  margin: auto;
+}
+
+.all-margins {
+  margin: 1em;
+}
+
+.left-margin {
+  margin-left: 1em;
+}
+
+.no-left-margin {
+  margin-left: 0;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
+}

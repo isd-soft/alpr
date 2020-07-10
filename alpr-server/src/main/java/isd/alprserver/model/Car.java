@@ -23,7 +23,7 @@ public class Car {
 
     @Column(unique = true)
     @NotNull
-    @Pattern(regexp = "([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{1,3})")
+    @Pattern(regexp = "([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})")
     private String licensePlate;
 
     @NotNull
@@ -41,6 +41,8 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Status status;
+
+    private byte[] photo;
 
     @Override
     public String toString() {

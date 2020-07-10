@@ -9,6 +9,8 @@ import {UptimeModel} from "../shared/uptime.model";
 import {HttpRequestModel} from "../shared/httpRequest.model";
 import {totalMemoryModel} from "../shared/totalMemory.model";
 import {usedMemoryModel} from "../shared/usedMemory.model";
+
+
 import {scan} from 'rxjs/operators';
 
 export type PieChartOptions = {
@@ -31,27 +33,42 @@ export type ColumnChartOptions = {
   legend: ApexLegend;
 };
 
+export type MorningChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
+
+export type EveningChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild("donut-chart-morning") donutChartMorning: ChartComponent;
+  public MorningDonutChartOptions: Partial<MorningChartOptions>;
+
+  @ViewChild("donut-chart-evening") donutChartEvening: ChartComponent;
+  public EveningDonutChartOptions: Partial<EveningChartOptions>;
+
+
   @ViewChild('chart-pie') pieChart: ChartComponent;
-  @ViewChild('chart-column') columnChart: ChartComponent;
   public pieChartOptions: Partial<PieChartOptions> = {
     series: null,
     chart: null,
     labels: null,
     responsive: null
   };
-  public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
-    series: null,
-    chart: null,
-    labels: null,
-    responsive: null
-  };
 
+  @ViewChild('chart-column') columnChart: ChartComponent;
   public columnChartOptions: Partial<ColumnChartOptions> = {
     series: null,
     chart: null,
@@ -64,6 +81,16 @@ export class DashboardComponent implements OnInit {
     stroke: null,
     tooltip: null
   };
+
+
+  public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
+    series: null,
+    chart: null,
+    labels: null,
+    responsive: null
+  };
+
+
   registeredUsersNumber: number;
   registeredCarsNumber: number;
   scannedPlatesNumber: number;
@@ -77,20 +104,32 @@ export class DashboardComponent implements OnInit {
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
+
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
       .then(result => {
         this.initColumnChart(result);
       });
+
     this.statisticsService.getTotalAllowedRejectedCars()
       .toPromise()
       .then(response => {
         this.initPieChart(response);
       })
       .catch(error => console.log(error));
+
     this.statisticsService.getCarsPerCompany()
       .toPromise()
       .then(response => this.initCarsPerCompanyChart(response));
+
+    this.statisticsService.getNumberScansMorning()
+      .toPromise()
+      .then(response => this.initCarsInTheMorningDonutChart(response));
+
+    this.statisticsService.getNumberScansEvening()
+      .toPromise()
+      .then(response => this.initCarsInTheEveningDonutChart(response));
+
   }
 
   ngOnInit(): void {
@@ -170,6 +209,12 @@ export class DashboardComponent implements OnInit {
         this.usedMemoryInfo = response;
         console.log(this.usedMemoryInfo);
       });
+
+    this.statisticsService.getNumberScansMorning()
+      .toPromise()
+      .then(response => {
+        console.log(response);
+      })
   }
 
   private initColumnChart(data: any[]): void {
@@ -277,4 +322,51 @@ export class DashboardComponent implements OnInit {
     };
   }
 
+  private initCarsInTheMorningDonutChart(data): void {
+    console.log(data)
+    this.MorningDonutChartOptions = {
+      series: data.map(entry => entry.cars),
+      chart: {
+        type: 'donut'
+      },
+      labels: data.map(entry => 'Hour ' + entry.hour),
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      ]
+    };
+  }
+
+  private initCarsInTheEveningDonutChart(data): void {
+    console.log(data)
+    this.EveningDonutChartOptions = {
+      series: data.map(entry => entry.cars),
+      chart: {
+        type: 'donut'
+      },
+      labels: data.map(entry => 'Hour : ' + entry.hour),
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      ]
+    };
+  }
 }

@@ -5,63 +5,65 @@
     <div class="col-6">
       <div class="row">
         <div class="col">
-        <mat-card>
-          <div class="row h-100">
+          <mat-card>
+            <div class="row h-100">
 
-            <div class="col-4 ">
-              <div class="embed-responsive embed-responsive-1by1 text-center">
-                <div class="embed-responsive-item">
-                  <div class="rounded-circle border border-success h-100 w-100 d-table">
-                    <div class="d-table-cell align-middle">
-                      <img class="icon" src="../../assets/img/person.svg" alt=""/>
-                      <br>
-                      <span class="title">
-                      USERS
-                    </span>
-                      <br>
-                      <span class="statistics-number">{{registeredUsersNumber}}</span>
+              <div class="col-4 ">
+                <div class="embed-responsive embed-responsive-1by1 text-center">
+                  <div class="embed-responsive-item">
+                    <div class="rounded-circle border border-success h-100 w-100 d-table">
+                      <div class="d-table-cell align-middle">
+                        <img class="icon" src="../../assets/img/person.svg" alt=""/>
+                        <br>
+                        <span class="title">
+                        USERS
+                        </span>
+                        <br>
+                        <span class="statistics-number">{{registeredUsersNumber}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="col-4">
-              <div class="embed-responsive embed-responsive-1by1 text-center">
-                <div class="embed-responsive-item">
-                  <div class="rounded-circle border border-primary h-100 w-100 d-table">
-                    <div class="d-table-cell align-middle">
-                      <img class="icon" src="../../assets/img/car.svg" alt=""/>
-                      <br>
-                      <span class="title">CARS</span>
-                      <br>
-                      <span class="statistics-number">{{registeredCarsNumber}}</span>
+              <div class="col-4">
+                <div class="embed-responsive embed-responsive-1by1 text-center">
+                  <div class="embed-responsive-item">
+                    <div class="rounded-circle border border-primary h-100 w-100 d-table">
+                      <div class="d-table-cell align-middle">
+                        <img class="icon" src="../../assets/img/car.svg" alt=""/>
+                        <br>
+                        <span class="title">CARS</span>
+                        <br>
+                        <span class="statistics-number">{{registeredCarsNumber}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div class="col-4">
-              <div class="embed-responsive embed-responsive-1by1 text-center">
-                <div class="embed-responsive-item">
-                  <div class="rounded-circle border border-info h-100 w-100 d-table">
-                    <div class="d-table-cell align-middle">
-                      <img class="icon" src="../../assets/img/phone.svg" alt=""/>
-                      <br>
-                      <span class="title">SCANS</span>
-                      <br>
-                      <span class="statistics-number">{{scannedPlatesNumber}}</span>
+              <div class="col-4">
+                <div class="embed-responsive embed-responsive-1by1 text-center">
+                  <div class="embed-responsive-item">
+                    <div class="rounded-circle border border-info h-100 w-100 d-table">
+                      <div class="d-table-cell align-middle">
+                        <img class="icon" src="../../assets/img/phone.svg" alt=""/>
+                        <br>
+                        <span class="title">SCANS</span>
+                        <br>
+                        <span class="statistics-number">{{scannedPlatesNumber}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-          </div>
-        </mat-card>
+            </div>
+          </mat-card>
         </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <mat-card id="chart-pie" style="text-align: center">
@@ -74,6 +76,8 @@
             </apx-chart>
           </mat-card>
         </div>
+
+
         <div class="col">
           <mat-card id="chart-cars-per-company" style="text-align: center">
             <span class="chart-title">Cars per company</span>
@@ -85,13 +89,17 @@
             ></apx-chart>
           </mat-card>
         </div>
+
       </div>
     </div>
+
 
     <div class="col-6">
       <mat-card id="systemInfo">
         <mat-list>
-          <div mat-subheader><mat-icon class="icon-info">info</mat-icon><span class="info-system"> System Information:</span></div>
+          <div mat-subheader>
+            <mat-icon class="icon-info">info</mat-icon>
+            <span class="info-system"> System Information:</span></div>
           <mat-label class="info">Info</mat-label>
           <li>Application name : <span class="value">{{appInfo.name}} </span></li>
           <li>Description : <span class="value">{{appInfo.description}} </span></li>
@@ -100,7 +108,7 @@
 
           <mat-label class="health">Health</mat-label>
           <li>The state of application : <span class="value"> {{healthInfo.status}}</span></li>
-          <li>DataBase : <span class="value">{{healthInfo.components.db.details.database}}</span></li>
+          <li>Database : <span class="value">{{healthInfo.components.db.details.database}}</span></li>
           <li>Total diskspace :<span class="value"> {{healthInfo.components.diskSpace.details.total}} bytes </span></li>
           <li>Free diskspace : <span class="value"> {{healthInfo.components.diskSpace.details.free}} bytes </span></li>
 
@@ -135,7 +143,6 @@
         </mat-list>
       </mat-card>
     </div>
-
   </div>
 
   <div class="row">
@@ -159,9 +166,43 @@
         </apx-chart>
       </mat-card>
     </div>
-    <div class="col">
+  </div>
+</div>
 
-    </div>
+
+<div class="row">
+  <div class="col">
+    <mat-card class="chart-donut" style="text-align: center">
+    <span class="chart-title">Number of cars in the morning<span class="material-icons"
+                                                                 [ngStyle]="{'color' : 'yellow'}">wb_sunny</span>
+    </span>
+      <div id="donut-chart-morning">
+        <apx-chart
+          [series]="MorningDonutChartOptions.series"
+          [chart]="MorningDonutChartOptions.chart"
+          [labels]="MorningDonutChartOptions.labels"
+          [responsive]="MorningDonutChartOptions.responsive"
+        ></apx-chart>
+      </div>
+    </mat-card>
   </div>
 
+  <div class="col">
+    <mat-card class="chart-donut" style="text-align: center">
+    <span class="chart-title">Number of cars in the evening <span class="material-icons">nights_stay</span>
+    </span>
+      <div id="donut-chart-evening">
+        <apx-chart
+          [series]="EveningDonutChartOptions.series"
+          [chart]="EveningDonutChartOptions.chart"
+          [labels]="EveningDonutChartOptions.labels"
+          [responsive]="EveningDonutChartOptions.responsive"
+        ></apx-chart>
+      </div>
+    </mat-card>
+  </div>
 </div>
+
+
+
+

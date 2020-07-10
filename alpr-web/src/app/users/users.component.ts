@@ -142,7 +142,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.snackBar.open('Oops! Something went wrong; Users not loaded',
           'OK', {duration: 3000});
       });
-    this.companyService.getAll().toPromise()
+      this.companyService.getAll().toPromise()
       .then(companies => {
         this.companies = companies;
       })

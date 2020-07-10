@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car add(Car car) throws CarAlreadyExistsException {
         if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
-            throw new CarAlreadyExistsException();
+            throw new CarAlreadyExistsException("The car with this license plate already exists.");
         }
         car = carRepository.save(car);
 
@@ -67,6 +68,9 @@ public class CarServiceImpl implements CarService {
         carById.setModel(carDTO.getModel());
         carById.setColor(carDTO.getColor());
         carById.setLicensePlate(carDTO.getLicensePlate());
+        carById.setPhoto(carDTO.getPhoto() != null ?
+                Base64.getDecoder().decode(carDTO.getPhoto().split(",")[1])
+                : null);
     }
 
     @Override
@@ -76,9 +80,13 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public void add(Car car, String email) throws UserNotFoundException {
+    public void add(Car car, String email) throws UserNotFoundException, CarAlreadyExistsException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User doesn't exist"));
         Status status = statusRepository.getByName("OUT").orElseThrow(() -> new StatusNotFoundException("Status not found"));
+        Optional<Car> byLicensePlate = this.carRepository.findByLicensePlate(car.getLicensePlate());
+        if(byLicensePlate.isPresent()){
+            throw new CarAlreadyExistsException("Car with license plate " + car.getLicensePlate() + " already exists");
+        }
         this.carRepository.save(car);
         user.getCars().add(car);
         car.setUser(user);
@@ -97,6 +105,11 @@ public class CarServiceImpl implements CarService {
     @Override
     public Optional<Car> getByLicensePlate(String licensePlate) {
         return this.carRepository.findByLicensePlate(licensePlate);
+    }
+
+    @Override
+    public List<Car> getByCompanyName(String name) {
+        return this.carRepository.findByCompanyName(name);
     }
 
     @Override
