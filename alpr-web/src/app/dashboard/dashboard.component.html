@@ -173,8 +173,9 @@
 <div class="row">
 <div class="col">
   <mat-card class="chart-donut" style="text-align: center">
-    <span class="chart-title">Number of cars in the morning<span class="material-icons" [ngStyle]="{'color' : 'yellow'}">wb_sunny</span>
+    <span class="chart-title">Number of cars in the morning
     </span>
+    <span class="material-icons"  [ngStyle]="{'color' : 'yellow', 'margin-left': '30px'}">wb_sunny</span>
     <div id="donut-chart-morning">
       <apx-chart
         [series]="MorningDonutChartOptions.series"
@@ -188,8 +189,8 @@
 
 <div class="col">
   <mat-card class="chart-donut" style="text-align: center">
-    <span class="chart-title">Number of cars in the evening <span class="material-icons">nights_stay</span>
-    </span>
+    <span class="chart-title">Number of cars in the evening</span>
+    <span class="material-icons"  [ngStyle]="{'margin-left': '30px'}">nights_stay</span>
     <div id="donut-chart-evening">
       <apx-chart
         [series]="EveningDonutChartOptions.series"

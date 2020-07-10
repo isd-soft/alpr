@@ -330,7 +330,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         type: 'donut'
       },
-      labels: data.map(entry => 'Hour ' + entry.hour),
+      labels: data.map(entry => 'Hour : ' + entry.hour + ':00'),
       responsive: [
         {
           breakpoint: 480,
@@ -354,7 +354,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         type: 'donut'
       },
-      labels: data.map(entry => 'Hour : ' + entry.hour),
+      labels: data.map(entry => 'Hour : ' + entry.hour + ':00'),
       responsive: [
         {
           breakpoint: 480,

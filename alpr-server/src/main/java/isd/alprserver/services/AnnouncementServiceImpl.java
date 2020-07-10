@@ -38,7 +38,6 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
 
     }
-
     @Override
     public List<Announcement> getAll() {
         return announcementRepository.findAll();

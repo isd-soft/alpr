@@ -57,4 +57,10 @@ public class AnnouncementController {
                 .collect(Collectors.toList())
         );
     }
+
+    private void sendAnnouncements(@RequestBody AnnouncementDTO dto){
+
+
+
+    }
 }
