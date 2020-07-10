@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/statistics")
@@ -53,6 +54,11 @@ public class StatisticsController {
     @GetMapping("/all-last-week")
     public ResponseEntity<List<ScanAudit>> getLastWeek() {
         return ResponseEntity.ok(statisticsService.getAllInLastWeek());
+    }
+
+    @GetMapping("/all-allowed-last-week")
+    public ResponseEntity<List<ScanAudit>> getAllowedLastWeek() {
+        return ResponseEntity.ok(statisticsService.getAllAllowedLastWeek());
     }
 
     @GetMapping("/cars-per-company")

@@ -38,20 +38,10 @@ public class CarController {
 
     @GetMapping("/company/{companyName}")
     public ResponseEntity<List<CarDTO>> getCarsByCompanyName(@PathVariable String companyName) {
-        return ResponseEntity.ok(carService.getByCompanyName(companyName).stream().map(
-                car -> CarDTO.builder()
-                        .id(car.getId())
-                        .licensePlate(car.getLicensePlate())
-                        .brand(car.getBrand())
-                        .model(car.getModel())
-                        .color(car.getColor())
-                        .ownerEmail(car.getUser().getEmail())
-                        .ownerTelephone(car.getUser().getTelephoneNumber())
-                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
-                        .ownerCompany(car.getUser().getCompany().getName())
-                        .status(car.getStatus().getName())
-                        .build()
-        ).collect(Collectors.toList()));
+        return ResponseEntity.ok(carService.getByCompanyName(companyName)
+                .stream()
+                .map(this::CarToCarDTO)
+                .collect(Collectors.toList()));
     }
 
     @DeleteMapping("/{id}")

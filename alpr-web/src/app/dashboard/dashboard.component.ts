@@ -90,6 +90,20 @@ export class DashboardComponent implements OnInit {
     tooltip: null
   };
 
+  @ViewChild('chart-column-cars-entered') carsEnteredExitedChart: ChartComponent;
+    public carsEnterExitedChartOptions: Partial<ColumnChartOptions> = {
+     series: null,
+     chart: null,
+     dataLabels: null,
+     plotOptions: null,
+     yaxis: null,
+     xaxis: null,
+     legend: null,
+     fill: null,
+     stroke: null,
+     tooltip: null
+     };
+
 
   public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
     series: null,
@@ -123,6 +137,12 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.initColumnChart(result);
+      });
+
+    this.statisticsService.getEnteredExitedCarsLastWeek()
+      .toPromise()
+      .then(result => {
+        this.initCarsEnteredExited(result);
       });
 
     this.statisticsService.getTotalAllowedRejectedCars()
@@ -217,25 +237,26 @@ export class DashboardComponent implements OnInit {
       .then(response => this.initCarsInTheEveningDonutChart(response));
   }
 
-  private initColumnChart(data: any[]): void {
+  private initCarsEnteredExited(data: any[]): void {
     const keys: string[] = [];
     data.forEach(scanning => {
       if (keys.indexOf(scanning.scanDate) < 0) {
         keys.push(scanning.scanDate);
       }
     });
-    const allowedValues: number[] = [];
-    const rejectedValues: number[] = [];
+    const enteredValues: number[] = [];
+    const exitedValues: number[] = [];
     keys.forEach(key => {
       const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-      const allowed: number  = temp.filter(s => s.allowed).length;
-      const rejected: number  = temp.length - allowed;
-      allowedValues.push(allowed);
-      rejectedValues.push(rejected);
+      const entered: number  = temp.filter(s => s.status === 'IN').length;
+      const exited: number  = temp.length - entered;
+      enteredValues.push(entered);
+      exitedValues.push(exited);
     });
-    this.columnChartOptions = {
+
+    this.carsEnterExitedChartOptions = {
       series: [
-        {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
+        {name: 'Entered', data: enteredValues}, {name: 'Exited', data: exitedValues}
       ],
       chart: {
         type: 'bar',
@@ -275,6 +296,67 @@ export class DashboardComponent implements OnInit {
       }
     };
   }
+
+  private initColumnChart(data: any[]): void {
+      const keys: string[] = [];
+      data.forEach(scanning => {
+        if (keys.indexOf(scanning.scanDate) < 0) {
+          keys.push(scanning.scanDate);
+        }
+      });
+      const allowedValues: number[] = [];
+      const rejectedValues: number[] = [];
+      keys.forEach(key => {
+        const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
+        const allowed: number  = temp.filter(s => s.allowed).length;
+        const rejected: number  = temp.length - allowed;
+        allowedValues.push(allowed);
+        rejectedValues.push(rejected);
+      });
+      this.columnChartOptions = {
+        series: [
+          {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
+        ],
+        chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            endingShape: 'rounded'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          show: true,
+          width: 2,
+          colors: ['transparent']
+        },
+        xaxis: {
+          categories: keys
+        },
+        yaxis: {
+          title: {
+            text: 'Nr. of cars',
+          }
+        },
+        fill: {
+          opacity: 1
+        },
+        tooltip: {
+          y: {
+            formatter(val) {
+              return val + ' cars';
+            }
+          }
+        }
+      };
+    }
+
 
   private initPieChart(data): void {
     this.pieChartOptions = {
