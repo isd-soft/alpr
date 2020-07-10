@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import isd.alprserver.model.Company;
 import isd.alprserver.services.interfaces.CompanyService;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 
@@ -23,9 +25,8 @@ public class CompanyController {
     private final CompanyService companyService;
 
     //getting all the companies
-    @GetMapping
+    @GetMapping()
     public  ResponseEntity<List<CompanyDTO>> getAll(){
-        System.out.println("Inside Home Controller");
         return ResponseEntity.ok(companyService.getAllCompanies().stream().map(
                 company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
         ).collect(Collectors.toList()));
