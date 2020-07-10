@@ -56,10 +56,6 @@ export type EveningChartOptions = {
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
-  public MorningDonutChartOptions: Partial<MorningChartOptions>;
-
-  @ViewChild('donut-chart-evening') donutChartEvening: ChartComponent;
-  public EveningDonutChartOptions: Partial<EveningChartOptions>;
   public MorningDonutChartOptions: Partial<MorningChartOptions> = {
     series: null,
     chart: null,
@@ -146,10 +142,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
               private snackBar: MatSnackBar) {
   }
 
-  ngOnInit(): void {
-    this.initCharts();
-  }
-
   initCharts(): void {
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
@@ -185,6 +177,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.initCharts();
     this.statisticsService.getCarsStatistics()
       .toPromise()
       .then(response => {
