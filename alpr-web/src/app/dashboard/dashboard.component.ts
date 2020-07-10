@@ -54,7 +54,7 @@ export type EveningChartOptions = {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit {
   @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
   public MorningDonutChartOptions: Partial<MorningChartOptions> = {
     series: null,
@@ -143,6 +143,18 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   initCharts(): void {
+    this.statisticsService.getParkingHistoryForToday()
+      .toPromise()
+      .then(histories => {
+        this.histories = histories;
+        this.historiesDataSource = new MatTableDataSource<ParkingHistory>(histories);
+        this.historiesDataSource.paginator = this.paginator;
+        this.historiesDataSource.sort = this.sort;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
       .then(result => {
@@ -470,19 +482,5 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   clearInput() {
     this.historiesDataSource.filter = '';
-  }
-
-  ngAfterViewInit(): void {
-    this.statisticsService.getParkingHistoryForToday()
-      .toPromise()
-      .then(histories => {
-        this.histories = histories;
-        this.historiesDataSource = new MatTableDataSource<ParkingHistory>(histories);
-        this.historiesDataSource.paginator = this.paginator;
-        this.historiesDataSource.sort = this.sort;
-      })
-      .catch(_ => {
-        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
-      });
   }
 }

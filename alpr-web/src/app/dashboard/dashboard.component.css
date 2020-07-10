@@ -13,6 +13,7 @@ mat-card {
   text-decoration: underline;
   font-weight: bold;
   font-family: sans-serif;
+  margin-top: 0;
 }
 
 .rounded-circle {
@@ -66,4 +67,8 @@ mat-card {
   display: flex;
   justify-content: center;
   width: 120px;
+}
+
+button:focus {
+  outline: none;
 }
