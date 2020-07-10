@@ -1,14 +1,35 @@
 <div class="div-center">
   <cdk-virtual-scroll-viewport itemSize="50" class="scrollable">
+    <div class="message" *ngIf="announcements.length === 0">
+      <span>No Announcements</span>
+    </div>
     <mat-card *ngFor="let announcement of announcements" class="item" [ngStyle]="{'background-color': announcement.priority.toLowerCase()}">
       <div class="announcement">
         <span class="title">{{announcement.title}}</span>
-        {{announcement.description}}
-        {{announcement.date}}
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('YELLOW') === 0">notification_important</mat-icon>
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('ORANGE') === 0">warning</mat-icon>
-        <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('RED') === 0">error</mat-icon>
+        <div class="row-box">
+          <div class="icon-box">
+            <div class="icon-container">
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('YELLOW') === 0">notification_important</mat-icon>
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('ORANGE') === 0">warning</mat-icon>
+              <mat-icon class="icon" *ngIf="announcement.priority.localeCompare('RED') === 0">error</mat-icon>
+            </div>
+            <span class="date-box">{{announcement.date}}</span>
+          </div>
+          <div class="description-box">
+            {{announcement.description}}
+          </div>
+        </div>
       </div>
+      <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)" *ngIf="isAdmin">
+        <mat-icon style="margin: auto">close</mat-icon>
+      </button>
+      <button mat-raised-button class="view-button" (click)="showComments(announcement.id)">
+        <mat-icon> comment</mat-icon>
+      </button>
+      <button mat-raised-button class="add-comment-button" (click)="addComment(announcement.id)">
+        <mat-icon> add_comment</mat-icon>
+      </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
+  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin && !showForm">Add Announcement</button>
 </div>

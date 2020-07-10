@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Table(name = "comments")
 @Entity
@@ -24,4 +25,6 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Announcement announcement;
+
+    private LocalDate date;
 }

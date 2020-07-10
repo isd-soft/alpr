@@ -7,14 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AnnouncementDTO {
-    private long id;
-    private String title;
+public class CommentDTO {
+    private String userEmail;
     private String description;
-    private String priority;
-    private LocalDate date = null;
+    private LocalDate date;
 }

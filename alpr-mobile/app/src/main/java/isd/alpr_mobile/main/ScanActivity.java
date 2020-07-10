@@ -98,6 +98,7 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     private void showSnackBack(String message) {
+
         Snackbar.make(findViewById(R.id.surface), message, Snackbar.LENGTH_LONG)
                 .setAction("OK", v -> { })
                 .show();
