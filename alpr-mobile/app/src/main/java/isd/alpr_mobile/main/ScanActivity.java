@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -21,8 +20,6 @@ import java.util.Objects;
 
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.model.LicensePlate;
-import isd.alpr_mobile.main.model.LicenseValidationResponse;
-import isd.alpr_mobile.main.model.Mail;
 import isd.alpr_mobile.main.model.MailResponse;
 import isd.alpr_mobile.main.retrofit.APIClient;
 import isd.alpr_mobile.main.retrofit.APIInterface;
@@ -97,18 +94,6 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
         cameraSource.stop();
     }
 
-    private void showSnackBack(String message) {
-
-        Snackbar.make(findViewById(R.id.surface), message, Snackbar.LENGTH_LONG)
-                .setAction("OK", v -> { })
-                .show();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void onPlateFound(List<LicensePlate> plates) {
         Call<MailResponse> call = APIClient.getClient().create(APIInterface.class).sendEmailNotificationByLicensePlate(plates.get(4));
@@ -116,16 +101,22 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
                 if(response.body() != null)
-                    showSnackBack(response.body().response);
+                    Snackbar.make(findViewById(R.id.surface), response.body().response, Snackbar.LENGTH_LONG)
+                            .setAction("OK", v -> finish())
+                            .show();
                 else
-                    showSnackBack("Email was not sent! Try again");
-                finish();
+                    Snackbar.make(findViewById(R.id.surface), "Email was not sent! Try again", Snackbar.LENGTH_LONG)
+                            .setAction("OK", v -> finish())
+                            .show();
+
             }
 
             @Override
             public void onFailure(Call<MailResponse> call, Throwable t) {
-                showSnackBack("Error sending message!");
-                finish();
+
+                Snackbar.make(findViewById(R.id.surface), "Error sending message!", Snackbar.LENGTH_LONG)
+                        .setAction("OK", v -> finish())
+                        .show();
             }
         });
     }

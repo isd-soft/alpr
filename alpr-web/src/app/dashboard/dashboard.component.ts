@@ -2,13 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AppModel} from "../shared/app.model";
-import {HealthModel} from "../shared/health.model";
-import {CpuModel} from "../shared/cpu.model";
-import {UptimeModel} from "../shared/uptime.model";
-import {HttpRequestModel} from "../shared/httpRequest.model";
-import {totalMemoryModel} from "../shared/totalMemory.model";
-import {usedMemoryModel} from "../shared/usedMemory.model";
+import {AppModel} from '../shared/app.model';
+import {HealthModel} from '../shared/health.model';
+import {CpuModel} from '../shared/cpu.model';
+import {UptimeModel} from '../shared/uptime.model';
+import {HttpRequestModel} from '../shared/httpRequest.model';
+import {totalMemoryModel} from '../shared/totalMemory.model';
+import {usedMemoryModel} from '../shared/usedMemory.model';
 
 
 import {scan} from 'rxjs/operators';
@@ -53,11 +53,22 @@ export type EveningChartOptions = {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild("donut-chart-morning") donutChartMorning: ChartComponent;
-  public MorningDonutChartOptions: Partial<MorningChartOptions>;
+  @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
 
-  @ViewChild("donut-chart-evening") donutChartEvening: ChartComponent;
-  public EveningDonutChartOptions: Partial<EveningChartOptions>;
+  public MorningDonutChartOptions: Partial<MorningChartOptions> = {
+    series: null,
+    chart: null,
+    responsive: null,
+    labels: null,
+  };
+
+  @ViewChild('donut-chart-evening') donutChartEvening: ChartComponent;
+  public EveningDonutChartOptions: Partial<EveningChartOptions> = {
+    series: null,
+    chart: null,
+    responsive: null,
+    labels: null,
+  };
 
 
   @ViewChild('chart-pie') pieChart: ChartComponent;
@@ -155,66 +166,56 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getInfo()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.appInfo = response.app;
-        console.log(this.appInfo);
       });
 
 
     this.statisticsService.getHealth()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.healthInfo = response;
-        console.log(this.healthInfo);
       });
 
 
     this.statisticsService.getCpuCount()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.cpuInfo = response;
-        console.log(this.cpuInfo);
       });
 
     this.statisticsService.getUptime()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.uptimeInfo = response;
-        console.log(this.uptimeInfo);
       });
 
     this.statisticsService.getHttpRequest()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.httpInfo = response;
-        console.log(this.httpInfo);
       });
 
     this.statisticsService.getTotalMemory()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.totalMemoryInfo = response;
-        console.log(this.totalMemoryInfo);
       });
 
     this.statisticsService.getUsedMemory()
       .toPromise()
       .then(response => {
-        console.log(response);
         this.usedMemoryInfo = response;
-        console.log(this.usedMemoryInfo);
       });
 
     this.statisticsService.getNumberScansMorning()
       .toPromise()
       .then(response => {
-        console.log(response);
-      })
+        this.initCarsInTheMorningDonutChart(response);
+      });
+
+    this.statisticsService.getNumberScansEvening()
+      .toPromise()
+      .then(response => this.initCarsInTheEveningDonutChart(response));
   }
 
   private initColumnChart(data: any[]): void {
@@ -323,7 +324,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private initCarsInTheMorningDonutChart(data): void {
-    console.log(data)
     this.MorningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
@@ -347,7 +347,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private initCarsInTheEveningDonutChart(data): void {
-    console.log(data)
     this.EveningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
