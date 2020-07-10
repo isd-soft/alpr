@@ -1,4 +1,7 @@
 <mat-card class="all-margins">
+
+  <mat-card-title>{{user.company}}</mat-card-title>
+
   <mat-form-field id="example-form-field">
 
     <mat-label class="material-icons">search</mat-label>
@@ -41,7 +44,11 @@
         <span class="color-title">
           {{car.color}}
         </span>
-        <span class="material-icons span-icon" [ngStyle]="{'color': car.color}">directions_car</span>
+        <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
+        <span class="material-icons span-icon" [ngStyle]="{'color': car.color}">
+          directions_car
+        </span>
+        </button>
       </mat-cell>
     </ng-container>
 
@@ -73,7 +80,32 @@
 
   </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
 
-  </mat-paginator>
 </mat-card>
+
+<ng-template #carPhotoTemplate>
+  <div>
+    <h2 mat-dialog-title>Car Photo</h2>
+
+    <mat-dialog-content>
+
+      <div *ngIf="carPhotoToView; else defaultPhoto">
+        <img [src]="carPhotoToView" alt="Car Photo Preview"
+             class="car-photo-preview">
+      </div>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
+        </button>
+      </mat-dialog-actions>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+<ng-template #defaultPhoto>
+  <img src="../../assets/img/default_car.jpg" alt="Car Photo Preview"
+       class="default-car-photo-preview">
+</ng-template>

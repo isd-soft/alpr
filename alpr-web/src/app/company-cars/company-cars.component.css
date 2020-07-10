@@ -33,3 +33,15 @@ table {
 .no-bottom-margin {
   margin-bottom: 0;
 }
+
+.car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+.default-car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
