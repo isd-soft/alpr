@@ -1,4 +1,7 @@
 <mat-card class="all-margins">
+
+  <mat-card-title>{{user.company}}</mat-card-title>
+
   <mat-form-field id="example-form-field">
 
     <mat-label class="material-icons">search</mat-label>
@@ -77,9 +80,8 @@
 
   </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons></mat-paginator>
 
-  </mat-paginator>
 </mat-card>
 
 <ng-template #carPhotoTemplate>

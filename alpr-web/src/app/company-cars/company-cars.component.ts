@@ -10,6 +10,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthenticationService} from '../auth/authentication.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {User} from '../shared/user.model';
 
 @Component({
   selector: 'app-company-cars',
@@ -22,6 +23,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(this.cars);
   value = '';
   carPhotoToView: any;
+  user: User;
 
   constructor(private carService: CarService,
               private formGenerator: FormGenerator,
@@ -58,6 +60,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user=this.authenticationService.currentUserValue;
   }
 
   loadCars() {
