@@ -10,9 +10,6 @@ import {HttpRequestModel} from '../shared/httpRequest.model';
 import {totalMemoryModel} from '../shared/totalMemory.model';
 import {usedMemoryModel} from '../shared/usedMemory.model';
 
-
-import {scan} from 'rxjs/operators';
-
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -115,7 +112,13 @@ export class DashboardComponent implements OnInit {
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
+  }
 
+  ngOnInit(): void {
+    this.initCharts();
+  }
+
+  initCharts(): void {
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
       .then(result => {
@@ -140,10 +143,6 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getNumberScansEvening()
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
-
-  }
-
-  ngOnInit(): void {
     this.statisticsService.getCarsStatistics()
       .toPromise()
       .then(response => {

@@ -60,23 +60,10 @@ public class CarController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Car> updateCar(@RequestBody Car car, @PathVariable long id)
-//            throws CarAlreadyExistsException {
-//        Car carById = carService.getCarById(id);
-//        carById.setBrand(car.getBrand());
-//        carById.setModel(car.getModel());
-//        carById.setColor(car.getColor());
-//        carById.setLicensePlate(car.getLicensePlate());
-//        carService.update(carById);
-//        return ResponseEntity.ok(carById);
-//    }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Car> updateCar(@RequestBody CarDTO carDTO,
-                                         @PathVariable(name = "id") Long id)
-            throws CarAlreadyExistsException {
+                                         @PathVariable(name = "id") Long id) {
         carService.update(id, carDTO);
         return ResponseEntity.noContent().build();
     }
@@ -103,7 +90,7 @@ public class CarController {
     }
 
     @GetMapping("/in")
-    public ResponseEntity<List<CarDTO>> getAllOutCars() {
+    public ResponseEntity<List<CarDTO>> getAllInCars() {
         return ResponseEntity.ok(
                 carService.getAllIn().stream()
                         .map(this::CarToCarDTO)

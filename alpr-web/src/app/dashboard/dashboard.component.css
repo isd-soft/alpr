@@ -1,6 +1,8 @@
 .container-fluid {
   height: 100%;
   width: 100%;
+  position: relative;
+  top: -79px;
 }
 
 mat-card {
@@ -58,5 +60,14 @@ mat-card {
   max-width: 380px;
   margin: 35px auto;
   padding: 0;
+}
+
+.refresh-button {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  left: 94vw;
+  z-index: 100;
+  margin-top: 10px;
 }
 

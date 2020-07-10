@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -54,11 +55,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers("/companies/**").permitAll()
-                .antMatchers("/cars/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/companies").permitAll()
+                .antMatchers(HttpMethod.GET, "/cars/in").permitAll()
+                .antMatchers(HttpMethod.POST, "/cars").permitAll()
                 .antMatchers("/email/**").permitAll()
+                .antMatchers("/actuator/**").hasRole("SYSTEM_ADMINISTRATOR")
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

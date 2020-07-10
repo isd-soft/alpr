@@ -32,15 +32,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try{
-                System.out.println(jwtToken);
                 email = jwtTokenUtil.getEmailFromToken(jwtToken);
-                System.out.println(email);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else {
-            logger.warn("JWT does not begin with Bearer String");
         }
 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
