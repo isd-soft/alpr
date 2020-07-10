@@ -29,6 +29,8 @@ public interface StatisticsService {
 
     List<ScanAudit> getAllInLastWeek();
 
+    List<ScanAudit> getAllAllowedLastWeek();
+
     List<Company> getAllCompanies();
 
     List<ScanAudit> getAllScansForToday();
