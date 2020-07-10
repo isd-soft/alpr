@@ -42,7 +42,6 @@ import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {ChartsModule} from "ng2-charts";
 
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -51,10 +50,10 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {StatisticsService} from './shared/statistics.service';
 import {MatListModule} from '@angular/material/list';
 import { AnnouncementComponent } from './announcement/announcement.component';
-import {AnnouncementService} from "./shared/announcement.service";
-import {ScrollingModule} from "@angular/cdk/scrolling";
+import {AnnouncementService} from './shared/announcement.service';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import {ConfirmationDialogService} from "./shared/confirmation-dialog.service";
+import {ConfirmationDialogService} from './shared/confirmation-dialog.service';
 import { AddCommentDialogComponent } from './add-comment-dialog/add-comment-dialog.component';
 import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-dialog.component';
 import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
@@ -113,8 +112,6 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     NgApexchartsModule,
     MatListModule,
     ScrollingModule,
-    ChartsModule
-
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,

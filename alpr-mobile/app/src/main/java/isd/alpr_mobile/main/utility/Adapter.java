@@ -112,20 +112,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         });
 
-        holder.callBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                makePhoneCall(v, cars.get(position).ownerTelephone);
-            }
-        });
+        holder.callBtn.setOnClickListener(v -> makePhoneCall(v, cars.get(position).ownerTelephone));
     }
 
     private void showSnackbar(View v) {
         Snackbar.make(v, "The email was sent!", Snackbar.LENGTH_LONG)
-                .setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) { }
-                })
+                .setAction("OK", v1 -> { })
                 .show();
     }
 
