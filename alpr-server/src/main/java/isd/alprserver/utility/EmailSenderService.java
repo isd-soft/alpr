@@ -23,31 +23,31 @@ public class EmailSenderService {
     private final CarService carService;
 
     //"0 0 0 * * *"
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/10 * * * * *")
     @Transactional
     public void updateParkingHistory() {
-//        System.out.println("here");
-//        companyService.getCompanies()
-//                .forEach(company -> {
-//                    ParkingHistory history = ParkingHistory.builder().
-//                            date(LocalDate.now())
-//                            .companyId(company.getId())
-//                            .nrParkingSpots(
-//                                    company.getNrParkingSpots() -
-//                                            (int) carService.getAllCars()
-//                                    .stream()
-//                                    .filter(car -> car.getStatus().getName().equals("IN"))
-//                                    .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-//                                    .count()
-//                            )
-//                            .lastSentNotification(-1)
-//                            .build();
-//                    parkingHistoryService.save(history);
-//                });
-//        System.out.println("done");
+        System.out.println("here");
+        companyService.getCompanies()
+                .forEach(company -> {
+                    ParkingHistory history = ParkingHistory.builder().
+                            date(LocalDate.now())
+                            .companyId(company.getId())
+                            .nrParkingSpots(
+                                    company.getNrParkingSpots() -
+                                            (int) carService.getAllCars()
+                                    .stream()
+                                    .filter(car -> car.getStatus().getName().equals("IN"))
+                                    .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+                                    .count()
+                            )
+                            .lastSentNotification(-1)
+                            .build();
+                    parkingHistoryService.save(history);
+                });
+        System.out.println("done");
     }
 
-    @Scheduled(cron = "*/10 * 9-18 * * ?")
+//    @Scheduled(cron = "*/10 * 9-18 * * ?")
     @Transactional
     public void check() {
         LocalDate date = LocalDate.now();

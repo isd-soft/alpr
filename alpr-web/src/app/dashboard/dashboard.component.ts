@@ -1,17 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {AppModel} from "../shared/app.model";
-import {HealthModel} from "../shared/health.model";
-import {CpuModel} from "../shared/cpu.model";
-import {UptimeModel} from "../shared/uptime.model";
-import {HttpRequestModel} from "../shared/httpRequest.model";
-import {totalMemoryModel} from "../shared/totalMemory.model";
-import {usedMemoryModel} from "../shared/usedMemory.model";
+import {AppModel} from '../shared/app.model';
+import {HealthModel} from '../shared/health.model';
+import {CpuModel} from '../shared/cpu.model';
+import {UptimeModel} from '../shared/uptime.model';
+import {HttpRequestModel} from '../shared/httpRequest.model';
+import {totalMemoryModel} from '../shared/totalMemory.model';
+import {usedMemoryModel} from '../shared/usedMemory.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {ParkingHistory} from '../shared/parking.history.model';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
 
-
-import {scan} from 'rxjs/operators';
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -52,11 +54,11 @@ export type EveningChartOptions = {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
-  @ViewChild("donut-chart-morning") donutChartMorning: ChartComponent;
+export class DashboardComponent implements OnInit, AfterViewInit {
+  @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
   public MorningDonutChartOptions: Partial<MorningChartOptions>;
 
-  @ViewChild("donut-chart-evening") donutChartEvening: ChartComponent;
+  @ViewChild('donut-chart-evening') donutChartEvening: ChartComponent;
   public EveningDonutChartOptions: Partial<EveningChartOptions>;
 
 
@@ -83,18 +85,18 @@ export class DashboardComponent implements OnInit {
   };
 
   @ViewChild('chart-column-cars-entered') carsEnteredExitedChart: ChartComponent;
-    public carsEnterExitedChartOptions: Partial<ColumnChartOptions> = {
-     series: null,
-     chart: null,
-     dataLabels: null,
-     plotOptions: null,
-     yaxis: null,
-     xaxis: null,
-     legend: null,
-     fill: null,
-     stroke: null,
-     tooltip: null
-     };
+  public carsEnterExitedChartOptions: Partial<ColumnChartOptions> = {
+    series: null,
+    chart: null,
+    dataLabels: null,
+    plotOptions: null,
+    yaxis: null,
+    xaxis: null,
+    legend: null,
+    fill: null,
+    stroke: null,
+    tooltip: null
+  };
 
 
   public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
@@ -104,6 +106,8 @@ export class DashboardComponent implements OnInit {
     responsive: null
   };
 
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   registeredUsersNumber: number;
   registeredCarsNumber: number;
@@ -115,6 +119,14 @@ export class DashboardComponent implements OnInit {
   httpInfo: HttpRequestModel = new HttpRequestModel();
   totalMemoryInfo: totalMemoryModel = new totalMemoryModel();
   usedMemoryInfo: usedMemoryModel = new usedMemoryModel();
+  value = '';
+
+
+  companiesColumnsToDisplay: string[] = ['companyName', 'totalParkingSpots',
+    'leftParkingSpots', 'OccupiedNrParkingSpots', 'SpotsAmountIndicator'];
+  histories: ParkingHistory[];
+  historiesDataSource: MatTableDataSource<ParkingHistory> =
+    new MatTableDataSource<ParkingHistory>(this.histories);
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
@@ -234,7 +246,7 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => {
         console.log(response);
-      })
+      });
   }
 
   private initCarsEnteredExited(data: any[]): void {
@@ -248,8 +260,8 @@ export class DashboardComponent implements OnInit {
     const exitedValues: number[] = [];
     keys.forEach(key => {
       const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-      const entered: number  = temp.filter(s => s.status === 'IN').length;
-      const exited: number  = temp.length - entered;
+      const entered: number = temp.filter(s => s.status === 'IN').length;
+      const exited: number = temp.length - entered;
       enteredValues.push(entered);
       exitedValues.push(exited);
     });
@@ -298,64 +310,64 @@ export class DashboardComponent implements OnInit {
   }
 
   private initColumnChart(data: any[]): void {
-      const keys: string[] = [];
-      data.forEach(scanning => {
-        if (keys.indexOf(scanning.scanDate) < 0) {
-          keys.push(scanning.scanDate);
+    const keys: string[] = [];
+    data.forEach(scanning => {
+      if (keys.indexOf(scanning.scanDate) < 0) {
+        keys.push(scanning.scanDate);
+      }
+    });
+    const allowedValues: number[] = [];
+    const rejectedValues: number[] = [];
+    keys.forEach(key => {
+      const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
+      const allowed: number = temp.filter(s => s.allowed).length;
+      const rejected: number = temp.length - allowed;
+      allowedValues.push(allowed);
+      rejectedValues.push(rejected);
+    });
+    this.columnChartOptions = {
+      series: [
+        {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
+      ],
+      chart: {
+        type: 'bar',
+        height: 350
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
         }
-      });
-      const allowedValues: number[] = [];
-      const rejectedValues: number[] = [];
-      keys.forEach(key => {
-        const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-        const allowed: number  = temp.filter(s => s.allowed).length;
-        const rejected: number  = temp.length - allowed;
-        allowedValues.push(allowed);
-        rejectedValues.push(rejected);
-      });
-      this.columnChartOptions = {
-        series: [
-          {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
-        ],
-        chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: keys
-        },
-        yaxis: {
-          title: {
-            text: 'Nr. of cars',
-          }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter(val) {
-              return val + ' cars';
-            }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: keys
+      },
+      yaxis: {
+        title: {
+          text: 'Nr. of cars',
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter(val) {
+            return val + ' cars';
           }
         }
-      };
-    }
+      }
+    };
+  }
 
 
   private initPieChart(data): void {
@@ -405,7 +417,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private initCarsInTheMorningDonutChart(data): void {
-    console.log(data)
+    console.log(data);
     this.MorningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
@@ -429,7 +441,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private initCarsInTheEveningDonutChart(data): void {
-    console.log(data)
+    console.log(data);
     this.EveningDonutChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
@@ -450,5 +462,27 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+  }
+
+  applyFilter(filterValue: string) {
+    this.historiesDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  clearInput() {
+    this.historiesDataSource.filter = '';
+  }
+
+  ngAfterViewInit(): void {
+    this.statisticsService.getParkingHistoryForToday()
+      .toPromise()
+      .then(histories => {
+        this.histories = histories;
+        this.historiesDataSource = new MatTableDataSource<ParkingHistory>(histories);
+        this.historiesDataSource.paginator = this.paginator;
+        this.historiesDataSource.sort = this.sort;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
   }
 }

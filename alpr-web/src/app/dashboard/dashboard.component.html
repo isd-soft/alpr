@@ -226,6 +226,75 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col" id="all-companies-parking-spots">
+    <mat-card>
+      <mat-card-title>
+        Parking Spots
+      </mat-card-title>
+
+      <mat-card-content>
+        <mat-form-field id="example-form-field">
+
+          <mat-label class="material-icons">search</mat-label>
+          <label>
+            <!--suppress TypeScriptUnresolvedVariable -->
+            <input (keyup)="applyFilter($event.target.value)" matInput
+                   placeholder="Search for company" type="text" [(ngModel)]="value">
+          </label>
+          <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
+            <mat-icon (click)="clearInput()">close</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-table matSort [dataSource]="historiesDataSource">
+          <ng-container matColumnDef="companyName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let history">{{history.companyName}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="totalParkingSpots">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+            <mat-cell *matCellDef="let history">{{history.totalParkingSpots}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="leftParkingSpots">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Left</mat-header-cell>
+            <mat-cell *matCellDef="let history">
+              {{history.leftParkingSpots}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="OccupiedNrParkingSpots">
+            <mat-header-cell *matHeaderCellDef>Occupied</mat-header-cell>
+            <mat-cell *matCellDef="let history">
+              {{history.totalParkingSpots - history.leftParkingSpots}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="SpotsAmountIndicator">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let history">
+              <div *ngIf="history.leftParkingSpots > 0; else occupied">
+                <mat-icon [ngStyle]="{'color': 'green'}">assignment_turned_in</mat-icon>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="companiesColumnsToDisplay"></mat-header-row>
+          <mat-row *matRowDef="let history; columns: companiesColumnsToDisplay"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<ng-template #occupied>
+  <mat-icon [ngStyle]="{'color': 'red'}">block</mat-icon>
+</ng-template>
 
 
 

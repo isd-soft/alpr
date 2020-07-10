@@ -1,6 +1,9 @@
 package isd.alprserver.services;
 
+import isd.alprserver.dtos.CompanyDTO;
+import isd.alprserver.dtos.ParkingHistoryDTO;
 import isd.alprserver.model.Company;
+import isd.alprserver.model.ParkingHistory;
 import isd.alprserver.model.shared.CarStatisticsResponse;
 import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.CarAudit;
@@ -10,12 +13,12 @@ import isd.alprserver.repositories.CarAuditRepository;
 import isd.alprserver.repositories.ScanAuditRepository;
 import isd.alprserver.repositories.UserAuditRepository;
 import isd.alprserver.services.interfaces.CompanyService;
+import isd.alprserver.services.interfaces.ParkingHistoryService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +30,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final CarAuditRepository carAuditRepository;
     private final ScanAuditRepository scanAuditRepository;
     private final CompanyService companyService;
+    private final ParkingHistoryService parkingHistoryService;
 
     @Override
     public UserAudit auditUserRegistration(UserAudit userAudit) {
@@ -107,5 +111,20 @@ public class StatisticsServiceImpl implements StatisticsService {
                 .stream()
                 .filter(audit -> audit.getScanDate().getDay() == today.getDay() && audit.getScanDate().getMonth() == today.getMonth() && audit.getScanDate().getYear() == today.getYear())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParkingHistoryDTO> getAllParkingHistoriesForToday() {
+        List<ParkingHistory> parkingHistories = parkingHistoryService.getAllForToday();
+        ArrayList<ParkingHistoryDTO> parkingHistoryDTOS = new ArrayList<>();
+        for (ParkingHistory parkingHistory : parkingHistories) {
+            Company company = companyService.getCompanyById(parkingHistory.getCompanyId());
+            parkingHistoryDTOS.add(ParkingHistoryDTO.builder()
+                    .leftParkingSpots(parkingHistory.getNrParkingSpots())
+                    .totalParkingSpots(company.getNrParkingSpots())
+                    .companyName(company.getName())
+                    .build());
+        }
+        return parkingHistoryDTOS;
     }
 }
