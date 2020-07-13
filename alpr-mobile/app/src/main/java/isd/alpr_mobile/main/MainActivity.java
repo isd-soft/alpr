@@ -3,17 +3,23 @@ package isd.alpr_mobile.main;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.lifecycle.Observer;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.notify.NotifyFragment;
 import isd.alpr_mobile.main.scan.OnScanFragmentInteractionListener;
 import isd.alpr_mobile.main.scan.ScanFragment;
+import isd.alpr_mobile.main.utility.ConnectionLiveData;
+import isd.alpr_mobile.main.utility.ConnectionModel;
+import isd.alpr_mobile.main.utility.InternetProblemsDialogFragment;
 import isd.alpr_mobile.main.write.OnWriteFragmentInteractionListener;
 import isd.alpr_mobile.main.write.WriteFragment;
 
@@ -31,6 +37,33 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        DialogFragment noInternetDialogFragment = new InternetProblemsDialogFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(noInternetDialogFragment, "INTERNET_CONNECTION");
+        noInternetDialogFragment.setCancelable(false);
+
+        ConnectionLiveData connectionLiveData = new ConnectionLiveData(getApplicationContext());
+        connectionLiveData.observe(this, connection -> {
+
+            if (connection.getIsConnected()) {
+                switch (connection.getType()) {
+                    case 1:
+                        noInternetDialogFragment.dismiss();
+                        Toast.makeText(MainActivity.this, "Wifi turned ON", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        noInternetDialogFragment.dismiss();
+                        Toast.makeText(MainActivity.this, "Mobile data turned ON", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } else {
+
+                noInternetDialogFragment.show(getSupportFragmentManager(),"INTERNET_CONNECTION");
+                Toast.makeText(MainActivity.this, "Connections turned OFF", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         frameLayout = findViewById(R.id.frames);
         nav = findViewById(R.id.nav);
@@ -87,4 +120,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onValidPlate(String licensePlate) { }
+
+
+
 }
