@@ -34,6 +34,7 @@
   </section>
 
   <mat-card class="all-margins">
+    <mat-card-title >My Cars</mat-card-title>
     <mat-table class="table" matSort [dataSource]="dataSource">
       <ng-container matColumnDef="licensePlate">
         <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
@@ -107,7 +108,7 @@
         <div class="col-6">
           <mat-form-field>
             <mat-label>Brand</mat-label>
-            <input matInput placeholder="brand"
+            <input matInput placeholder="Brand"
                    name="brand" type="text" required
                    formControlName="brand">
           </mat-form-field>
@@ -116,7 +117,7 @@
 
           <mat-form-field>
             <mat-label>Model</mat-label>
-            <input matInput placeholder="model"
+            <input matInput placeholder="Model"
                    name="model" type="text"
                    required formControlName="model">
           </mat-form-field>
@@ -125,7 +126,7 @@
 
           <mat-form-field>
             <mat-label>Color</mat-label>
-            <input matInput placeholder="color" name="color"
+            <input matInput placeholder="Color" name="color"
                    type="text" required formControlName="color">
           </mat-form-field>
 
@@ -133,7 +134,7 @@
 
           <mat-form-field>
             <mat-label>Owner</mat-label>
-            <input matInput placeholder="owner"
+            <input matInput placeholder="Owner"
                    name="owner" type="text" required
                    formControlName="ownerName">
           </mat-form-field>
@@ -142,7 +143,7 @@
 
           <mat-form-field>
             <mat-label>TelephoneNumber</mat-label>
-            <input matInput placeholder="ownerTelephone" name="ownerTelephone"
+            <input matInput placeholder="+373XXXXXXXX" name="ownerTelephone"
                    class="no-left-margin" type="text"
                    required formControlName="ownerTelephone">
           </mat-form-field>
