@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -9,6 +9,11 @@ import {UptimeModel} from '../shared/uptime.model';
 import {HttpRequestModel} from '../shared/httpRequest.model';
 import {totalMemoryModel} from '../shared/totalMemory.model';
 import {usedMemoryModel} from '../shared/usedMemory.model';
+import {MatTableDataSource} from '@angular/material/table';
+import {ParkingHistory} from '../shared/parking.history.model';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
+
 
 export type PieChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -51,7 +56,6 @@ export type EveningChartOptions = {
 })
 export class DashboardComponent implements OnInit {
   @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
-
   public MorningDonutChartOptions: Partial<MorningChartOptions> = {
     series: null,
     chart: null,
@@ -91,18 +95,18 @@ export class DashboardComponent implements OnInit {
   };
 
   @ViewChild('chart-column-cars-entered') carsEnteredExitedChart: ChartComponent;
-    public carsEnterExitedChartOptions: Partial<ColumnChartOptions> = {
-     series: null,
-     chart: null,
-     dataLabels: null,
-     plotOptions: null,
-     yaxis: null,
-     xaxis: null,
-     legend: null,
-     fill: null,
-     stroke: null,
-     tooltip: null
-     };
+  public carsEnterExitedChartOptions: Partial<ColumnChartOptions> = {
+    series: null,
+    chart: null,
+    dataLabels: null,
+    plotOptions: null,
+    yaxis: null,
+    xaxis: null,
+    legend: null,
+    fill: null,
+    stroke: null,
+    tooltip: null
+  };
 
 
   public carsPerCompanyChartOptions: Partial<PieChartOptions> = {
@@ -112,6 +116,8 @@ export class DashboardComponent implements OnInit {
     responsive: null
   };
 
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   registeredUsersNumber: number;
   registeredCarsNumber: number;
@@ -123,16 +129,32 @@ export class DashboardComponent implements OnInit {
   httpInfo: HttpRequestModel = new HttpRequestModel();
   totalMemoryInfo: totalMemoryModel = new totalMemoryModel();
   usedMemoryInfo: usedMemoryModel = new usedMemoryModel();
+  value = '';
+
+
+  companiesColumnsToDisplay: string[] = ['companyName', 'totalParkingSpots',
+    'leftParkingSpots', 'OccupiedNrParkingSpots', 'SpotsAmountIndicator'];
+  histories: ParkingHistory[];
+  historiesDataSource: MatTableDataSource<ParkingHistory> =
+    new MatTableDataSource<ParkingHistory>(this.histories);
 
   constructor(private statisticsService: StatisticsService,
               private snackBar: MatSnackBar) {
   }
 
-  ngOnInit(): void {
-    this.initCharts();
-  }
-
   initCharts(): void {
+    this.statisticsService.getParkingHistoryForToday()
+      .toPromise()
+      .then(histories => {
+        this.histories = histories;
+        this.historiesDataSource = new MatTableDataSource<ParkingHistory>(histories);
+        this.historiesDataSource.paginator = this.paginator;
+        this.historiesDataSource.sort = this.sort;
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+
     this.statisticsService.getAllowedRejectedCarsLastWeek()
       .toPromise()
       .then(result => {
@@ -163,6 +185,11 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getNumberScansEvening()
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
+
+  }
+
+  ngOnInit(): void {
+    this.initCharts();
     this.statisticsService.getCarsStatistics()
       .toPromise()
       .then(response => {
@@ -248,8 +275,8 @@ export class DashboardComponent implements OnInit {
     const exitedValues: number[] = [];
     keys.forEach(key => {
       const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-      const entered: number  = temp.filter(s => s.status === 'IN').length;
-      const exited: number  = temp.length - entered;
+      const entered: number = temp.filter(s => s.status === 'IN').length;
+      const exited: number = temp.length - entered;
       enteredValues.push(entered);
       exitedValues.push(exited);
     });
@@ -447,5 +474,13 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+  }
+
+  applyFilter(filterValue: string) {
+    this.historiesDataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  clearInput() {
+    this.historiesDataSource.filter = '';
   }
 }

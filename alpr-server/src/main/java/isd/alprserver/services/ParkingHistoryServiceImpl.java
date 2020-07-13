@@ -39,4 +39,8 @@ public class ParkingHistoryServiceImpl implements ParkingHistoryService {
     public ParkingHistory getByDateAndCompanyId(LocalDate date, long companyId) {
         return parkingHistoryRepository.findByDateAndCompanyId(date, companyId).orElseThrow(() -> new CompanyNotFoundException("Invalid company id"));
     }
+
+    public List<ParkingHistory> getAllForToday() {
+        return parkingHistoryRepository.findAllByDate(LocalDate.now());
+    }
 }
