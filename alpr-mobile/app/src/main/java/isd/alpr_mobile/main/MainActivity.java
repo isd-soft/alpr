@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity
                         break;
                 }
             } else {
-
                 noInternetDialogFragment.show(getSupportFragmentManager(), "INTERNET_CONNECTION");
                 Toast.makeText(MainActivity.this, "Connections turned OFF", Toast.LENGTH_SHORT).show();
             }

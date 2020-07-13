@@ -13,15 +13,15 @@
 
   <mat-form-field id="example-form-field">
 
-    <mat-label class="material-icons" >search</mat-label>
+    <mat-label class="material-icons" >Search</mat-label>
     <label>
       <input (keyup)="applyFilter($event.target.value)"
-             matInput placeholder="Search for company"
+             matInput placeholder="Search for Company"
              type="text" [(ngModel)]="value">
     </label>
     <button mat-button *ngIf="value" matSuffix mat-icon-button
             aria-label="Clear" (click)="value=''" type="button">
-      <mat-icon (click)="clearInput()">close</mat-icon>
+      <mat-icon (click)="clearInput()">Close</mat-icon>
     </button>
   </mat-form-field>
 
@@ -67,14 +67,14 @@
     <mat-dialog-content [formGroup]="addCompanyForm">
 
       <mat-form-field>
-        <mat-label>name</mat-label>
-        <input matInput placeholder="name"
+        <mat-label>Company Name</mat-label>
+        <input matInput placeholder="Company Name"
                name="name" type="text" required formControlName="name">
       </mat-form-field>
 
       <mat-form-field class="left-margin">
         <mat-label>Number of Parking Spots</mat-label>
-        <input matInput placeholder="nrParkingSpots" name="nrParkingSpots" class="no-left-margin"
+        <input matInput placeholder="Number of parking Spots" name="nrParkingSpots" class="no-left-margin"
                type="number" required formControlName="nrParkingSpots">
       </mat-form-field>
 
@@ -106,8 +106,8 @@
     <mat-dialog-content [formGroup]="editCompanyForm">
 
       <mat-form-field >
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="name"
+        <mat-label>Company Name</mat-label>
+        <input matInput placeholder="Company Name"
                name="name" type="text"
                required formControlName="name">
       </mat-form-field>
