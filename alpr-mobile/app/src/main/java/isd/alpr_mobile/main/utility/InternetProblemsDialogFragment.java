@@ -36,14 +36,14 @@ public class InternetProblemsDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        AlertDialog d = (AlertDialog)getDialog();
-        if(d != null){
+        AlertDialog d = (AlertDialog) getDialog();
+        if (d != null) {
             Button positiveButton = (Button) d.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(v -> {
                 Boolean wantToCloseDialog = false;
-                if(wantToCloseDialog)
+                if (wantToCloseDialog)
                     dismiss();
             });
         }

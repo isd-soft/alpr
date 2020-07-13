@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity
                 }
             } else {
 
-                noInternetDialogFragment.show(getSupportFragmentManager(),"INTERNET_CONNECTION");
+                noInternetDialogFragment.show(getSupportFragmentManager(), "INTERNET_CONNECTION");
                 Toast.makeText(MainActivity.this, "Connections turned OFF", Toast.LENGTH_SHORT).show();
             }
         });
@@ -82,9 +82,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(this.nav.getSelectedItemId() == R.id.scan_plate_action) {
+        if (this.nav.getSelectedItemId() == R.id.scan_plate_action) {
             replaceFrame(scanFragment);
-        } else if(this.nav.getSelectedItemId() == R.id.write_plate_action) {
+        } else if (this.nav.getSelectedItemId() == R.id.write_plate_action) {
             replaceFrame(writeFragment);
         } else {
             replaceFrame(notifyFragment);
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onValidPlate(String licensePlate) { }
-
+    public void onValidPlate(String licensePlate) {
+    }
 
 
 }
