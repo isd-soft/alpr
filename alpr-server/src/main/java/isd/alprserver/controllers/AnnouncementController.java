@@ -7,6 +7,8 @@ import isd.alprserver.model.AnnouncementPriority;
 import isd.alprserver.model.Comment;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.services.interfaces.AnnouncementService;
+import isd.alprserver.services.interfaces.MailService;
+import isd.alprserver.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AnnouncementController {
     private final AnnouncementService announcementService;
+
 
     @PostMapping()
     public ResponseEntity<?> addAnnouncement(@RequestBody AnnouncementDTO dto) {
@@ -44,6 +47,7 @@ public class AnnouncementController {
         }
         announcementService.add(announcement);
         return ResponseEntity.ok().build();
+
     }
 
     @GetMapping()
@@ -124,4 +128,6 @@ public class AnnouncementController {
                 .collect(Collectors.toList())
         );
     }
+
+
 }

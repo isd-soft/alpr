@@ -24,6 +24,14 @@ export class HeaderComponent implements OnInit {
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
+
+  navigateHome(){
+    if(this.authenticationService.currentUserValue.role === 'USER'){
+      this.router.navigate(['/']);
+    }
+    else
+      this.router.navigate(['/']);
+  }
 }
 
 
