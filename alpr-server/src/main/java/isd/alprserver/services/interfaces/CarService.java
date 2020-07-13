@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CarService{
-    List<Car> getAllCars();
+    List<Car> getAll();
 
-    Car getCarById(long id);
-
-    Car add(Car car) throws CarAlreadyExistsException;
+    Car getById(long id);
 
     void update(Long id, CarDTO carDTO);
 

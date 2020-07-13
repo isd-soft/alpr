@@ -1,6 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {CarModel} from '../shared/car.model';
 import {CarService} from '../shared/car.service';
@@ -17,8 +16,6 @@ import {FileHandler} from '../utils/file.handler';
 export class AddCarComponent implements OnInit {
   car: CarModel = new CarModel();
   user: User = new User();
-  fileToUpload: File = null;
-  public imagePath;
   public imgURL;
 
   registrationForm = this.fb.group({
@@ -27,7 +24,7 @@ export class AddCarComponent implements OnInit {
     model: ['', Validators.required],
     color: ['', Validators.required],
   });
-  labelDefault: string = 'Upload Photo';
+  labelDefault = 'Upload Photo';
   label: string = this.labelDefault;
 
   @ViewChild('carFileInput')
@@ -52,8 +49,6 @@ export class AddCarComponent implements OnInit {
     this.car.color = this.registrationForm.get('color').value;
     this.car.ownerEmail = this.user.email;
     this.car.photo = this.imgURL;
-
-    console.log(this.car);
     this.carService.registerCar(this.car)
       .toPromise()
       .then(_ => {
@@ -67,8 +62,7 @@ export class AddCarComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
-    console.log("received file")
-    let fileToUpload = files.item(0);
+    const fileToUpload = files.item(0);
 
     this.fileHandler.loadCarPhoto(files)
       .then(result => {

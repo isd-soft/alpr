@@ -1,6 +1,5 @@
 package isd.alprserver.services;
 
-import isd.alprserver.dtos.CompanyDTO;
 import isd.alprserver.dtos.ParkingHistoryDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.ParkingHistory;
@@ -18,6 +17,7 @@ import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,18 +33,13 @@ public class StatisticsServiceImpl implements StatisticsService {
     private final ParkingHistoryService parkingHistoryService;
 
     @Override
-    public UserAudit auditUserRegistration(UserAudit userAudit) {
-        return userAuditRepository.save(userAudit);
+    public void auditUserRegistration(UserAudit userAudit) {
+        userAuditRepository.save(userAudit);
     }
 
     @Override
-    public CarAudit auditCarRegistration(CarAudit carAudit) {
-        return carAuditRepository.save(carAudit);
-    }
-
-    @Override
-    public ScanAudit auditPlateScanning(ScanAudit scanAudit) {
-        return scanAuditRepository.save(scanAudit);
+    public void auditCarRegistration(CarAudit carAudit) {
+        carAuditRepository.save(carAudit);
     }
 
     @Override
@@ -91,25 +86,25 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Override
     public List<ScanAudit> getAllInLastWeek() {
-        return scanAuditRepository.findAllInLastWeek(new Date());
+        return scanAuditRepository.findAllInLastWeek();
     }
 
     @Override
     public List<ScanAudit> getAllAllowedLastWeek() {
-        return scanAuditRepository.findAllAllowedLastWeek(new Date());
+        return scanAuditRepository.findAllAllowedLastWeek();
     }
 
     @Override
     public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+        return companyService.getAll();
     }
 
     @Override
     public List<ScanAudit> getAllScansForToday() {
-        Date today = new Date();
+        LocalDate today = LocalDate.now();
         return scanAuditRepository.findAll()
                 .stream()
-                .filter(audit -> audit.getScanDate().getDay() == today.getDay() && audit.getScanDate().getMonth() == today.getMonth() && audit.getScanDate().getYear() == today.getYear())
+                .filter(audit -> audit.getScanDate().getDayOfWeek() == today.getDayOfWeek() && audit.getScanDate().getMonth() == today.getMonth() && audit.getScanDate().getYear() == today.getYear())
                 .collect(Collectors.toList());
     }
 
@@ -118,7 +113,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         List<ParkingHistory> parkingHistories = parkingHistoryService.getAllForToday();
         ArrayList<ParkingHistoryDTO> parkingHistoryDTOS = new ArrayList<>();
         for (ParkingHistory parkingHistory : parkingHistories) {
-            Company company = companyService.getCompanyById(parkingHistory.getCompanyId());
+            Company company = companyService.getById(parkingHistory.getCompanyId());
             parkingHistoryDTOS.add(ParkingHistoryDTO.builder()
                     .leftParkingSpots(parkingHistory.getNrParkingSpots())
                     .totalParkingSpots(company.getNrParkingSpots())

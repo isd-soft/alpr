@@ -65,12 +65,6 @@
   margin-left: 10px;
 }
 
-.add-button {
-  width: 15vw;
-  height: 50px;
-  font-size: 24px;
-}
-
 .remove-button {
   position: absolute;
   top: 1px;
@@ -87,6 +81,10 @@
   flex-direction: column;
   justify-content: center;
 
+}
+
+.add-button:focus {
+  outline: none;
 }
 
 .message span {

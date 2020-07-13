@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userDetails = this.userService.loadUserByUsername(email);
         }
         catch (UsernameNotFoundException e) {
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid credentials");
         }
         String rawPassword = request.getPassword();
         String password = userDetails.getPassword();
@@ -59,6 +59,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
             return new JwtResponse(jwtToken, userDTO);
         }
-        throw new InvalidCredentialsException("Invalid email or password");
+        throw new InvalidCredentialsException("Invalid credentials");
     }
 }

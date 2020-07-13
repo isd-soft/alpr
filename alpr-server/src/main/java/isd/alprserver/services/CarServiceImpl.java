@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -39,31 +40,19 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public List<Car> getAllCars() {
+    public List<Car> getAll() {
         return carRepository.findAll();
     }
 
     @Override
-    public Car getCarById(long id) {
+    public Car getById(long id) {
         return carRepository.findById(id).orElseThrow(() -> new CarNotFoundException("Car with id = " + id + " not found"));
-    }
-
-    @Override
-    public Car add(Car car) throws CarAlreadyExistsException {
-        if (carRepository.findByLicensePlate(car.getLicensePlate()).isPresent()) {
-            throw new CarAlreadyExistsException("The car with this license plate already exists.");
-        }
-        car = carRepository.save(car);
-
-        saveRegistrationStatistics(car);
-
-        return car;
     }
 
     @Override
     @Transactional
     public void update(Long id, CarDTO carDTO) {
-        Car carById = getCarById(id);
+        Car carById = getById(id);
         carById.setBrand(carDTO.getBrand());
         carById.setModel(carDTO.getModel());
         carById.setColor(carDTO.getColor());
@@ -154,7 +143,7 @@ public class CarServiceImpl implements CarService {
     private void addScanAuditOut(Car car) {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
-                        .scanDate(new Date())
+                        .scanDate(LocalDateTime.now())
                         .status("OUT")
                         .isAllowed(true)
                         .licensePlate(car.getLicensePlate())
@@ -168,7 +157,7 @@ public class CarServiceImpl implements CarService {
                         .licensePlate(car.getLicensePlate())
                         .status("IN")
                         .isAllowed(true)
-                        .scanDate(new Date())
+                        .scanDate(LocalDateTime.now())
                         .build()
         );
     }
@@ -177,7 +166,7 @@ public class CarServiceImpl implements CarService {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
                         .licensePlate(car.getLicensePlate())
-                        .scanDate(new Date())
+                        .scanDate(LocalDateTime.now())
                         .isAllowed(false)
                         .status("IN")
                         .build()
@@ -193,7 +182,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getAllIn() {
-        return getAllCars().stream()
+        return getAll().stream()
                 .filter(car -> car.getStatus().getName().equals("IN"))
                 .collect(Collectors.toList());
     }

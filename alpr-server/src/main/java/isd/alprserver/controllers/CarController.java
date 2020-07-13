@@ -25,7 +25,7 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
-        return ResponseEntity.ok(carService.getAllCars()
+        return ResponseEntity.ok(carService.getAll()
                 .stream()
                 .map(this::CarToCarDTO)
                 .collect(Collectors.toList()));
@@ -33,7 +33,7 @@ public class CarController {
 
     @GetMapping("/{id}")
     public Car getCarById(@PathVariable long id) {
-        return carService.getCarById(id);
+        return carService.getById(id);
     }
 
     @GetMapping("/company/{companyName}")

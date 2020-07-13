@@ -26,7 +26,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   user: User = new User();
   cars: CarModel[];
   dataSource = new MatTableDataSource(this.cars);
-  // dataSource = new MatTableDataSource(ELEMENT_DATA);
   value = '';
   editedCar: CarModel;
   editCarForm: FormGroup;
@@ -34,7 +33,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   carPhotoToView: any;
   carPhotoToEdit: any;
 
-  defaultUploadInputLabel: string = 'Upload Photo';
+  defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
 
   constructor(private carService: CarService,
@@ -50,7 +49,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   onRowClicked(row) {
-    console.log('Row clicked: ', row);
   }
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -61,7 +59,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<CarModel>(this.cars);
       this.dataSource.sort = this.sort;
     });
-  };
+  }
 
   ngOnInit(): void {
     this.user = this.authenticationService.currentUserValue;
@@ -93,7 +91,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   updateCar() {
-    let car: CarModel = this.formExtractor.extractCar(this.editCarForm);
+    const car: CarModel = this.formExtractor.extractCar(this.editCarForm);
     car.licensePlate = this.editedCar.licensePlate;
     car.photo = this.carPhotoToEdit;
 
@@ -118,7 +116,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   loadCars() {
     this.carService.getCars().toPromise().then(cars => {
       this.cars = cars.filter(car => car.ownerEmail.localeCompare(this.authenticationService.currentUserValue.email) === 0);
-      console.log(cars[0]);
       this.updateTable(this.cars);
     });
   }

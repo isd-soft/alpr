@@ -34,7 +34,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   carPhotoToEdit: any;
   carPhotoToAdd: any;
 
-  defaultUploadInputLabel: string = 'Upload Photo';
+  defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
 
   constructor(private carService: CarService,
@@ -47,9 +47,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
               private fileHandler: FileHandler) {
   }
 
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
-  }
+  onRowClicked(row) { }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -136,7 +134,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   updateCar() {
-    let car: CarModel = this.formExtractor.extractCar(this.editCarForm);
+    const car: CarModel = this.formExtractor.extractCar(this.editCarForm);
     car.licensePlate = this.editedCar.licensePlate;
     car.photo = this.carPhotoToEdit;
 
@@ -162,7 +160,6 @@ export class CarListComponent implements OnInit, AfterViewInit {
     this.carService.getCars()
       .subscribe(cars => {
         this.cars = cars;
-        console.log(cars[0]);
         this.updateTable(this.cars);
       });
   }

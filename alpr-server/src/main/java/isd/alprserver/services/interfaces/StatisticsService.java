@@ -12,11 +12,9 @@ import java.util.List;
 
 public interface StatisticsService {
 
-    UserAudit auditUserRegistration(UserAudit userAudit);
+    void auditUserRegistration(UserAudit userAudit);
 
-    CarAudit auditCarRegistration(CarAudit carAudit);
-
-    ScanAudit auditPlateScanning(ScanAudit scanAudit);
+    void auditCarRegistration(CarAudit carAudit);
 
     CarStatisticsResponse getCarStatistics();
 

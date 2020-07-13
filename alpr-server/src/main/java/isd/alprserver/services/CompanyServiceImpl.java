@@ -19,14 +19,14 @@ public class CompanyServiceImpl implements CompanyService
     private final CompanyRepository companyRepository;
 
     @Override
-    public List<Company> getAllCompanies()
+    public List<Company> getAll()
     {
         return companyRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Company addCompany(Company company) throws CompanyCreationException {
+    public Company add(Company company) throws CompanyCreationException {
         if (companyRepository.getByNameIgnoreCase(company.getName()).isPresent()) {
             throw new CompanyCreationException("The company with the name " + company.getName() + " already exists.");
         }
@@ -35,23 +35,17 @@ public class CompanyServiceImpl implements CompanyService
     }
 
     @Override
-    public void deleteCompany(long id) {
+    public void delete(long id) {
         companyRepository.deleteById(id);
     }
 
     @Override
-    @Transactional
-    public List<Company> getCompanies(){
-        return companyRepository.findAll();
-    }
-
-    @Override
-    public Company getCompanyById(long id) {
+    public Company getById(long id) {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException("Company with id = " + id + "not found"));
     }
 
     @Override
-    public Company updateCompany(Company company) {
+    public Company update(Company company) {
         return companyRepository.save(company);
     }
 
