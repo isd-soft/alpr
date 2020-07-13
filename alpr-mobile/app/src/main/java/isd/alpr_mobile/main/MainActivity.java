@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity
                 replaceFrame(notifyFragment);
                 break;
         }
-        // todo: get stored fragment in getSupportFragmentManager() instead of creating new
         return true;
     }
 
