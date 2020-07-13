@@ -9,7 +9,7 @@ import {AddCommentDialogComponent} from '../add-comment-dialog/add-comment-dialo
 import {CommentModel} from '../shared/comment.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ViewCommentDialogComponent} from '../view-comment-dialog/view-comment-dialog.component';
-import {AddAnnouncementDialogComponent} from "../add-announcement-dialog/add-announcement-dialog.component";
+import {AddAnnouncementDialogComponent} from '../add-announcement-dialog/add-announcement-dialog.component';
 
 @Component({
   selector: 'app-announcement',
@@ -44,9 +44,7 @@ export class AnnouncementComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.announcements = result;
-        console.log(this.announcements);
-      })
-      .catch(error => console.log(error));
+      });
   }
 
   removeAnnouncement(id: number) {
@@ -55,8 +53,7 @@ export class AnnouncementComponent implements OnInit {
         this.announcementService.removeAnnouncement(id)
           .toPromise()
           .then(_ => this.updateList());
-      })
-      .catch(() => console.log('Canceled'));
+      });
   }
 
   showAddForm() {
@@ -78,14 +75,13 @@ export class AnnouncementComponent implements OnInit {
   }
 
   addAnnouncement() {
-    console.log(this.announcement);
     this.announcementService.addAnnouncement(this.announcement)
       .toPromise()
       .then(_ => {
         this.updateList();
         this.showForm = false;
       })
-      .catch(error => console.log(error));
+      .catch(error => this.snackBar.open('Announcement was not added', 'OK', {duration: 3000}));
   }
 
   showComments(id: number) {

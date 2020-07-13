@@ -111,7 +111,9 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     NgbModule,
     NgApexchartsModule,
     MatListModule,
-    ScrollingModule,
+    ScrollingModule
+
+
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,

@@ -8,7 +8,7 @@ import {User} from '../shared/user.model';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  private url: string = 'http://localhost:8080';
+  private url = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {
     this.currentUserSubject =
@@ -25,7 +25,7 @@ export class AuthenticationService {
       {email, password})
       .pipe(map(jwtAuthResponse => {
         if (jwtAuthResponse.user && jwtAuthResponse.token) {
-          let user: User = jwtAuthResponse.user;
+          const user: User = jwtAuthResponse.user;
           user.token = jwtAuthResponse.token;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);

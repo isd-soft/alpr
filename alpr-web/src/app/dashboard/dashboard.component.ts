@@ -171,8 +171,7 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => {
         this.initPieChart(response);
-      })
-      .catch(error => console.log(error));
+      });
 
     this.statisticsService.getCarsPerCompany()
       .toPromise()
@@ -186,10 +185,6 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
 
-  }
-
-  ngOnInit(): void {
-    this.initCharts();
     this.statisticsService.getCarsStatistics()
       .toPromise()
       .then(response => {
@@ -262,19 +257,24 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getNumberScansEvening()
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
+
+  }
+
+  ngOnInit(): void {
+    this.initCharts();
   }
 
   private initCarsEnteredExited(data: any[]): void {
     const keys: string[] = [];
     data.forEach(scanning => {
-      if (keys.indexOf(scanning.scanDate) < 0) {
-        keys.push(scanning.scanDate);
+      if (keys.indexOf(scanning.scanDate.slice(0, 10)) < 0) {
+        keys.push(scanning.scanDate.slice(0, 10));
       }
     });
     const enteredValues: number[] = [];
     const exitedValues: number[] = [];
     keys.forEach(key => {
-      const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
+      const temp: any[] = data.filter(s => s.scanDate.slice(0, 10).localeCompare(key) === 0);
       const entered: number = temp.filter(s => s.status === 'IN').length;
       const exited: number = temp.length - entered;
       enteredValues.push(entered);
@@ -325,62 +325,62 @@ export class DashboardComponent implements OnInit {
   }
 
   private initColumnChart(data: any[]): void {
-      const keys: string[] = [];
-      data.forEach(scanning => {
-        if (keys.indexOf(scanning.scanDate) < 0) {
-          keys.push(scanning.scanDate);
+    const keys: string[] = [];
+    data.forEach(scanning => {
+      if (keys.indexOf(scanning.scanDate.slice(0, 10)) < 0) {
+        keys.push(scanning.scanDate.slice(0, 10));
+      }
+    });
+    const allowedValues: number[] = [];
+    const rejectedValues: number[] = [];
+    keys.forEach(key => {
+      const temp: any[] = data.filter(s => s.scanDate.slice(0, 10).localeCompare(key) === 0);
+      const allowed: number = temp.filter(s => s.allowed).length;
+      const rejected: number = temp.length - allowed;
+      allowedValues.push(allowed);
+      rejectedValues.push(rejected);
+    });
+    this.columnChartOptions = {
+      series: [
+        {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
+      ],
+      chart: {
+        type: 'bar',
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: '55%',
+          endingShape: 'rounded'
         }
-      });
-      const allowedValues: number[] = [];
-      const rejectedValues: number[] = [];
-      keys.forEach(key => {
-        const temp: any[] = data.filter(s => s.scanDate.localeCompare(key) === 0);
-        const allowed: number  = temp.filter(s => s.allowed).length;
-        const rejected: number  = temp.length - allowed;
-        allowedValues.push(allowed);
-        rejectedValues.push(rejected);
-      });
-      this.columnChartOptions = {
-        series: [
-          {name: 'Allowed', data: allowedValues}, {name: 'Rejected', data: rejectedValues}
-        ],
-        chart: {
-          type: 'bar',
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          }
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: keys
-        },
-        yaxis: {
-          title: {
-            text: 'Nr. of cars',
-          }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter(val) {
-              return val + ' cars';
-            }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+      },
+      xaxis: {
+        categories: keys
+      },
+      yaxis: {
+        title: {
+          text: 'Nr. of cars',
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      tooltip: {
+        y: {
+          formatter(val) {
+            return val + ' cars';
           }
         }
-      };
+      }
+    };
     }
 
 
@@ -388,7 +388,33 @@ export class DashboardComponent implements OnInit {
     this.pieChartOptions = {
       series: [data.allowedCars, data.rejectedCars],
       chart: {
-        type: 'pie'
+        type: 'pie',
+        toolbar: {
+          show: true,
+          offsetX: 0,
+          offsetY: 0,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            customIcons: []
+          },
+          export: {
+            csv: {
+              filename: undefined,
+              columnDelimiter: ',',
+              headerCategory: 'category',
+              headerValue: 'value',
+              dateFormatter(timestamp) {
+                return new Date(timestamp).toDateString();
+              }
+            }
+          },
+          autoSelected: 'zoom'
+        },
       },
       labels: ['Allowed', 'Rejected'],
       responsive: [
@@ -411,7 +437,33 @@ export class DashboardComponent implements OnInit {
     this.carsPerCompanyChartOptions = {
       series: data.map(entry => entry.cars),
       chart: {
-        type: 'pie'
+        type: 'pie',
+        toolbar: {
+          show: true,
+          offsetX: 0,
+          offsetY: 0,
+          tools: {
+            download: true,
+            selection: true,
+            zoom: true,
+            zoomin: true,
+            zoomout: true,
+            pan: true,
+            customIcons: []
+          },
+          export: {
+            csv: {
+              filename: undefined,
+              columnDelimiter: ',',
+              headerCategory: 'category',
+              headerValue: 'value',
+              dateFormatter(timestamp) {
+                return new Date(timestamp).toDateString();
+              }
+            }
+          },
+          autoSelected: 'zoom'
+        },
       },
       labels: data.map(entry => entry.name),
       responsive: [
@@ -436,7 +488,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         type: 'donut'
       },
-      labels: data.map(entry => 'Hour ' + entry.hour),
+      labels: data.map(entry => 'Hour : ' + entry.hour + ':00'),
       responsive: [
         {
           breakpoint: 480,
@@ -459,7 +511,7 @@ export class DashboardComponent implements OnInit {
       chart: {
         type: 'donut'
       },
-      labels: data.map(entry => 'Hour : ' + entry.hour),
+      labels: data.map(entry => 'Hour : ' + entry.hour + ':00'),
       responsive: [
         {
           breakpoint: 480,
@@ -483,4 +535,5 @@ export class DashboardComponent implements OnInit {
   clearInput() {
     this.historiesDataSource.filter = '';
   }
+
 }

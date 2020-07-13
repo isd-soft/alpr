@@ -32,9 +32,4 @@ public class RegistrationController {
 
         return ResponseEntity.ok(new Response<>("Successfully Registered"));
     }
-
-    @GetMapping(value = "/hello")
-    public ResponseEntity<Response<String>> sayHello() {
-        return ResponseEntity.ok(new Response<>("Hello"));
-    }
 }

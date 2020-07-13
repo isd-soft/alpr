@@ -21,14 +21,14 @@ public class EmailController {
 
     @PostMapping()
     public ResponseEntity<EmailResponse> sendEmailNotification(@RequestBody MailDTO mailDTO) {
-        mailService.sendNotification(mailDTO.getMail());
+        mailService.sendParkingNotificationEmail(mailDTO.getMail());
         return ResponseEntity.ok(EmailResponse.builder().response("Email was sent!").build());
     }
 
     @PostMapping("/license-plate")
     public ResponseEntity<EmailResponse> sendEmailByLicensePlate(@RequestBody LicensePlateDTO plate) {
         Car car = carService.getByLicensePlate(plate.getLicensePlate()).orElseThrow(() -> new CarNotFoundException("Unknown license plate " + plate.getLicensePlate()));
-        mailService.sendNotification(car.getUser().getEmail());
+        mailService.sendParkingNotificationEmail(car.getUser().getEmail());
         return ResponseEntity.ok(EmailResponse.builder().response("Email was sent!").build());
     }
 }

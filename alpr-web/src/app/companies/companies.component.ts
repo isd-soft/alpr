@@ -49,7 +49,6 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     this.companyService.getAll()
       .subscribe(companies => {
         this.companies = companies;
-        console.log(companies[0]);
         this.updateTable(this.companies);
       });
   }
@@ -86,7 +85,6 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   addCompany() {
     if (this.addCompanyForm.valid) {
       const companyModel: CompanyModel = this.formExtractor.extractCompany(this.addCompanyForm);
-      console.log(JSON.stringify(companyModel));
       this.companyService.add(companyModel).toPromise()
           .then(_ => {
             this.snackBar.open('Success', 'OK', {duration: 3000});

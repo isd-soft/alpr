@@ -16,7 +16,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional(readOnly = true)
-    public void sendEmail(User user, int nrParkingSpots) throws MailException {
+    public void sendNoMoreParkingSpotsEmail(User user, int nrParkingSpots) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(user.getEmail());
         message.setFrom("alprs003@gmail.com");
@@ -29,12 +29,23 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendNotification(String email) {
+    public void sendParkingNotificationEmail(String email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setFrom("alprs003@gmail.com");
         message.setSubject("Parking Notification");
         message.setText("Your presence is requested outside as you may have created a difficult parking situation.");
+        javaMailSender.send(message);
+    }
+
+
+    @Override
+    public void sendNotificationFromAdmin(String email, String subject, String text)  throws MailException {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setFrom("alprs003@gmail.com");
+        message.setSubject(subject);
+        message.setText(text);
         javaMailSender.send(message);
     }
 }

@@ -45,14 +45,10 @@ export class PasswordComponent implements OnInit {
   }
 
   onPasswordChange() {
-    let oldPassword: string = this.changePasswordForm.get('oldPassword').value;
-    let newPassword: string = this.changePasswordForm.get('newPassword').value;
-    let newPasswordConfirm: string = this.changePasswordForm.get('newPasswordConfirm').value;
-    let licensePlate: string = this.changePasswordForm.get('licensePlate').value;
-
-    console.log(oldPassword + ' old');
-    console.log(newPassword + ' new');
-    console.log(newPasswordConfirm + ' confirm');
+    const oldPassword: string = this.changePasswordForm.get('oldPassword').value;
+    const newPassword: string = this.changePasswordForm.get('newPassword').value;
+    const newPasswordConfirm: string = this.changePasswordForm.get('newPasswordConfirm').value;
+    const licensePlate: string = this.changePasswordForm.get('licensePlate').value;
 
     if (newPassword.localeCompare(newPasswordConfirm) !== 0) {
       this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,9 +16,9 @@ public interface ScanAuditRepository extends JpaRepository<ScanAudit, Long> {
 
     @Query(nativeQuery = true,
             value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.status='IN'")
-    List<ScanAudit> findAllInLastWeek(Date currentDate);
+    List<ScanAudit> findAllInLastWeek();
 
     @Query(nativeQuery = true,
             value = "select * from scan_audit sa where sa.scan_date > current_date - interval '7 day' and sa.is_allowed = true")
-    List<ScanAudit> findAllAllowedLastWeek(Date currentDate);
+    List<ScanAudit> findAllAllowedLastWeek();
 }

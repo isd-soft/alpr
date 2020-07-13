@@ -29,14 +29,12 @@ export class LoginComponent implements OnInit {
       this.emailRef.nativeElement.value,
       this.passwordRef.nativeElement.value)
       .toPromise()
-      .then(response => {
-        console.log(response.token);
+      .then(() => {
         this.snackBar.open('Successfully', 'OK', {duration: 4000});
-        this.router.navigate(['/'])
+        this.router.navigate(['/']);
       })
       .catch(error => {
-        this.snackBar.open("Oops! Something went wrong. Bad Credentials?", 'OK', {duration: 4000});
-        console.log(error);
+        this.snackBar.open(error, 'OK', {duration: 4000});
       });
   }
 

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import isd.alprserver.model.Company;
 import isd.alprserver.services.interfaces.CompanyService;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 
@@ -24,40 +22,35 @@ import javax.validation.Valid;
 public class CompanyController {
     private final CompanyService companyService;
 
-    //getting all the companies
     @GetMapping()
-    public  ResponseEntity<List<CompanyDTO>> getAll(){
-        return ResponseEntity.ok(companyService.getAllCompanies().stream().map(
+    public  ResponseEntity<List<CompanyDTO>> getAllCompanies(){
+        return ResponseEntity.ok(companyService.getAll().stream().map(
                 company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
         ).collect(Collectors.toList()));
     }
 
-    //adding a company
     @PostMapping("/add")
-    public ResponseEntity<Company> add(@RequestBody @Valid CompanyDTO companyDTO) {
+    public ResponseEntity<Company> addCompany(@RequestBody @Valid CompanyDTO companyDTO) {
         Company company = new Company();
         company.setName(companyDTO.getName());
         company.setNrParkingSpots(companyDTO.getNrParkingSpots());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(companyService.addCompany(company));
+                .body(companyService.add(company));
     }
 
-    //deleting a company
     @DeleteMapping("/{id}")
     public void deleteCompany(@PathVariable long id) {
-        companyService.deleteCompany(id);
+        companyService.delete(id);
     }
 
-    //get the company with a specific id
     @GetMapping("/{id}")
     public Company getCompanyById(@PathVariable  long id){
-       return companyService.getCompanyById(id);
+       return companyService.getById(id);
     }
 
-    //updating a company
     @PutMapping(value = "/update")
-    public ResponseEntity<Company> update(@RequestBody CompanyDTO company){
-        return ResponseEntity.ok(companyService.updateCompany(company.toCompany()));
+    public ResponseEntity<Company> updateCompany(@RequestBody CompanyDTO company){
+        return ResponseEntity.ok(companyService.update(company.toCompany()));
     }
 }
