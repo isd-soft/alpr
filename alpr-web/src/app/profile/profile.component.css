@@ -1,13 +1,13 @@
 .car-list-section {
-  margin: 20px;
-  margin-bottom: 100px;
+  margin: 20px 20px 0;
 }
+
 #example-form-field {
   width: 200px;
 }
 
 input {
-  min-width:200px;
+  min-width: 200px;
 }
 
 .color-title {
@@ -21,9 +21,9 @@ input {
 .card-content {
   width: 100%;
   font-size: 15px;
-  display:flex;
-  justify-content:space-between;
-  }
+  display: flex;
+  justify-content: space-between;
+}
 
 .table {
 }
@@ -32,6 +32,6 @@ input {
   margin-left: 1em;
 }
 
-.profile-info-section {
-  margin-bottom: 30px;
+.all-margins{
+  margin: 1em;
 }

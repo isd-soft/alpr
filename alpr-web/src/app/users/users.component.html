@@ -257,7 +257,8 @@
       <br>
 
       <mat-checkbox class="no-left-margin"
-                    (click)="editPasswordChecked = !editPasswordChecked">
+
+      (click)="onEditPasswordCheckBoxClick()">
         Modify Password
       </mat-checkbox>
 
@@ -266,7 +267,6 @@
                 [mat-dialog-close]="true">Close
         </button>
         <button class="mat-raised-button mat-primary left-margin"
-                [mat-dialog-close]="true"
                 (click)="updateUser()">Update
         </button>
       </mat-dialog-actions>

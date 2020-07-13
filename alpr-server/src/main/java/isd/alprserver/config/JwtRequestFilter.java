@@ -1,5 +1,6 @@
 package isd.alprserver.config;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import isd.alprserver.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,8 +34,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try{
                 email = jwtTokenUtil.getEmailFromToken(jwtToken);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (ExpiredJwtException e) {
+                System.err.println(e.getMessage());
             }
         }
 
