@@ -171,8 +171,7 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => {
         this.initPieChart(response);
-      })
-      .catch(error => console.log(error));
+      });
 
     this.statisticsService.getCarsPerCompany()
       .toPromise()
