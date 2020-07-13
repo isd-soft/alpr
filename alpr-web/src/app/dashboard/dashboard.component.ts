@@ -186,10 +186,6 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
 
-  }
-
-  ngOnInit(): void {
-    this.initCharts();
     this.statisticsService.getCarsStatistics()
       .toPromise()
       .then(response => {
@@ -262,6 +258,11 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getNumberScansEvening()
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
+
+  }
+
+  ngOnInit(): void {
+    this.initCharts();
   }
 
   private initCarsEnteredExited(data: any[]): void {
