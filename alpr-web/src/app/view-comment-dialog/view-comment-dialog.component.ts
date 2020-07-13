@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {CommentModel} from "../shared/comment.model";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {CommentModel} from '../shared/comment.model';
 
 export interface ViewDialogData {
   comments: CommentModel[];

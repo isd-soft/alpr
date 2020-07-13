@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
   <meta charset="utf-8">
   <title>ALPR</title>
@@ -8,16 +8,17 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <style>
     body {
-      width: 100vw;
-      min-height: calc(100vh + 90px)!important;
+      /*width: 100vw;*/
+      min-height: calc(100vh) !important;
       margin: 0;
       position: relative;
+      box-sizing: border-box;
     }
   </style>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-  <app-root></app-root>
+<body class="h-100">
+<app-root class="d-flex flex-column h-100"></app-root>
 </body>
 </html>

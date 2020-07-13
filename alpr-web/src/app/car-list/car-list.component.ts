@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {CarService} from '../shared/car.service';
@@ -34,8 +34,14 @@ export class CarListComponent implements OnInit, AfterViewInit {
   carPhotoToEdit: any;
   carPhotoToAdd: any;
 
-  defaultUploadInputLabel: string = 'Upload Photo';
+  defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
+
+  @ViewChild('carAddFileInput')
+  carAddFileInput: ElementRef;
+
+  @ViewChild('carEditFileInput')
+  carEditFileInput: ElementRef;
 
   constructor(private carService: CarService,
               private userService: UserService,
@@ -47,9 +53,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
               private fileHandler: FileHandler) {
   }
 
-  onRowClicked(row) {
-    console.log('Row clicked: ', row);
-  }
+  onRowClicked(row) { }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -136,7 +140,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   updateCar() {
-    let car: CarModel = this.formExtractor.extractCar(this.editCarForm);
+    const car: CarModel = this.formExtractor.extractCar(this.editCarForm);
     car.licensePlate = this.editedCar.licensePlate;
     car.photo = this.carPhotoToEdit;
 
@@ -162,7 +166,6 @@ export class CarListComponent implements OnInit, AfterViewInit {
     this.carService.getCars()
       .subscribe(cars => {
         this.cars = cars;
-        console.log(cars[0]);
         this.updateTable(this.cars);
       });
   }
@@ -192,6 +195,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .then(result => {
         this.carPhotoToEdit = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        this.carEditFileInput.nativeElement.value = '';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
@@ -203,9 +207,21 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .then(result => {
         this.carPhotoToAdd = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        this.carAddFileInput.nativeElement.value = '';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
       });
+  }
+
+  removeUploadedCar() {
+    this.carAddFileInput.nativeElement.value = '';
+    this.carEditFileInput.nativeElement.value = '';
+  }
+
+  setDefaultPhoto() {
+    this.carPhotoToEdit = null;
+    this.carPhotoToAdd = null;
+    this.uploadInputLabel = this.defaultUploadInputLabel;
   }
 }

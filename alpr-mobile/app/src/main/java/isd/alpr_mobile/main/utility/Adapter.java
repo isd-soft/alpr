@@ -56,18 +56,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         builder.setTitle("Confirmation");
         builder.setMessage("Do you really want to send an email to the driver of the car " + licensePlate + " ?");
         builder.setCancelable(false);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sendEmail(view, email);
-            }
-        });
+        builder.setPositiveButton("Yes", (dialog, which) -> sendEmail(view, email));
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setNegativeButton("No", (dialog, which) -> {
 
-            }
         });
         builder.show();
     }
@@ -78,11 +70,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             @Override
             public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
                 showSnackbar(view);
-                Log.i("ocr-cars", "Sent!");
             }
             @Override
             public void onFailure(Call<MailResponse> call, Throwable t) {
-                Log.i("ocr-cars", "Fail");
             }
         });
     }
@@ -91,26 +81,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         String licensePlate = cars.get(position).licensePlate;
         holder.textView.setText(licensePlate);
-        holder.sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Log.i("ocr-cars", cars.get(position).ownerEmail);
-//                Call<MailResponse> call = APIClient.getClient().create(APIInterface.class).sendEmailNotification(new Mail(cars.get(position).ownerEmail));
-//                call.enqueue(new Callback<MailResponse>() {
-//                    @Override
-//                    public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
-//                        showSnackbar(v);
-//                        Log.i("ocr-cars", "Sent!");
-//                    }
-//                    @Override
-//                    public void onFailure(Call<MailResponse> call, Throwable t) {
-//                        Log.i("ocr-cars", "Fail");
-//                    }
-//                });
-                confirmSendEmail(v, cars.get(position).licensePlate, cars.get(position).ownerEmail);
-            }
-
-        });
+        holder.sendBtn.setOnClickListener(v -> confirmSendEmail(v, cars.get(position).licensePlate, cars.get(position).ownerEmail));
 
         holder.callBtn.setOnClickListener(v -> makePhoneCall(v, cars.get(position).ownerTelephone));
     }

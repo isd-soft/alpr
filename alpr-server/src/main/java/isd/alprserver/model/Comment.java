@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Table(name = "comments")
 @Entity
@@ -27,4 +28,6 @@ public class Comment {
     private Announcement announcement;
 
     private LocalDate date;
+
+    private LocalTime time;
 }

@@ -156,16 +156,17 @@
 
           <div class="input-group mb-3" style="width: 100%">
             <div class="custom-file">
-              <input type="file" class="custom-file-input"
+              <input #carAddFileInput type="file" class="custom-file-input"
                      id="carAddFileInput" aria-describedby="inputGroupFileAddon02"
-                     (change)="handleAddCarFileInput($event.target.files)">
+                     (change)="handleAddCarFileInput($event.target.files)"
+                     (click)="removeUploadedCar()">
               <label class="custom-file-label" for="carAddFileInput">
                 {{uploadInputLabel}}
               </label>
             </div>
             <div class='input-group-append' *ngIf="carPhotoToAdd">
               <button class="btn btn-outline-secondary action" type="button"
-                      (click)="this.carPhotoToAdd = null">Set Default
+                      (click)="setDefaultPhoto()">Set Default
               </button>
             </div>
           </div>
@@ -251,16 +252,17 @@
 
         <div class="input-group mb-3" style="width: 100%">
           <div class="custom-file">
-            <input type="file" class="custom-file-input"
+            <input #carEditFileInput type="file" class="custom-file-input"
                    id="carEditFileInput" aria-describedby="inputGroupFileAddon01"
-                   (change)="handleEditCarFileInput($event.target.files)">
+                   (change)="handleEditCarFileInput($event.target.files)"
+                   (click)="removeUploadedCar()">
             <label class="custom-file-label" for="carEditFileInput">
               {{uploadInputLabel}}
             </label>
           </div>
           <div class='input-group-append' *ngIf="carPhotoToEdit">
             <button class="btn btn-outline-secondary action" type="button"
-                    (click)="this.carPhotoToEdit = null">Set Default
+                    (click)="setDefaultPhoto()">Set Default
             </button>
           </div>
         </div>
@@ -278,12 +280,12 @@
         <mat-card>
           <mat-card-subtitle>Photo Preview</mat-card-subtitle>
 
-            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-              <div style="text-align: center">
-                <img matCardImage [src]="carPhotoToEdit"
-                     alt="car photo" class="edit-car-photo">
-              </div>
+          <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+            <div style="text-align: center">
+              <img matCardImage [src]="carPhotoToEdit"
+                   alt="car photo" class="edit-car-photo">
             </div>
+          </div>
 
         </mat-card>
       </div>

@@ -1,26 +1,13 @@
-/*.footer {*/
-/*  position:fixed;*/
-/*  bottom:0px;*/
-/*}*/
-
-/*.company-details a {*/
-/*  color: #939393 !important;*/
-/*}*/
-
-
 html {
   position: relative;
   min-height: 100%;
 }
 
 #sticky-footer{
-  position: absolute;
-  bottom: -90px;
-  height: 90px;
   line-height: 15px;
   text-align: center;
   background: #3f51b5;
-  width: 100%;
+  width: 100vw;
 }
 
 .phone {
@@ -50,5 +37,6 @@ a{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 

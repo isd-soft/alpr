@@ -84,7 +84,7 @@ public class StatisticsController {
     public ResponseEntity<List<CarsPerHoursDTO>> getNumberOfCarsMorning() {
         return ResponseEntity.ok(
                 statisticsService.getAllScansForToday().stream().map(
-                        audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHours()).build()
+                        audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHour()).build()
                 )
                         .filter(audit -> audit.getHour() < 11)
                         .collect(Collectors.groupingBy(CarsPerHoursDTO::getHour))
@@ -100,7 +100,7 @@ public class StatisticsController {
     public ResponseEntity<List<CarsPerHoursDTO>> getNumberOfCarsEvening() {
         return ResponseEntity.ok(
                 statisticsService.getAllScansForToday().stream().map(
-                        audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHours()).build()
+                        audit -> CarsPerHoursDTO.builder().hour(audit.getScanDate().getHour()).build()
                 )
                         .filter(audit -> audit.getHour() > 17)
                         .collect(Collectors.groupingBy(CarsPerHoursDTO::getHour))

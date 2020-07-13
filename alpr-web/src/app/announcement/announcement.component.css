@@ -1,7 +1,7 @@
 .scrollable {
   width: 80vw;
-  height: 72vh;
-  margin: 20px;
+  height: 65vh;
+  margin: 20px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,9 +66,7 @@
 }
 
 .add-button {
-  width: 15vw;
-  height: 50px;
-  font-size: 24px;
+  margin: 0.5em;
 }
 
 .remove-button {
@@ -87,6 +85,10 @@
   flex-direction: column;
   justify-content: center;
 
+}
+
+.add-button:focus {
+  outline: none;
 }
 
 .message span {

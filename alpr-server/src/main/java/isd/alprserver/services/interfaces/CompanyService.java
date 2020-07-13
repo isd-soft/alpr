@@ -6,17 +6,16 @@ import isd.alprserver.model.exceptions.CompanyCreationException;
 import java.util.List;
 
 public interface CompanyService{
-    List<Company> getAllCompanies();
+    List<Company> getAll();
 
-    Company addCompany(Company company) throws CompanyCreationException;
+    Company add(Company company) throws CompanyCreationException;
 
-    void deleteCompany(long id);
+    void delete(long id);
 
-    List<Company> getCompanies();
 
-    Company getCompanyById(long id);
+    Company getById(long id);
 
-    Company updateCompany(Company company);
+    Company update(Company company);
 
     Company getByName(String name);
 

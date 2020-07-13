@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table(name = "scan_audit")
 @Entity
@@ -19,7 +19,7 @@ public class ScanAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private Date scanDate;
+    private LocalDateTime scanDate;
 
     private String status;
 

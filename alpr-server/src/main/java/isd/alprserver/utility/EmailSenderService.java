@@ -6,12 +6,10 @@ import isd.alprserver.services.interfaces.CompanyService;
 import isd.alprserver.services.interfaces.MailService;
 import isd.alprserver.services.interfaces.ParkingHistoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
@@ -22,19 +20,18 @@ public class EmailSenderService {
     private final MailService mailService;
     private final CarService carService;
 
-    //"0 0 0 * * *"
 //    @Scheduled(cron = "*/10 * * * * *")
     @Transactional
     public void updateParkingHistory() {
         System.out.println("here");
-        companyService.getCompanies()
+        companyService.getAll()
                 .forEach(company -> {
                     ParkingHistory history = ParkingHistory.builder().
                             date(LocalDate.now())
                             .companyId(company.getId())
                             .nrParkingSpots(
                                     company.getNrParkingSpots() -
-                                            (int) carService.getAllCars()
+                                            (int) carService.getAll()
                                     .stream()
                                     .filter(car -> car.getStatus().getName().equals("IN"))
                                     .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
@@ -51,12 +48,12 @@ public class EmailSenderService {
     @Transactional
     public void check() {
         LocalDate date = LocalDate.now();
-        companyService.getCompanies()
+        companyService.getAll()
                 .forEach(company -> {
                     ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
                     if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
                         history.setLastSentNotification(history.getNrParkingSpots());
-                        carService.getAllCars().stream()
+                        carService.getAll().stream()
                                 .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
                                 .filter(car -> car.getStatus().getName().equals("OUT"))
                                 .forEach(car -> mailService.sendNoMoreParkingSpotsEmail(car.getUser(), history.getNrParkingSpots()));

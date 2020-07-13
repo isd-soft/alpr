@@ -31,5 +31,11 @@
       </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
-  <button mat-raised-button color="primary" class="add-button" (click)="showAddForm()" *ngIf="isAdmin && !showForm">Add Announcement</button>
+  <button mat-fab color="primary"
+          class="add-button"
+          aria-label="Add announcement"
+          (click)="showAddForm()"
+          *ngIf="isAdmin && !showForm">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

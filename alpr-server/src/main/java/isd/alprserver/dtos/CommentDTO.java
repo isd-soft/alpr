@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Builder
 @Data
@@ -15,4 +16,5 @@ public class CommentDTO {
     private String userEmail;
     private String description;
     private LocalDate date;
+    private LocalTime time;
 }

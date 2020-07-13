@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Transactional
     public void create(UserDTO userDTO) throws UserCreationException, RoleNotFoundException {
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            throw new UserCreationException("The user with email " + userDTO.getEmail() + " already exists.");
+            throw new UserCreationException("This email is already used");
         }
         User user = userDTO.toUser();
         user.setCompany(getCompanyOfUser(userDTO));

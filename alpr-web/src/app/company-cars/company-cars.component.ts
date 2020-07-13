@@ -35,7 +35,6 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   }
 
   onRowClicked(row) {
-    console.log('Row clicked: ', row);
   }
 
   applyFilter(filterValue: string) {
@@ -60,13 +59,12 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.user=this.authenticationService.currentUserValue;
+    this.user = this.authenticationService.currentUserValue;
   }
 
   loadCars() {
     this.carService.getCarsByCompanyName(this.authenticationService.currentUserValue.company).subscribe(cars => {
       this.cars = cars;
-      console.log(cars[0]);
       this.updateTable(this.cars);
     });
   }
