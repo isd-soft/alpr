@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {CarService} from '../shared/car.service';
@@ -36,6 +36,12 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   defaultUploadInputLabel: string = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
+
+  @ViewChild('carAddFileInput')
+  carAddFileInput: ElementRef;
+
+  @ViewChild('carEditFileInput')
+  carEditFileInput: ElementRef;
 
   constructor(private carService: CarService,
               private userService: UserService,
@@ -192,6 +198,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .then(result => {
         this.carPhotoToEdit = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        this.carEditFileInput.nativeElement.value = '';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
@@ -203,9 +210,21 @@ export class CarListComponent implements OnInit, AfterViewInit {
       .then(result => {
         this.carPhotoToAdd = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        this.carAddFileInput.nativeElement.value = '';
       })
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
       });
+  }
+
+  removeUploadedCar() {
+    this.carAddFileInput.nativeElement.value = '';
+    this.carEditFileInput.nativeElement.value = '';
+  }
+
+  setDefaultPhoto() {
+    this.carPhotoToEdit = null;
+    this.carPhotoToAdd = null;
+    this.uploadInputLabel = this.defaultUploadInputLabel;
   }
 }
