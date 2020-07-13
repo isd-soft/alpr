@@ -1,6 +1,7 @@
 package isd.alprserver.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,11 +26,11 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.time}")
     private long expirationTime;
 
-    public String getEmailFromToken(String token) {
+    public String getEmailFromToken(String token) throws ExpiredJwtException {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Date getExpirationDateFromToken(String token) {
+    public Date getExpirationDateFromToken(String token) throws ExpiredJwtException {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
@@ -38,7 +39,7 @@ public class JwtTokenUtil implements Serializable {
         return claimsResolver.apply(claims);
     }
 
-    private Claims getAllClaimsFromToken(String token) {
+    private Claims getAllClaimsFromToken(String token) throws ExpiredJwtException {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
