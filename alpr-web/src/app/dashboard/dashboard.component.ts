@@ -483,4 +483,5 @@ export class DashboardComponent implements OnInit {
   clearInput() {
     this.historiesDataSource.filter = '';
   }
+
 }

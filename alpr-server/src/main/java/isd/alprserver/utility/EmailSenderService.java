@@ -47,20 +47,20 @@ public class EmailSenderService {
         System.out.println("done");
     }
 
-//    @Scheduled(cron = "*/10 * 9-18 * * ?")
+    //@Scheduled(cron = "*/10 * 9-18 * * ?")
     @Transactional
     public void check() {
-//        LocalDate date = LocalDate.now();
-//        companyService.getCompanies()
-//                .forEach(company -> {
-//                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
-//                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
-//                        history.setLastSentNotification(history.getNrParkingSpots());
-//                        carService.getAllCars().stream()
-//                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-//                                .filter(car -> car.getStatus().getName().equals("OUT"))
-//                                .forEach(car -> mailService.sendNoMoreParkingSpotsEmail(car.getUser(), history.getNrParkingSpots()));
-//                    }
-//                });
+        LocalDate date = LocalDate.now();
+        companyService.getCompanies()
+                .forEach(company -> {
+                    ParkingHistory history = parkingHistoryService.getByDateAndCompanyId(date, company.getId());
+                    if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
+                        history.setLastSentNotification(history.getNrParkingSpots());
+                        carService.getAllCars().stream()
+                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+                                .filter(car -> car.getStatus().getName().equals("OUT"))
+                                .forEach(car -> mailService.sendNoMoreParkingSpotsEmail(car.getUser(), history.getNrParkingSpots()));
+                    }
+                });
     }
 }
