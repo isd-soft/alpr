@@ -110,21 +110,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   updateUser() {
-    const user: User = this.formExtractor.extractUser(this.editUserForm);
-    user.email = this.editedUser.email;
-
-    this.userService.update(user, this.editPasswordChecked)
-      .toPromise()
-      .then(_ => {
-        this.snackBar.open('Successfully', 'OK', {duration: 3000});
-        this.loadUsers();
-      })
-      .catch(_ => {
-        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
-      });
-
     if (this.editUserForm.valid) {
-      let user: User = this.formExtractor.extractUser(this.editUserForm);
+      const user: User = this.formExtractor.extractUser(this.editUserForm);
       if (user.password.localeCompare(
         this.editUserForm.get('confirmPassword').value) === 0) {
         user.email = this.editedUser.email;
