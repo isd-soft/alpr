@@ -13,15 +13,14 @@
 
   <mat-form-field id="example-form-field">
 
-    <mat-label class="material-icons" >Search</mat-label>
+    <mat-label class="material-icons">search</mat-label>
     <label>
+      <!--suppress TypeScriptUnresolvedVariable -->
       <input (keyup)="applyFilter($event.target.value)"
-             matInput placeholder="Search for Company"
-             type="text" [(ngModel)]="value">
+             matInput placeholder="Search for a Company" type="text" [(ngModel)]="value">
     </label>
-    <button mat-button *ngIf="value" matSuffix mat-icon-button
-            aria-label="Clear" (click)="value=''" type="button">
-      <mat-icon (click)="clearInput()">Close</mat-icon>
+    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
+      <mat-icon (click)="clearInput()">close</mat-icon>
     </button>
   </mat-form-field>
 
