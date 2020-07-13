@@ -61,7 +61,6 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
     private List<Car> cars;
 
     public NotifyFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -73,8 +72,8 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_notify, container, false);
-        actionButton = (FloatingActionButton) view.findViewById(R.id.open_scan_action);
-        recyclerView = (RecyclerView) view.findViewById(R.id.table);
+        actionButton = view.findViewById(R.id.open_scan_action);
+        recyclerView = view.findViewById(R.id.table);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -110,7 +109,6 @@ public class NotifyFragment extends Fragment implements SurfaceHolder.Callback, 
 
             @Override
             public void onFailure(Call<List<Car>> call, Throwable t) {
-                //error
             }
         });
         return view;

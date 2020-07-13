@@ -20,7 +20,6 @@ public class EmailSenderService {
     private final MailService mailService;
     private final CarService carService;
 
-    //"0 0 0 * * *"
 //    @Scheduled(cron = "*/10 * * * * *")
     @Transactional
     public void updateParkingHistory() {

@@ -3,10 +3,7 @@ package isd.alpr_mobile.main;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,7 +22,6 @@ import retrofit2.Response;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +38,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
 
         Call<LicenseValidationResponse> call = APIClient.getClient().create(APIInterface.class).validateLicensePlate(plates);
         call.enqueue(new Callback<LicenseValidationResponse>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<LicenseValidationResponse> call, Response<LicenseValidationResponse> response) {
                 LicenseValidationResponse validationResponse = response.body();
