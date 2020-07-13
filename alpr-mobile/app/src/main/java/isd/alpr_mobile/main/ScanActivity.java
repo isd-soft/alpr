@@ -100,7 +100,7 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
         call.enqueue(new Callback<MailResponse>() {
             @Override
             public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
-                if(response.body() != null)
+                if (response.body() != null)
                     Snackbar.make(findViewById(R.id.surface), response.body().response, Snackbar.LENGTH_LONG)
                             .setAction("OK", v -> finish())
                             .show();

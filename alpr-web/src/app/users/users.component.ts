@@ -122,6 +122,28 @@ export class UsersComponent implements OnInit, AfterViewInit {
       .catch(_ => {
         this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
       });
+
+    if (this.editUserForm.valid) {
+      let user: User = this.formExtractor.extractUser(this.editUserForm);
+      if (user.password.localeCompare(
+        this.editUserForm.get('confirmPassword').value) === 0) {
+        user.email = this.editedUser.email;
+        this.userService.update(user, this.editPasswordChecked).toPromise()
+          .then(_ => {
+            this.snackBar.open('Successfully', 'OK', {duration: 3000});
+            this.loadUsers();
+          })
+          .catch(_ => {
+            this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+          });
+      } else {
+        this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});
+      }
+    } else {
+      this.snackBar.open('Fill all the required fields, please',
+        'OK', {duration: 4000});
+    }
+
   }
 
   private openTemplate(template) {
@@ -158,5 +180,10 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   clearInput() {
     this.usersDataSource.filter = '';
+  }
+
+  onEditPasswordCheckBoxClick() {
+    this.editPasswordChecked = !this.editPasswordChecked;
+    console.log(this.editPasswordChecked);
   }
 }

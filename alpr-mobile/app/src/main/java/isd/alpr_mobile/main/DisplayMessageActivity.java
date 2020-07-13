@@ -42,40 +42,39 @@ public class DisplayMessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<LicenseValidationResponse> call, Response<LicenseValidationResponse> response) {
                 LicenseValidationResponse validationResponse = response.body();
-                if(validationResponse.getStatus().equals("Forbidden")) {
-                    ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_forbidden);
-                    ((TextView)findViewById(R.id.status)).setText("Forbidden");
-                    ((TextView)findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorAccent));
-                    ((TextView)findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
-                    ((TextView)findViewById(R.id.car)).setText("");
-                    ((TextView)findViewById(R.id.user)).setText("");
-                    ((TextView)findViewById(R.id.company)).setText("");
-                }
-                else if(validationResponse.getStatus().equals("Allowed")){
-                    ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_allowed);
-                    ((TextView)findViewById(R.id.status)).setText("Allowed");
-                    ((TextView)findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimary));
-                    ((TextView)findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
-                    ((TextView)findViewById(R.id.car)).setText(validationResponse.getCar().brand + " " + validationResponse.getCar().model);
-                    ((TextView)findViewById(R.id.user)).setText(validationResponse.getCar().ownerName);
-                    ((TextView)findViewById(R.id.company)).setText(validationResponse.getCar().ownerCompany);
-                } else if(validationResponse.getStatus().equals("Unknown")){
-                    ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_unkown);
-                    ((TextView)findViewById(R.id.status)).setText("Unknown");
-                    ((TextView)findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    ((TextView)findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
+                if (validationResponse.getStatus().equals("Forbidden")) {
+                    ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.ic_forbidden);
+                    ((TextView) findViewById(R.id.status)).setText("Forbidden");
+                    ((TextView) findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorAccent));
+                    ((TextView) findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
+                    ((TextView) findViewById(R.id.car)).setText("");
+                    ((TextView) findViewById(R.id.user)).setText("");
+                    ((TextView) findViewById(R.id.company)).setText("");
+                } else if (validationResponse.getStatus().equals("Allowed")) {
+                    ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.ic_allowed);
+                    ((TextView) findViewById(R.id.status)).setText("Allowed");
+                    ((TextView) findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimary));
+                    ((TextView) findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
+                    ((TextView) findViewById(R.id.car)).setText(validationResponse.getCar().brand + " " + validationResponse.getCar().model);
+                    ((TextView) findViewById(R.id.user)).setText(validationResponse.getCar().ownerName);
+                    ((TextView) findViewById(R.id.company)).setText(validationResponse.getCar().ownerCompany);
+                } else if (validationResponse.getStatus().equals("Unknown")) {
+                    ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.ic_unkown);
+                    ((TextView) findViewById(R.id.status)).setText("Unknown");
+                    ((TextView) findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    ((TextView) findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
                 } else {
-                    ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_goodbye);
-                    ((TextView)findViewById(R.id.status)).setText("Good Bye");
-                    ((TextView)findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    ((TextView)findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
+                    ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.ic_goodbye);
+                    ((TextView) findViewById(R.id.status)).setText("Good Bye");
+                    ((TextView) findViewById(R.id.status)).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    ((TextView) findViewById(R.id.license_plate)).setText(validationResponse.getCar().licensePlate);
                 }
             }
 
             @Override
             public void onFailure(Call<LicenseValidationResponse> call, Throwable t) {
-                ((ImageView)findViewById(R.id.imageView)).setImageResource(R.drawable.ic_error);
-                ((TextView)findViewById(R.id.status)).setText("Error");
+                ((ImageView) findViewById(R.id.imageView)).setImageResource(R.drawable.ic_error);
+                ((TextView) findViewById(R.id.status)).setText("Error");
             }
         });
     }
