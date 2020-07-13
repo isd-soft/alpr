@@ -33,5 +33,6 @@ input {
 }
 
 .all-margins{
-  margin: 1em;
+  width: 100%;
+  margin-top: 1em;
 }
