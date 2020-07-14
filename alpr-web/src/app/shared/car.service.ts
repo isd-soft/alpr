@@ -17,6 +17,10 @@ export class CarService{
     return  this.http.get<any[]>(this.url + '/company/' + companyName);
   }
 
+  getParkingHistory(companyName:string): Observable<any> {
+     return this.http.get<any>(this.url + '/history/' + companyName);
+  }
+
   registerCar(car: CarModel): Observable<any> {
     return this.http.post(this.url + '/add', car);
   }
