@@ -22,4 +22,4 @@ Currently this application aims to ease the process of validating the number pla
 2. Why Number Plate Validator?<br>
 3. Take a look at [Functional Requirements](https://github.com/isd-soft/alpr/wiki/Functional-Requirements)<br> 
 4. Take a look at [Non-Functional Requirements](https://github.com/isd-soft/alpr/wiki/Non-Functional-Requirements)<br>
-5. Take a look at [Project Backlog](https://github.com/isd-soft/alpr/projects/1)<br>
+5. Take a look at [Project Backlog](https://github.com/isd-soft/alpr/issues)<br>
