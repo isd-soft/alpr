@@ -6,7 +6,7 @@ import {CommentModel} from './comment.model';
 
 @Injectable()
 export class AnnouncementService {
-  private url = 'http://localhost:8080/announcements';
+  private url = 'https://vm-alpr-server.herokuapp.com/announcements';
   constructor(private httpClient: HttpClient) {
   }
 
