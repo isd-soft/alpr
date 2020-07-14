@@ -1,5 +1,7 @@
 package isd.alprserver.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,9 +26,10 @@ public class CompanyController {
 
     @GetMapping()
     public  ResponseEntity<List<CompanyDTO>> getAllCompanies(){
-        return ResponseEntity.ok(companyService.getAll().stream().map(
-                company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
-        ).collect(Collectors.toList()));
+//        return ResponseEntity.ok(companyService.getAll().stream().map(
+//                company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
+//        ).collect(Collectors.toList()));
+        return ResponseEntity.ok(Collections.singletonList(CompanyDTO.builder().name("AAA").nrParkingSpots(10).build()));
     }
 
     @PostMapping("/add")
