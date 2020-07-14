@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
   @ViewChild('email') emailRef: ElementRef;
   @ViewChild('password') passwordRef: ElementRef;
+  hide = true;
 
   constructor(private userService: UserService,
               private snackBar: MatSnackBar,
