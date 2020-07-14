@@ -10,7 +10,7 @@ export class CarService{
   private url = 'https://vm-alpr-server.herokuapp.com/cars';
 
   getCars(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/cars');
+    return this.http.get<any[]>(this.url);
   }
 
   getCarsByCompanyName(companyName: string): Observable<any> {
