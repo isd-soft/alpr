@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class StatisticsService {
   private url = 'https://vm-alpr-server.herokuapp.com/statistics';
-  private metricsUrl = 'https://vm-alpr-server.herokuapp.com/metrics';
+  private metricsUrl = 'https://vm-alpr-server.herokuapp.com/actuator/metrics';
 
   constructor(private httpClient: HttpClient) {
   }

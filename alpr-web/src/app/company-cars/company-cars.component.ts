@@ -26,7 +26,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   value = '';
   carPhotoToView: any;
   user: User;
-  history: ParkingHistory;
+  history: ParkingHistory = new ParkingHistory('', 0, 0);
 
   constructor(private carService: CarService,
               private formGenerator: FormGenerator,
@@ -54,7 +54,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
-  };
+  }
 
   clearInput() {
     this.dataSource.filter = '';
