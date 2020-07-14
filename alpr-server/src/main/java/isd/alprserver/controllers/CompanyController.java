@@ -26,10 +26,9 @@ public class CompanyController {
 
     @GetMapping()
     public  ResponseEntity<List<CompanyDTO>> getAllCompanies(){
-//        return ResponseEntity.ok(companyService.getAll().stream().map(
-//                company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
-//        ).collect(Collectors.toList()));
-        return ResponseEntity.ok(Collections.singletonList(CompanyDTO.builder().name("AAA").nrParkingSpots(10).build()));
+        return ResponseEntity.ok(companyService.getAll().stream().map(
+                company -> CompanyDTO.builder().id(company.getId()).name(company.getName()).nrParkingSpots(company.getNrParkingSpots()).build()
+        ).collect(Collectors.toList()));
     }
 
     @PostMapping("/add")
