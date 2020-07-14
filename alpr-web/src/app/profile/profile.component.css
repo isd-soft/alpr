@@ -36,3 +36,35 @@ input {
   width: 100%;
   margin-top: 1em;
 }
+
+.car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+.default-car-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
+}
+
+.edit-car-photo {
+  max-height: 40vh;
+  max-width: 40vw;
+  object-fit: cover;
+}
+
+.default-edit-car-photo {
+  max-height: 25vh;
+  max-width: 25vw;
+  object-fit: cover;
+}
+
+input {
+  width: 100%;
+}

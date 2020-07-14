@@ -11,6 +11,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthenticationService} from '../auth/authentication.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {User} from '../shared/user.model';
+import {ParkingHistory} from '../shared/parking.history.model';
+
 
 @Component({
   selector: 'app-company-cars',
@@ -24,6 +26,7 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
   value = '';
   carPhotoToView: any;
   user: User;
+  history: ParkingHistory;
 
   constructor(private carService: CarService,
               private formGenerator: FormGenerator,
@@ -60,6 +63,9 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = this.authenticationService.currentUserValue;
+    this.carService.getParkingHistory(this.authenticationService.currentUserValue.company).subscribe(history => {
+    this.history = history});
+    console.log(history)
   }
 
   loadCars() {
