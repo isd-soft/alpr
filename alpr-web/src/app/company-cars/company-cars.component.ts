@@ -37,16 +37,15 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
               private sanitizer: DomSanitizer) {
   }
 
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+
   onRowClicked(row) {
   }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   ngAfterViewInit() {
     this.carService.getCarsByCompanyName(this.authenticationService.currentUserValue.company).toPromise().then(cars => {
@@ -63,9 +62,9 @@ export class CompanyCarsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = this.authenticationService.currentUserValue;
-    this.carService.getParkingHistory(this.authenticationService.currentUserValue.company).subscribe(history => {
-    this.history = history});
-    console.log(history)
+    this.carService.getParkingHistory(this.authenticationService.currentUserValue.company).subscribe(
+      history => this.history = history
+    );
   }
 
   loadCars() {
