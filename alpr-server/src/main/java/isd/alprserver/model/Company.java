@@ -27,9 +27,10 @@ public class Company {
 
     private int nrParkingSpots;
 
+    private byte[] logo;
+
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "company",
-            //orphanRemoval = true,
             cascade = CascadeType.ALL)
     private List<User> users = new ArrayList<>();
 

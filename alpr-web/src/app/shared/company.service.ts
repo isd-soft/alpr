@@ -11,7 +11,7 @@ export class CompanyService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getAll(): Observable<any[]>{
+  public getAll(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url);
   }
 
@@ -24,6 +24,6 @@ export class CompanyService {
   }
 
   update(companyModel: CompanyModel): Observable<any> {
-    return this.httpClient.put(this.url + '/update' , companyModel);
+    return this.httpClient.put(this.url + '/' + companyModel.id, companyModel);
   }
 }
