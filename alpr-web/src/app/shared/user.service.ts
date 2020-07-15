@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class UserService {
-  private url = 'http://localhost:8080';
+  private url = 'https://vm-alpr-server.herokuapp.com';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -44,10 +44,11 @@ export class UserService {
     return this.httpClient.get(this.url + '/users/hascars?email=' + email);
   }
 
-  changePassword(email: string, oldPassword: string,
-                 newPassword: string, licensePlate: string) {
-    return this.httpClient.put(this.url + '/users/password?email=' + email +
-      '&oldPassword=' + oldPassword + '&newPassword=' + newPassword +
+  changePassword(oldPassword: string,
+                 newPassword: string,
+                 licensePlate: string) {
+    return this.httpClient.put(this.url + '/users/password?oldPassword=' +
+      oldPassword + '&newPassword=' + newPassword +
       '&licensePlate=' + licensePlate, null);
   }
 }

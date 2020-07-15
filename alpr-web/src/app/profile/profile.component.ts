@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {CarModel} from '../shared/car.model';
@@ -14,6 +14,7 @@ import {FormExtractor} from '../utils/form.extractor';
 import {FormGroup} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {FileHandler} from '../utils/file.handler';
+import {Role} from '../auth/role';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   value = '';
   editedCar: CarModel;
   editCarForm: FormGroup;
+  editProfileForm: FormGroup;
   profilePhotoToView: any;
 
   carPhotoToView: any;
@@ -36,6 +38,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
+
+  hasCars: boolean;
+  changePasswordForm: FormGroup;
 
   constructor(private carService: CarService,
               private userService: UserService,
@@ -63,15 +68,18 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.user = this.authenticationService.currentUserValue;
-    if (this.user.photo) {
-          this.profilePhotoToView = this.base64PhotoToUrl(this.user.photo);
-        } else {
-          this.profilePhotoToView = null;
-    }
-    }
+    this.authenticationService.currentUser.subscribe(user => {
+    this.user = user;
+          if (this.user.photo) {
+                this.profilePhotoToView = this.base64PhotoToUrl(this.user.photo);
+              } else {
+                this.profilePhotoToView = null;
+          }
+    });
 
-  onEdit(editCarTemplate, car: CarModel) {
+  }
+
+  onCarEdit(editCarTemplate, car: CarModel) {
     this.editedCar = car;
     if (car.photo) {
       this.carPhotoToEdit = this.base64PhotoToUrl(car.photo);
@@ -84,7 +92,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
 
-  onDelete(car: CarModel) {
+  onCarDelete(car: CarModel) {
     this.carService.removeById(car.id).toPromise()
       .then(_ => {
         this.snackBar.open('Successfully', 'OK', {duration: 3000});
@@ -113,7 +121,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
 
-  private openTemplate(template) {
+  private openTemplate(template: TemplateRef<any>) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     this.dialog.open(template, dialogConfig);
@@ -131,7 +139,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  onCarIconClick(viewCarTemplate, car: CarModel) {
+  onCarIconClick(viewCarTemplate: TemplateRef<any>, car: CarModel) {
     if (car.photo) {
       this.carPhotoToView = this.base64PhotoToUrl(car.photo);
     } else {
@@ -154,5 +162,74 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       .catch(error => {
         this.snackBar.open(error, 'OK', {duration: 4000});
       });
+  }
+
+  onEditProfileClick(editProfileTemplate: TemplateRef<any>) {
+    this.editProfileForm = this.formGenerator.generateProfileEditForm(this.user);
+    this.openTemplate(editProfileTemplate);
+  }
+
+  onChangePasswordClick(changePasswordTemplate: TemplateRef<any>) {
+    this.changePasswordForm = this.formGenerator.generateChangePasswordForm();
+    if (this.user.role === Role.User) {
+      this.userService.hasCars(this.user.email).toPromise()
+        .then(response => {
+          this.hasCars = response;
+        })
+        .catch(_ => this.snackBar.open(
+          'Oops! Something went wrong', 'OK', {duration: 3000}));
+    }
+    this.openTemplate(changePasswordTemplate);
+  }
+
+  changeUserPassword() {
+    const oldPassword: string = this.changePasswordForm.get('oldPassword').value;
+    const newPassword: string = this.changePasswordForm.get('newPassword').value;
+    const newPasswordConfirm: string = this.changePasswordForm.get('newPasswordConfirm').value;
+    const licensePlate: string = this.changePasswordForm.get('licensePlate').value;
+
+    if (newPassword.localeCompare(newPasswordConfirm) !== 0) {
+      this.snackBar.open('Passwords don\'t match', 'OK', {duration: 4000});
+    } else {
+      this.userService.changePassword(oldPassword, newPassword, licensePlate)
+        .toPromise()
+        .then(_ => {
+          this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        })
+        .catch(error => this.handleError(error));
+    }
+  }
+
+  updateUserProfile() {
+    console.log('click');
+    if (this.editProfileForm.valid) {
+      const user: User = this.formExtractor
+        .extractUserFromProfileForm(this.editProfileForm);
+      user.email = this.user.email;
+      user.company = this.user.company;
+      user.password = this.user.password;
+      user.role = this.user.role;
+
+      this.userService.update(user, false).toPromise()
+        .then(_ => {
+          this.user.firstName = user.firstName;
+          this.user.lastName = user.lastName;
+          this.user.telephoneNumber = user.telephoneNumber;
+          this.user.age = user.age;
+          this.authenticationService.updateUser(this.user);
+          this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        })
+        .catch(error => {
+          this.handleError(error);
+        });
+
+    } else {
+      this.snackBar.open('Fill all the required fields, please',
+        'OK', {duration: 4000});
+    }
+  }
+
+  handleError(httpError: string): void {
+    this.snackBar.open(httpError, 'OK', {duration: 4000});
   }
 }

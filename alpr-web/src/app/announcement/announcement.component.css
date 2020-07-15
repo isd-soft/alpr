@@ -77,6 +77,14 @@
   padding: 1px
 }
 
+.edit-button {
+  position: absolute;
+  top: 1px;
+  right: 50px;
+  font-size: 30px;
+  padding: 1px;
+}
+
 .message {
   width: 100%;
   height: 72vh;
@@ -100,11 +108,19 @@
 .view-button {
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 14px;
+}
+
+.view-button:focus {
+  outline: none;
+}
+
+.add-comment-button:focus{
+  outline: none;
 }
 
 .add-comment-button {
   position: absolute;
   bottom: 5px;
-  right: 70px;
+  right: 84px;
 }

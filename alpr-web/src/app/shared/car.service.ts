@@ -7,17 +7,17 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class CarService{
   constructor(private http: HttpClient) {}
-  private url = 'http://localhost:8080/cars';
+  private url = 'https://vm-alpr-server.herokuapp.com/cars';
 
   getCars(): Observable<any[]>{
-    return this.http.get<any[]>('http://localhost:8080/cars');
+    return this.http.get<any[]>(this.url);
   }
 
   getCarsByCompanyName(companyName: string): Observable<any> {
     return  this.http.get<any[]>(this.url + '/company/' + companyName);
   }
 
-  getParkingHistory(companyName:string): Observable<any> {
+  getParkingHistory(companyName: string): Observable<any> {
      return this.http.get<any>(this.url + '/history/' + companyName);
   }
 

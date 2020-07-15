@@ -26,11 +26,12 @@ export class HeaderComponent implements OnInit {
   }
 
   navigateHome(){
-    if(this.authenticationService.currentUserValue.role === 'USER'){
+    if (this.authenticationService.currentUserValue.role === 'USER'){
       this.router.navigate(['/']);
     }
-    else
+    else {
       this.router.navigate(['/']);
+    }
   }
 }
 

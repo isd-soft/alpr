@@ -23,11 +23,15 @@
       <button mat-button class="remove-button" (click)="removeAnnouncement(announcement.id)" *ngIf="isAdmin">
         <mat-icon style="margin: auto">close</mat-icon>
       </button>
-      <button mat-raised-button class="view-button" (click)="showComments(announcement.id)">
+      <button mat-raised-button class="view-button" (click)="showComments(announcement.id)"
+        matBadge="{{nrOfComments[announcement.id]}}" matBadgePosition="above after" matBadgeColor="primary">
         <mat-icon> comment</mat-icon>
       </button>
       <button mat-raised-button class="add-comment-button" (click)="addComment(announcement.id)">
         <mat-icon> add_comment</mat-icon>
+      </button>
+      <button mat-button class="edit-button" (click)="editAnnouncement(announcement)" *ngIf="isAdmin">
+        <mat-icon>edit</mat-icon>
       </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>

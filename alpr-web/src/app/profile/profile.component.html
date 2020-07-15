@@ -1,6 +1,5 @@
 <!--suppress HtmlFormInputWithoutLabel -->
 <section class="car-list-section">
-  <!--<div class="mat-elevation-z8">-->
   <section class="profile-info-section">
     <mat-card class="my-card">
       <mat-card-title class="full-width">Profile</mat-card-title>
@@ -57,6 +56,14 @@
               </div>
 
         </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary"
+                  (click)="onEditProfileClick(editProfileTemplate)">Edit Profile
+          </button>
+          <button mat-raised-button color="accent"
+                  (click)="onChangePasswordClick(changePasswordTemplate)">Change Password
+          </button>
+        </mat-card-actions>
       </div>
     </mat-card>
   </section>
@@ -108,10 +115,10 @@
         <mat-cell *matCellDef="let element; let car">
 
           <button mat-raised-button color="primary"
-                  (click)="onEdit(editCarTemplate, car)">Edit
+                  (click)="onCarEdit(editCarTemplate, car)">Edit
           </button>
           <button mat-raised-button color="warn" class="left-margin"
-                  (click)="onDelete(car)">Remove
+                  (click)="onCarDelete(car)">Remove
           </button>
         </mat-cell>
 
@@ -201,7 +208,8 @@
                     [mat-dialog-close]="true">Close
             </button>
             <button class="mat-raised-button mat-primary left-margin"
-                    [mat-dialog-close]="true" (click)="updateCar()">Update
+                    [mat-dialog-close]="true" (click)="updateCar()"
+                    [disabled]="!editCarForm.valid">Update
             </button>
           </mat-dialog-actions>
         </div>
@@ -257,4 +265,108 @@
 <ng-template #defaultProfilePhoto>
   <div class="profile-photo"><img src="../../assets/img/default-profile.png" alt="Profile Photo Preview"
                                   class="default-profile-preview" style="width: 100%;height: 100%;object-fit: cover"></div>
+</ng-template>
+
+<ng-template #editProfileTemplate>
+  <div mat-dialog-title>Edit Profile</div>
+  <mat-dialog-content [formGroup]="editProfileForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="First Name"
+                 name="firstName" type="text" required
+                 formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Last Name"
+                 name="lastName" type="text"
+                 required formControlName="lastName">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>Age</mat-label>
+          <input matInput placeholder="Age" name="age"
+                 class="no-left-margin" type="number"
+                 required formControlName="age">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telephone Number</mat-label>
+          <input matInput placeholder="+373XXXXXXXX" name="telephone"
+                 type="text" required formControlName="telephone">
+        </mat-form-field>
+
+        <br>
+
+        <mat-dialog-actions class="no-bottom-margin">
+          <button class="mat-raised-button"
+                  [mat-dialog-close]="true">Close
+          </button>
+          <button class="mat-raised-button mat-primary left-margin"
+                  (click)="updateUserProfile()"
+                  [disabled]="!editProfileForm.valid">
+            Update
+          </button>
+        </mat-dialog-actions>
+      </div>
+      <div class="col"></div>
+    </div>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #changePasswordTemplate>
+  <div mat-dialog-title>Change Password</div>
+
+  <mat-dialog-content>
+    <form [formGroup]="changePasswordForm" (ngSubmit)="changeUserPassword()">
+
+      <mat-form-field>
+        <mat-label>Old Password</mat-label>
+        <input matInput placeholder="Old Password" name="oldPassword"
+               type="password" required formControlName="oldPassword">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input matInput placeholder="New Password" name="newPassword"
+               type="password" required formControlName="newPassword">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Confirm New Password</mat-label>
+        <input matInput placeholder="Confirm New Password" name="newPasswordConfirm"
+               type="password" required formControlName="newPasswordConfirm">
+      </mat-form-field>
+
+      <br>
+
+      <div *ngIf="hasCars">
+        <mat-form-field>
+          <mat-label>License Plate</mat-label>
+          <input matInput placeholder="Provide license number for one of your cars"
+                 type="text" name="licensePlate" required formControlName="licensePlate">
+        </mat-form-field>
+      </div>
+
+    </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Close</button>
+    <button mat-raised-button type="submit" (click)="changeUserPassword()"
+            color="primary" [disabled]="!changePasswordForm.valid">
+      Change Password
+    </button>
+  </mat-dialog-actions>
+
 </ng-template>

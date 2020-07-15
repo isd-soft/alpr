@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class CompanyService {
-  private url = 'http://localhost:8080/companies';
+  private url = 'https://vm-alpr-server.herokuapp.com/companies';
 
   constructor(private httpClient: HttpClient) {
   }

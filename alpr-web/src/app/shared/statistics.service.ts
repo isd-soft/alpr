@@ -4,8 +4,8 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class StatisticsService {
-  private url = 'http://localhost:8080/statistics';
-  private metricsUrl = 'http://localhost:8080/actuator/metrics';
+  private url = 'https://vm-alpr-server.herokuapp.com/statistics';
+  private metricsUrl = 'https://vm-alpr-server.herokuapp.com/actuator/metrics';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -35,11 +35,11 @@ export class StatisticsService {
   }
 
   public getInfo(): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/actuator/info');
+    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/info');
   }
 
   public getHealth(): Observable<any> {
-    return this.httpClient.get('http://localhost:8080/actuator/health');
+    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/health');
   }
 
   public getCpuCount(): Observable<any> {
