@@ -18,6 +18,10 @@ export class AnnouncementService {
     return this.httpClient.post(this.url, announcement);
   }
 
+  public updateAnnouncement(announcement: AnnouncementModel): Observable<any> {
+    return this.httpClient.put(this.url, announcement);
+  }
+
   public removeAnnouncement(id: number): Observable<any> {
     return this.httpClient.delete(this.url + `/${id}`);
   }
