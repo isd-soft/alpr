@@ -40,7 +40,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
-import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 // @ts-ignore
@@ -77,7 +76,6 @@ import {MatBadgeModule} from "@angular/material/badge";
     HeaderComponent,
     FooterComponent,
     CompanyCarsComponent,
-    PasswordComponent,
     DashboardComponent,
     AnnouncementComponent,
     ConfirmationDialogComponent,

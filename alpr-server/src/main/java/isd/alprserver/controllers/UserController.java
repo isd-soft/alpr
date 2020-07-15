@@ -1,11 +1,14 @@
 package isd.alprserver.controllers;
 
+import isd.alprserver.config.JwtTokenUtil;
 import isd.alprserver.dtos.UserDTO;
 import isd.alprserver.model.User;
 import isd.alprserver.model.exceptions.RoleNotFoundException;
 import isd.alprserver.model.exceptions.UserNotFoundException;
 import isd.alprserver.model.exceptions.UserRemovalException;
 import isd.alprserver.model.exceptions.UserUpdatingException;
+import isd.alprserver.services.interfaces.CompanyService;
+import isd.alprserver.services.interfaces.RoleService;
 import isd.alprserver.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -24,7 +28,10 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
+    private final CompanyService companyService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
@@ -45,10 +52,31 @@ public class UserController {
 
 
     @PutMapping("/update")
-    @PreAuthorize("hasRole('ROLE_SYSTEM_ADMINISTRATOR')")
     public ResponseEntity<?> updateUser(@RequestParam boolean isPasswordChanged,
-                                        @RequestBody @Valid UserDTO userDTO)
+                                        @RequestBody @Valid UserDTO userDTO,
+                                        HttpServletRequest httpServletRequest)
             throws UserNotFoundException, RoleNotFoundException, UserUpdatingException {
+
+        final String requestTokenHeader = httpServletRequest
+                .getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String email = jwtTokenUtil.getEmailFromToken(jwtToken);
+
+        User requestingUser = userService.getUserByEmail(email);
+        if (requestingUser.getRole() == roleService.getByName("SYSTEM_ADMINISTRATOR")) {
+            User userToUpdate = userService.getUserByEmail(userDTO.getEmail());
+            if (userToUpdate.getRole() == roleService.getByName("SYSTEM_ADMINISTRATOR") &&
+                    !requestingUser.getEmail().equals(userDTO.getEmail())) {
+                throw new UserUpdatingException("System Administrator can not update " +
+                        "another System Administrator");
+            }
+        } else {
+            if (!email.equals(userDTO.getEmail()) ||
+                    companyService.getByName(userDTO.getCompany()) != requestingUser.getCompany() ||
+                    roleService.getByName(userDTO.getRole()) != requestingUser.getRole()) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }
 
         if (isPasswordChanged) {
             userDTO.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
@@ -88,12 +116,17 @@ public class UserController {
     }
 
     @PutMapping("/password")
-    public ResponseEntity<?> changePassword(@RequestParam String email,
-                                            @RequestParam String oldPassword,
+    public ResponseEntity<?> changePassword(@RequestParam String oldPassword,
                                             @RequestParam String newPassword,
                                             @RequestParam(required = false)
-                                                    String licensePlate)
+                                                    String licensePlate,
+                                            HttpServletRequest httpServletRequest)
             throws UserUpdatingException {
+
+        final String requestTokenHeader = httpServletRequest
+                .getHeader("Authorization");
+        String jwtToken = requestTokenHeader.substring(7);
+        String email = jwtTokenUtil.getEmailFromToken(jwtToken);
 
         userService.changePassword(email, oldPassword,
                 newPassword, licensePlate, bCryptPasswordEncoder);
