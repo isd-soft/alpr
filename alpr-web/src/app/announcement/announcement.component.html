@@ -29,6 +29,9 @@
       <button mat-raised-button class="add-comment-button" (click)="addComment(announcement.id)">
         <mat-icon> add_comment</mat-icon>
       </button>
+      <button mat-button class="edit-button" (click)="editAnnouncement(announcement)" *ngIf="isAdmin">
+        <mat-icon>edit</mat-icon>
+      </button>
     </mat-card>
   </cdk-virtual-scroll-viewport>
   <button mat-fab color="primary"

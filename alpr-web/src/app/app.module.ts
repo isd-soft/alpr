@@ -59,6 +59,7 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
 import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
 import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
+import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     ConfirmationDialogComponent,
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
-    AddAnnouncementDialogComponent
+    AddAnnouncementDialogComponent,
+    EditAnnouncementDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -123,7 +125,10 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
-  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent, AddAnnouncementDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent,
+    ViewCommentDialogComponent,
+    AddAnnouncementDialogComponent,
+  EditAnnouncementDialogComponent]
 })
 export class AppModule {
 }
