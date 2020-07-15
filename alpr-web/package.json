@@ -34,7 +34,8 @@
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2",
-    "express": "latest"
+    "express": "^4.17.1",
+    "body-parser": "^1.19.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.7",
