@@ -47,6 +47,29 @@
           <mat-option *ngFor="let company of companies" [value]="company.name">{{company.name}}</mat-option>
         </mat-select>
       </mat-form-field>
+
+      <div class="input-group mb-3 full-width">
+        <div class="custom-file">
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <input #userFileInput type="file" class="custom-file-input"
+                 id="userFileInput" aria-describedby="inputGroupFileAddon01"
+                 (change)="handleFileInput($event.target.files)"
+                 accept="image/jpeg">
+          <label class="custom-file-label" for="userFileInput">
+            {{label}}
+          </label>
+        </div>
+      </div>
+
+      <mat-card class="user-photo-preview" *ngIf="imgURL">
+        <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+        <img matCardImage [src]="imgURL" alt="user photo">
+        <mat-card-actions>
+          <button mat-raised-button (click)="removeUploadedPhoto()"
+                  class="action">Remove
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </form>
 
   </mat-card-content>

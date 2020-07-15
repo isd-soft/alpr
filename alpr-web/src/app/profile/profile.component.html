@@ -4,43 +4,72 @@
   <section class="profile-info-section">
     <mat-card class="my-card">
       <mat-card-title class="full-width">Profile</mat-card-title>
-      <mat-card-content class="card-content">
-        <mat-form-field>
-          <mat-label>First Name:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.firstName">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Last Name:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.lastName">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Email:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.email">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Age:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.age">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Telephone:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Company:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.company">
-        </mat-form-field>
-      </mat-card-content>
+      <div>
+        <mat-card-content class="card-content">
+            <div class="col">
+              <div *ngIf="profilePhotoToView; else defaultProfilePhoto"
+                   class="profile-photo">
+                <img [src]="profilePhotoToView" alt="Profile Photo Preview"
+                     style="width: 100%;height: 100%;object-fit: cover">
+              </div>
+            </div>
+              <div class="col">
+                <div class="row">
+              <mat-form-field>
+                <mat-label>First Name:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.firstName">
+              </mat-form-field>
+                </div>
+                <div class="row">
+              <mat-form-field>
+                <mat-label>Last Name:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.lastName">
+              </mat-form-field>
+                </div>
+              </div>
+              <div class="col">
+                <div class="row">
+              <mat-form-field>
+                <mat-label>Email:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.email">
+              </mat-form-field>
+                </div>
+                <div class="row">
+              <mat-form-field>
+                <mat-label>Age:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.age">
+              </mat-form-field>
+              </div>
+              </div>
+              <div class="col" >
+                <div class="row">
+              <mat-form-field>
+                <mat-label>Telephone:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
+              </mat-form-field>
+                </div>
+                <div class="row">
+              <mat-form-field>
+                <mat-label>Company:</mat-label>
+                <input matInput [disabled]="true" [(ngModel)]="user.company">
+              </mat-form-field>
+              </div>
+              </div>
+
+        </mat-card-content>
+      </div>
     </mat-card>
   </section>
 
   <mat-card class="all-margins">
-    <mat-card-title >My Cars</mat-card-title>
+    <mat-card-title>My Cars</mat-card-title>
     <mat-table class="table" matSort [dataSource]="dataSource">
       <ng-container matColumnDef="licensePlate">
         <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
         <!--suppress TypeScriptUnresolvedVariable -->
         <mat-cell class="description-cell"
-                  *matCellDef="let car">{{car.licensePlate}}</mat-cell>
+                  *matCellDef="let car">{{car.licensePlate}}
+        </mat-cell>
 
       </ng-container>
 
@@ -48,13 +77,15 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
         <!--suppress TypeScriptUnresolvedVariable -->
         <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.brand}}</mat-cell>
+                  *matCellDef="let car">{{car.brand}}
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="model">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
         <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.model}}</mat-cell>
+                  *matCellDef="let car">{{car.model}}
+        </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="color">
@@ -177,12 +208,12 @@
         <div class="col-6">
           <mat-card>
             <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-              <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-                <div style="text-align: center">
-                  <img mat-card-image [src]="carPhotoToEdit"
-                       alt="car photo" class="edit-car-photo">
-                </div>
+            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img mat-card-image [src]="carPhotoToEdit"
+                     alt="car photo" class="edit-car-photo">
               </div>
+            </div>
           </mat-card>
         </div>
       </div>
@@ -221,4 +252,9 @@
     <img matCardImage src="../../assets/img/default_car.jpg" alt="Car Photo Preview"
          class="default-edit-car-photo">
   </div>
+</ng-template>
+
+<ng-template #defaultProfilePhoto>
+  <div class="profile-photo"><img src="../../assets/img/default-profile.png" alt="Profile Photo Preview"
+                                  class="default-profile-preview" style="width: 100%;height: 100%;object-fit: cover"></div>
 </ng-template>

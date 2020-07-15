@@ -18,14 +18,28 @@ input {
   margin: auto;
 }
 
-.card-content {
-  width: 100%;
-  font-size: 15px;
-  display: flex;
-  justify-content: space-between;
+.my-card{
 }
 
-.table {
+.card-content {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  font-size: 20px;
+}
+
+.first-column {
+  display: flex;
+  align-items:column;
+}
+
+.profile-photo {
+  height: 180px;
+  width: 180px;
+  object-fit: cover;
+}
+
+.form {
 }
 
 .left-margin {

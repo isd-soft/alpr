@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   value = '';
   editedCar: CarModel;
   editCarForm: FormGroup;
+  profilePhotoToView: any;
 
   carPhotoToView: any;
   carPhotoToEdit: any;
@@ -63,7 +64,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = this.authenticationService.currentUserValue;
-  }
+    if (this.user.photo) {
+          this.profilePhotoToView = this.base64PhotoToUrl(this.user.photo);
+        } else {
+          this.profilePhotoToView = null;
+    }
+    }
 
   onEdit(editCarTemplate, car: CarModel) {
     this.editedCar = car;

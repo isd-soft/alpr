@@ -21,10 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +50,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User user = userDTO.toUser();
         user.setCompany(getCompanyOfUser(userDTO));
         user.setRole(getRoleOfUser(userDTO));
+        user.setPhoto(userDTO.getPhoto() != null ?
+                Base64.getDecoder().decode(userDTO.getPhoto().split(",")[1]) :
+                null);
 
         user = userRepository.save(user);
 
