@@ -40,7 +40,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
-import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 // @ts-ignore
@@ -75,7 +74,6 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     HeaderComponent,
     FooterComponent,
     CompanyCarsComponent,
-    PasswordComponent,
     DashboardComponent,
     AnnouncementComponent,
     ConfirmationDialogComponent,

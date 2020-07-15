@@ -26,10 +26,13 @@ export class NavigationComponent implements OnInit {
             name: 'Dashboard'
           },
           {
+            link: 'profile',
+            name: 'Profile'
+          },
+          {
             link: 'announcements',
             name: 'Announcements'
-          }
-          ,
+          },
           {
             link: 'cars',
             name: 'Cars'
@@ -63,10 +66,6 @@ export class NavigationComponent implements OnInit {
             name: 'Company\'s Cars'
           }];
       }
-      this.links.push({
-        link: 'password',
-        name: 'Change password'
-      });
     });
   }
 }

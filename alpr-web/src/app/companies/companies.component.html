@@ -87,7 +87,7 @@
                 (click)="addCompanyForm.reset()">Clear
         </button>
         <button class="mat-raised-button mat-primary left-margin"
-                (click)="addCompany()">Save
+                (click)="addCompany()" [disabled]="!addCompanyForm.valid">Save
         </button>
       </mat-dialog-actions>
 
@@ -126,7 +126,7 @@
         </button>
         <button class="mat-raised-button mat-primary left-margin"
                 [mat-dialog-close]="true"
-                (click)="updateCompany()">Update
+                (click)="updateCompany()" [disabled]="!editCompanyForm.valid">Update
         </button>
       </mat-dialog-actions>
 
