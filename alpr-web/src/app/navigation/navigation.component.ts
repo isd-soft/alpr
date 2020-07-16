@@ -52,14 +52,9 @@ export class NavigationComponent implements OnInit {
             link: 'profile',
             name: 'Profile'
           },
-
           {
             link: 'announcements',
             name: 'Announcements'
-          },
-          {
-            link: 'addcar',
-            name: 'Add Car'
           },
           {
             link: 'companycars',

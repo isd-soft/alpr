@@ -21,9 +21,9 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  updateUser(user: User){
+  updateUser(user: User) {
     user.token = this.currentUserSubject.value.token;
-    localStorage.setItem('currentUser', JSON.stringify(user))
+    localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
 
