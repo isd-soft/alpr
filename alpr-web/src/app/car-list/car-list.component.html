@@ -49,7 +49,7 @@
         </span>
           <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
             <span class="material-icons span-icon"
-                  [ngStyle]="{'color': car.color}">directions_car
+                  [ngStyle]="{'color': car.color, 'background-color': car.color.toLowerCase().localeCompare('white') === 0 ? 'black' : 'transparent'}">directions_car
             </span>
           </button>
         </mat-cell>

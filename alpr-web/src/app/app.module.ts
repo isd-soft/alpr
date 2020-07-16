@@ -58,6 +58,7 @@ import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-an
 import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
 import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit
     NgbModule,
     NgApexchartsModule,
     MatListModule,
-    ScrollingModule
+    ScrollingModule,
+    MatBadgeModule
 
 
   ],

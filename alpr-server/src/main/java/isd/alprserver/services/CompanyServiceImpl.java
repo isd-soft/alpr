@@ -1,5 +1,7 @@
 package isd.alprserver.services;
 
+import isd.alprserver.dtos.CompanyDTO;
+import isd.alprserver.model.Car;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.exceptions.CompanyCreationException;
 import isd.alprserver.model.exceptions.CompanyNotFoundException;
@@ -9,18 +11,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyServiceImpl implements CompanyService
-{
+public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
 
     @Override
-    public List<Company> getAll()
-    {
+    public List<Company> getAll() {
         return companyRepository.findAll();
     }
 
@@ -45,8 +46,14 @@ public class CompanyServiceImpl implements CompanyService
     }
 
     @Override
-    public Company update(Company company) {
-        return companyRepository.save(company);
+    @Transactional
+    public void update(Long id, CompanyDTO company) {
+        Company companyById = getById(id);
+        companyById.setName(company.getName());
+        companyById.setNrParkingSpots(company.getNrParkingSpots());
+        companyById.setLogo(company.getLogo() != null ?
+                Base64.getDecoder().decode(company.getLogo().split(",")[1])
+                : null);
     }
 
     @Override

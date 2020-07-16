@@ -10,7 +10,7 @@ import {CommentModel} from '../shared/comment.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ViewCommentDialogComponent} from '../view-comment-dialog/view-comment-dialog.component';
 import {AddAnnouncementDialogComponent} from '../add-announcement-dialog/add-announcement-dialog.component';
-import {EditAnnouncementDialogComponent} from "../edit-announcement-dialog/edit-announcement-dialog.component";
+import {EditAnnouncementDialogComponent} from '../edit-announcement-dialog/edit-announcement-dialog.component';
 
 @Component({
   selector: 'app-announcement',
@@ -23,6 +23,7 @@ export class AnnouncementComponent implements OnInit {
   public isAdmin = true;
   private userEmail = '';
   private commentDescription = '';
+  public nrOfComments = {};
   announcement: AnnouncementModel = new AnnouncementModel();
   constructor(private announcementService: AnnouncementService,
               private confirmationDialogService: ConfirmationDialogService,
@@ -45,6 +46,11 @@ export class AnnouncementComponent implements OnInit {
       .toPromise()
       .then(result => {
         this.announcements = result;
+        this.announcements.forEach(ann => {
+          this.announcementService.getAllComments(ann.id)
+            .toPromise()
+            .then(comments => this.nrOfComments[ann.id] = comments.length);
+        });
       });
   }
 
@@ -110,6 +116,7 @@ export class AnnouncementComponent implements OnInit {
           .toPromise()
           .then(_ => {
             this.snackBar.open('Comment added!', 'OK', {duration: 2000});
+            this.updateList();
           });
       }
     });
@@ -135,6 +142,12 @@ export class AnnouncementComponent implements OnInit {
         this.showForm = false;
       }
     });
+  }
+
+  getNrOfComments(announcementId: number) {
+    return this.announcementService.getAllComments(announcementId)
+      .toPromise()
+      .then(result => result);
   }
 
 }
