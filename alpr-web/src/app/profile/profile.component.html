@@ -396,7 +396,7 @@
             </div>
             <div class='input-group-append' *ngIf="carPhotoToAdd">
               <button class="btn btn-outline-secondary action" type="button"
-                      (click)="setDefaultPhoto()">Set Default
+                      (click)="setDefaultCarPhoto()">Set Default
               </button>
             </div>
           </div>
@@ -406,7 +406,7 @@
                     [mat-dialog-close]="true">Close
             </button>
             <button class="mat-raised-button mat-accent left-margin"
-                    (click)="addCarForm.reset()">Clear
+                    (click)="addCarForm.reset(); setDefaultCarPhoto()">Clear
             </button>
             <button class="mat-raised-button mat-primary left-margin"
                     (click)="addCar()" [disabled]="!addCarForm.valid">Save
