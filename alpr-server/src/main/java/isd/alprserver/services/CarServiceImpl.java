@@ -19,6 +19,7 @@ import isd.alprserver.services.interfaces.ParkingHistoryService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -215,9 +216,22 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public List<CarDTO> getAllIn() {
-        return getAll().stream()
-                .filter(car -> car.getStatus().equals("IN"))
+        return carRepository.findByStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status name")))
+                .stream()
+                .map(car -> CarDTO.builder()
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .color(car.getColor())
+                        .id(car.getId())
+                        .model(car.getModel())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .status(car.getStatus().getName())
+                        .build())
                 .collect(Collectors.toList());
     }
 }
