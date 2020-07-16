@@ -6,8 +6,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class UserService {
-  // private url = 'https://vm-alpr-server.herokuapp.com';
-  private url = 'http://localhost:8080';
+  private url = 'https://vm-alpr-server.herokuapp.com';
 
   constructor(private httpClient: HttpClient) {
   }
