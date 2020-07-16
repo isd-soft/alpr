@@ -30,6 +30,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   value = '';
   companyPhotoToView: any;
   companyPhotoToEdit: any;
+  companyPhotoToEditURL: any;
   companyPhotoToAdd: any;
 
   defaultUploadInputLabel = 'Upload Photo';
@@ -79,6 +80,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     this.editedCompany = companyModel;
     if (companyModel.logo) {
       this.companyPhotoToEdit = this.base64PhotoToUrl(companyModel.logo);
+      this.companyPhotoToEditURL = companyModel.logo;
     } else {
       this.companyPhotoToEdit = null;
     }
@@ -130,8 +132,16 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
   updateCompany() {
     const companyModel: CompanyModel = this.formExtractor.extractCompany(this.editCompanyForm);
     companyModel.id = this.editedCompany.id;
-    companyModel.logo = this.companyPhotoToEdit;
 
+    if (this.companyPhotoToEdit) {
+      if (this.companyPhotoToEditURL.includes('data:image')) {
+        companyModel.logo = this.companyPhotoToEdit;
+      } else {
+        companyModel.logo = 'data:Image/*;base64,' + this.companyPhotoToEditURL;
+      }
+    } else {
+      companyModel.logo = null;
+    }
     this.companyService.update(companyModel)
       .toPromise()
       .then(_ => {
@@ -188,6 +198,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
     this.fileHandler.loadCompanyPhoto(files)
       .then(result => {
         this.companyPhotoToEdit = result;
+        this.companyPhotoToEditURL = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
         this.companyEditFileInput.nativeElement.value = '';
       })
