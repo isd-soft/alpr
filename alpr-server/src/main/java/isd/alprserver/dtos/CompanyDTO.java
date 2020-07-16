@@ -1,4 +1,5 @@
 package isd.alprserver.dtos;
+
 import isd.alprserver.model.Company;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,6 @@ import javax.validation.constraints.Pattern;
 @Data
 public class CompanyDTO {
 
-//    @NotNull
     private long id;
 
     @NotNull
@@ -24,11 +24,5 @@ public class CompanyDTO {
     @NotNull
     private int nrParkingSpots;
 
-        public Company toCompany() {
-            return Company.builder()
-                    .id(id)
-                    .name(name)
-                    .nrParkingSpots(nrParkingSpots)
-                    .build();
-        }
-    }
+    private String logo;
+}

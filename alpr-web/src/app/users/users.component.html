@@ -171,7 +171,7 @@
                 (click)="addUserForm.reset()">Clear
         </button>
         <button class="mat-raised-button mat-primary left-margin"
-                (click)="addUser()">Save
+                (click)="addUser()" [disabled]="!addUserForm.valid">Save
         </button>
       </mat-dialog-actions>
 
@@ -267,7 +267,7 @@
                 [mat-dialog-close]="true">Close
         </button>
         <button class="mat-raised-button mat-primary left-margin"
-                (click)="updateUser()">Update
+                (click)="updateUser()" [disabled]="!editUserForm.valid">Update
         </button>
       </mat-dialog-actions>
 

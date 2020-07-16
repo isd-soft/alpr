@@ -30,7 +30,6 @@ import {CarService} from './shared/car.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {AddCarComponent} from './add-car/add-car.component';
 import {HomeComponent} from './home/home.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {CompaniesComponent} from './companies/companies.component';
@@ -40,7 +39,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
-import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 // @ts-ignore
@@ -59,6 +57,8 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
 import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
 import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
+import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
+import {MatBadgeModule} from "@angular/material/badge";
 import {PlanHandler} from "./utils/plan.handler";
 import {ParkingPlanService} from "./shared/parking.plan.service";
 
@@ -68,7 +68,6 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
     RegistrationComponent,
     LoginComponent,
     UsersComponent,
-    AddCarComponent,
     CarListComponent,
     CompaniesComponent,
     HomeComponent,
@@ -77,13 +76,13 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
     HeaderComponent,
     FooterComponent,
     CompanyCarsComponent,
-    PasswordComponent,
     DashboardComponent,
     AnnouncementComponent,
     ConfirmationDialogComponent,
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
-    AddAnnouncementDialogComponent
+    AddAnnouncementDialogComponent,
+    EditAnnouncementDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +112,8 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
     NgbModule,
     NgApexchartsModule,
     MatListModule,
-    ScrollingModule
+    ScrollingModule,
+    MatBadgeModule
 
 
   ],
@@ -126,7 +126,10 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
-  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent, AddAnnouncementDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent,
+    ViewCommentDialogComponent,
+    AddAnnouncementDialogComponent,
+  EditAnnouncementDialogComponent]
 })
 export class AppModule {
 }

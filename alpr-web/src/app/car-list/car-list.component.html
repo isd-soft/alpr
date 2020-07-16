@@ -49,7 +49,7 @@
         </span>
           <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
             <span class="material-icons span-icon"
-                  [ngStyle]="{'color': car.color}">directions_car
+                  [ngStyle]="{'color': car.color, 'background-color': car.color.toLowerCase().localeCompare('white') === 0 ? 'black' : 'transparent'}">directions_car
             </span>
           </button>
         </mat-cell>
@@ -179,7 +179,7 @@
                     (click)="addCarForm.reset()">Clear
             </button>
             <button class="mat-raised-button mat-primary left-margin"
-                    (click)="addCar()">Save
+                    (click)="addCar()" [disabled]="!addCarForm.valid">Save
             </button>
           </mat-dialog-actions>
         </div>
@@ -272,7 +272,8 @@
                   [mat-dialog-close]="true">Close
           </button>
           <button class="mat-raised-button mat-primary left-margin"
-                  [mat-dialog-close]="true" (click)="updateCar()">Update
+                  [mat-dialog-close]="true" (click)="updateCar()"
+                  [disabled]="!editCarForm.valid">Update
           </button>
         </mat-dialog-actions>
       </div>

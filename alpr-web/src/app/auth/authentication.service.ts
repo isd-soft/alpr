@@ -20,6 +20,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
+  updateUser(user: User) {
+    user.token = this.currentUserSubject.value.token;
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+  }
+
   login(email: string, password: string) {
     return this.http.post<any>(this.url + `/authenticate`,
       {email, password})

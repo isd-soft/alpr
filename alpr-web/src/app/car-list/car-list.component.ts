@@ -27,7 +27,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   users = [];
   dataSource = new MatTableDataSource(this.cars);
   value = '';
-  addCarForm: FormGroup = this.formGenerator.generateCarAddForm();
+  addCarForm: FormGroup = this.formGenerator.generateAdminCarAddForm();
   editedCar: CarModel;
   editCarForm: FormGroup;
   carPhotoToView: any;
@@ -126,7 +126,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   addCar() {
-    const car: CarModel = this.formExtractor.extractAddCar(this.addCarForm);
+    const car: CarModel = this.formExtractor.extractAdminAddCar(this.addCarForm);
     car.photo = this.carPhotoToAdd;
     this.carService.registerCar(car)
       .toPromise()

@@ -1,100 +1,112 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<section class="car-list-section">
-  <!--<div class="mat-elevation-z8">-->
-  <section class="profile-info-section">
-    <mat-card class="my-card">
-      <mat-card-title class="full-width">Profile</mat-card-title>
-      <mat-card-content class="card-content">
-        <mat-form-field>
-          <mat-label>First Name:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.firstName">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Last Name:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.lastName">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Email:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.email">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Age:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.age">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Telephone:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Company:</mat-label>
-          <input matInput [disabled]="true" [(ngModel)]="user.company">
-        </mat-form-field>
-      </mat-card-content>
-    </mat-card>
-  </section>
+<div class="all-margins">
+  <mat-card class="my-card">
+    <mat-card-title>Profile</mat-card-title>
+    <mat-card-content class="card-content">
+      <mat-form-field>
+        <mat-label>First Name:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.firstName">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Last Name:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.lastName">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.email">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Age:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.age">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Telephone:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Company:</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="user.company">
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary"
+              (click)="onEditProfileClick(editProfileTemplate)">Edit Profile
+      </button>
+      <button mat-raised-button color="accent"
+              (click)="onChangePasswordClick(changePasswordTemplate)">Change Password
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="all-margins">
+  <mat-card>
+    <mat-card-title>My Cars</mat-card-title>
 
-  <mat-card class="all-margins">
-    <mat-card-title >My Cars</mat-card-title>
-    <mat-table class="table" matSort [dataSource]="dataSource">
-      <ng-container matColumnDef="licensePlate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
-        <!--suppress TypeScriptUnresolvedVariable -->
-        <mat-cell class="description-cell"
-                  *matCellDef="let car">{{car.licensePlate}}</mat-cell>
+    <button mat-raised-button color="accent"
+            (click)="onCarAdd(addCarTemplate)">Add car
+    </button>
+    <mat-card-content>
+      <mat-table class="table" matSort [dataSource]="dataSource">
+        <ng-container matColumnDef="licensePlate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <mat-cell class="description-cell"
+                    *matCellDef="let car">{{car.licensePlate}}</mat-cell>
 
-      </ng-container>
+        </ng-container>
 
-      <ng-container matColumnDef="brand">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
-        <!--suppress TypeScriptUnresolvedVariable -->
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.brand}}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="brand">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">{{car.brand}}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="model">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.model}}</mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">{{car.model}}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">
+        <ng-container matColumnDef="color">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">
         <span class="color-title">
           {{car.color}}
         </span>
-          <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
+            <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
             <span class="material-icons span-icon"
                   [ngStyle]="{'color': car.color}">directions_car
             </span>
-          </button>
-        </mat-cell>
-      </ng-container>
+            </button>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element; let car">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element; let car">
 
-          <button mat-raised-button color="primary"
-                  (click)="onEdit(editCarTemplate, car)">Edit
-          </button>
-          <button mat-raised-button color="warn" class="left-margin"
-                  (click)="onDelete(car)">Remove
-          </button>
-        </mat-cell>
+            <button mat-raised-button color="primary"
+                    (click)="onCarEdit(editCarTemplate, car)">Edit
+            </button>
+            <button mat-raised-button color="warn" class="left-margin"
+                    (click)="onCarDelete(car)">Remove
+            </button>
+          </mat-cell>
 
-      </ng-container>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns"
-               (click)="onRowClicked(row)">
-      </mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"
+                 (click)="onRowClicked(row)">
+        </mat-row>
 
-    </mat-table>
+      </mat-table>
+    </mat-card-content>
   </mat-card>
-</section>
+</div>
 
 <ng-template #editCarTemplate>
   <div>
@@ -170,19 +182,20 @@
                     [mat-dialog-close]="true">Close
             </button>
             <button class="mat-raised-button mat-primary left-margin"
-                    [mat-dialog-close]="true" (click)="updateCar()">Update
+                    [mat-dialog-close]="true" (click)="updateCar()"
+                    [disabled]="!editCarForm.valid">Update
             </button>
           </mat-dialog-actions>
         </div>
         <div class="col-6">
           <mat-card>
             <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-              <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
-                <div style="text-align: center">
-                  <img mat-card-image [src]="carPhotoToEdit"
-                       alt="car photo" class="edit-car-photo">
-                </div>
+            <div *ngIf="carPhotoToEdit; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img mat-card-image [src]="carPhotoToEdit"
+                     alt="car photo" class="edit-car-photo">
               </div>
+            </div>
           </mat-card>
         </div>
       </div>
@@ -220,5 +233,198 @@
   <div style="text-align: center">
     <img matCardImage src="../../assets/img/default_car.jpg" alt="Car Photo Preview"
          class="default-edit-car-photo">
+  </div>
+</ng-template>
+
+<ng-template #editProfileTemplate>
+  <div mat-dialog-title>Edit Profile</div>
+  <mat-dialog-content [formGroup]="editProfileForm">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <mat-label>First Name</mat-label>
+          <input matInput placeholder="First Name"
+                 name="firstName" type="text" required
+                 formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput placeholder="Last Name"
+                 name="lastName" type="text"
+                 required formControlName="lastName">
+        </mat-form-field>
+
+        <br>
+
+        <mat-form-field>
+          <mat-label>Age</mat-label>
+          <input matInput placeholder="Age" name="age"
+                 class="no-left-margin" type="number"
+                 required formControlName="age">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telephone Number</mat-label>
+          <input matInput placeholder="+373XXXXXXXX" name="telephone"
+                 type="text" required formControlName="telephone">
+        </mat-form-field>
+
+        <br>
+
+        <mat-dialog-actions class="no-bottom-margin">
+          <button class="mat-raised-button"
+                  [mat-dialog-close]="true">Close
+          </button>
+          <button class="mat-raised-button mat-primary left-margin"
+                  (click)="updateUserProfile()"
+                  [disabled]="!editProfileForm.valid">
+            Update
+          </button>
+        </mat-dialog-actions>
+      </div>
+      <div class="col"></div>
+    </div>
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #changePasswordTemplate>
+  <div mat-dialog-title>Change Password</div>
+
+  <mat-dialog-content>
+    <form [formGroup]="changePasswordForm" (ngSubmit)="changeUserPassword()">
+
+      <mat-form-field>
+        <mat-label>Old Password</mat-label>
+        <input matInput placeholder="Old Password" name="oldPassword"
+               type="password" required formControlName="oldPassword">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input matInput placeholder="New Password" name="newPassword"
+               type="password" required formControlName="newPassword">
+      </mat-form-field>
+
+      <br>
+
+      <mat-form-field>
+        <mat-label>Confirm New Password</mat-label>
+        <input matInput placeholder="Confirm New Password" name="newPasswordConfirm"
+               type="password" required formControlName="newPasswordConfirm">
+      </mat-form-field>
+
+      <br>
+
+      <div *ngIf="hasCars">
+        <mat-form-field>
+          <mat-label>License Plate</mat-label>
+          <input matInput placeholder="Provide license number for one of your cars"
+                 type="text" name="licensePlate" required formControlName="licensePlate">
+        </mat-form-field>
+      </div>
+
+    </form>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="true">Close</button>
+    <button mat-raised-button type="submit" (click)="changeUserPassword()"
+            color="primary" [disabled]="!changePasswordForm.valid">
+      Change Password
+    </button>
+  </mat-dialog-actions>
+
+</ng-template>
+
+<ng-template #addCarTemplate>
+  <div>
+    <div mat-dialog-title>
+      <h2>Add Car</h2>
+    </div>
+    <mat-dialog-content [formGroup]="addCarForm" style="height: 100%">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>License Plate</mat-label>
+            <input matInput placeholder="License Plate"
+                   name="licensePlate" type="text" required
+                   formControlName="licensePlate">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="Brand"
+                   name="brand" type="text" required
+                   formControlName="brand">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Model</mat-label>
+            <input matInput placeholder="Model"
+                   name="model" type="text"
+                   required formControlName="model">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="Color" name="color"
+                   type="text" required formControlName="color">
+          </mat-form-field>
+
+          <br>
+
+          <div class="input-group mb-3" style="width: 100%">
+            <div class="custom-file">
+              <!--suppress TypeScriptUnresolvedVariable -->
+              <input #carAddFileInput type="file" class="custom-file-input"
+                     id="carAddFileInput" aria-describedby="inputGroupFileAddon02"
+                     (change)="handleAddCarFileInput($event.target.files)"
+                     (click)="removeUploadedCar()">
+              <label class="custom-file-label" for="carAddFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="carPhotoToAdd">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="setDefaultPhoto()">Set Default
+              </button>
+            </div>
+          </div>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addCarForm.reset()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addCar()" [disabled]="!addCarForm.valid">Save
+            </button>
+          </mat-dialog-actions>
+        </div>
+        <div class="col-6">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="carPhotoToAdd; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="carPhotoToAdd"
+                     alt="car photo" class="edit-car-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-dialog-content>
   </div>
 </ng-template>

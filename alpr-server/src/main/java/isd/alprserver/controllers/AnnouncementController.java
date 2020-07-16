@@ -79,6 +79,28 @@ public class AnnouncementController {
         );
     }
 
+    @PutMapping()
+    public ResponseEntity<?> updateAnnouncement(@RequestBody AnnouncementDTO dto) {
+        Announcement announcement = Announcement.builder()
+                .id(dto.getId())
+                .title(dto.getTitle())
+                .description(dto.getDescription())
+                .build();
+        switch (dto.getPriority()) {
+            case "YELLOW":
+                announcement.setPriority(AnnouncementPriority.YELLOW);
+                break;
+            case "ORANGE":
+                announcement.setPriority(AnnouncementPriority.ORANGE);
+                break;
+            case "RED":
+                announcement.setPriority(AnnouncementPriority.RED);
+                break;
+        }
+        announcementService.update(announcement);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeAnnouncement(@PathVariable long id) {
         announcementService.remove(id);
@@ -107,13 +129,15 @@ public class AnnouncementController {
                     if (comment.getDate().isAfter(t1.getDate()) && comment.getTime().isAfter(t1.getTime()))
                         return -1;
                     else if (comment.getDate().isAfter(t1.getDate()) && comment.getTime().isBefore(t1.getTime()))
-                        return 1;
+                        return -1;
                     else if (comment.getDate().isEqual(t1.getDate()) && comment.getTime().isAfter(t1.getTime()))
                         return -1;
                     else if (comment.getDate().isEqual(t1.getDate()) && comment.getTime().isBefore(t1.getTime()))
                         return 1;
                     else if(comment.getDate().isBefore(t1.getDate()))
                         return 1;
+                    else if(comment.getDate().isAfter(t1.getDate()))
+                        return -1;
                     return 0;
                 })
                   .map(

@@ -31,21 +31,43 @@ export class FormExtractor {
       carDetailsForm.get('ownerTelephone').value);
   }
 
-    public extractAddCar(carDetailsForm: FormGroup) {
-      return new CarModel(
-        1,
-        carDetailsForm.get('licensePlate').value,
-        carDetailsForm.get('brand').value,
-        carDetailsForm.get('model').value,
-        carDetailsForm.get('color').value,
-        carDetailsForm.get('ownerEmail').value);
-    }
+  public extractAdminAddCar(carDetailsForm: FormGroup) {
+    return new CarModel(
+      1,
+      carDetailsForm.get('licensePlate').value,
+      carDetailsForm.get('brand').value,
+      carDetailsForm.get('model').value,
+      carDetailsForm.get('color').value,
+      carDetailsForm.get('ownerEmail').value);
+  }
+
+  public extractUserAddCar(carDetailsForm: FormGroup) {
+    return new CarModel(
+      1,
+      carDetailsForm.get('licensePlate').value,
+      carDetailsForm.get('brand').value,
+      carDetailsForm.get('model').value,
+      carDetailsForm.get('color').value,
+      null);
+  }
 
   public extractCompany(companyDetailsForm: FormGroup) {
     return new CompanyModel(
       1,
       companyDetailsForm.get('name').value,
       companyDetailsForm.get('nrParkingSpots').value);
+  }
+
+  public extractUserFromProfileForm(profileEditForm: FormGroup) {
+    return new User(null,
+      profileEditForm.get('firstName').value,
+      profileEditForm.get('lastName').value,
+      profileEditForm.get('age').value,
+      profileEditForm.get('telephone').value,
+      null,
+      null,
+      null,
+    );
   }
 }
 
