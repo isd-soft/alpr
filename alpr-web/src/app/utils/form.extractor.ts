@@ -31,7 +31,7 @@ export class FormExtractor {
       carDetailsForm.get('ownerTelephone').value);
   }
 
-  public extractAddCar(carDetailsForm: FormGroup) {
+  public extractAdminAddCar(carDetailsForm: FormGroup) {
     return new CarModel(
       1,
       carDetailsForm.get('licensePlate').value,
@@ -39,6 +39,16 @@ export class FormExtractor {
       carDetailsForm.get('model').value,
       carDetailsForm.get('color').value,
       carDetailsForm.get('ownerEmail').value);
+  }
+
+  public extractUserAddCar(carDetailsForm: FormGroup) {
+    return new CarModel(
+      1,
+      carDetailsForm.get('licensePlate').value,
+      carDetailsForm.get('brand').value,
+      carDetailsForm.get('model').value,
+      carDetailsForm.get('color').value,
+      null);
   }
 
   public extractCompany(companyDetailsForm: FormGroup) {

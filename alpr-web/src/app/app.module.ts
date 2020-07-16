@@ -30,7 +30,6 @@ import {CarService} from './shared/car.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {AddCarComponent} from './add-car/add-car.component';
 import {HomeComponent} from './home/home.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {CompaniesComponent} from './companies/companies.component';
@@ -66,7 +65,6 @@ import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit
     RegistrationComponent,
     LoginComponent,
     UsersComponent,
-    AddCarComponent,
     CarListComponent,
     CompaniesComponent,
     HomeComponent,
