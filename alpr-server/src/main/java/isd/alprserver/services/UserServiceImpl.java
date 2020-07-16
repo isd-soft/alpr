@@ -114,12 +114,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     @Transactional
     public void update(UserDTO userDTO, boolean isPasswordChanged)
-            throws RoleNotFoundException, UserUpdatingException {
+            throws RoleNotFoundException {
 
         User storedUser = getUserByDTO(userDTO);
-        if (storedUser.getRole().getName().equals("SYSTEM_ADMINISTRATOR")) {
-            throw new UserUpdatingException("System administrator can not be updated");
-        }
 
         storedUser.setCompany(getCompanyOfUser(userDTO));
         storedUser.setRole(getRoleOfUser(userDTO));

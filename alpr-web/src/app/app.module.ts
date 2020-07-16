@@ -40,7 +40,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
-import {PasswordComponent} from './password/password.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
 // @ts-ignore
@@ -59,6 +58,8 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
 import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
 import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
+import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
+import {MatBadgeModule} from "@angular/material/badge";
 
 @NgModule({
   declarations: [
@@ -75,13 +76,13 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     HeaderComponent,
     FooterComponent,
     CompanyCarsComponent,
-    PasswordComponent,
     DashboardComponent,
     AnnouncementComponent,
     ConfirmationDialogComponent,
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
-    AddAnnouncementDialogComponent
+    AddAnnouncementDialogComponent,
+    EditAnnouncementDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +112,8 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
     NgbModule,
     NgApexchartsModule,
     MatListModule,
-    ScrollingModule
+    ScrollingModule,
+    MatBadgeModule
 
 
   ],
@@ -123,7 +125,10 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
-  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent, ViewCommentDialogComponent, AddAnnouncementDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, AddCommentDialogComponent,
+    ViewCommentDialogComponent,
+    AddAnnouncementDialogComponent,
+  EditAnnouncementDialogComponent]
 })
 export class AppModule {
 }
