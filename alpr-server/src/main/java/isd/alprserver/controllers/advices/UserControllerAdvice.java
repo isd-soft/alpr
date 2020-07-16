@@ -18,7 +18,7 @@ public class UserControllerAdvice {
             UserCreationException.class,
             UserUpdatingException.class})
     public ResponseEntity<Exception> handleUserException(Exception e) {
-        log.warn("Exception!", e);
+        log.info("Exception!", e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }

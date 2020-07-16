@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class JwtAuthenticationControllerAdvice {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<Exception> handleBadCredentials(Exception e) {
-        log.warn("Exception!", e);
+        log.info("Exception!", e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }

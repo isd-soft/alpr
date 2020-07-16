@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CompanyControllerAdvice {
     @ExceptionHandler()
     public ResponseEntity<Exception> handleCompanyNotFound(Exception e) {
-        log.warn("Exception!", e);
+        log.info("Exception!", e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }

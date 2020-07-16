@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -13,6 +13,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ParkingHistory} from '../shared/parking.history.model';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {ParkingPlanModel} from "../shared/parking.plan.model";
+import { HttpClient, HttpEventType} from "@angular/common/http";
 
 
 export type PieChartOptions = {
@@ -55,6 +57,7 @@ export type EveningChartOptions = {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
   @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
   public MorningDonutChartOptions: Partial<MorningChartOptions> = {
     series: null,
@@ -138,9 +141,18 @@ export class DashboardComponent implements OnInit {
   historiesDataSource: MatTableDataSource<ParkingHistory> =
     new MatTableDataSource<ParkingHistory>(this.histories);
 
+
+  labelDefault = 'Upload Photo';
+  label: string = this.labelDefault;
+
+  @ViewChild('planFileInput')
+  planFileInput: ElementRef;
+
+
   constructor(private statisticsService: StatisticsService,
-              private snackBar: MatSnackBar) {
-  }
+              private snackBar: MatSnackBar,
+              private httpClient: HttpClient,
+              ) {}
 
   initCharts(): void {
     this.statisticsService.getParkingHistoryForToday()
@@ -257,6 +269,8 @@ export class DashboardComponent implements OnInit {
     this.statisticsService.getNumberScansEvening()
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
+
+
 
   }
 

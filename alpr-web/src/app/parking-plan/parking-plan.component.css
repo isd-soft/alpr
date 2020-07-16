@@ -82,14 +82,30 @@ button:focus {
 .title-plan{
   font-size: 30px;
   color: #3f51b5;
-  padding-left: 230px;
-}
-
-.parking{
-  width: 95%;
-  padding-left: 140px;
+  text-align: center;
 }
 
 #remove{
+  display: block;
+  margin: auto;
+}
 
+.default-photo{
+  padding-left: 80px;
+  display: block;
+  margin: auto;
+}
+
+#parking-default{
+  width: 70%;
+  padding-left: 80px;
+  display: block;
+  margin: auto;
+}
+
+#parking{
+  width: 70%;
+  padding-left: 80px;
+  display: block;
+  margin: auto;
 }

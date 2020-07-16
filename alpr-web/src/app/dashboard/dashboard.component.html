@@ -155,13 +155,11 @@
 
           <mat-label class="metrics">Metrics</mat-label>
           <li *ngFor="let measurement of cpuInfo.measurements">
-            The number of processors available:
-            <span class="value">{{measurement.value}}</span>
+            The number of processors available : <span class="value">{{measurement.value}}</span>
           </li>
 
           <li *ngFor="let measurement of uptimeInfo.measurements">
-            The uptime:
-            <span class="value">{{measurement.value}}</span>
+            The uptime : <span class="value">{{measurement.value}}</span>
           </li>
 
 
@@ -173,12 +171,12 @@
           </li>
 
           <li *ngFor="let measurement of totalMemoryInfo.measurements">
-            The maximum amount of memory in bytes:
+            The maximum amount of memory in bytes :
             <span class="value">{{measurement.value}}</span>
           </li>
 
           <li *ngFor="let measurement of usedMemoryInfo.measurements">
-            The amount of used memory:
+            The amount of used memory :
             <span class="value">{{measurement.value}}</span>
           </li>
         </mat-list>
@@ -283,10 +281,11 @@
   </div>
 </div>
 
-
+  <mat-card style="text-align: center">
 <ng-template #occupied>
   <mat-icon [ngStyle]="{'color': 'red'}">block</mat-icon>
 </ng-template>
 
 
+  </mat-card>
 

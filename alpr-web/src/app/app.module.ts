@@ -41,6 +41,8 @@ import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
+
+
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -59,6 +61,11 @@ import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
 import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
 import {MatBadgeModule} from "@angular/material/badge";
+import {PlanHandler} from "./utils/plan.handler";
+import {ParkingPlanService} from "./shared/parking.plan.service";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MaterialFileInputModule} from "ngx-material-file-input";
+import { ParkingPlanComponent } from './parking-plan/parking-plan.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +87,9 @@ import {MatBadgeModule} from "@angular/material/badge";
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
     AddAnnouncementDialogComponent,
-    EditAnnouncementDialogComponent
+    EditAnnouncementDialogComponent,
+    ParkingPlanComponent
+
   ],
   imports: [
     BrowserModule,
@@ -111,15 +120,18 @@ import {MatBadgeModule} from "@angular/material/badge";
     NgApexchartsModule,
     MatListModule,
     ScrollingModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressBarModule,
+    MaterialFileInputModule
 
 
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
-    FileHandler,
+    FileHandler,PlanHandler,ParkingPlanService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],

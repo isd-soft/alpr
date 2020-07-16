@@ -302,7 +302,7 @@
     <mat-dialog-content>
 
       <div *ngIf="carPhotoToView; else defaultPhoto">
-        <img [src]="carPhotoToView" alt="Car Photo Preview"
+        <img [src]="this.carPhotoToView" alt="Car Photo Preview"
              class="car-photo-preview">
       </div>
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class StatisticsControllerAdvice {
     @ExceptionHandler()
     public ResponseEntity<?> handleException(Exception e) {
-        log.warn("Exception!", e);
+        log.info("Exception!", e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
     }
 }

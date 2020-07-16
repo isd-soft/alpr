@@ -36,11 +36,11 @@ export class StatisticsService {
   }
 
   public getInfo(): Observable<any> {
-    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/info');
+    return this.httpClient.get(ConnectionURL.local + '/actuator/info');
   }
 
   public getHealth(): Observable<any> {
-    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/health');
+    return this.httpClient.get(ConnectionURL.local + '/actuator/health');
   }
 
   public getCpuCount(): Observable<any> {
