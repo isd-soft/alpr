@@ -8,8 +8,7 @@ import {User} from '../shared/user.model';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  // private url = 'https://vm-alpr-server.herokuapp.com';
-  private url='http://localhost:8080';
+  private url = 'https://vm-alpr-server.herokuapp.com';
 
   constructor(private http: HttpClient) {
     this.currentUserSubject =
