@@ -272,7 +272,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.carEditFileInput.nativeElement.value = '';
   }
 
-  setDefaultPhoto() {
+  setDefaultCarPhoto() {
     this.carPhotoToEdit = null;
     this.carPhotoToAdd = null;
     this.uploadInputLabel = this.defaultUploadInputLabel;

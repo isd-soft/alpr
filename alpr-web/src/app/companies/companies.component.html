@@ -113,7 +113,7 @@
                 [mat-dialog-close]="true">Close
         </button>
         <button class="mat-raised-button mat-accent left-margin"
-                (click)="addCompanyForm.reset()">Clear
+                (click)="addCompanyForm.reset(); setDefaultCompanyPhoto()">Clear
         </button>
         <button class="mat-raised-button mat-primary left-margin"
                 (click)="addCompany()" [disabled]="!addCompanyForm.valid">Save
