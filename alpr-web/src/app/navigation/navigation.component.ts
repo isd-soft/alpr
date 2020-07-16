@@ -44,6 +44,10 @@ export class NavigationComponent implements OnInit {
           {
             link: 'companies',
             name: 'Companies'
+          },
+          {
+            link: 'parkingplan',
+            name: 'Parking Plan'
           }
         ];
       } else {

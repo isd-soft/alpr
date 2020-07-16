@@ -3,6 +3,7 @@ package isd.alprserver.controllers;
 
 
 import isd.alprserver.model.ParkingPlan;
+import isd.alprserver.model.exceptions.ParkingPlanNotFoundException;
 import isd.alprserver.services.interfaces.ParkingPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class ParkingPlanController {
     @GetMapping(path = { "/get" })
     public ParkingPlan getImage() throws IOException {
         final Optional<ParkingPlan> retrievedImage = parkingPlanService.findPlanById(1);
-        return new ParkingPlan(retrievedImage.get().getPhoto());
+        return new ParkingPlan(retrievedImage.map(ParkingPlan::getPhoto).orElseThrow(ParkingPlanNotFoundException::new));
     }
 
 }

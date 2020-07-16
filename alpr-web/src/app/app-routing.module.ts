@@ -13,6 +13,7 @@ import {CompanyCarsComponent} from "./company-cars/company-cars.component";
 import {CompaniesComponent} from './companies/companies.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AnnouncementComponent} from "./announcement/announcement.component";
+import {ParkingPlanComponent} from "./parking-plan/parking-plan.component";
 
 
 
@@ -27,6 +28,8 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'companycars', component: CompanyCarsComponent, canActivate: [AuthGuard]},
+  {path: 'parkingplan', component: ParkingPlanComponent, canActivate: [AuthGuard]}
+
 
 ];
 

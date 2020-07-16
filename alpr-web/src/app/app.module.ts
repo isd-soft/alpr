@@ -41,6 +41,8 @@ import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 
+
+
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DashboardComponent} from './dashboard/dashboard.component';
@@ -61,6 +63,9 @@ import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit
 import {MatBadgeModule} from "@angular/material/badge";
 import {PlanHandler} from "./utils/plan.handler";
 import {ParkingPlanService} from "./shared/parking.plan.service";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MaterialFileInputModule} from "ngx-material-file-input";
+import { ParkingPlanComponent } from './parking-plan/parking-plan.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +87,9 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
     AddAnnouncementDialogComponent,
-    EditAnnouncementDialogComponent
+    EditAnnouncementDialogComponent,
+    ParkingPlanComponent
+
   ],
   imports: [
     BrowserModule,
@@ -113,7 +120,9 @@ import {ParkingPlanService} from "./shared/parking.plan.service";
     NgApexchartsModule,
     MatListModule,
     ScrollingModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressBarModule,
+    MaterialFileInputModule
 
 
   ],

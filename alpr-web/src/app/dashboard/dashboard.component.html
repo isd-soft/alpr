@@ -280,86 +280,11 @@
     </div>
   </div>
 
-<!--  <div class="input-group mb-3 full-width">-->
-<!--    <div class="custom-file">-->
-<!--      &lt;!&ndash;suppress TypeScriptUnresolvedVariable &ndash;&gt;-->
-<!--      <input #planFileInput type="file" class="custom-file-input"-->
-<!--             id="planFileInput" aria-describedby="inputGroupFileAddon01"-->
-<!--             (change)="handlePlanInput($event.target.files)"-->
-<!--             accept="image/jpeg">-->
-<!--      <label class="custom-file-label" for="planFileInput">-->
-<!--        {{label}}-->
-<!--      </label>-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--  <mat-card class="plan-photo-preview">-->
-<!--    <mat-card-subtitle>Parking Plan Photo</mat-card-subtitle>-->
-<!--    <img matCardImage [src]="imgURL" alt="car photo">-->
-<!--    <mat-card-actions>-->
-<!--      <button mat-raised-button (click)="removeUploadedPlan()"-->
-<!--              class="action">Remove-->
-<!--      </button>-->
-<!--    </mat-card-actions>-->
-<!--  </mat-card>-->
-
-
-  <div class="input-group mb-3 full-width">
-  <div class="container row">
-    <div class="col-md-12">
-      <h1>Upload Image</h1>
-    </div>
-  </div>
-  <div class="container row">
-    <div class="col-md-6">
-      <input type="file" (change)="onFileChanged($event)">
-    </div>
-    <div class="col-md-6">
-      <input type="button" (click)="onUpload()" value="upload">
-    </div>
-  </div>
-  <hr />
-  <div class="container row">
-    <div class="col-md-12">
-      <div *ngIf=message>{{message}}</div>
-    </div>
-  </div>
-  <div class="container row">
-    <div class="col-md-6">
-      <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
-             name="name" />
-    </div>
-    <div class="col-md-6">
-      <input type="button" (click)="getImage()" value="Get Image">
-    </div>
-  </div>
-  <div class="container row">
-    <div class="col-md-12">
-      <div *ngIf="retrievedImage; else defaultPhoto" >
-        <img matCardImg [src]="retrievedImage" alt="Car Photo Preview">
-        <mat-card-actions>
-          <button mat-raised-button (click)="removeUploadedPlan()"
-                  class="action">Remove
-          </button>
-        </mat-card-actions>
-
-      </div>
-    </div>
-  </div>
-
-    <ng-template #defaultPhoto>
-      <img src="../../assets/img/parking.png" alt="Car Photo Preview"
-           class="default-car-photo-preview">
-    </ng-template>
-
-
-
-
-</div>
-
+  <mat-card style="text-align: center">
 <ng-template #occupied>
   <mat-icon [ngStyle]="{'color': 'red'}">block</mat-icon>
 </ng-template>
 
 
-
+  </mat-card>
+</div>
