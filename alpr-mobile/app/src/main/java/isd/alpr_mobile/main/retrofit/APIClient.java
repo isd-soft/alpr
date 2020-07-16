@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class APIClient {
     private static Retrofit retrofit = null;
     private static final String url = "https://vm-alpr-server.herokuapp.com";
+    //private static final String url = "http://192.168.137.117:8080";
 
     public static Retrofit getClient() {
         if(retrofit == null) {

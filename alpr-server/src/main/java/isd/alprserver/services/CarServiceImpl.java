@@ -109,6 +109,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Transactional
     public Optional<Car> getByLicensePlate(String licensePlate) {
         return this.carRepository.findByLicensePlate(licensePlate);
     }
