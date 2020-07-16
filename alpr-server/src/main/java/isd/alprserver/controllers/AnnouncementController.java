@@ -136,6 +136,8 @@ public class AnnouncementController {
                         return 1;
                     else if(comment.getDate().isBefore(t1.getDate()))
                         return 1;
+                    else if(comment.getDate().isAfter(t1.getDate()))
+                        return -1;
                     return 0;
                 })
                   .map(

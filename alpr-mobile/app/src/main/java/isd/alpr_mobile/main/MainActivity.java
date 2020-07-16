@@ -12,13 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.lifecycle.Observer;
 import isd.alpr_mobile.R;
 import isd.alpr_mobile.main.notify.NotifyFragment;
 import isd.alpr_mobile.main.scan.OnScanFragmentInteractionListener;
 import isd.alpr_mobile.main.scan.ScanFragment;
 import isd.alpr_mobile.main.utility.ConnectionLiveData;
-import isd.alpr_mobile.main.utility.ConnectionModel;
 import isd.alpr_mobile.main.utility.InternetProblemsDialogFragment;
 import isd.alpr_mobile.main.write.OnWriteFragmentInteractionListener;
 import isd.alpr_mobile.main.write.WriteFragment;
