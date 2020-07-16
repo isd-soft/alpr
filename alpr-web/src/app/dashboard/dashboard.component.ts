@@ -446,7 +446,8 @@ export class DashboardComponent implements OnInit {
   }
 
   private initColumnChart(data: any[]): void {
-    const keys: string[] = [];
+    console.log(data);
+    let keys: string[] = [];
     data.forEach(scanning => {
       if (keys.indexOf(scanning.scanDate.slice(0, 10)) < 0) {
         keys.push(scanning.scanDate.slice(0, 10));
@@ -454,6 +455,7 @@ export class DashboardComponent implements OnInit {
     });
     const allowedValues: number[] = [];
     const rejectedValues: number[] = [];
+    keys = keys.reverse();
     keys.forEach(key => {
       const temp: any[] = data.filter(s => s.scanDate.slice(0, 10).localeCompare(key) === 0);
       const allowed: number = temp.filter(s => s.allowed).length;

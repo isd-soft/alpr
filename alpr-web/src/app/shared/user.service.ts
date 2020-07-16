@@ -2,12 +2,12 @@ import {User} from './user.model';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {ConnectionURL} from "./url";
 
 
 @Injectable()
 export class UserService {
-  // private url = 'https://vm-alpr-server.herokuapp.com';
-  private url = 'http://localhost:8080';
+  private url = ConnectionURL.local;
 
   constructor(private httpClient: HttpClient) {
   }

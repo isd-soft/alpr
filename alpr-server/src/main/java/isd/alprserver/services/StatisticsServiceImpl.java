@@ -1,5 +1,6 @@
 package isd.alprserver.services;
 
+import isd.alprserver.dtos.CompanyWithCarsDTO;
 import isd.alprserver.dtos.ParkingHistoryDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.ParkingHistory;
@@ -16,15 +17,16 @@ import isd.alprserver.services.interfaces.ParkingHistoryService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class StatisticsServiceImpl implements StatisticsService {
     private final UserAuditRepository userAuditRepository;
     private final CarAuditRepository carAuditRepository;
@@ -97,6 +99,22 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public List<Company> getAllCompanies() {
         return companyService.getAll();
+    }
+
+    @Override
+    public List<CompanyWithCarsDTO> getAllCompanies2() {
+        return companyService.getAll() .stream()
+                .map(company -> CompanyWithCarsDTO.
+                        builder()
+                        .name(company.getName())
+                        .cars(
+                                company.getUsers().stream()
+                                        .map(user -> user.getCars().size())
+                                        .reduce(0, Integer::sum)
+                        )
+                        .build()
+                )
+                .collect(Collectors.toList());
     }
 
     @Override

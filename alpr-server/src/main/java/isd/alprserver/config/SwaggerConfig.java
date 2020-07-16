@@ -1,6 +1,5 @@
 package isd.alprserver.config;
 
-import com.sun.beans.TypeResolver;
 import org.assertj.core.util.Lists;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
