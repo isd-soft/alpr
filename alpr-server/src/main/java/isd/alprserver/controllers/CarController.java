@@ -33,10 +33,7 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<List<CarDTO>> getAllCars() {
-        return ResponseEntity.ok(carService.getAll()
-                .stream()
-                .map(this::CarToCarDTO)
-                .collect(Collectors.toList()));
+        return ResponseEntity.ok(carService.getAll());
     }
 
     @GetMapping("/{id}")
@@ -46,10 +43,7 @@ public class CarController {
 
     @GetMapping("/company/{companyName}")
     public ResponseEntity<List<CarDTO>> getCarsByCompanyName(@PathVariable String companyName) {
-        return ResponseEntity.ok(carService.getByCompanyName(companyName)
-                .stream()
-                .map(this::CarToCarDTO)
-                .collect(Collectors.toList()));
+        return ResponseEntity.ok(carService.getByCompanyName(companyName));
     }
 
     @GetMapping("/history/{companyName}")
@@ -102,27 +96,7 @@ public class CarController {
     @GetMapping("/in")
     public ResponseEntity<List<CarDTO>> getAllInCars() {
         return ResponseEntity.ok(
-                carService.getAllIn().stream()
-                        .map(this::CarToCarDTO)
-                        .collect(Collectors.toList())
+                carService.getAllIn()
         );
-    }
-
-    private CarDTO CarToCarDTO(Car car) {
-        return CarDTO.builder()
-                .id(car.getId())
-                .licensePlate(car.getLicensePlate())
-                .brand(car.getBrand())
-                .model(car.getModel())
-                .color(car.getColor())
-                .ownerEmail(car.getUser().getEmail())
-                .ownerTelephone(car.getUser().getTelephoneNumber())
-                .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
-                .ownerCompany(car.getUser().getCompany().getName())
-                .status(car.getStatus().getName())
-                .photo(car.getPhoto() != null ?
-                        Base64.getEncoder().encodeToString(car.getPhoto()) :
-                        null)
-                .build();
     }
 }

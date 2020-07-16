@@ -62,7 +62,7 @@ public class AnnouncementController {
                                 .id(ann.getId())
                                 .title(ann.getTitle())
                                 .description(ann.getDescription())
-                                .date(ann.getDate())
+                                .date(ann.getDate().toString())
                                 .priority(ann.getPriority().toString())
                                 .build()
                         )
@@ -74,9 +74,9 @@ public class AnnouncementController {
 
     private Comparator<AnnouncementDTO> getAnnouncementDTOComparator() {
         return (a, b) -> {
-            if (a.getDate().isAfter(b.getDate()))
+            if (LocalDate.parse(a.getDate()).isAfter(LocalDate.parse(b.getDate())))
                 return -1;
-            else if(a.getDate().isBefore(b.getDate()))
+            else if(LocalDate.parse(a.getDate()).isBefore(LocalDate.parse(b.getDate())))
                 return 1;
             else if(a.getId() > b.getId())
                 return -1;
@@ -111,7 +111,7 @@ public class AnnouncementController {
                         .description(commentDTO.getDescription())
                         .userEmail(commentDTO.getUserEmail())
                         .date(LocalDate.now())
-                        .time(LocalTime.now())
+                        .time(LocalTime.now().plusHours(3))
                 .build()
         );
         return ResponseEntity.ok().build();
@@ -120,33 +120,8 @@ public class AnnouncementController {
     @GetMapping("/comments/{id}")
     public ResponseEntity<List<CommentDTO>> getAllCommentsFromAnnouncement(@PathVariable long id) throws UserNotFoundException {
         return ResponseEntity.ok(
-          announcementService.getAllComments(id).stream()
-                .sorted(getCommentComparator())
-                  .map(
-                          comment ->
-                                  CommentDTO.builder()
-                                          .description(comment.getDescription())
-                                          .userEmail(comment.getUserEmail())
-                                          .date(comment.getDate())
-                                          .time(comment.getTime())
-                                          .build()
-                  )
-                .collect(Collectors.toList())
+          announcementService.getAllComments(id)
         );
-    }
-
-    private Comparator<Comment> getCommentComparator() {
-        return (a, b) -> {
-            if (a.getDate().isAfter(b.getDate()))
-                return -1;
-            else if(a.getDate().isBefore(b.getDate()))
-                return 1;
-            else if (a.getDate().isEqual(b.getDate()) && a.getTime().isAfter(b.getTime()))
-                return -1;
-            else if (a.getDate().isEqual(b.getDate()) && a.getTime().isBefore(b.getTime()))
-                return 1;
-            return 0;
-        };
     }
 
 

@@ -8,7 +8,7 @@ import {ConnectionURL} from './url';
 @Injectable()
 export class CarService{
   constructor(private http: HttpClient) {}
-  private url = ConnectionURL.local + '/cars';
+  private url = ConnectionURL.url + '/cars';
 
   getCars(): Observable<any[]>{
     return this.http.get<any[]>(this.url);

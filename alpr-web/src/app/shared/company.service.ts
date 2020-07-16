@@ -7,7 +7,7 @@ import {ConnectionURL} from "./url";
 
 @Injectable()
 export class CompanyService {
-  private url = ConnectionURL.local + 'companies';
+  private url = ConnectionURL.url + '/companies';
 
   constructor(private httpClient: HttpClient) {
   }

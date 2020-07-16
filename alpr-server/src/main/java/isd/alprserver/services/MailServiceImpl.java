@@ -16,9 +16,9 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional(readOnly = true)
-    public void sendNoMoreParkingSpotsEmail(User user, int nrParkingSpots) throws MailException {
+    public void sendNoMoreParkingSpotsEmail(String mail, int nrParkingSpots) throws MailException {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());
+        message.setTo(mail);
         message.setFrom("alprs003@gmail.com");
         message.setSubject("Parking Notification");
         if(nrParkingSpots == 0)

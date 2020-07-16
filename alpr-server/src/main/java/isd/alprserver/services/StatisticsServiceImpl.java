@@ -96,13 +96,9 @@ public class StatisticsServiceImpl implements StatisticsService {
         return scanAuditRepository.findAllAllowedLastWeek();
     }
 
-    @Override
-    public List<Company> getAllCompanies() {
-        return companyService.getAll();
-    }
 
     @Override
-    public List<CompanyWithCarsDTO> getAllCompanies2() {
+    public List<CompanyWithCarsDTO> getCarsPerCompany() {
         return companyService.getAll() .stream()
                 .map(company -> CompanyWithCarsDTO.
                         builder()

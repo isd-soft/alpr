@@ -31,9 +31,7 @@ public interface StatisticsService {
 
     List<ScanAudit> getAllAllowedLastWeek();
 
-    List<Company> getAllCompanies();
-
-    List<CompanyWithCarsDTO> getAllCompanies2();
+    List<CompanyWithCarsDTO> getCarsPerCompany();
 
     List<ScanAudit> getAllScansForToday();
 

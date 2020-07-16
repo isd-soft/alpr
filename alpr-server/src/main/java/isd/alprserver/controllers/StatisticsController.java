@@ -68,14 +68,19 @@ public class StatisticsController {
     }
 
     @GetMapping("/all-allowed-last-week")
-    public ResponseEntity<List<ScanAudit>> getAllowedLastWeek() {
-        return ResponseEntity.ok(statisticsService.getAllAllowedLastWeek());
+    public ResponseEntity<List<ScanAuditDTO>> getAllowedLastWeek() {
+        return ResponseEntity.ok(
+                statisticsService.getAllAllowedLastWeek()
+                .stream()
+                .map(this::ScanAuditToScan)
+                .collect(Collectors.toList())
+        );
     }
 
     @GetMapping("/cars-per-company")
     public ResponseEntity<List<CompanyWithCarsDTO>> getAllCompaniesWithCars() {
         return ResponseEntity.ok(
-                statisticsService.getAllCompanies2()
+                statisticsService.getCarsPerCompany()
         );
     }
 

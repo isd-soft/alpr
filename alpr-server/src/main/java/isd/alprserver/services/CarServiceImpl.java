@@ -19,6 +19,7 @@ import isd.alprserver.services.interfaces.ParkingHistoryService;
 import isd.alprserver.services.interfaces.StatisticsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -31,7 +32,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
@@ -41,8 +41,24 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public List<Car> getAll() {
-        return carRepository.findAll();
+    public List<CarDTO> getAll() {
+        return carRepository.findAll().stream()
+                .map(car -> CarDTO.builder()
+                        .id(car.getId())
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .model(car.getModel())
+                        .color(car.getColor())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
+                        .photo(car.getPhoto() != null ?
+                                Base64.getEncoder().encodeToString(car.getPhoto()) :
+                                null)
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -98,8 +114,26 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getByCompanyName(String name) {
-        return this.carRepository.findByCompanyName(name);
+    @Transactional
+    public List<CarDTO> getByCompanyName(String name) {
+        return this.carRepository.findByCompanyName(name)
+                .stream()
+                .map(car -> CarDTO.builder()
+                        .id(car.getId())
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .model(car.getModel())
+                        .color(car.getColor())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
+                        .photo(car.getPhoto() != null ?
+                                Base64.getEncoder().encodeToString(car.getPhoto()) :
+                                null)
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -144,7 +178,7 @@ public class CarServiceImpl implements CarService {
     private void addScanAuditOut(Car car) {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .status("OUT")
                         .isAllowed(true)
                         .licensePlate(car.getLicensePlate())
@@ -158,7 +192,7 @@ public class CarServiceImpl implements CarService {
                         .licensePlate(car.getLicensePlate())
                         .status("IN")
                         .isAllowed(true)
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .build()
         );
     }
@@ -167,7 +201,7 @@ public class CarServiceImpl implements CarService {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
                         .licensePlate(car.getLicensePlate())
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .isAllowed(false)
                         .status("IN")
                         .build()
@@ -182,9 +216,22 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAllIn() {
-        return getAll().stream()
-                .filter(car -> car.getStatus().getName().equals("IN"))
+    @Transactional
+    public List<CarDTO> getAllIn() {
+        return carRepository.findByStatus(statusRepository.getByName("IN").orElseThrow(() -> new StatusNotFoundException("Invalid status name")))
+                .stream()
+                .map(car -> CarDTO.builder()
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .color(car.getColor())
+                        .id(car.getId())
+                        .model(car.getModel())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .status(car.getStatus().getName())
+                        .build())
                 .collect(Collectors.toList());
     }
 }
