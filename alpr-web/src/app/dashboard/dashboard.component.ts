@@ -325,7 +325,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private initColumnChart(data: any[]): void {
-    console.log(data);
     let keys: string[] = [];
     data.forEach(scanning => {
       if (keys.indexOf(scanning.scanDate.slice(0, 10)) < 0) {

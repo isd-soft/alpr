@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class CarServiceImpl implements CarService {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
@@ -41,8 +40,24 @@ public class CarServiceImpl implements CarService {
 
     @Override
     @Transactional
-    public List<Car> getAll() {
-        return carRepository.findAll();
+    public List<CarDTO> getAll() {
+        return carRepository.findAll().stream()
+                .map(car -> CarDTO.builder()
+                        .id(car.getId())
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .model(car.getModel())
+                        .color(car.getColor())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
+                        .photo(car.getPhoto() != null ?
+                                Base64.getEncoder().encodeToString(car.getPhoto()) :
+                                null)
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -98,8 +113,26 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getByCompanyName(String name) {
-        return this.carRepository.findByCompanyName(name);
+    @Transactional
+    public List<CarDTO> getByCompanyName(String name) {
+        return this.carRepository.findByCompanyName(name)
+                .stream()
+                .map(car -> CarDTO.builder()
+                        .id(car.getId())
+                        .licensePlate(car.getLicensePlate())
+                        .brand(car.getBrand())
+                        .model(car.getModel())
+                        .color(car.getColor())
+                        .ownerEmail(car.getUser().getEmail())
+                        .ownerTelephone(car.getUser().getTelephoneNumber())
+                        .ownerName(car.getUser().getFirstName() + " " + car.getUser().getLastName())
+                        .ownerCompany(car.getUser().getCompany().getName())
+                        .status(car.getStatus().getName())
+                        .photo(car.getPhoto() != null ?
+                                Base64.getEncoder().encodeToString(car.getPhoto()) :
+                                null)
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -182,9 +215,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<Car> getAllIn() {
+    public List<CarDTO> getAllIn() {
         return getAll().stream()
-                .filter(car -> car.getStatus().getName().equals("IN"))
+                .filter(car -> car.getStatus().equals("IN"))
                 .collect(Collectors.toList());
     }
 }

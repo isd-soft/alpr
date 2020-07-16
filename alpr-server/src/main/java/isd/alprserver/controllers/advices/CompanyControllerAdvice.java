@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(basePackageClasses = {CompanyController.class})
 @Slf4j
 public class CompanyControllerAdvice {
-    @ExceptionHandler({CompanyNotFoundException.class,CompanyCreationException.class})
+    @ExceptionHandler()
     public ResponseEntity<Exception> handleCompanyNotFound(Exception e) {
         log.warn("Exception!", e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);

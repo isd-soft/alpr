@@ -33,8 +33,8 @@ public class EmailSenderService {
                                     company.getNrParkingSpots() -
                                             (int) carService.getAll()
                                     .stream()
-                                    .filter(car -> car.getStatus().getName().equals("IN"))
-                                    .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
+                                    .filter(car -> car.getStatus().equals("IN"))
+                                    .filter(car -> car.getOwnerCompany().equals(company.getName()))
                                     .count()
                             )
                             .lastSentNotification(-1)
@@ -54,9 +54,9 @@ public class EmailSenderService {
                     if (history.getNrParkingSpots() < 4 && history.getNrParkingSpots() != history.getLastSentNotification()) {
                         history.setLastSentNotification(history.getNrParkingSpots());
                         carService.getAll().stream()
-                                .filter(car -> car.getUser().getCompany().getName().equals(company.getName()))
-                                .filter(car -> car.getStatus().getName().equals("OUT"))
-                                .forEach(car -> mailService.sendNoMoreParkingSpotsEmail(car.getUser(), history.getNrParkingSpots()));
+                                .filter(car -> car.getOwnerCompany().equals(company.getName()))
+                                .filter(car -> car.getStatus().equals("OUT"))
+                                .forEach(car -> mailService.sendNoMoreParkingSpotsEmail(car.getOwnerEmail(), history.getNrParkingSpots()));
                     }
                 });
     }

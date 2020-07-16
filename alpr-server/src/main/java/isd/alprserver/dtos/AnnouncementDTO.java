@@ -16,5 +16,5 @@ public class AnnouncementDTO {
     private String title;
     private String description;
     private String priority;
-    private LocalDate date = null;
+    private String date = null;
 }
