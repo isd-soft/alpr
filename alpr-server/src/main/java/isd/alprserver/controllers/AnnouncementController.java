@@ -111,7 +111,7 @@ public class AnnouncementController {
                         .description(commentDTO.getDescription())
                         .userEmail(commentDTO.getUserEmail())
                         .date(LocalDate.now())
-                        .time(LocalTime.now())
+                        .time(LocalTime.now().plusHours(3))
                 .build()
         );
         return ResponseEntity.ok().build();

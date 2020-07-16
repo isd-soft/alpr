@@ -177,7 +177,7 @@ public class CarServiceImpl implements CarService {
     private void addScanAuditOut(Car car) {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .status("OUT")
                         .isAllowed(true)
                         .licensePlate(car.getLicensePlate())
@@ -191,7 +191,7 @@ public class CarServiceImpl implements CarService {
                         .licensePlate(car.getLicensePlate())
                         .status("IN")
                         .isAllowed(true)
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .build()
         );
     }
@@ -200,7 +200,7 @@ public class CarServiceImpl implements CarService {
         statisticsService.addScanAudit(
                 ScanAudit.builder()
                         .licensePlate(car.getLicensePlate())
-                        .scanDate(LocalDateTime.now())
+                        .scanDate(LocalDateTime.now().plusHours(3))
                         .isAllowed(false)
                         .status("IN")
                         .build()

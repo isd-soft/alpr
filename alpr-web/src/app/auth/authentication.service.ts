@@ -9,7 +9,7 @@ import {ConnectionURL} from "../shared/url";
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  private url = ConnectionURL.local;
+  private url = ConnectionURL.url;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject =

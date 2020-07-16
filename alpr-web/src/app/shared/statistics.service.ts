@@ -5,8 +5,8 @@ import {ConnectionURL} from "./url";
 
 @Injectable()
 export class StatisticsService {
-  private url = ConnectionURL.local + '/statistics'
-  private metricsUrl = ConnectionURL.local + '/actuator/metrics';
+  private url = ConnectionURL.url + '/statistics'
+  private metricsUrl = ConnectionURL.url + '/actuator/metrics';
 
   constructor(private httpClient: HttpClient) {
   }
