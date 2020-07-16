@@ -129,7 +129,7 @@ public class AnnouncementController {
                     if (comment.getDate().isAfter(t1.getDate()) && comment.getTime().isAfter(t1.getTime()))
                         return -1;
                     else if (comment.getDate().isAfter(t1.getDate()) && comment.getTime().isBefore(t1.getTime()))
-                        return 1;
+                        return -1;
                     else if (comment.getDate().isEqual(t1.getDate()) && comment.getTime().isAfter(t1.getTime()))
                         return -1;
                     else if (comment.getDate().isEqual(t1.getDate()) && comment.getTime().isBefore(t1.getTime()))
