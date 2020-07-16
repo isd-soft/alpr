@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ChartComponent} from 'ng-apexcharts';
 import {StatisticsService} from '../shared/statistics.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -13,6 +13,13 @@ import {MatTableDataSource} from '@angular/material/table';
 import {ParkingHistory} from '../shared/parking.history.model';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FileHandler} from "../utils/file.handler";
+import {PlanHandler} from "../utils/plan.handler";
+import {ParkingPlanService} from "../shared/parking.plan.service";
+import {CarModel} from "../shared/car.model";
+import {ParkingPlanModel} from "../shared/parking.plan.model";
+import { HttpClient, HttpEventType} from "@angular/common/http";
 
 
 export type PieChartOptions = {
@@ -55,6 +62,13 @@ export type EveningChartOptions = {
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  imageUrl: string = "/assets/img/parking.png";
+  fileToUpload: File = null;
+  imgURL : string = '/assets/img/parking.png';
+  parkingPlan: ParkingPlanModel[];
+
+
+
   @ViewChild('donut-chart-morning') donutChartMorning: ChartComponent;
   public MorningDonutChartOptions: Partial<MorningChartOptions> = {
     series: null,
@@ -138,9 +152,97 @@ export class DashboardComponent implements OnInit {
   historiesDataSource: MatTableDataSource<ParkingHistory> =
     new MatTableDataSource<ParkingHistory>(this.histories);
 
+
+  labelDefault = 'Upload Photo';
+  label: string = this.labelDefault;
+
+  @ViewChild('planFileInput')
+  planFileInput: ElementRef;
+
+
   constructor(private statisticsService: StatisticsService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private planHandler: PlanHandler,
+              private parkingPlanService: ParkingPlanService,
+              private httpClient: HttpClient,
+              ) {}
+
+
+  selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string;
+  imageName: any;
+
+//Gets called when the user selects an image
+  public onFileChanged(event) {
+    //Select File
+    this.selectedFile = event.target.files[0];
+    this.onUpload();
   }
+  //Gets called when the user clicks on submit to upload the image
+  onUpload() {
+    console.log(this.selectedFile);
+
+    //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+
+    //Make a call to the Spring Boot Application to save the image
+    this.httpClient.post('http://localhost:8080/parkingplan/upload', uploadImageData, { observe: 'response' })
+      .subscribe((response) => {
+          if (response.status === 200) {
+            console.log('na na na')
+            this.message = 'Image uploaded successfully';
+            this.getImage();
+          } else {
+            this.message = 'Image not uploaded successfully';
+          }
+        }
+      );
+  }
+  //Gets called when the user clicks on retieve image button to get the image from back end
+  getImage() {
+    //Make a call to Spring Boot to get the Image Bytes.
+    this.httpClient.get('http://localhost:8080/parkingplan/get')
+      .subscribe(
+        res => {
+          this.retrieveResonse = res;
+          this.base64Data = this.retrieveResonse.picByte;
+          this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+        }
+      );
+  }
+
+
+  handlePlanInput(files: FileList) {
+    const fileToUpload = files.item(0);
+
+    this.planHandler.loadPlanPhoto(files)
+      .then(result => {
+        this.imgURL = result;
+        this.label = fileToUpload.name;
+      })
+      .catch(error => {
+        this.snackBar.open(error, 'OK', {duration: 4000});
+      });
+  }
+
+
+
+  removeUploadedPlan() {
+    this.retrievedImage = null;
+  }
+
+
+
+
+
+
+
+
+
 
   initCharts(): void {
     this.statisticsService.getParkingHistoryForToday()
@@ -258,11 +360,30 @@ export class DashboardComponent implements OnInit {
       .toPromise()
       .then(response => this.initCarsInTheEveningDonutChart(response));
 
+    this.parkingPlanService.getParkingPlan()
+      .toPromise()
+      .then(response => {this.retrievedImage = response.photo})
+      .catch();
+
   }
 
   ngOnInit(): void {
     this.initCharts();
+    this.getImage();
   }
+
+
+  handleFileInput(file: FileList){
+    this.fileToUpload = file.item(0);
+    //Show image preview
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+  }
+
+
 
   private initCarsEnteredExited(data: any[]): void {
     const keys: string[] = [];

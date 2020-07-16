@@ -72,3 +72,9 @@ mat-card {
 button:focus {
   outline: none;
 }
+
+.plan-photo-preview img{
+  max-width: 90vw;
+  max-height: 90vw;
+  object-fit: cover;
+}

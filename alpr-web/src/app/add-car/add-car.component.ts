@@ -24,6 +24,7 @@ export class AddCarComponent implements OnInit {
     model: ['', Validators.required],
     color: ['', Validators.required],
   });
+
   labelDefault = 'Upload Photo';
   label: string = this.labelDefault;
 

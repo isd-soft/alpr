@@ -59,6 +59,8 @@ import { ViewCommentDialogComponent } from './view-comment-dialog/view-comment-d
 import { AddAnnouncementDialogComponent } from './add-announcement-dialog/add-announcement-dialog.component';
 import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
+import {PlanHandler} from "./utils/plan.handler";
+import {ParkingPlanService} from "./shared/parking.plan.service";
 
 @NgModule({
   declarations: [
@@ -117,9 +119,10 @@ import {CompanyCarsComponent} from './company-cars/company-cars.component';
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
-    FileHandler,
+    FileHandler,PlanHandler,ParkingPlanService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],
