@@ -1,5 +1,6 @@
 package isd.alprserver.services.interfaces;
 
+import isd.alprserver.dtos.CompanyWithCarsDTO;
 import isd.alprserver.dtos.ParkingHistoryDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.shared.CarStatisticsResponse;
@@ -31,6 +32,8 @@ public interface StatisticsService {
     List<ScanAudit> getAllAllowedLastWeek();
 
     List<Company> getAllCompanies();
+
+    List<CompanyWithCarsDTO> getAllCompanies2();
 
     List<ScanAudit> getAllScansForToday();
 

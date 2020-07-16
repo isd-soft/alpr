@@ -1,9 +1,6 @@
 package isd.alprserver.controllers;
 
-import isd.alprserver.dtos.AllowedRejectedCounterDTO;
-import isd.alprserver.dtos.CarsPerHoursDTO;
-import isd.alprserver.dtos.CompanyWithCarsDTO;
-import isd.alprserver.dtos.ParkingHistoryDTO;
+import isd.alprserver.dtos.*;
 import isd.alprserver.model.shared.CarStatisticsResponse;
 import isd.alprserver.model.shared.UserStatisticsResponse;
 import isd.alprserver.model.statistics.ScanAudit;
@@ -52,8 +49,22 @@ public class StatisticsController {
     }
 
     @GetMapping("/all-last-week")
-    public ResponseEntity<List<ScanAudit>> getLastWeek() {
-        return ResponseEntity.ok(statisticsService.getAllInLastWeek());
+    public ResponseEntity<List<ScanAuditDTO>> getLastWeek() {
+        return ResponseEntity.ok(
+                statisticsService.getAllInLastWeek().stream()
+                .map(this::ScanAuditToScan)
+                .collect(Collectors.toList())
+        );
+    }
+
+    private ScanAuditDTO ScanAuditToScan(ScanAudit sa) {
+        return ScanAuditDTO.builder()
+        .id(sa.getId())
+        .allowed(sa.isAllowed())
+        .licensePlate(sa.getLicensePlate())
+        .scanDate(sa.getScanDate().toLocalDate().toString())
+        .status(sa.getStatus())
+        .build();
     }
 
     @GetMapping("/all-allowed-last-week")
@@ -64,19 +75,7 @@ public class StatisticsController {
     @GetMapping("/cars-per-company")
     public ResponseEntity<List<CompanyWithCarsDTO>> getAllCompaniesWithCars() {
         return ResponseEntity.ok(
-                statisticsService.getAllCompanies()
-                        .stream()
-                        .map(company -> CompanyWithCarsDTO.
-                                builder()
-                                .name(company.getName())
-                                .cars(
-                                        company.getUsers().stream()
-                                                .map(user -> user.getCars().size())
-                                                .reduce(0, Integer::sum)
-                                )
-                                .build()
-                        )
-                        .collect(Collectors.toList())
+                statisticsService.getAllCompanies2()
         );
     }
 

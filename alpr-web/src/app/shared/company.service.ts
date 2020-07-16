@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CompanyModel} from './company.model';
 import {Observable} from 'rxjs';
+import {ConnectionURL} from "./url";
 
 
 @Injectable()
 export class CompanyService {
-  private url = 'https://vm-alpr-server.herokuapp.com/companies';
+  private url = ConnectionURL.local + 'companies';
 
   constructor(private httpClient: HttpClient) {
   }

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -68,6 +69,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    @Transactional
     public void deleteById(int id)
             throws UserNotFoundException, UserRemovalException {
         User user = userRepository.findById(id).orElseThrow(() ->
@@ -79,28 +81,27 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    @Transactional
     public User getById(int id) throws UserNotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new
                 UserNotFoundException("User with id " + id + " not found"));
     }
 
     @Override
+    @Transactional
     public List<UserDTO> getAll() {
-        List<User> users = userRepository.findAll();
-        ArrayList<UserDTO> userDTOS = new ArrayList<>();
-        for (User user : users) {
-            userDTOS.add(UserDTO.builder()
-                    .age(user.getAge())
-                    .company(user.getCompany().getName())
-                    .role(user.getRole().getName())
-                    .email(user.getEmail())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .password("**********")
-                    .telephoneNumber(user.getTelephoneNumber())
-                    .build());
-        }
-        return userDTOS;
+        return userRepository.findAll().stream()
+                .map(user -> UserDTO.builder()
+                .age(user.getAge())
+                .company(user.getCompany().getName())
+                .role(user.getRole().getName())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .password("**********")
+                .telephoneNumber(user.getTelephoneNumber())
+                .build())
+                .collect(Collectors.toList());
     }
 
     @Override

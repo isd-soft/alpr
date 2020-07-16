@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ConnectionURL} from "./url";
 
 @Injectable()
 export class StatisticsService {
-  private url = 'https://vm-alpr-server.herokuapp.com/statistics';
-  private metricsUrl = 'https://vm-alpr-server.herokuapp.com/actuator/metrics';
+  private url = ConnectionURL.local + '/statistics'
+  private metricsUrl = ConnectionURL.local + '/actuator/metrics';
 
   constructor(private httpClient: HttpClient) {
   }

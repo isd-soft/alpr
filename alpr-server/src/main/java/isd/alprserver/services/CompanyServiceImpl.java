@@ -21,6 +21,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
 
     @Override
+    @Transactional
     public List<Company> getAll() {
         return companyRepository.findAll();
     }
@@ -36,11 +37,13 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         companyRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public Company getById(long id) {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException("Company with id = " + id + "not found"));
     }
@@ -57,6 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public Company getByName(String name) {
         return this.companyRepository.getByName(name).orElseThrow(() -> new CompanyNotFoundException("This company doesn't exist"));
     }

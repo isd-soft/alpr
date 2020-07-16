@@ -3,10 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AnnouncementModel} from './announcement.model';
 import {CommentModel} from './comment.model';
+import {ConnectionURL} from './url';
 
 @Injectable()
 export class AnnouncementService {
-  private url = 'https://vm-alpr-server.herokuapp.com/announcements';
+  private url = ConnectionURL.local + '/announcements';
   constructor(private httpClient: HttpClient) {
   }
 
