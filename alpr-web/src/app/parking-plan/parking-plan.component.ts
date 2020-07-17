@@ -33,7 +33,7 @@ export class ParkingPlanComponent implements OnInit {
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
 
-    this.httpClient.post(ConnectionURL.local + '/parkingplan/upload', uploadImageData, { observe: 'response' })
+    this.httpClient.post(ConnectionURL.url + '/parkingplan/upload', uploadImageData, { observe: 'response' })
       .subscribe((response) => {
           if (response.status === 200) {
             console.log('na na na')
@@ -46,7 +46,7 @@ export class ParkingPlanComponent implements OnInit {
       );
   }
   getImage() {
-    this.httpClient.get(ConnectionURL.local + '/parkingplan/get')
+    this.httpClient.get(ConnectionURL.url + '/parkingplan/get')
       .subscribe(
         res => {
           this.retrieveResonse = res;
