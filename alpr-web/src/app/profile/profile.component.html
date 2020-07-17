@@ -1,141 +1,138 @@
 <!--suppress HtmlFormInputWithoutLabel -->
-<section class="car-list-section">
-  <section class="profile-info-section">
-    <mat-card class="my-card">
-      <mat-card-title class="full-width">Profile</mat-card-title>
-      <div>
-        <mat-card-content class="card-content">
-            <div class="col">
-              <div *ngIf="profilePhotoToView; else defaultProfilePhoto"
-                   class="profile-photo">
-                <img [src]="profilePhotoToView" alt="Profile Photo Preview"
-                     style="width: 100%;height: 100%;object-fit: cover">
-              </div>
-            </div>
-              <div class="col">
-                <div class="row">
-              <mat-form-field>
-                <mat-label>First Name:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.firstName">
-              </mat-form-field>
-                </div>
-                <div class="row">
-              <mat-form-field>
-                <mat-label>Last Name:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.lastName">
-              </mat-form-field>
-                </div>
-              </div>
-              <div class="col">
-                <div class="row">
-              <mat-form-field>
-                <mat-label>Email:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.email">
-              </mat-form-field>
-                </div>
-                <div class="row">
-              <mat-form-field>
-                <mat-label>Age:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.age">
-              </mat-form-field>
-              </div>
-              </div>
-              <div class="col" >
-                <div class="row">
-              <mat-form-field>
-                <mat-label>Telephone:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
-              </mat-form-field>
-                </div>
-                <div class="row">
-              <mat-form-field>
-                <mat-label>Company:</mat-label>
-                <input matInput [disabled]="true" [(ngModel)]="user.company">
-              </mat-form-field>
-              </div>
-              </div>
+<div class="all-margins">
+  <mat-card class="my-card">
+    <mat-card-title class="full-width">Profile</mat-card-title>
+    <div>
+      <mat-card-content class="card-content">
+        <div class="col">
+          <div *ngIf="profilePhotoToView; else defaultProfilePhoto"
+               class="profile-photo">
+            <img [src]="profilePhotoToView" alt="Profile Photo Preview"
+                 style="width: 100%;height: 100%;object-fit: cover">
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <mat-form-field>
+              <mat-label>First Name:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.firstName">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Last Name:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.lastName">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Email:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.email">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Age:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.age">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col" >
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Telephone:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.telephoneNumber">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field>
+              <mat-label>Company:</mat-label>
+              <input matInput [disabled]="true" [(ngModel)]="user.company">
+            </mat-form-field>
+          </div>
+        </div>
 
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary"
-                  (click)="onEditProfileClick(editProfileTemplate)">Edit Profile
-          </button>
-          <button mat-raised-button color="accent"
-                  (click)="onChangePasswordClick(changePasswordTemplate)">Change Password
-          </button>
-        </mat-card-actions>
-      </div>
-    </mat-card>
-  </section>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary"
+                (click)="onEditProfileClick(editProfileTemplate)">Edit Profile
+        </button>
+        <button mat-raised-button color="accent"
+                (click)="onChangePasswordClick(changePasswordTemplate)">Change Password
+        </button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+</div>
 
-  <mat-card class="all-margins">
-    <mat-card-title>My Cars</mat-card-title>
+<mat-card class="all-margins">
+  <mat-card-title>My Cars</mat-card-title>
 
-    <button mat-raised-button color="accent"
-            (click)="onCarAdd(addCarTemplate)">Add car
-    </button>
-    <mat-card-content>
-      <mat-table class="table" matSort [dataSource]="dataSource">
-        <ng-container matColumnDef="licensePlate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
-          <!--suppress TypeScriptUnresolvedVariable -->
-          <mat-cell class="description-cell"
-                    *matCellDef="let car">{{car.licensePlate}}</mat-cell>
+  <button mat-raised-button color="accent"
+          (click)="onCarAdd(addCarTemplate)">Add car
+  </button>
+  <mat-card-content>
+    <mat-table class="table" matSort [dataSource]="dataSource">
+      <ng-container matColumnDef="licensePlate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+        <!--suppress TypeScriptUnresolvedVariable -->
+        <mat-cell class="description-cell"
+                  *matCellDef="let car">{{car.licensePlate}}</mat-cell>
 
-        </ng-container>
+      </ng-container>
 
-        <ng-container matColumnDef="brand">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
-          <!--suppress TypeScriptUnresolvedVariable -->
-          <mat-cell class="duration-cell"
-                    *matCellDef="let car">{{car.brand}}</mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="brand">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+        <!--suppress TypeScriptUnresolvedVariable -->
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">{{car.brand}}</mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="model">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
-          <mat-cell class="duration-cell"
-                    *matCellDef="let car">{{car.model}}</mat-cell>
-        </ng-container>
+      <ng-container matColumnDef="model">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">{{car.model}}</mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="color">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
-          <mat-cell class="duration-cell"
-                    *matCellDef="let car">
+      <ng-container matColumnDef="color">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let car">
         <span class="color-title">
           {{car.color}}
         </span>
-            <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
+          <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
             <span class="material-icons span-icon"
                   [ngStyle]="{'color': car.color}">directions_car
             </span>
-            </button>
-          </mat-cell>
-        </ng-container>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef></mat-header-cell>
-          <mat-cell *matCellDef="let element; let car">
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element; let car">
 
-            <button mat-raised-button color="primary"
-                    (click)="onCarEdit(editCarTemplate, car)">Edit
-            </button>
-            <button mat-raised-button color="warn" class="left-margin"
-                    (click)="onCarDelete(car)">Remove
-            </button>
-          </mat-cell>
+          <button mat-raised-button color="primary"
+                  (click)="onCarEdit(editCarTemplate, car)">Edit
+          </button>
+          <button mat-raised-button color="warn" class="left-margin"
+                  (click)="onCarDelete(car)">Remove
+          </button>
+        </mat-cell>
 
-        </ng-container>
+      </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-        <mat-row *matRowDef="let row; columns: displayedColumns"
-                 (click)="onRowClicked(row)">
-        </mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns">
+      </mat-row>
 
-      </mat-table>
-    </mat-card-content>
-  </mat-card>
-</div>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
 
 <ng-template #editCarTemplate>
   <div>
@@ -323,7 +320,7 @@
           </div>
           <div class='input-group-append' *ngIf="userPhotoToEdit">
             <button class="btn btn-outline-secondary action" type="button"
-                    (click)="this.userPhotoToEdit = null; this.imgURL = null">Set Default
+                    (click)="this.userPhotoToEdit = null; this.profileImageUrl = null">Set Default
             </button>
           </div>
         </div>
@@ -357,7 +354,7 @@
 <ng-template #changePasswordTemplate>
   <div mat-dialog-title>Change Password</div>
 
-  <mat-dialog-content>
+  <mat-dialog-content class="change-pass-container">
     <form [formGroup]="changePasswordForm" (ngSubmit)="changeUserPassword()">
 
       <mat-form-field>
@@ -387,7 +384,7 @@
       <div *ngIf="hasCars">
         <mat-form-field>
           <mat-label>License Plate</mat-label>
-          <input matInput placeholder="Provide license number for one of your cars"
+          <input matInput placeholder="License plate"
                  type="text" name="licensePlate" required formControlName="licensePlate">
         </mat-form-field>
       </div>

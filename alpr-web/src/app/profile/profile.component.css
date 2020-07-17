@@ -88,3 +88,8 @@ input {
 input {
   width: 100%;
 }
+
+.change-pass-container input {
+  max-width: 100%!important;
+  min-width: 0;
+}

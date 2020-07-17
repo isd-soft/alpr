@@ -36,7 +36,6 @@ export class CarService{
   }
 
   update(car: CarModel): Observable<any> {
-    console.log(JSON.stringify(car));
     return this.http.put(this.url +
       '/' + car.id, car);
   }

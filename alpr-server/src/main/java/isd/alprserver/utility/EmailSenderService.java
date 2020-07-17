@@ -6,6 +6,7 @@ import isd.alprserver.services.interfaces.CompanyService;
 import isd.alprserver.services.interfaces.MailService;
 import isd.alprserver.services.interfaces.ParkingHistoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,10 +21,9 @@ public class EmailSenderService {
     private final MailService mailService;
     private final CarService carService;
 
-//    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void updateParkingHistory() {
-        System.out.println("here");
         companyService.getAll()
                 .forEach(company -> {
                     ParkingHistory history = ParkingHistory.builder().
@@ -41,10 +41,9 @@ public class EmailSenderService {
                             .build();
                     parkingHistoryService.save(history);
                 });
-        System.out.println("done");
     }
 
-    //@Scheduled(cron = "*/10 * 9-18 * * ?")
+    @Scheduled(cron = "*/30 * 8-11 * * ?")
     @Transactional
     public void check() {
         LocalDate date = LocalDate.now();

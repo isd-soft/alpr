@@ -32,11 +32,12 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   editCarForm: FormGroup;
   editProfileForm: FormGroup;
   public profilePhotoToView: any;
-  public imgURL;
+  public profileImageUrl;
   userPhotoToEdit: any;
 
   carPhotoToView: any;
   carPhotoToEdit: any;
+  carPhotoToEditURL: any;
 
   defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
@@ -63,9 +64,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
               private authenticationService: AuthenticationService,
               private sanitizer: DomSanitizer,
               private fileHandler: FileHandler) {
-  }
-
-  onRowClicked(row) {
   }
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -97,6 +95,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.editedCar = car;
     if (car.photo) {
       this.carPhotoToEdit = this.base64PhotoToUrl(car.photo);
+      this.carPhotoToEditURL = car.photo;
     } else {
       this.carPhotoToEdit = null;
     }
@@ -121,7 +120,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   updateCar() {
     const car: CarModel = this.formExtractor.extractCar(this.editCarForm);
     car.licensePlate = this.editedCar.licensePlate;
-    car.photo = this.carPhotoToEdit;
+    if (this.carPhotoToEdit) {
+      if (this.carPhotoToEditURL.includes('data:image')) {
+        car.photo = this.carPhotoToEditURL;
+      } else {
+        car.photo = 'data:Image/*;base64,' + this.carPhotoToEditURL;
+      }
+    } else {
+      car.photo = null;
+    }
 
     this.carService.update(car)
       .toPromise()
@@ -171,6 +178,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.fileHandler.loadCarPhoto(files)
       .then(result => {
         this.carPhotoToEdit = result;
+        this.carPhotoToEditURL = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
       })
       .catch(error => {
@@ -182,7 +190,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       this.fileHandler.loadCarPhoto(files)
         .then(result => {
           this.userPhotoToEdit = result;
-          this.imgURL= result;
+          this.profileImageUrl= result;
           this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
         })
         .catch(error => {
@@ -228,7 +236,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   updateUserProfile() {
-    console.log('click');
     if (this.editProfileForm.valid) {
       const user: User = this.formExtractor
         .extractUserFromProfileForm(this.editProfileForm);
@@ -236,7 +243,11 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       user.company = this.user.company;
       user.password = this.user.password;
       user.role = this.user.role;
-      if (this.imgURL)user.photo = this.imgURL;
+      if (this.profileImageUrl) {
+        user.photo = this.profileImageUrl;
+      } else {
+        user.photo = null;
+      }
 
       this.userService.update(user, false).toPromise()
         .then(_ => {
@@ -246,7 +257,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           this.user.age = user.age;
 
           if (this.userPhotoToEdit) {
-                this.user.photoURL = this.imgURL;
+                this.user.photoURL = this.profileImageUrl;
           } else {
                 this.profilePhotoToView = null;
                 this.user.photoURL = null;

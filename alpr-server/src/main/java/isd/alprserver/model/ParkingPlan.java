@@ -12,10 +12,10 @@ import javax.persistence.*;
 @Data
 @Table(name = "parking_plan")
 public class ParkingPlan {
+
     @Id
     private int id;
 
-    @Column(name = "photo")
     private byte[] photo;
 
 

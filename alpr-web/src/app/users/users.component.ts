@@ -40,6 +40,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   userPhotoToView: any;
   userPhotoToEdit: any;
   userPhotoToAdd: any;
+  userPhotoToEditURL: any;
 
   defaultUploadInputLabel = 'Upload Photo';
   uploadInputLabel: string = this.defaultUploadInputLabel;
@@ -82,10 +83,11 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   onEdit(editUserTemplate, user: User) {
+    this.editPasswordChecked = false;
     this.editedUser = user;
-    console.log(user)
      if (user.photo) {
         this.userPhotoToEdit = this.base64PhotoToUrl(user.photo);
+        this.userPhotoToEditURL = user.photo;
      } else {
         this.userPhotoToEdit = null;
      }
@@ -137,7 +139,16 @@ export class UsersComponent implements OnInit, AfterViewInit {
   updateUser() {
     if (this.editUserForm.valid) {
       const user: User = this.formExtractor.extractUser(this.editUserForm);
-      user.photo = this.userPhotoToEdit;
+      if (this.userPhotoToEdit) {
+        if (this.userPhotoToEditURL.includes('data:image')) {
+          user.photo = this.userPhotoToEditURL;
+        } else {
+          user.photo = 'data:Image/*;base64,' + this.userPhotoToEditURL;
+        }
+      } else {
+        user.photo = null;
+      }
+
       if (user.password.localeCompare(
         this.editUserForm.get('confirmPassword').value) === 0) {
         user.email = this.editedUser.email;
@@ -197,7 +208,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   onEditPasswordCheckBoxClick() {
     this.editPasswordChecked = !this.editPasswordChecked;
-    console.log(this.editPasswordChecked);
   }
 
   private base64PhotoToUrl(base64Photo: string) {
@@ -209,8 +219,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.fileHandler.loadCarPhoto(files)
       .then(result => {
           this.userPhotoToEdit = result;
+          this.userPhotoToEditURL = result;
           this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
-          this.userEditFileInput.nativeElement.value ='';
+          this.userEditFileInput.nativeElement.value = '';
         })
         .catch(error => {
           this.snackBar.open(error, 'OK', {duration: 4000});

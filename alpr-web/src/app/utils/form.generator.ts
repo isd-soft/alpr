@@ -85,8 +85,8 @@ export class FormGenerator {
       brand: [car.brand, Validators.required],
       model: [car.model, Validators.required],
       color: [car.color, Validators.required],
-      ownerName: [car.ownerName, Validators.required],
-      ownerTelephone: [car.ownerTelephone, Validators.required]
+      ownerName: new FormControl({value: car.ownerName, disabled: true}, Validators.required),
+      ownerTelephone: new FormControl({value: car.ownerTelephone, disabled: true}, Validators.required)
     });
   }
 

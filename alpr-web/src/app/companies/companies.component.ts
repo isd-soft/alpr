@@ -135,7 +135,7 @@ export class CompaniesComponent implements OnInit, AfterViewInit {
 
     if (this.companyPhotoToEdit) {
       if (this.companyPhotoToEditURL.includes('data:image')) {
-        companyModel.logo = this.companyPhotoToEdit;
+        companyModel.logo = this.companyPhotoToEditURL;
       } else {
         companyModel.logo = 'data:Image/*;base64,' + this.companyPhotoToEditURL;
       }
