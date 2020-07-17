@@ -9,7 +9,6 @@ export class CarModel {
               public ownerName: string = '',
               public ownerTelephone: string = '',
               public status: string = '',
-              public photo?: string
-  ) {
+              public photo?: string) {
   }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CarService{
-    List<Car> getAll();
+    List<CarDTO> getAll();
 
     Car getById(long id);
 
@@ -22,8 +22,8 @@ public interface CarService{
 
     Optional<Car> getByLicensePlate(String licensePlate);
 
-    List<Car> getByCompanyName(String name);
+    List<CarDTO> getByCompanyName(String name);
 
     LicenseValidationResponse getByLicensePlates(List<String> licensePlateList);
-    List<Car> getAllIn();
+    List<CarDTO> getAllIn();
 }

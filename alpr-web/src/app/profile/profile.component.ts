@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {CarModel} from '../shared/car.model';
@@ -43,6 +43,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   hasCars: boolean;
   changePasswordForm: FormGroup;
+
+  addCarForm: FormGroup = this.formGenerator.generateUserCarAddForm();
+  carPhotoToAdd: any;
+
+  @ViewChild('carAddFileInput')
+  carAddFileInput: ElementRef;
+
+  @ViewChild('carEditFileInput')
+  carEditFileInput: ElementRef;
 
   constructor(private carService: CarService,
               private userService: UserService,
@@ -256,7 +265,50 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onCarAdd(addCarTemplate: TemplateRef<any>) {
+    this.openTemplate(addCarTemplate);
+
+  }
+
+  addCar() {
+    const car: CarModel = this.formExtractor.extractUserAddCar(this.addCarForm);
+    car.photo = this.carPhotoToAdd;
+    car.ownerEmail = this.user.email;
+    this.carService.registerCar(car)
+      .toPromise()
+      .then(_ => {
+        this.snackBar.open('Successfully', 'OK', {duration: 3000});
+        this.loadCars();
+      })
+      .catch(_ => {
+        this.snackBar.open('Oops! Something went wrong', 'OK', {duration: 3000});
+      });
+  }
+
   handleError(httpError: string): void {
     this.snackBar.open(httpError, 'OK', {duration: 4000});
+  }
+
+  handleAddCarFileInput(files: FileList) {
+    this.fileHandler.loadCarPhoto(files)
+      .then(result => {
+        this.carPhotoToAdd = result;
+        this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        this.carAddFileInput.nativeElement.value = '';
+      })
+      .catch(error => {
+        this.snackBar.open(error, 'OK', {duration: 4000});
+      });
+  }
+
+  removeUploadedCar() {
+    this.carAddFileInput.nativeElement.value = '';
+    this.carEditFileInput.nativeElement.value = '';
+  }
+
+  setDefaultCarPhoto() {
+    this.carPhotoToEdit = null;
+    this.carPhotoToAdd = null;
+    this.uploadInputLabel = this.defaultUploadInputLabel;
   }
 }

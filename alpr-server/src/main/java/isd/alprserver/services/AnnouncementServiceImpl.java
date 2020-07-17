@@ -1,6 +1,6 @@
 package isd.alprserver.services;
 
-import isd.alprserver.dtos.AnnouncementDTO;
+import isd.alprserver.dtos.CommentDTO;
 import isd.alprserver.model.Announcement;
 import isd.alprserver.model.Comment;
 import isd.alprserver.model.exceptions.UserNotFoundException;
@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -66,12 +68,39 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public List<Comment> getAllComments(long id) throws UserNotFoundException {
+    @Transactional
+    public List<CommentDTO> getAllComments(long id) throws UserNotFoundException {
         Announcement announcement = announcementRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Invalid announcement id " + id));
-        return announcement.getComments();
+        return announcement.getComments().stream()
+                .sorted(getCommentComparator())
+                .map(
+                        comment ->
+                                CommentDTO.builder()
+                                        .description(comment.getDescription())
+                                        .userEmail(comment.getUserEmail())
+                                        .date(comment.getDate().toString())
+                                        .time(comment.getTime().toString())
+                                        .build()
+                )
+                .collect(Collectors.toList());
     }
+
     private void sendAnnouncements(Announcement announcement){
         userService.getAll().forEach(userDTO -> mailService.sendNotificationFromAdmin(userDTO.getEmail(), announcement.getTitle(), announcement.getDescription()) );
 
+    }
+
+    private Comparator<Comment> getCommentComparator() {
+        return (a, b) -> {
+            if (a.getDate().isAfter(b.getDate()))
+                return -1;
+            else if(a.getDate().isBefore(b.getDate()))
+                return 1;
+            else if (a.getDate().isEqual(b.getDate()) && a.getTime().isAfter(b.getTime()))
+                return -1;
+            else if (a.getDate().isEqual(b.getDate()) && a.getTime().isBefore(b.getTime()))
+                return 1;
+            return 0;
+        };
     }
 }

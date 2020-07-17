@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CarModel} from './car.model';
 import {Observable} from 'rxjs';
+import {ConnectionURL} from './url';
 
 
 @Injectable()
 export class CarService{
   constructor(private http: HttpClient) {}
-  private url = 'https://vm-alpr-server.herokuapp.com/cars';
+  private url = ConnectionURL.url + '/cars';
 
 
   getCars(): Observable<any[]>{

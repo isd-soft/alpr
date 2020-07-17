@@ -70,69 +70,72 @@
 
   <mat-card class="all-margins">
     <mat-card-title>My Cars</mat-card-title>
-    <mat-table class="table" matSort [dataSource]="dataSource">
-      <ng-container matColumnDef="licensePlate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
-        <!--suppress TypeScriptUnresolvedVariable -->
-        <mat-cell class="description-cell"
-                  *matCellDef="let car">{{car.licensePlate}}
-        </mat-cell>
 
-      </ng-container>
+    <button mat-raised-button color="accent"
+            (click)="onCarAdd(addCarTemplate)">Add car
+    </button>
+    <mat-card-content>
+      <mat-table class="table" matSort [dataSource]="dataSource">
+        <ng-container matColumnDef="licensePlate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>License Plate</mat-header-cell>
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <mat-cell class="description-cell"
+                    *matCellDef="let car">{{car.licensePlate}}</mat-cell>
 
-      <ng-container matColumnDef="brand">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
-        <!--suppress TypeScriptUnresolvedVariable -->
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.brand}}
-        </mat-cell>
-      </ng-container>
+        </ng-container>
 
-      <ng-container matColumnDef="model">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">{{car.model}}
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="brand">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Brand</mat-header-cell>
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">{{car.brand}}</mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="color">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
-        <mat-cell class="duration-cell"
-                  *matCellDef="let car">
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Model</mat-header-cell>
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">{{car.model}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="color">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Color</mat-header-cell>
+          <mat-cell class="duration-cell"
+                    *matCellDef="let car">
         <span class="color-title">
           {{car.color}}
         </span>
-          <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
+            <button mat-icon-button (click)="onCarIconClick(carPhotoTemplate, car)">
             <span class="material-icons span-icon"
                   [ngStyle]="{'color': car.color}">directions_car
             </span>
-          </button>
-        </mat-cell>
-      </ng-container>
+            </button>
+          </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let element; let car">
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element; let car">
 
-          <button mat-raised-button color="primary"
-                  (click)="onCarEdit(editCarTemplate, car)">Edit
-          </button>
-          <button mat-raised-button color="warn" class="left-margin"
-                  (click)="onCarDelete(car)">Remove
-          </button>
-        </mat-cell>
+            <button mat-raised-button color="primary"
+                    (click)="onCarEdit(editCarTemplate, car)">Edit
+            </button>
+            <button mat-raised-button color="warn" class="left-margin"
+                    (click)="onCarDelete(car)">Remove
+            </button>
+          </mat-cell>
 
-      </ng-container>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-      <mat-row *matRowDef="let row; columns: displayedColumns"
-               (click)="onRowClicked(row)">
-      </mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"
+                 (click)="onRowClicked(row)">
+        </mat-row>
 
-    </mat-table>
+      </mat-table>
+    </mat-card-content>
   </mat-card>
-</section>
+</div>
 
 <ng-template #editCarTemplate>
   <div>
@@ -401,4 +404,93 @@
     </button>
   </mat-dialog-actions>
 
+</ng-template>
+
+<ng-template #addCarTemplate>
+  <div>
+    <div mat-dialog-title>
+      <h2>Add Car</h2>
+    </div>
+    <mat-dialog-content [formGroup]="addCarForm" style="height: 100%">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field>
+            <mat-label>License Plate</mat-label>
+            <input matInput placeholder="License Plate"
+                   name="licensePlate" type="text" required
+                   formControlName="licensePlate">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="Brand"
+                   name="brand" type="text" required
+                   formControlName="brand">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Model</mat-label>
+            <input matInput placeholder="Model"
+                   name="model" type="text"
+                   required formControlName="model">
+          </mat-form-field>
+
+          <br>
+
+          <mat-form-field>
+            <mat-label>Color</mat-label>
+            <input matInput placeholder="Color" name="color"
+                   type="text" required formControlName="color">
+          </mat-form-field>
+
+          <br>
+
+          <div class="input-group mb-3" style="width: 100%">
+            <div class="custom-file">
+              <!--suppress TypeScriptUnresolvedVariable -->
+              <input #carAddFileInput type="file" class="custom-file-input"
+                     id="carAddFileInput" aria-describedby="inputGroupFileAddon02"
+                     (change)="handleAddCarFileInput($event.target.files)"
+                     (click)="removeUploadedCar()">
+              <label class="custom-file-label" for="carAddFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="carPhotoToAdd">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="setDefaultCarPhoto()">Set Default
+              </button>
+            </div>
+          </div>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addCarForm.reset(); setDefaultCarPhoto()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addCar()" [disabled]="!addCarForm.valid">Save
+            </button>
+          </mat-dialog-actions>
+        </div>
+        <div class="col-6">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="carPhotoToAdd; else defaultEditCarPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="carPhotoToAdd"
+                     alt="car photo" class="edit-car-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </div>
 </ng-template>

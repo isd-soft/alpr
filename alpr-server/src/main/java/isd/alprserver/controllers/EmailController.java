@@ -9,6 +9,7 @@ import isd.alprserver.services.interfaces.CarService;
 import isd.alprserver.services.interfaces.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,6 +27,7 @@ public class EmailController {
     }
 
     @PostMapping("/license-plate")
+    @Transactional
     public ResponseEntity<EmailResponse> sendEmailByLicensePlate(@RequestBody LicensePlateDTO plate) {
         Car car = carService.getByLicensePlate(plate.getLicensePlate()).orElseThrow(() -> new CarNotFoundException("Unknown license plate " + plate.getLicensePlate()));
         mailService.sendParkingNotificationEmail(car.getUser().getEmail());

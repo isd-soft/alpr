@@ -44,6 +44,10 @@ export class NavigationComponent implements OnInit {
           {
             link: 'companies',
             name: 'Companies'
+          },
+          {
+            link: 'parkingplan',
+            name: 'Parking Plan'
           }
         ];
       } else {
@@ -52,14 +56,9 @@ export class NavigationComponent implements OnInit {
             link: 'profile',
             name: 'Profile'
           },
-
           {
             link: 'announcements',
             name: 'Announcements'
-          },
-          {
-            link: 'addcar',
-            name: 'Add Car'
           },
           {
             link: 'companycars',

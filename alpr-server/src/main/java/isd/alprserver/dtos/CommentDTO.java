@@ -15,6 +15,6 @@ import java.time.LocalTime;
 public class CommentDTO {
     private String userEmail;
     private String description;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
 }

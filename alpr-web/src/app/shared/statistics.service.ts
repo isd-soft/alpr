@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {ConnectionURL} from "./url";
 
 @Injectable()
 export class StatisticsService {
-  private url = 'https://vm-alpr-server.herokuapp.com/statistics';
-  private metricsUrl = 'https://vm-alpr-server.herokuapp.com/actuator/metrics';
+  private url = ConnectionURL.url + '/statistics'
+  private metricsUrl = ConnectionURL.url + '/actuator/metrics';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -35,11 +36,11 @@ export class StatisticsService {
   }
 
   public getInfo(): Observable<any> {
-    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/info');
+    return this.httpClient.get(ConnectionURL.local + '/actuator/info');
   }
 
   public getHealth(): Observable<any> {
-    return this.httpClient.get('https://vm-alpr-server.herokuapp.com/actuator/health');
+    return this.httpClient.get(ConnectionURL.local + '/actuator/health');
   }
 
   public getCpuCount(): Observable<any> {

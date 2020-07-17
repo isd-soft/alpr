@@ -1,0 +1,111 @@
+.container-fluid {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  top: -79px;
+}
+
+mat-card {
+  margin: 10px;
+}
+
+.chart-title {
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: sans-serif;
+  margin-top: 0;
+}
+
+.rounded-circle {
+  border-width: 1vw !important;
+}
+
+.icon {
+  max-width: 4vw;
+  max-height: 4vw;
+}
+
+.title {
+  font-size: 2vw;
+  color: lightslategray;
+}
+
+.statistics-number{
+  font-size: 2vw;
+}
+
+.icon-info{
+  color: red;
+  padding-right: 30px;
+}
+
+.system-info {
+  size: 60px;
+}
+
+.health, .info, .metrics {
+  color: #3f51b5;
+  font-size: 25px;
+}
+.value {
+  color: #3f51b5;
+}
+
+.info-system {
+  font-size: 30px;
+  color: #3f51b5;
+
+}
+
+.button-container {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;
+  left: 94vw;
+  z-index: 100;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.plan-photo-preview img{
+  max-width: 90vw;
+  max-height: 90vw;
+  object-fit: cover;
+}
+
+.title-plan{
+  font-size: 30px;
+  color: #3f51b5;
+  text-align: center;
+}
+
+#remove{
+  display: block;
+  margin: auto;
+}
+
+.default-photo{
+  padding-left: 80px;
+  display: block;
+  margin: auto;
+}
+
+#parking-default{
+  width: 70%;
+  padding-left: 80px;
+  display: block;
+  margin: auto;
+}
+
+#parking{
+  width: 70%;
+  padding-left: 80px;
+  display: block;
+  margin: auto;
+}

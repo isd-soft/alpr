@@ -1,11 +1,12 @@
 package isd.alprserver.services.interfaces;
 
+import isd.alprserver.dtos.CompanyDTO;
 import isd.alprserver.model.Company;
 import isd.alprserver.model.exceptions.CompanyCreationException;
 
 import java.util.List;
 
-public interface CompanyService{
+public interface CompanyService {
     List<Company> getAll();
 
     Company add(Company company) throws CompanyCreationException;
@@ -15,7 +16,7 @@ public interface CompanyService{
 
     Company getById(long id);
 
-    Company update(Company company);
+    void update(Long id, CompanyDTO company);
 
     Company getByName(String name);
 

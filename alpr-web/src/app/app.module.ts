@@ -30,7 +30,6 @@ import {CarService} from './shared/car.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-import {AddCarComponent} from './add-car/add-car.component';
 import {HomeComponent} from './home/home.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {CompaniesComponent} from './companies/companies.component';
@@ -41,6 +40,8 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthenticationService} from './auth/authentication.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
+
+
 
 // @ts-ignore
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -60,6 +61,11 @@ import {FileHandler} from './utils/file.handler';
 import {CompanyCarsComponent} from './company-cars/company-cars.component';
 import { EditAnnouncementDialogComponent } from './edit-announcement-dialog/edit-announcement-dialog.component';
 import {MatBadgeModule} from "@angular/material/badge";
+import {PlanHandler} from "./utils/plan.handler";
+import {ParkingPlanService} from "./shared/parking.plan.service";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MaterialFileInputModule} from "ngx-material-file-input";
+import { ParkingPlanComponent } from './parking-plan/parking-plan.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +73,6 @@ import {MatBadgeModule} from "@angular/material/badge";
     RegistrationComponent,
     LoginComponent,
     UsersComponent,
-    AddCarComponent,
     CarListComponent,
     CompaniesComponent,
     HomeComponent,
@@ -82,7 +87,9 @@ import {MatBadgeModule} from "@angular/material/badge";
     AddCommentDialogComponent,
     ViewCommentDialogComponent,
     AddAnnouncementDialogComponent,
-    EditAnnouncementDialogComponent
+    EditAnnouncementDialogComponent,
+    ParkingPlanComponent
+
   ],
   imports: [
     BrowserModule,
@@ -113,15 +120,18 @@ import {MatBadgeModule} from "@angular/material/badge";
     NgApexchartsModule,
     MatListModule,
     ScrollingModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressBarModule,
+    MaterialFileInputModule
 
 
   ],
   providers: [UserService, CompanyService, CarService, AnnouncementService, ConfirmationDialogService,
     FormExtractor, FormGenerator, AuthenticationService, StatisticsService,
-    FileHandler,
+    FileHandler,PlanHandler,ParkingPlanService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+
   ],
   bootstrap: [AppComponent],
   exports: [MatPaginatorModule],

@@ -1,5 +1,6 @@
 package isd.alprserver.services.interfaces;
 
+import isd.alprserver.dtos.CommentDTO;
 import isd.alprserver.model.Announcement;
 import isd.alprserver.model.Comment;
 import isd.alprserver.model.exceptions.UserNotFoundException;
@@ -14,5 +15,5 @@ public interface AnnouncementService {
     List<Announcement> getAll();
     Optional<Announcement> getById(long id);
     void addComment(long id, Comment comment);
-    List<Comment> getAllComments(long id) throws UserNotFoundException;
+    List<CommentDTO> getAllComments(long id) throws UserNotFoundException;
 }

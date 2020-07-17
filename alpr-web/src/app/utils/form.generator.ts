@@ -53,15 +53,26 @@ export class FormGenerator {
     });
   }
 
-  public generateCarAddForm(): FormGroup {
+  public generateAdminCarAddForm(): FormGroup {
     return this.fb.group({
-      id: ['', Validators.required],
+      id: [''],
       licensePlate: ['', [Validators.required,
         Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       color: ['', Validators.required],
       ownerEmail: ['', [Validators.required, Validators.email]],
+    });
+  }
+
+  public generateUserCarAddForm(): FormGroup {
+    return this.fb.group({
+      id: [''],
+      licensePlate: ['', [Validators.required,
+        Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
+      brand: ['', Validators.required],
+      model: ['', Validators.required],
+      color: ['', Validators.required],
     });
   }
 
@@ -101,6 +112,15 @@ export class FormGenerator {
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
       newPasswordConfirm: ['', Validators.required]
+    });
+  }
+
+  public generateCarRegistrationForm(): FormGroup {
+    return this.fb.group({
+      licensePlate: ['', [Validators.required, Validators.pattern('^([A-Z]{3}\\s\\d{1,3}|[A-Z]{1,2}\\s[A-Z]{2}\\s\\d{2,3})$')]],
+      brand: ['', Validators.required],
+      model: ['', Validators.required],
+      color: ['', Validators.required],
     });
   }
 }

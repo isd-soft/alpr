@@ -2,15 +2,17 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {CompanyModel} from './company.model';
 import {Observable} from 'rxjs';
+import {ConnectionURL} from "./url";
 
 
 @Injectable()
 export class CompanyService {
-  private url = 'https://vm-alpr-server.herokuapp.com/companies';
+  private url = ConnectionURL.url + '/companies';
+
   constructor(private httpClient: HttpClient) {
   }
 
-  public getAll(): Observable<any[]>{
+  public getAll(): Observable<any[]> {
     return this.httpClient.get<any[]>(this.url);
   }
 
@@ -23,6 +25,6 @@ export class CompanyService {
   }
 
   update(companyModel: CompanyModel): Observable<any> {
-    return this.httpClient.put(this.url + '/update' , companyModel);
+    return this.httpClient.put(this.url + '/' + companyModel.id, companyModel);
   }
 }

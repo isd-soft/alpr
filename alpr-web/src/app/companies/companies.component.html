@@ -3,60 +3,70 @@
 <!--suppress HtmlFormInputWithoutLabel, TypeScriptUnresolvedVariable -->
 <section class="car-list-section">
 
-<mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 
-<mat-card class="all-margins">
+  <mat-card class="all-margins">
 
-  <button mat-raised-button color="accent" class="all-margins"
-          (click)="onAdd(addCompanyTemplate)">Add a company
-  </button>
-
-  <mat-form-field id="example-form-field">
-
-    <mat-label class="material-icons">search</mat-label>
-    <label>
-      <!--suppress TypeScriptUnresolvedVariable -->
-      <input (keyup)="applyFilter($event.target.value)"
-             matInput placeholder="Search for a Company" type="text" [(ngModel)]="value">
-    </label>
-    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
-      <mat-icon (click)="clearInput()">close</mat-icon>
+    <button mat-raised-button color="accent" class="all-margins"
+            (click)="onAdd(addCompanyTemplate)">Add a company
     </button>
-  </mat-form-field>
+
+    <mat-form-field id="example-form-field">
+
+      <mat-label class="material-icons">search</mat-label>
+      <label>
+        <!--suppress TypeScriptUnresolvedVariable -->
+        <input (keyup)="applyFilter($event.target.value)"
+               matInput placeholder="Search for a Company" type="text" [(ngModel)]="value">
+      </label>
+      <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" type="button">
+        <mat-icon (click)="clearInput()">close</mat-icon>
+      </button>
+    </mat-form-field>
 
 
-  <mat-table matSort [dataSource]="companiesDataSource" >
+    <mat-table matSort [dataSource]="companiesDataSource">
 
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</mat-header-cell>
-      <mat-cell *matCellDef="let companyModel">{{companyModel.name}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Company Name</mat-header-cell>
+        <mat-cell *matCellDef="let companyModel">{{companyModel.name}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="nrParkingSpots">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Number of Parking Spots</mat-header-cell>
-      <mat-cell *matCellDef="let companyModel">{{companyModel.nrParkingSpots}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="nrParkingSpots">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Number of Parking Spots</mat-header-cell>
+        <mat-cell *matCellDef="let companyModel">{{companyModel.nrParkingSpots}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let element; let companyModel"  class="align-right">
+      <ng-container matColumnDef="logo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Company logo</mat-header-cell>
+        <mat-cell class="duration-cell"
+                  *matCellDef="let companyModel">
+          <button mat-icon-button (click)="onCompanyIconClick(companyLogoTemplate, companyModel)">
+            <span class="material-icons span-icon">business</span>
+          </button>
+        </mat-cell>
+      </ng-container>
 
-        <button mat-raised-button color="primary"
-                (click)="onEdit(editCompanyTemplate, companyModel)">Edit
-        </button>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element; let companyModel" class="align-right">
 
-        <button mat-raised-button color="warn" class="left-margin"
-                (click)="onDelete(companyModel)">Remove
-        </button>
-      </mat-cell>
-    </ng-container>
+          <button mat-raised-button color="primary"
+                  (click)="onEdit(editCompanyTemplate, companyModel)">Edit
+          </button>
 
-    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let companyModel; columns: columnsToDisplay"></mat-row>
+          <button mat-raised-button color="warn" class="left-margin"
+                  (click)="onDelete(companyModel)">Remove
+          </button>
+        </mat-cell>
+      </ng-container>
 
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
-</mat-card>
+      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+      <mat-row *matRowDef="let companyModel; columns: columnsToDisplay"></mat-row>
+
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  </mat-card>
 </section>
 
 <ng-template #addCompanyTemplate>
@@ -79,15 +89,137 @@
 
       <br>
 
+      <div class="input-group mb-3" style="width: 100%">
+        <div class="custom-file">
+          <input #companyAddFileInput type="file" class="custom-file-input"
+                 id="companyAddFileInput" aria-describedby="inputGroupFileAddon02"
+                 (change)="handleAddCompanyFileInput($event.target.files)"
+                 (click)="removeUploadedCompany()">
+          <label class="custom-file-label" for="companyAddFileInput">
+            {{uploadInputLabel}}
+          </label>
+        </div>
+        <div class='input-group-append' *ngIf="companyPhotoToAdd">
+          <button class="btn btn-outline-secondary action" type="button"
+                  (click)="setDefaultCompanyPhoto()">Set Default
+          </button>
+        </div>
+      </div>
+
+      <br>
+
       <mat-dialog-actions class="no-bottom-margin">
         <button class="mat-raised-button"
                 [mat-dialog-close]="true">Close
         </button>
         <button class="mat-raised-button mat-accent left-margin"
-                (click)="addCompanyForm.reset()">Clear
+                (click)="addCompanyForm.reset(); setDefaultCompanyPhoto()">Clear
         </button>
         <button class="mat-raised-button mat-primary left-margin"
                 (click)="addCompany()" [disabled]="!addCompanyForm.valid">Save
+        </button>
+      </mat-dialog-actions>
+
+      <div class="col-6">
+        <mat-card>
+          <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+          <div *ngIf="companyPhotoToAdd; else defaultEditCompanyPhoto">
+            <div style="text-align: center">
+              <img matCardImage [src]="companyPhotoToAdd"
+                   alt="company photo" class="edit-company-photo">
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+    </mat-dialog-content>
+  </div>
+</ng-template>
+
+
+<ng-template #editCompanyTemplate>
+  <div mat-dialog-title>
+    <h2>Edit Company</h2>
+    <mat-divider></mat-divider>
+    <h5>{{editedCompany.name}}</h5>
+  </div>
+  <mat-dialog-content [formGroup]="editCompanyForm">
+
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Company Name</mat-label>
+          <input matInput placeholder="Company Name"
+                 name="name" type="text"
+                 required formControlName="name">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Number of Parking Spots</mat-label>
+          <input matInput placeholder="Number of Parking Spots" name="nrParkingSpots"
+                 class="no-left-margin" type="number"
+                 required formControlName="nrParkingSpots">
+        </mat-form-field>
+
+        <div class="input-group mb-3" style="width: 100%">
+          <div class="custom-file">
+            <input #companyEditFileInput type="file" class="custom-file-input"
+                   id="companyEditFileInput" aria-describedby="inputGroupFileAddon01"
+                   (change)="handleEditCompanyFileInput($event.target.files)"
+                   (click)="removeUploadedCompany()">
+            <label class="custom-file-label" for="companyEditFileInput">
+              {{uploadInputLabel}}
+            </label>
+          </div>
+          <div class='input-group-append' *ngIf="companyPhotoToEdit">
+            <button class="btn btn-outline-secondary action" type="button"
+                    (click)="setDefaultCompanyPhoto()">Set Default
+            </button>
+          </div>
+        </div>
+
+        <mat-dialog-actions class="no-bottom-margin">
+          <button class="mat-raised-button"
+                  [mat-dialog-close]="true">Close
+          </button>
+          <button class="mat-raised-button mat-primary left-margin"
+                  [mat-dialog-close]="true"
+                  (click)="updateCompany()">Update
+          </button>
+        </mat-dialog-actions>
+      </div>
+      <div class="col">
+        <mat-card>
+          <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+
+          <div *ngIf="companyPhotoToEdit; else defaultEditCompanyPhoto">
+            <div style="text-align: center">
+              <img matCardImage [src]="companyPhotoToEdit"
+                   alt="company photo" class="edit-company-photo">
+            </div>
+          </div>
+
+        </mat-card>
+      </div>
+    </div>
+  </mat-dialog-content>
+</ng-template>
+
+
+<ng-template #companyLogoTemplate>
+  <div>
+    <h2 mat-dialog-title>Company Photo</h2>
+
+    <mat-dialog-content>
+
+      <div *ngIf="companyPhotoToView; else defaultCompanyPhoto">
+        <img [src]="this.companyPhotoToView" alt="Company Photo Preview"
+             class="company-photo-preview">
+      </div>
+
+      <mat-dialog-actions class="no-bottom-margin">
+        <button class="mat-raised-button"
+                [mat-dialog-close]="true">Close
         </button>
       </mat-dialog-actions>
 
@@ -95,42 +227,15 @@
   </div>
 </ng-template>
 
-<ng-template #editCompanyTemplate>
-  <div>
-    <div mat-dialog-title>
-      <h2>Edit Company</h2>
-      <mat-divider></mat-divider>
-      <h5>{{editedCompany.name}}</h5>
-    </div>
-    <mat-dialog-content [formGroup]="editCompanyForm">
+<ng-template #defaultCompanyPhoto>
+  <img src="../../assets/img/default_company.png" alt="Company Photo Preview"
+       class="default-company-photo-preview">
+</ng-template>
 
-      <mat-form-field >
-        <mat-label>Company Name</mat-label>
-        <input matInput placeholder="Company Name"
-               name="name" type="text"
-               required formControlName="name">
-      </mat-form-field>
-      <br>
-      <mat-form-field>
-        <mat-label>Number of Parking Spots</mat-label>
-        <input matInput placeholder="Number of Parking Spots" name="nrParkingSpots"
-               class="no-left-margin" type="number"
-               required formControlName="nrParkingSpots">
-      </mat-form-field>
-
-      <br>
-
-      <mat-dialog-actions class="no-bottom-margin">
-        <button class="mat-raised-button"
-                [mat-dialog-close]="true">Close
-        </button>
-        <button class="mat-raised-button mat-primary left-margin"
-                [mat-dialog-close]="true"
-                (click)="updateCompany()" [disabled]="!editCompanyForm.valid">Update
-        </button>
-      </mat-dialog-actions>
-
-    </mat-dialog-content>
+<ng-template #defaultEditCompanyPhoto>
+  <div style="text-align: center">
+    <img matCardImage src="../../assets/img/default_company.png" alt="Company Photo Preview"
+         class="default-edit-company-photo">
   </div>
 </ng-template>
 

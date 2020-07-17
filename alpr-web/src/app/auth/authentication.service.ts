@@ -3,13 +3,13 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {User} from '../shared/user.model';
+import {ConnectionURL} from "../shared/url";
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  //private url = 'https://vm-alpr-server.herokuapp.com';
-  private url = 'http://localhost:8080';
+  private url = ConnectionURL.url;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject =
@@ -21,9 +21,9 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  updateUser(user: User){
+  updateUser(user: User) {
     user.token = this.currentUserSubject.value.token;
-    localStorage.setItem('currentUser', JSON.stringify(user))
+    localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
 

@@ -27,11 +27,12 @@ export class CarListComponent implements OnInit, AfterViewInit {
   users = [];
   dataSource = new MatTableDataSource(this.cars);
   value = '';
-  addCarForm: FormGroup = this.formGenerator.generateCarAddForm();
+  addCarForm: FormGroup = this.formGenerator.generateAdminCarAddForm();
   editedCar: CarModel;
   editCarForm: FormGroup;
   carPhotoToView: any;
   carPhotoToEdit: any;
+  carPhotoToEditURL: any;
   carPhotoToAdd: any;
 
   defaultUploadInputLabel = 'Upload Photo';
@@ -53,7 +54,8 @@ export class CarListComponent implements OnInit, AfterViewInit {
               private fileHandler: FileHandler) {
   }
 
-  onRowClicked(row) { }
+  onRowClicked(row) {
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -99,6 +101,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
     this.editedCar = car;
     if (car.photo) {
       this.carPhotoToEdit = this.base64PhotoToUrl(car.photo);
+      this.carPhotoToEditURL = car.photo;
     } else {
       this.carPhotoToEdit = null;
     }
@@ -126,7 +129,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   addCar() {
-    const car: CarModel = this.formExtractor.extractAddCar(this.addCarForm);
+    const car: CarModel = this.formExtractor.extractAdminAddCar(this.addCarForm);
     car.photo = this.carPhotoToAdd;
     this.carService.registerCar(car)
       .toPromise()
@@ -142,7 +145,15 @@ export class CarListComponent implements OnInit, AfterViewInit {
   updateCar() {
     const car: CarModel = this.formExtractor.extractCar(this.editCarForm);
     car.licensePlate = this.editedCar.licensePlate;
-    car.photo = this.carPhotoToEdit;
+    if (this.carPhotoToEdit) {
+      if (this.carPhotoToEditURL.includes('data:image')) {
+        car.photo = this.carPhotoToEditURL;
+      } else {
+        car.photo = 'data:Image/*;base64,' + this.carPhotoToEditURL;
+      }
+    } else {
+      car.photo = null;
+    }
 
     this.carService.update(car)
       .toPromise()
@@ -194,6 +205,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
     this.fileHandler.loadCarPhoto(files)
       .then(result => {
         this.carPhotoToEdit = result;
+        this.carPhotoToEditURL = result;
         this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
         this.carEditFileInput.nativeElement.value = '';
       })

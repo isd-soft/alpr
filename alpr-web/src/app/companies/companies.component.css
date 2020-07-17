@@ -14,9 +14,41 @@
   margin-bottom: 0;
 }
 
-.align-right{
+.align-right {
   display: flex;
   padding: 0;
   justify-content: flex-end;
 }
 
+
+.span-icon {
+  margin-left: 3px;
+}
+
+.color-title {
+  width: 33%;
+}
+
+.company-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+.default-company-photo-preview {
+  max-width: 45vw;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+.edit-company-photo {
+  max-height: 40vh;
+  max-width: 40vw;
+  object-fit: cover;
+}
+
+.default-edit-company-photo {
+  max-height: 25vh;
+  max-width: 25vw;
+  object-fit: cover;
+}
