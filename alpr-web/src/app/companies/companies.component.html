@@ -1,5 +1,3 @@
-
-
 <!--suppress HtmlFormInputWithoutLabel, TypeScriptUnresolvedVariable -->
 <section class="car-list-section">
 
@@ -72,66 +70,69 @@
 <ng-template #addCompanyTemplate>
   <div>
     <h2 mat-dialog-title>Add Company</h2>
-
     <mat-dialog-content [formGroup]="addCompanyForm">
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Company Name</mat-label>
+            <input matInput placeholder="Company Name"
+                   name="name" type="text" required formControlName="name">
+          </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Company Name</mat-label>
-        <input matInput placeholder="Company Name"
-               name="name" type="text" required formControlName="name">
-      </mat-form-field>
+          <br>
 
-      <mat-form-field class="left-margin">
-        <mat-label>Number of Parking Spots</mat-label>
-        <input matInput placeholder="Number of parking Spots" name="nrParkingSpots" class="no-left-margin"
-               type="number" required formControlName="nrParkingSpots">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Number of Parking Spots</mat-label>
+            <input matInput placeholder="Number of parking Spots" name="nrParkingSpots" class="no-left-margin"
+                   type="number" required formControlName="nrParkingSpots">
+          </mat-form-field>
 
-      <br>
+          <br>
 
-      <div class="input-group mb-3" style="width: 100%">
-        <div class="custom-file">
-          <input #companyAddFileInput type="file" class="custom-file-input"
-                 id="companyAddFileInput" aria-describedby="inputGroupFileAddon02"
-                 (change)="handleAddCompanyFileInput($event.target.files)"
-                 (click)="removeUploadedCompany()">
-          <label class="custom-file-label" for="companyAddFileInput">
-            {{uploadInputLabel}}
-          </label>
-        </div>
-        <div class='input-group-append' *ngIf="companyPhotoToAdd">
-          <button class="btn btn-outline-secondary action" type="button"
-                  (click)="setDefaultCompanyPhoto()">Set Default
-          </button>
-        </div>
-      </div>
-
-      <br>
-
-      <mat-dialog-actions class="no-bottom-margin">
-        <button class="mat-raised-button"
-                [mat-dialog-close]="true">Close
-        </button>
-        <button class="mat-raised-button mat-accent left-margin"
-                (click)="addCompanyForm.reset(); setDefaultCompanyPhoto()">Clear
-        </button>
-        <button class="mat-raised-button mat-primary left-margin"
-                (click)="addCompany()" [disabled]="!addCompanyForm.valid">Save
-        </button>
-      </mat-dialog-actions>
-
-      <div class="col-6">
-        <mat-card>
-          <mat-card-subtitle>Photo Preview</mat-card-subtitle>
-          <div *ngIf="companyPhotoToAdd; else defaultEditCompanyPhoto">
-            <div style="text-align: center">
-              <img matCardImage [src]="companyPhotoToAdd"
-                   alt="company photo" class="edit-company-photo">
+          <div class="input-group mb-3" style="width: 100%">
+            <div class="custom-file">
+              <input #companyAddFileInput type="file" class="custom-file-input"
+                     id="companyAddFileInput" aria-describedby="inputGroupFileAddon02"
+                     (change)="handleAddCompanyFileInput($event.target.files)"
+                     (click)="removeUploadedCompany()">
+              <label class="custom-file-label" for="companyAddFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="companyPhotoToAdd">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="setDefaultCompanyPhoto()">Set Default
+              </button>
             </div>
           </div>
-        </mat-card>
-      </div>
 
+          <br>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addCompanyForm.reset(); setDefaultCompanyPhoto()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addCompany()" [disabled]="!addCompanyForm.valid">Save
+            </button>
+          </mat-dialog-actions>
+        </div>
+
+        <div class="col">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="companyPhotoToAdd; else defaultEditCompanyPhoto">
+              <div style="text-align: center">
+                <img matCardImage [src]="companyPhotoToAdd"
+                     alt="company photo" class="edit-company-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
     </mat-dialog-content>
   </div>
 </ng-template>
