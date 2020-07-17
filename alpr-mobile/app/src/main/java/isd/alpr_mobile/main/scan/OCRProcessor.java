@@ -1,6 +1,5 @@
 package isd.alpr_mobile.main.scan;
 
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Detector;
@@ -8,7 +7,6 @@ import com.google.android.gms.vision.text.TextBlock;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,14 +19,10 @@ import retrofit2.Retrofit;
 public class OCRProcessor implements Detector.Processor<TextBlock> {
 
     private OnPlateFoundListener listener;
-    private Retrofit retrofit;
-    private APIInterface api;
     public List<LicensePlate> foundPlates;
 
     public OCRProcessor(OnPlateFoundListener listener) {
         this.listener = listener;
-        this.retrofit = APIClient.getClient();
-        this.api = retrofit.create(APIInterface.class);
         this.foundPlates = new ArrayList<>();
 
     }

@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -66,6 +70,31 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
         }
     }
 
+    private void sendEmail(LicensePlate licensePlate) {
+        Call<MailResponse> call = APIClient.getClient().create(APIInterface.class).sendEmailNotificationByLicensePlate(licensePlate);
+        call.enqueue(new Callback<MailResponse>() {
+            @Override
+            public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
+                if (response.body() != null)
+                    Snackbar.make(findViewById(R.id.surface), response.body().response, Snackbar.LENGTH_LONG)
+                            .setAction("OK", v -> finish())
+                            .show();
+                else
+                    Snackbar.make(findViewById(R.id.surface), "Email was not sent! Try again", Snackbar.LENGTH_LONG)
+                            .setAction("OK", v -> finish())
+                            .show();
+
+            }
+
+            @Override
+            public void onFailure(Call<MailResponse> call, Throwable t) {
+                Snackbar.make(findViewById(R.id.surface), "Error sending message!", Snackbar.LENGTH_LONG)
+                        .setAction("OK", v -> finish())
+                        .show();
+            }
+        });
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try {
@@ -96,28 +125,6 @@ public class ScanActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void onPlateFound(List<LicensePlate> plates) {
-        Call<MailResponse> call = APIClient.getClient().create(APIInterface.class).sendEmailNotificationByLicensePlate(plates.get(4));
-        call.enqueue(new Callback<MailResponse>() {
-            @Override
-            public void onResponse(Call<MailResponse> call, Response<MailResponse> response) {
-                if (response.body() != null)
-                    Snackbar.make(findViewById(R.id.surface), response.body().response, Snackbar.LENGTH_LONG)
-                            .setAction("OK", v -> finish())
-                            .show();
-                else
-                    Snackbar.make(findViewById(R.id.surface), "Email was not sent! Try again", Snackbar.LENGTH_LONG)
-                            .setAction("OK", v -> finish())
-                            .show();
-
-            }
-
-            @Override
-            public void onFailure(Call<MailResponse> call, Throwable t) {
-
-                Snackbar.make(findViewById(R.id.surface), "Error sending message!", Snackbar.LENGTH_LONG)
-                        .setAction("OK", v -> finish())
-                        .show();
-            }
-        });
+        sendEmail(plates.get(plates.size() - 1));
     }
 }

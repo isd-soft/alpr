@@ -9,15 +9,13 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @Table(name = "parking_plan")
 public class ParkingPlan {
     @Id
     private int id;
 
-    @Column(name = "photo", length = 1000)
+    @Column(name = "photo")
     private byte[] photo;
 
 
