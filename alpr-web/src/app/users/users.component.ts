@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../shared/user.service';
 import {Router} from '@angular/router';
 import {FormGenerator} from '../utils/form.generator';
@@ -12,6 +12,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Role} from '../auth/role';
+import {DomSanitizer} from '@angular/platform-browser';
+import {FileHandler} from '../utils/file.handler';
 
 @Component({
   selector: 'app-users',
@@ -35,13 +37,28 @@ export class UsersComponent implements OnInit, AfterViewInit {
   userRole = Role.User;
   value = '';
 
+  userPhotoToView: any;
+  userPhotoToEdit: any;
+  userPhotoToAdd: any;
+
+  defaultUploadInputLabel = 'Upload Photo';
+  uploadInputLabel: string = this.defaultUploadInputLabel;
+
+  @ViewChild('userAddFileInput')
+  userAddFileInput: ElementRef;
+
+  @ViewChild('userEditFileInput')
+  userEditFileInput: ElementRef;
+
   constructor(private userService: UserService,
               private companyService: CompanyService,
               private router: Router,
               private formGenerator: FormGenerator,
               private formExtractor: FormExtractor,
               private dialog: MatDialog,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private sanitizer: DomSanitizer,
+              private fileHandler: FileHandler) {
   }
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -66,6 +83,13 @@ export class UsersComponent implements OnInit, AfterViewInit {
 
   onEdit(editUserTemplate, user: User) {
     this.editedUser = user;
+    console.log(user)
+     if (user.photo) {
+        this.userPhotoToEdit = this.base64PhotoToUrl(user.photo);
+     } else {
+        this.userPhotoToEdit = null;
+     }
+    this.uploadInputLabel = this.defaultUploadInputLabel;
     this.editUserForm = this.formGenerator
       .generateUserEditForm(this.editedUser);
     this.openTemplate(editUserTemplate);
@@ -90,6 +114,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   addUser() {
     if (this.addUserForm.valid) {
       const user: User = this.formExtractor.extractUser(this.addUserForm);
+      user.photo = this.userPhotoToAdd;
       if (user.password.localeCompare(
         this.addUserForm.get('confirmPassword').value) === 0) {
         this.userService.add(user).toPromise()
@@ -112,6 +137,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   updateUser() {
     if (this.editUserForm.valid) {
       const user: User = this.formExtractor.extractUser(this.editUserForm);
+      user.photo = this.userPhotoToEdit;
       if (user.password.localeCompare(
         this.editUserForm.get('confirmPassword').value) === 0) {
         user.email = this.editedUser.email;
@@ -172,5 +198,34 @@ export class UsersComponent implements OnInit, AfterViewInit {
   onEditPasswordCheckBoxClick() {
     this.editPasswordChecked = !this.editPasswordChecked;
     console.log(this.editPasswordChecked);
+  }
+
+  private base64PhotoToUrl(base64Photo: string) {
+    return this.sanitizer.bypassSecurityTrustUrl('data:Image/*;base64,' +
+     base64Photo);
+  }
+
+  handleEditUserFileInput(files: FileList) {
+    this.fileHandler.loadCarPhoto(files)
+      .then(result => {
+          this.userPhotoToEdit = result;
+          this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+          this.userEditFileInput.nativeElement.value ='';
+        })
+        .catch(error => {
+          this.snackBar.open(error, 'OK', {duration: 4000});
+        });
+  }
+
+  handleAddUserFileInput(files: FileList) {
+      this.fileHandler.loadCarPhoto(files)
+        .then(result => {
+          this.userPhotoToAdd = result;
+          this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+          this.userAddFileInput.nativeElement.value ='';
+        })
+        .catch(error => {
+          this.snackBar.open(error, 'OK', {duration: 4000});
+        });
   }
 }

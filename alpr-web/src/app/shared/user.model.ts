@@ -8,6 +8,7 @@ export class User {
               public company: string = '',
               public role: string = '',
               public token?: string,
-              public photo?: string) {
+              public photo?: string,
+              public photoURL?: any) {
   }
 }

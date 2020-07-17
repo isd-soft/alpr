@@ -7,7 +7,7 @@
 }
 
 input {
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .color-title {
@@ -18,28 +18,19 @@ input {
   margin: auto;
 }
 
-.my-card{
-}
-
 .card-content {
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 300px auto auto auto;
   font-size: 20px;
 }
 
-.first-column {
-  display: flex;
-  align-items:column;
-}
-
-.profile-photo {
-  height: 180px;
-  width: 180px;
+.profile-photo img{
+  width:100%;
+  height:100%;
+  max-height: 180px;
+  max-width: 180px;
   object-fit: cover;
-}
-
-.form {
 }
 
 .left-margin {
@@ -76,6 +67,22 @@ input {
 .default-edit-car-photo {
   max-height: 25vh;
   max-width: 25vw;
+  object-fit: cover;
+}
+
+.edit-user-photo {
+  width:100%;
+  height:100%;
+  max-height: 250px;
+  max-width: 250px;
+  object-fit: cover;
+}
+
+.default-edit-user-photo {
+  width:100%;
+  height:100%;
+  max-height: 250px;
+  max-width: 250px;
   object-fit: cover;
 }
 

@@ -31,7 +31,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   editedCar: CarModel;
   editCarForm: FormGroup;
   editProfileForm: FormGroup;
-  profilePhotoToView: any;
+  public profilePhotoToView: any;
+  public imgURL;
+  userPhotoToEdit: any;
 
   carPhotoToView: any;
   carPhotoToEdit: any;
@@ -70,11 +72,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.authenticationService.currentUser.subscribe(user => {
     this.user = user;
-          if (this.user.photo) {
-                this.profilePhotoToView = this.base64PhotoToUrl(this.user.photo);
-              } else {
-                this.profilePhotoToView = null;
-          }
+    if (this.user.photoURL){
+           this.profilePhotoToView = this.user.photoURL;
+     } else if (this.user.photo) {
+           this.profilePhotoToView = this.base64PhotoToUrl(this.user.photo);
+     } else {
+       this.profilePhotoToView = null;
+     }
+
     });
 
   }
@@ -164,9 +169,22 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       });
   }
 
+  handleEditUserFileInput(files: FileList) {
+      this.fileHandler.loadCarPhoto(files)
+        .then(result => {
+          this.userPhotoToEdit = result;
+          this.imgURL= result;
+          this.uploadInputLabel = files.item(0).name.substring(0, 13) + '...';
+        })
+        .catch(error => {
+          this.snackBar.open(error, 'OK', {duration: 4000});
+        });
+  }
+
   onEditProfileClick(editProfileTemplate: TemplateRef<any>) {
-    this.editProfileForm = this.formGenerator.generateProfileEditForm(this.user);
-    this.openTemplate(editProfileTemplate);
+     this.userPhotoToEdit = this.profilePhotoToView;
+     this.editProfileForm = this.formGenerator.generateProfileEditForm(this.user);
+     this.openTemplate(editProfileTemplate);
   }
 
   onChangePasswordClick(changePasswordTemplate: TemplateRef<any>) {
@@ -209,6 +227,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       user.company = this.user.company;
       user.password = this.user.password;
       user.role = this.user.role;
+      if (this.imgURL)user.photo = this.imgURL;
 
       this.userService.update(user, false).toPromise()
         .then(_ => {
@@ -216,7 +235,15 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           this.user.lastName = user.lastName;
           this.user.telephoneNumber = user.telephoneNumber;
           this.user.age = user.age;
+
+          if (this.userPhotoToEdit) {
+                this.user.photoURL = this.imgURL;
+          } else {
+                this.profilePhotoToView = null;
+                this.user.photoURL = null;
+          }
           this.authenticationService.updateUser(this.user);
+
           this.snackBar.open('Successfully', 'OK', {duration: 3000});
         })
         .catch(error => {

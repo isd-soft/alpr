@@ -93,87 +93,132 @@
 </section>
 
 <ng-template #addUserTemplate>
-  <div>
+  <div >
     <h2 mat-dialog-title>Add User</h2>
 
     <mat-dialog-content [formGroup]="addUserForm">
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" type="text"
-               name="mail" required formControlName="email">
-      </mat-form-field>
 
-      <mat-form-field class="left-margin">
-        <mat-label>First Name</mat-label>
-        <input matInput placeholder="First Name" class="no-left-margin"
-               name="firstName" type="text" required formControlName="firstName">
-      </mat-form-field>
+      <div class="row">
 
-      <br>
+        <div class="col-3">
 
-      <mat-form-field>
-        <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last Name"
-               name="lastName" type="text" required formControlName="lastName">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" type="text"
+                   name="mail" required formControlName="email">
+          </mat-form-field>
 
-      <mat-form-field class="left-margin">
-        <mat-label>Age</mat-label>
-        <input matInput placeholder="Age" name="age" class="no-left-margin"
-               type="number" required formControlName="age">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="Last Name"
+                   name="lastName" type="text" required formControlName="lastName">
+          </mat-form-field>
 
-      <br>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" name="password"
+                   type="password" required formControlName="password">
+          </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" name="password"
-               type="password" required formControlName="password">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Telephone Number</mat-label>
+            <input matInput placeholder="+373XXXXXXXX" name="telephone"
+                   type="text" required formControlName="telephone">
+          </mat-form-field>
 
-      <mat-form-field class="left-margin">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required
-               formControlName="confirmPassword" class="no-left-margin">
-      </mat-form-field>
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select required formControlName="role">
+              <mat-option *ngFor="let role of roles"
+                          [value]="role">{{role}}</mat-option>
+            </mat-select>
+          </mat-form-field>
 
-      <br>
+        </div>
 
-      <mat-form-field>
-        <mat-label>Telephone Number</mat-label>
-        <input matInput placeholder="+373XXXXXXXX" name="telephone"
-               type="text" required formControlName="telephone">
-      </mat-form-field>
+        <div class="col-3">
 
-      <mat-form-field class="left-margin">
-        <mat-label>Company</mat-label>
-        <mat-select required formControlName="company">
-          <mat-option *ngFor="let company of companies"
-                      [value]="company.name">{{company.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field class="left-margin">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First Name" class="no-left-margin"
+                   name="firstName" type="text" required formControlName="firstName">
+          </mat-form-field>
 
-      <br>
+          <mat-form-field class="left-margin">
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="Age" name="age" class="no-left-margin"
+                   type="number" required formControlName="age">
+          </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Role</mat-label>
-        <mat-select required formControlName="role">
-          <mat-option *ngFor="let role of roles"
-                      [value]="role">{{role}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+          <mat-form-field class="left-margin">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput placeholder="Confirm Password" name="confirmPassword" type="password" required
+                   formControlName="confirmPassword" class="no-left-margin">
+          </mat-form-field>
 
-      <mat-dialog-actions class="no-bottom-margin">
-        <button class="mat-raised-button"
-                [mat-dialog-close]="true">Close
-        </button>
-        <button class="mat-raised-button mat-accent left-margin"
-                (click)="addUserForm.reset()">Clear
-        </button>
-        <button class="mat-raised-button mat-primary left-margin"
-                (click)="addUser()" [disabled]="!addUserForm.valid">Save
-        </button>
-      </mat-dialog-actions>
+          <mat-form-field class="left-margin">
+            <mat-label>Company</mat-label>
+            <mat-select required formControlName="company">
+              <mat-option *ngFor="let company of companies"
+                          [value]="company.name">{{company.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col-6">
+
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="userPhotoToAdd; else defaultAddUserPhoto">
+              <div style="text-align: center">
+                <img mat-card-image [src]="userPhotoToAdd"
+                     alt="user photo" class="add-user-photo">
+              </div>
+            </div>
+          </mat-card>
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-6">
+          <div class="input-group mb-3" style="width: 100%">
+            <div class="custom-file">
+              <!--suppress TypeScriptUnresolvedVariable -->
+              <input type="file" class="custom-file-input"
+                     id="userAddFileInput" aria-describedby="inputGroupFileAddon01"
+                     (change)="handleAddUserFileInput($event.target.files)" #userAddFileInput>
+              <label class="custom-file-label" for="userAddFileInput">
+                {{uploadInputLabel}}
+              </label>
+            </div>
+            <div class='input-group-append' *ngIf="userPhotoToAdd">
+              <button class="btn btn-outline-secondary action" type="button"
+                      (click)="this.userPhotoToAdd=null">Set Default
+              </button>
+            </div>
+          </div>
+
+          <mat-dialog-actions class="no-bottom-margin">
+            <button class="mat-raised-button"
+                    [mat-dialog-close]="true">Close
+            </button>
+            <button class="mat-raised-button mat-accent left-margin"
+                    (click)="addUserForm.reset()">Clear
+            </button>
+            <button class="mat-raised-button mat-primary left-margin"
+                    (click)="addUser()" [disabled]="!addUserForm.valid">Save
+            </button>
+          </mat-dialog-actions>
+
+        </div>
+
+
+      </div>
+
+
 
     </mat-dialog-content>
   </div>
@@ -188,26 +233,53 @@
     </div>
     <mat-dialog-content [formGroup]="editUserForm">
 
-      <mat-form-field>
-        <mat-label>First Name</mat-label>
-        <input matInput placeholder="First Name" class="no-left-margin"
-               name="firstName" type="text" required
-               formControlName="firstName">
-      </mat-form-field>
+      <div class="row">
+        <div class="col-3">
+
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="First Name" class="no-left-margin"
+                   name="firstName" type="text" required
+                   formControlName="firstName">
+          </mat-form-field>
+
+          <mat-form-field class="no-left-margin">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" name="password"
+                   type="password" required formControlName="password">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="Age" name="age"
+                   class="no-left-margin" type="number"
+                   required formControlName="age">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Company</mat-label>
+            <mat-select required formControlName="company">
+              <mat-option *ngFor="let company of companies"
+                          [value]="company.name">
+                {{company.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-checkbox class="no-left-margin"
+                        (click)="onEditPasswordCheckBoxClick()">
+            Modify Password
+          </mat-checkbox>
+
+        </div>
+
+        <div class="col-3">
 
       <mat-form-field class="left-margin">
         <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name"
                name="lastName" type="text"
                required formControlName="lastName">
-      </mat-form-field>
-
-      <br>
-
-      <mat-form-field class="no-left-margin">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="Password" name="password"
-               type="password" required formControlName="password">
       </mat-form-field>
 
       <mat-form-field class="left-margin">
@@ -217,31 +289,10 @@
                formControlName="confirmPassword">
       </mat-form-field>
 
-      <br>
-
-      <mat-form-field>
-        <mat-label>Age</mat-label>
-        <input matInput placeholder="Age" name="age"
-               class="no-left-margin" type="number"
-               required formControlName="age">
-      </mat-form-field>
-
       <mat-form-field class="left-margin">
         <mat-label>Telephone Number</mat-label>
         <input matInput placeholder="+373XXXXXXXX" name="telephone"
                type="text" required formControlName="telephone">
-      </mat-form-field>
-
-      <br>
-
-      <mat-form-field>
-        <mat-label>Company</mat-label>
-        <mat-select required formControlName="company">
-          <mat-option *ngFor="let company of companies"
-                      [value]="company.name">
-            {{company.name}}
-          </mat-option>
-        </mat-select>
       </mat-form-field>
 
       <mat-form-field class="left-margin">
@@ -254,13 +305,41 @@
         </mat-select>
       </mat-form-field>
 
-      <br>
+        </div>
 
-      <mat-checkbox class="no-left-margin"
+        <div class="col">
+          <mat-card>
+            <mat-card-subtitle>Photo Preview</mat-card-subtitle>
+            <div *ngIf="userPhotoToEdit; else defaultEditUserPhoto">
+              <div style="text-align: center">
+                <img mat-card-image [src]="userPhotoToEdit"
+                     alt="user photo" class="edit-user-photo">
+              </div>
+            </div>
+          </mat-card>
+        </div>
 
-      (click)="onEditPasswordCheckBoxClick()">
-        Modify Password
-      </mat-checkbox>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+
+      <div class="input-group mb-3" style="width: 100%">
+        <div class="custom-file">
+          <!--suppress TypeScriptUnresolvedVariable -->
+          <input type="file" class="custom-file-input"
+                 id="userEditFileInput" aria-describedby="inputGroupFileAddon01"
+                 (change)="handleEditUserFileInput($event.target.files)" #userEditFileInput>
+          <label class="custom-file-label" for="userEditFileInput">
+            {{uploadInputLabel}}
+          </label>
+        </div>
+        <div class='input-group-append' *ngIf="userPhotoToEdit">
+          <button class="btn btn-outline-secondary action" type="button"
+                  (click)="this.userPhotoToEdit=null">Set Default
+          </button>
+        </div>
+      </div>
 
       <mat-dialog-actions class="no-bottom-margin">
         <button class="mat-raised-button"
@@ -270,9 +349,21 @@
                 (click)="updateUser()" [disabled]="!editUserForm.valid">Update
         </button>
       </mat-dialog-actions>
+        </div>
+      </div>
 
     </mat-dialog-content>
   </div>
+</ng-template>
+
+<ng-template #defaultAddUserPhoto>
+  <div style="text-align: center"><img src="../../assets/img/default-profile.png" alt="Profile Photo Preview"
+                                  class="default-profile-preview" ></div>
+</ng-template>
+
+<ng-template #defaultEditUserPhoto>
+  <div style="text-align: center"><img matCardImage src="../../assets/img/default-profile.png" alt="Profile Photo Preview"
+                                       class="default-edit-user-photo"></div>
 </ng-template>
 
 <ng-template #noActions>
