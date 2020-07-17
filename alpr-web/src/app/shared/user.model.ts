@@ -7,6 +7,8 @@ export class User {
               public password: string = '',
               public company: string = '',
               public role: string = '',
-              public token?: string) {
+              public token?: string,
+              public photo?: string,
+              public photoURL?: any) {
   }
 }

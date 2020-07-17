@@ -213,7 +213,7 @@
     <mat-dialog-content>
 
       <div *ngIf="companyPhotoToView; else defaultCompanyPhoto">
-        <img [src]="companyPhotoToView" alt="Company Photo Preview"
+        <img [src]="this.companyPhotoToView" alt="Company Photo Preview"
              class="company-photo-preview">
       </div>
 

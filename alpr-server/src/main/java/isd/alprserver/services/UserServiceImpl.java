@@ -54,6 +54,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         User user = userDTO.toUser();
         user.setCompany(getCompanyOfUser(userDTO));
         user.setRole(getRoleOfUser(userDTO));
+        user.setPhoto(userDTO.getPhoto() != null ?
+                Base64.getDecoder().decode(userDTO.getPhoto().split(",")[1]) :
+                null);
 
         user = userRepository.save(user);
 
@@ -100,6 +103,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .lastName(user.getLastName())
                 .password("**********")
                 .telephoneNumber(user.getTelephoneNumber())
+                        .photo(user.getPhoto()!= null ?
+                                Base64.getEncoder().encodeToString(user.getPhoto()) :
+                                null)
                 .build())
                 .collect(Collectors.toList());
     }
@@ -125,7 +131,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         storedUser.setAge(userDTO.getAge());
         storedUser.setLastName(userDTO.getLastName());
         storedUser.setTelephoneNumber(userDTO.getTelephoneNumber());
-
+        storedUser.setPhoto(userDTO.getPhoto() != null ?
+                Base64.getDecoder().decode(userDTO.getPhoto().split(",")[1]) :
+                null);
         if (isPasswordChanged) {
             storedUser.setPassword(userDTO.getPassword());
         }

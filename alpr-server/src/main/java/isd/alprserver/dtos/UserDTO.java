@@ -46,6 +46,8 @@ public class UserDTO {
 
     private String role;
 
+    private String photo;
+
     public User toUser() {
         return User.builder()
                 .email(email)

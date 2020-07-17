@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -57,6 +59,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .email(user.getEmail())
                     .company(user.getCompany().getName())
                     .age(user.getAge())
+                    .photo(user.getPhoto()!= null ?
+                            Base64.getEncoder().encodeToString(user.getPhoto()) :
+                            null)
                     .build();
 
             return new JwtResponse(jwtToken, userDTO);

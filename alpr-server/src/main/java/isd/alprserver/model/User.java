@@ -96,6 +96,8 @@ public class User implements UserDetails {
         return Collections.singleton(new SimpleGrantedAuthority("ROLE_" + getRole().getName()));
     }
 
+    private byte[] photo;
+
     @Override
     public String toString() {
         return "User{" +
