@@ -1,8 +1,8 @@
 package isd.alpr_mobile.main.utility;
 
 public class ConnectionModel {
-    private int type;
-    private boolean isConnected;
+    private final int type;
+    private final boolean isConnected;
 
     public ConnectionModel(int type, boolean isConnected) {
         this.type = type;

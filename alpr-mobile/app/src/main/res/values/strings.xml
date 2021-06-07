@@ -35,4 +35,12 @@
     <string name="dialog_connection_lost">No internet. Please reconnect</string>
     <string name="retry">Retry</string>
     <string name="cancel">Cancel</string>
+    <string name="scanning_title">Scanning</string>
+    <string name="writing_title">Writing</string>
+    <string name="listing_title">Listing</string>
+    <string name="result_image">Result Image Description</string>
+    <string name="status_allow">ALLOWED</string>
+    <string name="question_enter">Is the car entering?</string>
+    <string name="status_forbid">FORBIDDEN</string>
+    <string name="question_leave">Is the car leaving?</string>
 </resources>

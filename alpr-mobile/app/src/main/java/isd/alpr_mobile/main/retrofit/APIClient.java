@@ -1,20 +1,29 @@
 package isd.alpr_mobile.main.retrofit;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APIClient {
-    private static Retrofit retrofit = null;
-    private static final String url = "https://vm-alpr-server.herokuapp.com";
-    //private static final String url = "http://192.168.137.117:8080";
+    private static final String BASE_URL = "http://192.168.1.4:8080/";
 
     public static Retrofit getClient() {
-        if(retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .addInterceptor(interceptor)
+                .build();
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
     }
 }

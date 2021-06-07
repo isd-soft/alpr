@@ -10,7 +10,7 @@ import android.net.NetworkInfo;
 import androidx.lifecycle.LiveData;
 
 public class ConnectionLiveData extends LiveData<ConnectionModel> {
-    private Context context;
+    private final Context context;
 
     public ConnectionLiveData(Context context) {
         this.context = context;
@@ -29,7 +29,7 @@ public class ConnectionLiveData extends LiveData<ConnectionModel> {
         context.unregisterReceiver(networkReceiver);
     }
 
-    private BroadcastReceiver networkReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver networkReceiver = new BroadcastReceiver() {
 
         @SuppressWarnings("deprecation")
         @Override

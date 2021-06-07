@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.activity.ResultActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/result_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/back_button"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_arrow_back"
+            android:textColor="#FFF" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="60dp"
+            android:fontFamily="sans-serif"
+            android:gravity="center_vertical"
+            android:text="Result"
+            android:textColor="#FFF"
+            android:textSize="40sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/result_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_loading"
+                android:contentDescription="@string/result_image" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/result_status"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/result_image"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="220dp"
+                android:layout_marginRight="30dp"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/license_plate"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/result_status"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:fontFamily="sans-serif"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/brand"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/license_plate"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:fontFamily="sans-serif"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/owner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/brand"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:fontFamily="sans-serif" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/owner"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:fontFamily="sans-serif"
+                android:textColor="#000"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/question"
+                android:layout_marginTop="50dp"
+                android:text="YES"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="100dp"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:enabled="false"
+                android:visibility="invisible"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/question"
+                android:layout_marginTop="50dp"
+                android:text="NO"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="100dp"
+                app:backgroundTint="@color/colorPrimary"
+                android:enabled="false"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

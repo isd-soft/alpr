@@ -1,4 +1,4 @@
-package isd.alpr_mobile.main.scan;
+package isd.alpr_mobile.main.fragment;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,6 +11,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,21 +23,28 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
-import isd.alpr_mobile.main.DisplayMessageActivity;
 import isd.alpr_mobile.R;
-import isd.alpr_mobile.main.model.LicensePlate;
-import isd.alpr_mobile.main.scan.license_plate_validation.OnPlateFoundListener;
+import isd.alpr_mobile.main.activity.ResultActivity;
+import isd.alpr_mobile.main.model.LicensePlateRequest;
+import isd.alpr_mobile.main.model.ValidateCarDTO;
+import isd.alpr_mobile.main.retrofit.APIClient;
+import isd.alpr_mobile.main.retrofit.ApiService;
+import isd.alpr_mobile.main.utility.OCRProcessor;
+import isd.alpr_mobile.main.utility.RequestCode;
+import isd.alpr_mobile.main.utility.HttpResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class ScanFragment extends Fragment implements SurfaceHolder.Callback, OnPlateFoundListener {
-    private OnScanFragmentInteractionListener mListener;
+public class ScanFragment extends Fragment implements SurfaceHolder.Callback {
     private SurfaceView cameraView;
     private CameraSource cameraSource;
+    private final ApiService apiService;
 
     public ScanFragment() {
-        // Required empty public constructor
+        apiService = APIClient.getClient().create(ApiService.class);
     }
 
     @Override
@@ -50,29 +59,25 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         startSourceCamera();
+        view.findViewById(R.id.scan_ready_button).setOnClickListener(v -> {
+            String text = ((TextView)view.findViewById(R.id.license_plate_text_view)).getText().toString();
+            apiService.getCarByLicensePlate(new LicensePlateRequest(text)).enqueue(new Callback<HttpResponse<ValidateCarDTO>>() {
+                @Override
+                public void onResponse(@NonNull Call<HttpResponse<ValidateCarDTO>> call, @NonNull Response<HttpResponse<ValidateCarDTO>> response) {
+                    changeActivity(Objects.requireNonNull(response.body()).data);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<HttpResponse<ValidateCarDTO>> call, @NonNull Throwable t) {
+                    showToast();
+                }
+            });
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        startSourceCamera();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        if (context instanceof OnScanFragmentInteractionListener) {
-            mListener = (OnScanFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnScanFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     private void startSourceCamera() {
@@ -89,7 +94,7 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
                     .build();
 
             cameraView.getHolder().addCallback(this);
-            textRecognizer.setProcessor(new OCRProcessor(this));
+            textRecognizer.setProcessor(new OCRProcessor(requireActivity().findViewById(R.id.license_plate_text_view)));
         }
     }
 
@@ -102,7 +107,6 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
                         Objects.requireNonNull(getActivity()),
                         new String[]{Manifest.permission.CAMERA},
                         RequestCode.CAMERA_REQUEST_PERMISSION_ID.ordinal());
-                // todo: continue if permission granted, else replace fragment to WriteFragment
                 return;
             }
             cameraSource.start(cameraView.getHolder());
@@ -125,11 +129,14 @@ public class ScanFragment extends Fragment implements SurfaceHolder.Callback, On
         return Objects.requireNonNull(getActivity()).getApplicationContext();
     }
 
-    @Override
-    public void onPlateFound(List<LicensePlate> plates) {
-        Intent intent = new Intent(getActivity(), DisplayMessageActivity.class);
-        intent.putExtra("plates", plates.toArray());
+    private void changeActivity(ValidateCarDTO argument) {
+        Intent intent = new Intent(requireActivity(), ResultActivity.class);
+        intent.putExtra("argument", argument);
         startActivity(intent);
+    }
+
+    private void showToast() {
+        Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
     }
 }
 
